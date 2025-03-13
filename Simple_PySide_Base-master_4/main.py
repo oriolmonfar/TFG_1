@@ -37,6 +37,7 @@ from config_manager import *
 
 IP_VMIX = load_ip_vmix()
 FAST_JOG = load_fast_jog()
+SHIFT = False
 
 
 class PopupRecordTrains(QDialog):  
@@ -592,7 +593,7 @@ class MainWindow(QMainWindow):
 
         #################################### START- BOTONS CLIP
 
-        self.ui.clip_addtoplaylist.clicked.connect(lambda: UIFunctions.function_addtoplaylist(self))
+        self.ui.clip_addtoplaylist.clicked.connect(lambda: UIFunctions.function_plst_page(self))
 
         #################################### END - BOTONS CLIP
 
@@ -611,41 +612,175 @@ class MainWindow(QMainWindow):
 
         #################################### START- BOTONS SIMULATOR
 
+        def toggle_shift(self):
+            """Alterna el estado de SHIFT y cambia el color del botón."""
+            global SHIFT
+            SHIFT = not SHIFT
 
-            
-        self.ui.sim_A.clicked.connect(lambda: UIFunctions.function_A(self))
-        self.ui.sim_B.clicked.connect(lambda: UIFunctions.function_B(self))
-        self.ui.sim_C.clicked.connect(lambda: UIFunctions.function_C(self))
-        self.ui.sim_D.clicked.connect(lambda: UIFunctions.function_D(self))
-        self.ui.sim_take.clicked.connect(lambda: UIFunctions.function_take())
-        self.ui.sim_prvctl.clicked.connect(lambda: UIFunctions.function_prvctl(self))
-        self.ui.sim_loop.clicked.connect(lambda: UIFunctions.function_loop())
-        self.ui.sim_play.clicked.connect(lambda: UIFunctions.function_play(self))
-        self.ui.sim_record.clicked.connect(lambda: UIFunctions.function_record())
-        self.ui.sim_in.clicked.connect(lambda: UIFunctions.function_in())
-        self.ui.sim_out.clicked.connect(lambda: UIFunctions.function_out())
+            if SHIFT:
+                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: rgba(255,40,40,150);} QPushButton:hover {background-color: rgba(255,40,40,50);} QPushButton:pressed { background-color: rgba(255,40,40,50);}")  # Rojo cuando está activado
+            else:
+                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")   # Transparente cuando está desactivado
+
+            print(f"Shift activado: {SHIFT}")  # Depuración
+
+        def reset_shift(self):
+            """Desactiva SHIFT si está activado y restablece el color."""
+            global SHIFT
+            if SHIFT:
+                SHIFT = False
+                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
+                print("Shift desactivado")
+
+        self.ui.sim_shift.setCheckable(True)
+        self.ui.sim_shift.clicked.connect(lambda: toggle_shift(self))
+
+        def execute_functions_A(self):
+            """Ejecuta la función correspondiente según el estado de SHIFT."""
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_A_prima()
+                reset_shift(self)
+            else:
+                UIFunctions.function_A(self)
+        self.ui.sim_A.clicked.connect(lambda: execute_functions_A(self))
+
+        def execute_functions_B(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_B_prima()
+                reset_shift(self)
+            else:
+                UIFunctions.function_B(self)
+        self.ui.sim_B.clicked.connect(lambda: execute_functions_B(self))
+
+        def execute_functions_C(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_C_prima()
+                reset_shift(self)
+            else:
+                UIFunctions.function_C(self)
+        self.ui.sim_C.clicked.connect(lambda: execute_functions_C(self))
+
+        def execute_functions_D(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_D_prima()
+                reset_shift(self)
+            else:
+                UIFunctions.function_D(self)
+        self.ui.sim_D.clicked.connect(lambda: execute_functions_D(self))
+
+        def execute_functions_play(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_network()
+                reset_shift(self)
+            else:
+                UIFunctions.function_play(self)
+        self.ui.sim_play.clicked.connect(lambda: execute_functions_play(self))
+
+        def execute_functions_gototc(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_gototc()
+                reset_shift(self)
+            else:
+                UIFunctions.function_lastcue()
+        self.ui.sim_gototc.clicked.connect(lambda: execute_functions_gototc(self))
+
+        def execute_functions_fastjog(self, dial):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_fastjog(dial)
+                reset_shift(self)
+            else:
+                UIFunctions.function_mark()
+        self.ui.sim_fastjog.clicked.connect(lambda: execute_functions_fastjog(self, self.dial))
+
+        def execute_functions_record(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_return()
+                reset_shift(self)
+            else:
+                UIFunctions.function_record()
+        self.ui.sim_record.clicked.connect(lambda: execute_functions_record(self))
+
+        def execute_functions_prvctl(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_page()
+                reset_shift(self)
+            else:
+                UIFunctions.function_prvctl(self)
+        self.ui.sim_prvctl.clicked.connect(lambda: execute_functions_prvctl(self))
+
+        def execute_functions_loop(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_loop()
+                reset_shift(self)
+            else:
+                UIFunctions.function_plst_page(self)
+        self.ui.sim_loop.clicked.connect(lambda: execute_functions_loop(self))
+
+        def execute_functions_insert(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_insert()
+                reset_shift(self)
+            else:
+                UIFunctions.function_browse()
+        self.ui.sim_insert.clicked.connect(lambda: execute_functions_insert(self))
+
+        def execute_functions_in(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_gotoin()
+                reset_shift(self)
+            else:
+                UIFunctions.function_in()
+        self.ui.sim_in.clicked.connect(lambda: execute_functions_in(self))
+
+        def execute_functions_out(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_gotoout()
+                reset_shift(self)
+            else:
+                UIFunctions.function_out()
+        self.ui.sim_out.clicked.connect(lambda: execute_functions_out(self))
+
+        def execute_functions_take(self):
+            global SHIFT
+            if SHIFT:
+                UIFunctions.function_lever()
+                reset_shift(self)
+            else:
+                UIFunctions.function_take()
+        self.ui.sim_take.clicked.connect(lambda: execute_functions_take(self))
+
         #self.ui.sim_e_e.clicked.connect(lambda: UIFunctions.function_e_e())
-        #self.ui.sim_plst.clicked.connect(lambda: UIFunctions.function_addtoplaylist(self))
-        
-
 
         self.ui.sim_rodeta.setMinimum(0)
         self.ui.sim_rodeta.setMaximum(100)
         self.ui.sim_rodeta.setWrapping(True)  # Hacer que el dial sea cíclico
         self.dial = self.findChild(QDial, "sim_rodeta")  # Busca el QDial en la UI
         UIFunctions.function_rodeta(self.dial)  # Configura el dial
-        self.ui.sim_fastjog.clicked.connect(lambda: UIFunctions.function_fastjog(self.dial))  # Conectar botón
 
         self.slider = self.findChild(QSlider, "sim_palanqueta")  # Find the slider
         UIFunctions.setup_replay_speed_slider(self.slider)  # Setup slider functionality
         #self.ui.sim_lever.clicked.connect(lambda: UIFunctions.function_lever(self.slider))
 
         #################################### END - BOTONS SIMULATOR
-        self.ui.config_ipconfig.clicked.connect(self.show_dialog_myvmix)
-        self.ui.config_fastjogconfig.clicked.connect(self.show_dialog_fastjog)
         
 
         #################################### START - BOTONS CONFIGURATION
+
+        self.ui.config_ipconfig.clicked.connect(self.show_dialog_myvmix)
+        self.ui.config_fastjogconfig.clicked.connect(self.show_dialog_fastjog)
 
 
 
