@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>924</width>
+    <height>485</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(44,49,60);</string>
+  </property>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>921</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(27,29,35,200);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QFrame" name="frame_btns_right">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>0</y>
+      <width>120</width>
+      <height>42</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>120</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="minimize_myvmix">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Minimize</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {	
+	border: none;
+	background-color: transparent;
+}
+QPushButton:hover {
+	background-color: rgb(52, 59, 72);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="files.qrc">
+         <normaloff>:/16x16/icons/16x16/cil-window-minimize.png</normaloff>:/16x16/icons/16x16/cil-window-minimize.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="maximize_myvmix">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Maximize</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {	
+	border: none;
+	background-color: transparent;
+}
+QPushButton:hover {
+	background-color: rgb(52, 59, 72);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="files.qrc">
+         <normaloff>:/16x16/icons/16x16/cil-window-maximize.png</normaloff>:/16x16/icons/16x16/cil-window-maximize.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="close_myvmix">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Close</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {	
+	border: none;
+	background-color: transparent;
+}
+QPushButton:hover {
+	background-color: rgb(52, 59, 72);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="files.qrc">
+         <normaloff>:/16x16/icons/16x16/cil-x.png</normaloff>:/16x16/icons/16x16/cil-x.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_3">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>440</y>
+     <width>921</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(27,29,35,200);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="myvmix_add">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>400</y>
+     <width>93</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 8px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,150,250,200);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+   </property>
+   <property name="text">
+    <string>ADD</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="myvmix_delete">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>400</y>
+     <width>93</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 8px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,150);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+   </property>
+   <property name="text">
+    <string>DELETE</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="myvmix_combobox">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>150</y>
+     <width>441</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 10px;
+	border: 2px solid rgba(255,255,255,255);
+	background-color: transparent;  /* Borde blanco con transparencia */
+}
+
+QComboBox:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QComboBox:pressed {
+    background-color: rgba(0,150,250,50);
+}
+QComboBox::item:hover {
+	background-color: rgba(0,150,250,50);
+}
+QComboBox QPopupMenu {
+    color: white; /* color de los textos en el menú desplegable */
+}</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>90</y>
+     <width>181</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;     
+	background-color: transparent;      
+
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Choose vMix PC</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="myvmix_confirm">
+   <property name="geometry">
+    <rect>
+     <x>690</x>
+     <y>390</y>
+     <width>231</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: green;         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+   </property>
+   <property name="text">
+    <string>CONFIRM</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>260</y>
+     <width>441</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QFrame {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 5px;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QPushButton" name="myvmix_checkconnection">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>211</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+    </property>
+    <property name="text">
+     <string>Check vMix Connection:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="myvmix_success_label">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>-1</y>
+      <width>231</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: rgb(0,255,0);				 /* Color del texto */
+	padding: 10px;     
+	background-color: transparent;      
+
+}</string>
+    </property>
+    <property name="text">
+     <string>       Successful</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="files.qrc"/>
+ </resources>
+ <connections/>
+</ui>

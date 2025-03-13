@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>924</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(44,49,60);
+</string>
+  </property>
+  <widget class="QCheckBox" name="checkbox_cam3">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>290</y>
+     <width>261</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	background-color: transparent;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QCheckBox:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QCheckBox:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+/* CHECKBOX */
+QCheckBox::indicator {
+    border: 3px solid rgb(52, 59, 72);
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+    background: rgb(44, 49, 60);
+}
+
+QCheckBox::indicator:checked {
+    background: 3px solid rgb(52, 59, 72);
+	border: 3px solid rgb(52, 59, 72);	
+	background-image: url(:/16x16/icons/16x16/cil-check-alt.png);
+}</string>
+   </property>
+   <property name="text">
+    <string>                     3</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkbox_cam2">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>180</y>
+     <width>261</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	background-color: transparent;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QCheckBox:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QCheckBox:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+/* CHECKBOX */
+QCheckBox::indicator {
+    border: 3px solid rgb(52, 59, 72);
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+    background: rgb(44, 49, 60);
+}
+
+QCheckBox::indicator:checked {
+    background: 3px solid rgb(52, 59, 72);
+	border: 3px solid rgb(52, 59, 72);	
+	background-image: url(:/16x16/icons/16x16/cil-check-alt.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>                     2</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkbox_cam5">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>70</y>
+     <width>261</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	background-color: transparent;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QCheckBox:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QCheckBox:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+/* CHECKBOX */
+QCheckBox::indicator {
+    border: 3px solid rgb(52, 59, 72);
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+    background: rgb(44, 49, 60);
+}
+
+QCheckBox::indicator:checked {
+    background: 3px solid rgb(52, 59, 72);
+	border: 3px solid rgb(52, 59, 72);	
+	background-image: url(:/16x16/icons/16x16/cil-check-alt.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>                     5</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkbox_cam6">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>180</y>
+     <width>261</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	background-color: transparent;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QCheckBox:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QCheckBox:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+/* CHECKBOX */
+QCheckBox::indicator {
+    border: 3px solid rgb(52, 59, 72);
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+    background: rgb(44, 49, 60);
+}
+
+QCheckBox::indicator:checked {
+    background: 3px solid rgb(52, 59, 72);
+	border: 3px solid rgb(52, 59, 72);	
+	background-image: url(:/16x16/icons/16x16/cil-check-alt.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>                     6</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkbox_cam1">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>70</y>
+     <width>261</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	background-color: transparent;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QCheckBox:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QCheckBox:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+/* CHECKBOX */
+QCheckBox::indicator {
+    border: 3px solid rgb(52, 59, 72);
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+    background: rgb(44, 49, 60);
+}
+
+QCheckBox::indicator:checked {
+    background: 3px solid rgb(52, 59, 72);
+	border: 3px solid rgb(52, 59, 72);	
+	background-image: url(:/16x16/icons/16x16/cil-check-alt.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>                     1</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkbox_cam4">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>400</y>
+     <width>261</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	background-color: transparent;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QCheckBox:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QCheckBox:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+/* CHECKBOX */
+QCheckBox::indicator {
+    border: 3px solid rgb(52, 59, 72);
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+    background: rgb(44, 49, 60);
+}
+
+QCheckBox::indicator:checked {
+    background: 3px solid rgb(52, 59, 72);
+	border: 3px solid rgb(52, 59, 72);	
+	background-image: url(:/16x16/icons/16x16/cil-check-alt.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>                     4</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkbox_cam7">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>290</y>
+     <width>261</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	background-color: transparent;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QCheckBox:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QCheckBox:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+/* CHECKBOX */
+QCheckBox::indicator {
+    border: 3px solid rgb(52, 59, 72);
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+    background: rgb(44, 49, 60);
+}
+
+QCheckBox::indicator:checked {
+    background: 3px solid rgb(52, 59, 72);
+	border: 3px solid rgb(52, 59, 72);	
+	background-image: url(:/16x16/icons/16x16/cil-check-alt.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>                     7</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkbox_cam8">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>400</y>
+     <width>261</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	background-color: transparent;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QCheckBox:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QCheckBox:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+/* CHECKBOX */
+QCheckBox::indicator {
+    border: 3px solid rgb(52, 59, 72);
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+    background: rgb(44, 49, 60);
+}
+
+QCheckBox::indicator:checked {
+    background: 3px solid rgb(52, 59, 72);
+	border: 3px solid rgb(52, 59, 72);	
+	background-image: url(:/16x16/icons/16x16/cil-check-alt.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>                     8</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>921</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(27,29,35,200);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QFrame" name="frame_btns_right">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>0</y>
+      <width>120</width>
+      <height>42</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>120</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="minimize_recordtrains">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Minimize</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {	
+	border: none;
+	background-color: transparent;
+}
+QPushButton:hover {
+	background-color: rgb(52, 59, 72);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="files.qrc">
+         <normaloff>:/16x16/icons/16x16/cil-window-minimize.png</normaloff>:/16x16/icons/16x16/cil-window-minimize.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="maximizerecord_trains">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Maximize</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {	
+	border: none;
+	background-color: transparent;
+}
+QPushButton:hover {
+	background-color: rgb(52, 59, 72);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="files.qrc">
+         <normaloff>:/16x16/icons/16x16/cil-window-maximize.png</normaloff>:/16x16/icons/16x16/cil-window-maximize.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="close_recordtrains">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Close</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {	
+	border: none;
+	background-color: transparent;
+}
+QPushButton:hover {
+	background-color: rgb(52, 59, 72);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="files.qrc">
+         <normaloff>:/16x16/icons/16x16/cil-x.png</normaloff>:/16x16/icons/16x16/cil-x.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="files.qrc"/>
+ </resources>
+ <connections/>
+</ui>
