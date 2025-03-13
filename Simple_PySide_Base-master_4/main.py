@@ -611,14 +611,9 @@ class MainWindow(QMainWindow):
 
         #################################### START- BOTONS SIMULATOR
 
-        self.ui.sim_shift.setCheckable(False)
 
-
-        if self.ui.sim_shift.isChecked():
             
-            self.ui.sim_A.clicked.connect(lambda: UIFunctions.function_A(self))
-        else: 
-            self.ui.sim_A.clicked.connect(lambda: UIFunctions.function_A_prima())
+        self.ui.sim_A.clicked.connect(lambda: UIFunctions.function_A(self))
         self.ui.sim_B.clicked.connect(lambda: UIFunctions.function_B(self))
         self.ui.sim_C.clicked.connect(lambda: UIFunctions.function_C(self))
         self.ui.sim_D.clicked.connect(lambda: UIFunctions.function_D(self))
