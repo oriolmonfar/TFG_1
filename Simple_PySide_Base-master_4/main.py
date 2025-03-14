@@ -21,6 +21,7 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient, QMouseEvent)
 from PySide2.QtWidgets import *
 import re
+from functools import partial
 
 
 # GUI FILE
@@ -711,7 +712,7 @@ class MainWindow(QMainWindow):
         def execute_functions_prvctl(self):
             global SHIFT
             if SHIFT:
-                UIFunctions.function_page()
+                UIFunctions.function_page(self)
                 reset_shift(self)
             else:
                 UIFunctions.function_prvctl(self)
@@ -773,6 +774,30 @@ class MainWindow(QMainWindow):
         self.slider = self.findChild(QSlider, "sim_palanqueta")  # Find the slider
         UIFunctions.setup_replay_speed_slider(self.slider)  # Setup slider functionality
         #self.ui.sim_lever.clicked.connect(lambda: UIFunctions.function_lever(self.slider))
+
+        #Gestio clips
+
+        self.current_page = None
+        self.current_bank = None
+        self.current_slot = None
+
+
+        # Conectar los botones ya creados en Qt Designer
+        self.ui.sim_f1.clicked.connect(lambda: UIFunctions.handle_button_click(self,1))
+        self.ui.sim_f2.clicked.connect(lambda: UIFunctions.handle_button_click(self,2))
+        self.ui.sim_f3.clicked.connect(lambda: UIFunctions.handle_button_click(self,3))
+        self.ui.sim_f4.clicked.connect(lambda: UIFunctions.handle_button_click(self,4))
+        self.ui.sim_f5.clicked.connect(lambda: UIFunctions.handle_button_click(self,5))
+        self.ui.sim_f6.clicked.connect(lambda: UIFunctions.handle_button_click(self,6))
+        self.ui.sim_f7.clicked.connect(lambda: UIFunctions.handle_button_click(self,7))
+        self.ui.sim_f8.clicked.connect(lambda: UIFunctions.handle_button_click(self,8))
+        self.ui.sim_f9.clicked.connect(lambda: UIFunctions.handle_button_click(self,9))
+        self.ui.sim_f10.clicked.connect(lambda: UIFunctions.handle_button_click(self,10))
+
+        
+
+
+
 
         #################################### END - BOTONS SIMULATOR
         

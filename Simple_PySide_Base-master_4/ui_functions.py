@@ -612,8 +612,13 @@ class UIFunctions(MainWindow):
 
         print("Replay recording toggled successfully")
 
-    def function_page():
-        print("Ejecutando funcion Page...")
+    def function_page(self):
+        """ Activa el modo de selección de clips """
+        self.clip_mode = True
+        self.current_page = None
+        self.current_bank = None
+        self.current_slot = None
+        print("Modo Clip activado. Selecciona una página.")
 
     def function_prvctl(self):
         # Step 1: Fetch the XML from vMix using send_request
@@ -812,7 +817,35 @@ class UIFunctions(MainWindow):
 
 
 
+    #Gestio clips: 
+    def handle_button_click(self, num):
+        """ Maneja la navegación entre páginas, bancos y slots """
+        if not self.clip_mode:
+            print("No estás en modo Clip. Llama a clip() primero.")
+            return
 
+        if self.current_page is None:
+            self.current_page = num
+            #self.ui.label_page.setText(f"PAGE {num}")  # Actualiza QLabel
+            print(f"Página seleccionada: {self.current_page}. Ahora selecciona un banco.")
+        elif self.current_bank is None:
+            self.current_bank = num
+            self.ui.label_bank.setText(f"{num} BANK")  # Actualiza QLabel
+            print(f"Banco seleccionado: {self.current_bank}. Ahora selecciona un slot de clip.")
+        else:
+            self.current_slot = num
+            UIFunctions.function_shotclip(self)
+
+    def function_shotclip(self):
+        """ Ejecuta la acción del clip y resetea los estados """
+        clip_name = f"{self.current_page}{self.current_bank}{self.current_slot}"
+        print(f"Estás ejecutando el clip con nombre {clip_name}")
+
+        # Reset de los estados
+        self.clip_mode = False
+        self.current_page = None
+        self.current_bank = None
+        self.current_slot = None
 
 
 
