@@ -3,5 +3,23 @@
     "IP_VMIX": "127.0.0.1:8088",
     "VMIX_LIST": [
         "VMIX_URI (127.0.0.1:8088)"
-    ]
+    ],
+    "CURRENT_PAGE": 6,
+    "CURRENT_BANK": 1,
+    "CURRENT_CLIP": "642",
+    "last_page": 1,
+    "last_bank_per_page": {
+        "1": 1,
+        "2": 1,
+        "3": 7,
+        "4": 2,
+        "5": 6,
+        "6": 4,
+        "7": 1,
+        "8": 0,
+        "9": 2,
+        "10": 1
+    },
+    "last_clip": 1,
+    "clip_mode": false
 }

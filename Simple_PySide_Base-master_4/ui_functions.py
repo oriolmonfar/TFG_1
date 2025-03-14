@@ -157,14 +157,16 @@ class UIFunctions(MainWindow):
         self.ui.label_title_bar_top.setText(text)
 
     def labelPGM_PRV(self, text):
+        global current_clip
+        current_clip = load_current_clip()
         if text == "A":
-            self.ui.label_pgm.setText(f'                                            PGM                        ')
+            self.ui.label_pgm.setText(f'                                            PGM : {current_clip}                     ')
             self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
         elif text == "B":
-            self.ui.label_pgm.setText(f'                                            PRV                      ')
+            self.ui.label_pgm.setText(f'                                            PRV : {current_clip}                        ')
             self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
         else: 
-            self.ui.label_pgm.setText(f'                                     LINKED A|B                ')
+            self.ui.label_pgm.setText(f'                                     LINKED A|B : {current_clip}                ')
             self.ui.label_pgm.setStyleSheet("color: rgb(255,165,0)")
 
         
@@ -612,15 +614,11 @@ class UIFunctions(MainWindow):
 
         print("Replay recording toggled successfully")
 
-    def function_page(self):
-        """ Activa el modo de selección de clips """
-        self.clip_mode = True
-        self.current_page = None
-        self.current_bank = None
-        self.current_slot = None
-        print("Modo Clip activado. Selecciona una página.")
+    #function PAGE declarada en main.py
 
     def function_prvctl(self):
+        global current_clip
+        current_clip = load_current_clip()
         # Step 1: Fetch the XML from vMix using send_request
         response = UIFunctions.send_request("api/")  # Only pass "api/" here
 
@@ -655,10 +653,10 @@ class UIFunctions(MainWindow):
 
                 # Update UI labels
                 if channel_mode == "A":
-                    self.ui.label_pgm.setText('                                            PRV                        ')
+                    self.ui.label_pgm.setText(f'                                            PRV : {current_clip}                        ')
                     self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
                 else:
-                    self.ui.label_pgm.setText('                                            PGM                        ')
+                    self.ui.label_pgm.setText(f'                                            PGM : {current_clip}                     ')
                     self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
 
         except ET.ParseError:
@@ -791,9 +789,8 @@ class UIFunctions(MainWindow):
         slider.sliderReleased.connect(on_slider_released) # Resume with new speed
         slider.valueChanged.connect(on_slider_changed)    # Change speed while moving        
 
-
+    """""
     def function_e_e():
-        """Jumps to current time in replay and plays it."""
         
         # Step 1: ReplayJumpToNow
         endpoint_now = "api/?Function=ReplayJumpToNow&Channel=1"
@@ -815,37 +812,44 @@ class UIFunctions(MainWindow):
 
         print("Replay jumped to now and playback started successfully.")
 
+    """
+    def function_e_e():
+        """Jumps to current time in replay and plays it."""
+        
+        # Step 1: ReplayJumpToNow
+        endpoint_now = "api/?Function=ReplayJumpToNow&Channel=1"
+        response_1 = UIFunctions.send_request(endpoint_now)  # Usamos la función send_request con el endpoint
+
+        if not response_1:
+            print("No se pudo realizar el 'ReplayJumpToNow' debido a la falta de conexión con vMix.")
+            return  # Salir si no hay conexión
+
+        time.sleep(0.01)  # Pequeña pausa
+
+        # Step 2: ReplayPlay
+        endpoint_play = "api/?Function=ReplayPlay&Channel=1"
+        response_2 = UIFunctions.send_request(endpoint_play)  # Usamos la función send_request con el endpoint
+
+        if not response_2:
+            print("No se pudo iniciar la reproducción del replay debido a la falta de conexión con vMix.")
+            return  # Salir si no hay conexión
+
+        # Desactivar clip_mode
+        global clip_mode
+        clip_mode = False  # Desactivamos el modo clip
+        print("Modo clip desactivado.")
+
+        # Guardar la configuración
+        save_config("clip_mode", clip_mode)
+        print("Configuración de clip_mode guardada.")  # Confirmación de guardado
+
+        print("Replay jumped to now and playback started successfully.")
+
+
 
 
     #Gestio clips: 
-    def handle_button_click(self, num):
-        """ Maneja la navegación entre páginas, bancos y slots """
-        if not self.clip_mode:
-            print("No estás en modo Clip. Llama a clip() primero.")
-            return
 
-        if self.current_page is None:
-            self.current_page = num
-            #self.ui.label_page.setText(f"PAGE {num}")  # Actualiza QLabel
-            print(f"Página seleccionada: {self.current_page}. Ahora selecciona un banco.")
-        elif self.current_bank is None:
-            self.current_bank = num
-            self.ui.label_bank.setText(f"{num} BANK")  # Actualiza QLabel
-            print(f"Banco seleccionado: {self.current_bank}. Ahora selecciona un slot de clip.")
-        else:
-            self.current_slot = num
-            UIFunctions.function_shotclip(self)
-
-    def function_shotclip(self):
-        """ Ejecuta la acción del clip y resetea los estados """
-        clip_name = f"{self.current_page}{self.current_bank}{self.current_slot}"
-        print(f"Estás ejecutando el clip con nombre {clip_name}")
-
-        # Reset de los estados
-        self.clip_mode = False
-        self.current_page = None
-        self.current_bank = None
-        self.current_slot = None
 
 
 

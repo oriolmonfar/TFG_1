@@ -431,16 +431,22 @@ class Ui_MainWindow(object):
         self.horizontalLayout_10.setSpacing(0)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(5, 0, 10, 0)
-        self.label_bank = QLabel(self.frame_label_top_btns)
-        self.label_bank.setObjectName(u"label_bank")
+        self.label_page = QLabel(self.frame_label_top_btns)
+        self.label_page.setObjectName(u"label_page")
         font1 = QFont()
         font1.setFamily(u"Segoe UI")
         font1.setPointSize(10)
         font1.setBold(True)
         font1.setWeight(75)
+        self.label_page.setFont(font1)
+        self.label_page.setStyleSheet(u"background-color: transparent;")
+
+        self.horizontalLayout_10.addWidget(self.label_page)
+
+        self.label_bank = QLabel(self.frame_label_top_btns)
+        self.label_bank.setObjectName(u"label_bank")
         self.label_bank.setFont(font1)
-        self.label_bank.setStyleSheet(u"background: transparent;\n"
-"")
+        self.label_bank.setStyleSheet(u"background-color: transparent;")
 
         self.horizontalLayout_10.addWidget(self.label_bank)
 
@@ -3637,7 +3643,8 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.btn_toggle_menu.setText("")
-        self.label_bank.setText(QCoreApplication.translate("MainWindow", u"PAGE 0   1 BANK", None))
+        self.label_page.setText(QCoreApplication.translate("MainWindow", u"PAGE 0  ", None))
+        self.label_bank.setText(QCoreApplication.translate("MainWindow", u" 1 BANK", None))
         self.label_pgm.setText(QCoreApplication.translate("MainWindow", u"                                             PGM  A                      ", None))
         self.label_vmixconn.setText(QCoreApplication.translate("MainWindow", u"vMix connection: ", None))
         self.label_title_bar_top.setText("")

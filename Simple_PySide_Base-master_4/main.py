@@ -21,7 +21,6 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient, QMouseEvent)
 from PySide2.QtWidgets import *
 import re
-from functools import partial
 
 
 # GUI FILE
@@ -39,6 +38,11 @@ from config_manager import *
 IP_VMIX = load_ip_vmix()
 FAST_JOG = load_fast_jog()
 SHIFT = False
+current_page = load_current_page()
+current_bank = load_current_bank()
+current_clip = load_current_clip()
+clip_mode = load_clip_mode()
+modo_page = False
 
 
 class PopupRecordTrains(QDialog):  
@@ -470,6 +474,11 @@ class MainWindow(QMainWindow):
         ## SET ==> WINDOW TITLE
         self.setWindowTitle('Main Window - Python Base')
         #UIFunctions.labelTitle(self, 'Main Window - Python Base')
+        self.ui.label_page.setText(f"PAGE {current_page}")
+        if current_bank ==0:
+            self.ui.label_bank.setText("   PL. BANK")  # Actualiza QLabel
+        else: 
+            self.ui.label_bank.setText(f" {current_bank} BANK")  # Actualiza QLabel
         UIFunctions.labelDescription(self, 'PL11:  113A, 232A, 342A')
         
         ################################# SET PGM
@@ -703,7 +712,8 @@ class MainWindow(QMainWindow):
         def execute_functions_record(self):
             global SHIFT
             if SHIFT:
-                UIFunctions.function_return()
+                #UIFunctions.function_return()
+                UIFunctions.function_e_e()
                 reset_shift(self)
             else:
                 UIFunctions.function_record()
@@ -712,7 +722,7 @@ class MainWindow(QMainWindow):
         def execute_functions_prvctl(self):
             global SHIFT
             if SHIFT:
-                UIFunctions.function_page(self)
+                function_page_activate()
                 reset_shift(self)
             else:
                 UIFunctions.function_prvctl(self)
@@ -777,22 +787,80 @@ class MainWindow(QMainWindow):
 
         #Gestio clips
 
-        self.current_page = None
-        self.current_bank = None
-        self.current_slot = None
+        def function_page_activate():
+            """Activa el modo de selección de página."""
+            global modo_page
+            modo_page = True
+            print("Modo de selección de página activado.")
 
+        def handle_sim_f_button(self, f_button_number):
+            """Maneja la funcionalidad de los botones sim_f1 a sim_f10."""
+
+            global current_page, current_bank, SHIFT, clip_mode, modo_page
+
+            # Si SHIFT está activado, cambiar el banco, si no, cambiar la página.
+            if SHIFT:
+                change_bank(f_button_number)  # Cambiar banco de la página actual
+                print("function change bank")
+                reset_shift(self)
+                
+            elif modo_page:
+                function_page(f_button_number)  # Cambiar página según el número del botón
+                print("function change page")
+                modo_page = False
+            
+            
+            # Activar el modo clip y mostrar el código correspondiente
+            else:
+                clip_mode = True  # Activar modo clip
+                clip_code = f"{current_page}{current_bank}{f_button_number}"
+                print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
+                save_current_clip(clip_code)
+                channel_mode = get_channelmode(self)
+                UIFunctions.labelPGM_PRV(self, channel_mode)
+    
+        def function_page(page_number):
+            """Cambia la página y muestra el banco correspondiente."""
+            global current_page, current_bank, SHIFT
+            
+            # Cambiar la página
+            current_page = page_number
+            save_current_page(current_page)
+            self.ui.label_page.setText(f"PAGE {current_page}")  # Actualiza QLabel
+            
+            # Mostrar el banco de la página seleccionada
+            current_bank = load_current_bank()
+            self.ui.label_bank.setText(f" {current_bank} BANK")  # Actualiza QLabel
+            print(f"Página {current_page} seleccionada. Banco actual: {current_bank}")
+
+            
+
+        def change_bank(button_number):
+            """Cambia el banco para la página actual si Shift está presionado."""
+            global current_bank
+            if SHIFT:
+                save_current_bank(button_number)
+                current_bank = button_number  # Actualizamos la variable global
+                self.ui.label_bank.setText(f"{current_bank} BANK")  # Actualiza QLabel
+                print(f"Banco actualizado a {button_number} para la página {current_page}.")
+                if current_bank == 0:
+                    self.ui.label_bank.setText("   PL. BANK")  # Actualiza QLabel
+
+            else:
+                print("Shift no está presionado, no se puede cambiar el banco.")
 
         # Conectar los botones ya creados en Qt Designer
-        self.ui.sim_f1.clicked.connect(lambda: UIFunctions.handle_button_click(self,1))
-        self.ui.sim_f2.clicked.connect(lambda: UIFunctions.handle_button_click(self,2))
-        self.ui.sim_f3.clicked.connect(lambda: UIFunctions.handle_button_click(self,3))
-        self.ui.sim_f4.clicked.connect(lambda: UIFunctions.handle_button_click(self,4))
-        self.ui.sim_f5.clicked.connect(lambda: UIFunctions.handle_button_click(self,5))
-        self.ui.sim_f6.clicked.connect(lambda: UIFunctions.handle_button_click(self,6))
-        self.ui.sim_f7.clicked.connect(lambda: UIFunctions.handle_button_click(self,7))
-        self.ui.sim_f8.clicked.connect(lambda: UIFunctions.handle_button_click(self,8))
-        self.ui.sim_f9.clicked.connect(lambda: UIFunctions.handle_button_click(self,9))
-        self.ui.sim_f10.clicked.connect(lambda: UIFunctions.handle_button_click(self,10))
+        self.ui.sim_f1.clicked.connect(lambda: handle_sim_f_button(self, 1))
+        self.ui.sim_f2.clicked.connect(lambda: handle_sim_f_button(self,2))
+        self.ui.sim_f3.clicked.connect(lambda: handle_sim_f_button(self,3))
+        self.ui.sim_f4.clicked.connect(lambda: handle_sim_f_button(self,4))
+        self.ui.sim_f5.clicked.connect(lambda: handle_sim_f_button(self,5))
+        self.ui.sim_f6.clicked.connect(lambda: handle_sim_f_button(self,6))
+        self.ui.sim_f7.clicked.connect(lambda: handle_sim_f_button(self,7))
+        self.ui.sim_f8.clicked.connect(lambda: handle_sim_f_button(self,8))
+        self.ui.sim_f9.clicked.connect(lambda: handle_sim_f_button(self,9))
+        self.ui.sim_f10.clicked.connect(lambda:handle_sim_f_button(self,0))
+
 
         
 
