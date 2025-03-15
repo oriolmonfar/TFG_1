@@ -837,7 +837,7 @@ class UIFunctions(MainWindow):
         # Desactivar clip_mode
         global clip_mode
         clip_mode = False  # Desactivamos el modo clip
-        print("Modo clip desactivado.")
+        print(f"Modo clip desactivado: Clip_mode: {clip_mode}")
 
         # Guardar la configuración
         save_config("clip_mode", clip_mode)

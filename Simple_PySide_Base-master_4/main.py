@@ -41,6 +41,7 @@ SHIFT = False
 current_page = load_current_page()
 current_bank = load_current_bank()
 current_clip = load_current_clip()
+current_camangle = load_current_camangle()
 clip_mode = load_clip_mode()
 modo_page = False
 
@@ -647,39 +648,83 @@ class MainWindow(QMainWindow):
 
         def execute_functions_A(self):
             """Ejecuta la función correspondiente según el estado de SHIFT."""
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_A_prima()
-                reset_shift(self)
-            else:
-                UIFunctions.function_A(self)
+            global SHIFT, clip_mode, current_camangle, current_clip
+            if clip_mode:
+                save_current_camangle("A")
+                current_camangle = load_current_camangle()
+                print(f"Clip Mode activo: current_camangle actualizado a {current_camangle}")
+                current_clip = load_current_clip()
+                clip_no_camangle = current_clip[:-1]
+                save_current_clip(f"{clip_no_camangle}{current_camangle}")
+                print(current_clip)
+                channel_mode = get_channelmode(self)
+                UIFunctions.labelPGM_PRV(self, channel_mode)
+            else: 
+                if SHIFT:
+                    UIFunctions.function_A_prima()
+                    reset_shift(self)
+                else:
+                    UIFunctions.function_A(self)
         self.ui.sim_A.clicked.connect(lambda: execute_functions_A(self))
 
         def execute_functions_B(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_B_prima()
-                reset_shift(self)
-            else:
-                UIFunctions.function_B(self)
+            global SHIFT, clip_mode, current_camangle, current_clip
+            if clip_mode:
+                save_current_camangle("B")
+                current_camangle = load_current_camangle()
+                print(f"Clip Mode activo: current_camangle actualizado a {current_camangle}")
+                current_clip = load_current_clip()
+                clip_no_camangle = current_clip[:-1]
+                save_current_clip(f"{clip_no_camangle}{current_camangle}")
+                print(current_clip)
+                channel_mode = get_channelmode(self)
+                UIFunctions.labelPGM_PRV(self, channel_mode)
+            else: 
+                if SHIFT:
+                    UIFunctions.function_B_prima()
+                    reset_shift(self)
+                else:
+                    UIFunctions.function_B(self)
         self.ui.sim_B.clicked.connect(lambda: execute_functions_B(self))
 
         def execute_functions_C(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_C_prima()
-                reset_shift(self)
-            else:
-                UIFunctions.function_C(self)
+            global SHIFT, clip_mode, current_camangle, current_clip
+            if clip_mode:
+                save_current_camangle("C")
+                current_camangle = load_current_camangle()
+                print(f"Clip Mode activo: current_camangle actualizado a {current_camangle}")
+                current_clip = load_current_clip()
+                clip_no_camangle = current_clip[:-1]
+                save_current_clip(f"{clip_no_camangle}{current_camangle}")
+                print(current_clip)
+                channel_mode = get_channelmode(self)
+                UIFunctions.labelPGM_PRV(self, channel_mode)
+            else: 
+                if SHIFT:
+                    UIFunctions.function_C_prima()
+                    reset_shift(self)
+                else:
+                    UIFunctions.function_C(self)
         self.ui.sim_C.clicked.connect(lambda: execute_functions_C(self))
 
         def execute_functions_D(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_D_prima()
-                reset_shift(self)
-            else:
-                UIFunctions.function_D(self)
+            global SHIFT, clip_mode, current_camangle, current_clip
+            if clip_mode:
+                save_current_camangle("D")
+                current_camangle = load_current_camangle()
+                print(f"Clip Mode activo: current_camangle actualizado a {current_camangle}")
+                current_clip = load_current_clip()
+                clip_no_camangle = current_clip[:-1]
+                save_current_clip(f"{clip_no_camangle}{current_camangle}")
+                print(current_clip)
+                channel_mode = get_channelmode(self)
+                UIFunctions.labelPGM_PRV(self, channel_mode)
+            else: 
+                if SHIFT:
+                    UIFunctions.function_D_prima()
+                    reset_shift(self)
+                else:
+                    UIFunctions.function_D(self)
         self.ui.sim_D.clicked.connect(lambda: execute_functions_D(self))
 
         def execute_functions_play(self):
@@ -813,7 +858,8 @@ class MainWindow(QMainWindow):
             # Activar el modo clip y mostrar el código correspondiente
             else:
                 clip_mode = True  # Activar modo clip
-                clip_code = f"{current_page}{current_bank}{f_button_number}"
+                clip_code = f"{current_page}{current_bank}{f_button_number}{current_camangle}"
+                print(clip_mode)
                 print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
                 save_current_clip(clip_code)
                 channel_mode = get_channelmode(self)

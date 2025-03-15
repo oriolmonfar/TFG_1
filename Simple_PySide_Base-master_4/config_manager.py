@@ -82,7 +82,8 @@ def get_default_config():
             "10": 1
         },
         "last_clip": 1,
-        "clip_mode": False
+        "clip_mode": False,
+        "current_camangle": "A"
     }
 
 # Funciones de carga y guardado de FAST_JOG
@@ -171,6 +172,17 @@ def load_current_clip():
 def save_current_clip(value):
     """Guarda el número de clip actual en el archivo JSON."""
     save_config("CURRENT_CLIP", value)
+
+def load_current_camangle():
+    """Carga el cam angle actual desde el archivo JSON."""
+    global current_camangle
+    current_camangle = load_config().get("current_camangle", "A")
+    return current_camangle
+
+def save_current_camangle(value):
+    """Guarda el número de camanlge actual en el archivo JSON."""
+    save_config("current_camangle", value)
+
 
 # Funciones relacionadas con clip_mode
 
