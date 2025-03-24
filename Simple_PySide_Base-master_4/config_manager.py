@@ -38,6 +38,7 @@ import json
 import os
 
 CONFIG_FILE = "config.json"
+CLIP_MANAGEMENT_FILE = "clip_management.json"
 
 def load_config():
     """Carga el archivo JSON y devuelve un diccionario con los valores."""
@@ -56,6 +57,22 @@ def save_config(key, value):
     config[key] = value  # Actualizar o añadir el valor
     with open(CONFIG_FILE, "w") as file:
         json.dump(config, file, indent=4)  # Guardar el archivo actualizado
+
+def load_clip_management():
+    """Carga el archivo clip_manager.json y devuelve su contenido como un diccionario."""
+    if os.path.exists(CLIP_MANAGEMENT_FILE):
+        try:
+            with open(CLIP_MANAGEMENT_FILE, "r") as file:
+                return json.load(file)
+        except json.JSONDecodeError:
+            print("Error leyendo clip_manager.json. Creando una nueva estructura.")
+    # Si hay error o no existe, devolver estructura vacía
+    return {f"{i:03d}": "void" for i in range(1000)}
+
+def save_clip_management(data):
+    """Guarda el diccionario en clip_manager.json."""
+    with open(CLIP_MANAGEMENT_FILE, "w") as file:
+        json.dump(data, file, indent=4)
 
 def get_default_config():
     """Devuelve la configuración predeterminada."""
@@ -83,7 +100,10 @@ def get_default_config():
         },
         "last_clip": 1,
         "clip_mode": False,
-        "current_camangle": "A"
+        "current_camangle": "A",
+        "clip_id": 0,
+        "last_date": "2025-03-22",
+        "last_time": "12:45:33.00"
     }
 
 # Funciones de carga y guardado de FAST_JOG
@@ -183,6 +203,36 @@ def save_current_camangle(value):
     """Guarda el número de camanlge actual en el archivo JSON."""
     save_config("current_camangle", value)
 
+def load_current_clip_id():
+    """Carga el clip id actual desde el archivo JSON."""
+    global clip_id 
+    clip_id = load_config().get("clip_id", "0")
+    return clip_id
+
+def save_current_clip_id(value):
+    """Guarda el clip id actual en el archivo JSON."""
+    save_config("clip_id", value)
+
+def load_last_date():
+    """Carga el clip id actual desde el archivo JSON."""
+    global last_date 
+    last_date = load_config().get("last_date", "2025-03-22")
+    return last_date
+
+def save_last_date(value):
+    """Guarda el clip id actual en el archivo JSON."""
+    save_config("last_date", value)
+
+def load_last_time():
+    """Carga el clip id actual desde el archivo JSON."""
+    global last_time 
+    last_time = load_config().get("last_time", "12:45:33.00")
+    return last_time
+
+def save_last_time(value):
+    """Guarda el clip id actual en el archivo JSON."""
+    save_config("last_time", value)
+
 
 # Funciones relacionadas con clip_mode
 
@@ -195,3 +245,18 @@ def load_clip_mode():
 def save_clip_mode(value):
     """Guarda el estado de clip_mode en el archivo config.json y actualiza la variable global."""
     save_config("clip_mode", value)
+
+#functiones relacionada clip_management
+def load_clip_management():
+    try:
+        with open(CLIP_MANAGEMENT_FILE, "r") as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {str(i).zfill(3): "void" for i in range(1000)}
+
+def save_clip_management(data):
+    with open(CLIP_MANAGEMENT_FILE, "w") as file:
+        json.dump(data, file, indent=4)
+def save_clip_management(data):
+    with open(CLIP_MANAGEMENT_FILE, "w") as file:
+        json.dump(data, file, indent=4)

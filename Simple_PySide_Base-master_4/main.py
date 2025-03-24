@@ -1,26 +1,12 @@
-################################################################################
-##
-## BY: WANDERSON M.PIMENTA
-## PROJECT MADE WITH: Qt Designer and PySide2
-## V: 1.0.0
-##
-## This project can be used freely for all uses, as long as they maintain the
-## respective credits only in the Python scripts, any information in the visual
-## interface (GUI) can be modified without any implication.
-##
-## There are limitations on Qt licenses if you want to use your products
-## commercially, I recommend reading them on the official website:
-## https://doc.qt.io/qtforpython/licenses.html
-##
-################################################################################
 
 import sys
 import platform
 from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent, QTimer)
+from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent, QTimer,QEventLoop)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient, QMouseEvent)
 from PySide2.QtWidgets import *
-import re
+import time
+from datetime import datetime
 
 
 # GUI FILE
@@ -33,6 +19,8 @@ from ui_popup_myvmix import Ui_Dialog as Dialog_myvmix
 from ui_popup_deleteip import Ui_Dialog as Dialog_deleteip
 from ui_popup_confirm_no_connection import Ui_Dialog as Dialog_no_connection
 from ui_popup_confirm_connected import Ui_Dialog as Dialog_connected
+from ui_popup_overwrite_clip import Ui_Dialog as Dialog_overwrite
+from ui_popup_delete_clip_dictionary import Ui_Dialog as Dialog_delete_clip_dictionary
 from config_manager import *
 
 IP_VMIX = load_ip_vmix()
@@ -44,6 +32,10 @@ current_clip = load_current_clip()
 current_camangle = load_current_camangle()
 clip_mode = load_clip_mode()
 modo_page = False
+clip_id = load_current_clip_id()
+last_date = load_last_date()
+last_time = load_last_time()
+
 
 
 class PopupRecordTrains(QDialog):  
@@ -57,6 +49,76 @@ class PopupRecordTrains(QDialog):
         self.ui.maximizerecord_trains.clicked.connect(lambda: UIFunctions.maximize_restore(self))
         ## SHOW ==> CLOSE APPLICATION
         self.ui.close_recordtrains.clicked.connect(lambda: self.close())
+
+class PopupOverwriteClip(QDialog):  
+    def __init__(self, clip_code, clip_management):  
+        super().__init__()  
+        self.ui = Dialog_overwrite()  # Instancia de la UI generada
+        self.ui.setupUi(self)  # Aplica la UI a la ventana de diálogo
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        ## ==> MAXIMIZE/RESTORE
+        ## SHOW ==> CLOSE APPLICATION
+        self.ui.close_overwrite.clicked.connect(lambda: self.close())
+        self.ui.overwrite_no.clicked.connect(lambda: no(clip_code))
+        self.ui.overwrite_yes.clicked.connect(lambda: yes(self, clip_code, clip_management))
+
+        def yes(self, clip_code, clip_management):
+            """Overwrites the clip ID in clip_manager.json."""
+            id = load_current_clip_id()
+            clip_management[clip_code] = str(id)
+            save_clip_management(clip_management)
+            id += 1
+            save_current_clip_id(id)
+            #print(f"Clip {clip_code} registrado con ID {clip_id - 1}")
+            print(f"El clip {clip_code} ya está registrado con ID {clip_management[clip_code]}")
+            time.sleep(0.2)
+            self.close()
+
+        def no(clip_code): 
+            id = load_current_clip_id()
+            print(f"Se mantuvo el ID original para el clip {clip_code}.")
+            id +=1 
+            save_current_clip_id(id)
+            time.sleep(0.1)
+            self.close()
+
+class PopupDeleteClipDictionary(QDialog):  
+    def __init__(self):  
+        super().__init__()  
+        self.ui = Dialog_delete_clip_dictionary()  # Instancia de la UI generada
+        self.ui.setupUi(self)  # Aplica la UI a la ventana de diálogo
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        ## ==> MAXIMIZE/RESTORE
+        ## SHOW ==> CLOSE APPLICATION
+        self.ui.close_confirm_deleteclipdic.clicked.connect(lambda: self.close())
+        self.ui.confirm_deleteclipdic_no.clicked.connect(lambda: self.close())
+        self.ui.confirm_deleteclipdic_yes.clicked.connect(lambda: reset_clip_manager_and_clip_id())
+
+        def reset_clip_manager_and_clip_id():
+            """Resetea todos los clips a 'void' en clip_manager.json y establece clip_id en 0 en config.json."""
+
+            
+            # Cargar el archivo clip_manager.json
+            clip_manager = load_clip_management()
+
+            # Iterar sobre los códigos de clip y restablecerlos a "void" si no lo son
+            for clip_code in clip_manager.keys():
+                if clip_manager[clip_code] != "void":
+                    clip_manager[clip_code] = "void"
+
+            # Guardar los cambios en clip_manager.json
+            save_clip_management(clip_manager)
+            print("Todos los clips han sido restablecidos a 'void'.")
+
+            # Cargar y actualizar config.json
+            config = load_config()
+            config["clip_id"] = 0
+            save_config("clip_id", 0)
+            
+            print("clip_id ha sido restablecido a 0 en 'config.json'.")
+
+            time.sleep(0.1)
+            self.close()
 
 
 class PopupSearchTC(QDialog):  
@@ -81,7 +143,8 @@ class PopupSearchTC(QDialog):
         self.ui.searchtc_7.clicked.connect(lambda: self.write("7"))
         self.ui.searchtc_8.clicked.connect(lambda: self.write("8"))
         self.ui.searchtc_9.clicked.connect(lambda: self.write("9"))
-        self.ui.searchtc_punt.clicked.connect(lambda: self.write(":"))
+        self.ui.searchtc_dospunts.clicked.connect(lambda: self.write(":"))
+        self.ui.searchtc_punt_2.clicked.connect(lambda: self.write("."))
         self.ui.searchtc_delete.clicked.connect(lambda: self.delete())
         self.ui.searchtc_confirm.clicked.connect(lambda: self.confirm())
 
@@ -95,8 +158,16 @@ class PopupSearchTC(QDialog):
             cursor.movePosition(cursor.End)  # Mueve el cursor al final
             cursor.deletePreviousChar()  # Borra el último carácter
     def confirm(self): 
+        global last_date, last_time
         texto = self.ui.searchtc_textedit.toPlainText()  # Recupera el texto
-        print(texto)
+        date = datetime.now().date()
+        last_time = save_last_time(texto)
+        last_date = save_last_date(date)
+        endpoint = f"api/?Function=ReplaySetTimecode&Value={date}T{texto}0"
+        UIFunctions.send_request(endpoint)
+        time.sleep(0.1)
+        self.close()
+        
     
 class PopupFastJog(QDialog):
     def __init__(self):
@@ -256,26 +327,6 @@ class PopupIpConfig(QDialog):
         """Añade la configuración a la QComboBox en el formato correcto."""
         formatted_text = f"{name} ({ip_port})"
         self.vmix_window.myvmix_combobox.addItem(formatted_text)
-
-"""""
-    def confirm(self):
-        texto = self.ui.textedit_ipconfig.toPlainText().strip()
-
-        if self.is_valid_ip(texto):  # Verifica si la IP es válida
-            global IP_VMIX  # Asegúrate de usar la variable global
-            IP_VMIX = texto  # Actualiza la variable global
-            save_ip_vmix(IP_VMIX)  # Guarda la nueva IP en el archivo JSON
-            print(f"Nuevo valor de IP_VMIX guardado: {IP_VMIX}")
-            time.sleep(0.2)
-            self.close()
-        else:
-            print("Entrada no válida. Ingresa una IP válida.")
-
-    def is_valid_ip(self, ip):
-        ip_only = ip.split(':')[0]  # Dividir la cadena por el símbolo ':' y tomar solo la parte de la IP
-        pattern = r"^(\d{1,3}\.){3}\d{1,3}$"  # Verifica el formato correcto de la IP
-        return bool(re.match(pattern, ip_only))  # Verifica solo la parte de la IP
-    """
     
 
 class PopupMyVmix(QDialog):  
@@ -605,6 +656,9 @@ class MainWindow(QMainWindow):
         #################################### START- BOTONS CLIP
 
         self.ui.clip_addtoplaylist.clicked.connect(lambda: UIFunctions.function_plst_page(self))
+        self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
+        self.ui.contec_acc_actualclip.setText(f"{current_clip}")
+
 
         #################################### END - BOTONS CLIP
 
@@ -618,6 +672,7 @@ class MainWindow(QMainWindow):
         #################################### START - BOTONS CONTENT ACCESS
         self.ui.cont_acc_recordtrains.clicked.connect(self.show_dialog_recordtrains)
         self.ui.cont_acc_searchtc.clicked.connect(self.show_dialog_searchtc)
+        self.ui.cont_acc_lastsearchtc.clicked.connect(lambda: UIFunctions.function_lastsearchtc())
 
         #################################### END - BOTONS CONTENT ACCESS
 
@@ -757,11 +812,10 @@ class MainWindow(QMainWindow):
         def execute_functions_record(self):
             global SHIFT
             if SHIFT:
-                #UIFunctions.function_return()
-                UIFunctions.function_e_e()
+                UIFunctions.function_record()
                 reset_shift(self)
             else:
-                UIFunctions.function_record()
+                UIFunctions.function_e_e()
         self.ui.sim_record.clicked.connect(lambda: execute_functions_record(self))
 
         def execute_functions_prvctl(self):
@@ -806,7 +860,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.function_gotoout()
                 reset_shift(self)
             else:
-                UIFunctions.function_out()
+                function_out()
         self.ui.sim_out.clicked.connect(lambda: execute_functions_out(self))
 
         def execute_functions_take(self):
@@ -837,24 +891,97 @@ class MainWindow(QMainWindow):
             global modo_page
             modo_page = True
             print("Modo de selección de página activado.")
+        
+        def function_out():
+    
+            global clip_id
+            
+            endpoint = "api/?Function=ReplayMarkOut"
+            response = UIFunctions.send_request(endpoint)
+            
+            if not response:
+                print("No se pudo marcar el 'Out' debido a la falta de conexión con vMix.")
+                return
+            
+            print("Replay mark 'Out' set successfully.")
+            
+            print("Esperando selección de clip...")
+            selected_clip = wait_for_clip_selection()
+            
+            if selected_clip:
+                clip_management = load_clip_management()
+                
+                if clip_management.get(selected_clip) == "void":
+                    id = load_current_clip_id()
+                    clip_management[selected_clip] = str(id)
+                    save_clip_management(clip_management)
+                    id += 1
+                    save_current_clip_id(id)
+                    print(f"Clip {selected_clip} registrado con ID {id - 1}")
+                else:
+                    UIFunctions.show_dialog_overwrite_clip(self, selected_clip, clip_management)
+        
+                    
+        
+        def wait_for_clip_selection():
+            while True:
+                button_number = get_button_event()  # Captura el número del botón (1-10)
+
+                if isinstance(button_number, int):  # Verifica que sea un número
+                    current_page = load_config().get("CURRENT_PAGE", 1)
+                    current_bank = load_config().get("last_bank_per_page", {}).get(str(current_page), 1)
+
+                    clip_code = f"{current_page}{current_bank}{button_number}"
+                    print(f"Clip code generado: {clip_code}")  # Para depuración
+                    return clip_code
+        
+                
+        def get_button_event():
+            """Espera la pulsación de un botón sim_f y devuelve su número."""
+            loop = QEventLoop()
+            button_pressed = None
+
+            def on_button_press(button_number):
+                """Captura el número del botón pulsado y sale del loop."""
+                nonlocal button_pressed
+                button_pressed = button_number
+                loop.quit()
+
+            # Conectar cada botón a la función
+            self.ui.sim_f1.clicked.connect(lambda: on_button_press(1))
+            self.ui.sim_f2.clicked.connect(lambda: on_button_press(2))
+            self.ui.sim_f3.clicked.connect(lambda: on_button_press(3))
+            self.ui.sim_f4.clicked.connect(lambda: on_button_press(4))
+            self.ui.sim_f5.clicked.connect(lambda: on_button_press(5))
+            self.ui.sim_f6.clicked.connect(lambda: on_button_press(6))
+            self.ui.sim_f7.clicked.connect(lambda: on_button_press(7))
+            self.ui.sim_f8.clicked.connect(lambda: on_button_press(8))
+            self.ui.sim_f9.clicked.connect(lambda: on_button_press(9))
+            self.ui.sim_f10.clicked.connect(lambda: on_button_press(0))
+
+            # Establecer un timeout para evitar bloqueos
+            QTimer.singleShot(5000, loop.quit)  # Máximo 5 segundos de espera
+
+            loop.exec_()  # Espera a que se presione un botón
+
+            return button_pressed  # Retorna el botón presionado o None si se agotó el tiempo
 
         def handle_sim_f_button(self, f_button_number):
             """Maneja la funcionalidad de los botones sim_f1 a sim_f10."""
-
             global current_page, current_bank, SHIFT, clip_mode, modo_page
 
-            # Si SHIFT está activado, cambiar el banco, si no, cambiar la página.
+
+            # Si SHIFT está activado, cambiar el banco
             if SHIFT:
                 change_bank(f_button_number)  # Cambiar banco de la página actual
                 print("function change bank")
                 reset_shift(self)
-                
+
             elif modo_page:
                 function_page(f_button_number)  # Cambiar página según el número del botón
                 print("function change page")
                 modo_page = False
-            
-            
+
             # Activar el modo clip y mostrar el código correspondiente
             else:
                 clip_mode = True  # Activar modo clip
@@ -863,8 +990,42 @@ class MainWindow(QMainWindow):
                 print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
                 save_current_clip(clip_code)
                 channel_mode = get_channelmode(self)
-                UIFunctions.labelPGM_PRV(self, channel_mode)
-    
+                UIFunctions.labelPGM_PRV(self, channel_mode)          
+                # Remover el último carácter (letra del cam angle)
+                numeric_code = clip_code[:-1]  
+                # Cargar el archivo JSON
+                try:
+                    with open("clip_management.json", "r") as file:
+                        clip_data = json.load(file)
+                except FileNotFoundError:
+                    print("Error: El archivo clip_management.json no existe.")
+                    return None
+
+                # Obtener el valor asignado al código
+                clip_value = clip_data.get(numeric_code, "void")
+
+                # Comprobar si el valor es "void"
+                if clip_value == "void":
+                    print("No hay ningún clip asignado.")
+                    return None
+
+                # Asegurar que el valor sea una cadena y formatearlo con ceros a la izquierda
+                #formatted_id = str(clip_value).zfill(4)  # Rellena con ceros hasta 4 dígitos
+                #endpoint_1 = f"api/?Function=ReplayPlayEventsByID&Value={formatted_id}&Channel=1"
+                #endpoint_2 = "api/?Function=ReplayPause&Channel=1"
+                #UIFunctions.send_request(endpoint_1)
+                #UIFunctions.send_request(endpoint_2)
+                
+                endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
+                endpoint_2 = "api/?Function=ReplaySelectNextEvent&Channel=1"
+                UIFunctions.send_request(endpoint_1)
+                i = 1
+                for i in range(int(clip_value)):
+                    UIFunctions.send_request(endpoint_2)
+
+                
+                
+            
         def function_page(page_number):
             """Cambia la página y muestra el banco correspondiente."""
             global current_page, current_bank, SHIFT
@@ -895,22 +1056,18 @@ class MainWindow(QMainWindow):
             else:
                 print("Shift no está presionado, no se puede cambiar el banco.")
 
+
         # Conectar los botones ya creados en Qt Designer
         self.ui.sim_f1.clicked.connect(lambda: handle_sim_f_button(self, 1))
-        self.ui.sim_f2.clicked.connect(lambda: handle_sim_f_button(self,2))
-        self.ui.sim_f3.clicked.connect(lambda: handle_sim_f_button(self,3))
-        self.ui.sim_f4.clicked.connect(lambda: handle_sim_f_button(self,4))
-        self.ui.sim_f5.clicked.connect(lambda: handle_sim_f_button(self,5))
-        self.ui.sim_f6.clicked.connect(lambda: handle_sim_f_button(self,6))
-        self.ui.sim_f7.clicked.connect(lambda: handle_sim_f_button(self,7))
-        self.ui.sim_f8.clicked.connect(lambda: handle_sim_f_button(self,8))
-        self.ui.sim_f9.clicked.connect(lambda: handle_sim_f_button(self,9))
-        self.ui.sim_f10.clicked.connect(lambda:handle_sim_f_button(self,0))
-
-
-        
-
-
+        self.ui.sim_f2.clicked.connect(lambda: handle_sim_f_button(self, 2))
+        self.ui.sim_f3.clicked.connect(lambda: handle_sim_f_button(self, 3))
+        self.ui.sim_f4.clicked.connect(lambda: handle_sim_f_button(self, 4))
+        self.ui.sim_f5.clicked.connect(lambda: handle_sim_f_button(self, 5))
+        self.ui.sim_f6.clicked.connect(lambda: handle_sim_f_button(self, 6))
+        self.ui.sim_f7.clicked.connect(lambda: handle_sim_f_button(self, 7))
+        self.ui.sim_f8.clicked.connect(lambda: handle_sim_f_button(self, 8))
+        self.ui.sim_f9.clicked.connect(lambda: handle_sim_f_button(self, 9))
+        self.ui.sim_f10.clicked.connect(lambda: handle_sim_f_button(self, 0))
 
 
         #################################### END - BOTONS SIMULATOR
@@ -918,14 +1075,22 @@ class MainWindow(QMainWindow):
 
         #################################### START - BOTONS CONFIGURATION
 
+
         self.ui.config_ipconfig.clicked.connect(self.show_dialog_myvmix)
         self.ui.config_fastjogconfig.clicked.connect(self.show_dialog_fastjog)
+        self.ui.config_deleteclipdict.clicked.connect( self.show_dialog_deleteclipdic)
 
 
 
 
-        #################################### END - BOTONS CONFIGURATION   
+        #################################### END - BOTONS CONFIGURATION
 
+        #################################### START - BOTONS PLAYLIST
+
+        items = ["153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","256B 18:14:23:12 \n Dur: 00:00:03:22 \n REC3","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","777C 18:14:23:12 \n Dur: 00:00:03:22 \n REC3","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1"]   
+        self.ui.playlist_combobox_pl1.addItems(items)
+
+        #################################### END - BOTONS PLAYLIST
 
         ## ==> QTableWidget RARAMETERS
         ########################################################################
@@ -964,6 +1129,11 @@ class MainWindow(QMainWindow):
     def show_dialog_myvmix(self):
         self.popup = PopupMyVmix()  # Guardar en un atributo para evitar que se elimine
         self.popup.exec_()  # Muestra el diálogo de forma modal
+
+    def show_dialog_deleteclipdic(self):
+        self.popup = PopupDeleteClipDictionary()  # Guardar en un atributo para evitar que se elimine
+        self.popup.exec_()  # Muestra el diálogo de forma modal
+
 
     def Button(self):
         # GET BT CLICKED

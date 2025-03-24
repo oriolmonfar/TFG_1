@@ -1,18 +1,3 @@
-################################################################################
-##
-## BY: WANDERSON M.PIMENTA
-## PROJECT MADE WITH: Qt Designer and PySide2
-## V: 1.0.0
-##
-## This project can be used freely for all uses, as long as they maintain the
-## respective credits only in the Python scripts, any information in the visual
-## interface (GUI) can be modified without any implication.
-##
-## There are limitations on Qt licenses if you want to use your products
-## commercially, I recommend reading them on the official website:
-## https://doc.qt.io/qtforpython/licenses.html
-##
-################################################################################
 
 ## ==> GUI FILE
 from main import *
@@ -22,6 +7,7 @@ import time
 import threading
 from PySide2.QtCore import QTimer
 from config_manager import *
+from PySide2.QtCore import Qt
 
 ## ==> GLOBALS
 GLOBAL_STATE = 0
@@ -160,13 +146,14 @@ class UIFunctions(MainWindow):
         global current_clip
         current_clip = load_current_clip()
         if text == "A":
-            self.ui.label_pgm.setText(f'                                            PGM : {current_clip}                     ')
+            self.ui.label_pgm.setAlignment(Qt.AlignCenter)
+            self.ui.label_pgm.setText(f'PGM : {current_clip}')
             self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
         elif text == "B":
-            self.ui.label_pgm.setText(f'                                            PRV : {current_clip}                        ')
+            self.ui.label_pgm.setText(f'PRV : {current_clip}')
             self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
         else: 
-            self.ui.label_pgm.setText(f'                                     LINKED A|B : {current_clip}                ')
+            self.ui.label_pgm.setText(f'LINKED A|B : {current_clip}')
             self.ui.label_pgm.setStyleSheet("color: rgb(255,165,0)")
 
         
@@ -323,6 +310,12 @@ class UIFunctions(MainWindow):
             return  # Si no hay conexión, salir de la función
         
         UIFunctions.labelPGM_PRV(self, "A|B")
+
+    def function_lastsearchtc():
+        time = load_last_time()
+        date = load_last_date()
+        endpoint = f"api/?Function=ReplaySetTimecode&Value={date}T{time}0"
+        UIFunctions.send_request(endpoint)
 
 
 
@@ -541,7 +534,7 @@ class UIFunctions(MainWindow):
 
     def function_play(self):
         # Intentar enviar la solicitud de reproducción
-        response_1 = UIFunctions.send_request("api/?Function=ReplayPlay&Channel=1")
+        response_1 = UIFunctions.send_request("api/?Function=ReplayPlaySelectedEvent&Channel=1")
         if not response_1:
             print("No se pudo ejecutar ReplayPlay. Saltando function_play.")
             return
@@ -692,8 +685,8 @@ class UIFunctions(MainWindow):
     def function_gotoout():
         print("Ejecutando funcion Goto OUT...")
     
+    """"
     def function_out():
-        """Marks the current position as 'out' for replay."""
         
         # Endpoint para la función 'ReplayMarkOut'
         endpoint = "api/?Function=ReplayMarkOut"
@@ -705,7 +698,13 @@ class UIFunctions(MainWindow):
             print("No se pudo marcar el 'Out' debido a la falta de conexión con vMix.")
             return  # Salir si no hay conexión
         
+        # guardar clip a F
+        
+        # id++
+
         print("Replay mark 'Out' set successfully.")
+
+    """
 
     def function_lever():
         print("Ejecutando funcion lever...")
@@ -789,30 +788,6 @@ class UIFunctions(MainWindow):
         slider.sliderReleased.connect(on_slider_released) # Resume with new speed
         slider.valueChanged.connect(on_slider_changed)    # Change speed while moving        
 
-    """""
-    def function_e_e():
-        
-        # Step 1: ReplayJumpToNow
-        endpoint_now = "api/?Function=ReplayJumpToNow&Channel=1"
-        response_1 = UIFunctions.send_request(endpoint_now)  # Usamos la función send_request con el endpoint
-
-        if not response_1:
-            print("No se pudo realizar el 'ReplayJumpToNow' debido a la falta de conexión con vMix.")
-            return  # Salir si no hay conexión
-
-        time.sleep(0.01)  # Pequeña pausa
-
-        # Step 2: ReplayPlay
-        endpoint_play = "api/?Function=ReplayPlay&Channel=1"
-        response_2 = UIFunctions.send_request(endpoint_play)  # Usamos la función send_request con el endpoint
-
-        if not response_2:
-            print("No se pudo iniciar la reproducción del replay debido a la falta de conexión con vMix.")
-            return  # Salir si no hay conexión
-
-        print("Replay jumped to now and playback started successfully.")
-
-    """
     def function_e_e():
         """Jumps to current time in replay and plays it."""
         
@@ -824,15 +799,52 @@ class UIFunctions(MainWindow):
             print("No se pudo realizar el 'ReplayJumpToNow' debido a la falta de conexión con vMix.")
             return  # Salir si no hay conexión
 
-        time.sleep(0.01)  # Pequeña pausa
+        time.sleep(0.2)  # Pequeña pausa
 
         # Step 2: ReplayPlay
         endpoint_play = "api/?Function=ReplayPlay&Channel=1"
         response_2 = UIFunctions.send_request(endpoint_play)  # Usamos la función send_request con el endpoint
 
+
         if not response_2:
             print("No se pudo iniciar la reproducción del replay debido a la falta de conexión con vMix.")
             return  # Salir si no hay conexión
+        
+        
+        #Activar live si no esta activado 
+        check_live = UIFunctions.send_request("api/")  # Usamos send_request con el endpoint de la API
+        
+        if not check_live:
+            print("No se pudo obtener el XML debido a la falta de conexión con vMix.")
+            return None  # Salimos de la función si no hay conexión
+
+        # Paso 2: Parsear el XML
+        try:
+            root = ET.fromstring(check_live)  # Convertimos el texto XML en una estructura de árbol
+        except ET.ParseError as e:
+            print(f"Error al parsear el XML: {e}")
+            return None  # Salimos si hay un error en el XML
+
+        # Paso 3: Iterar sobre todos los inputs y buscar el 'channelMode' en la sección de Replay
+        result = None  # Inicializamos result como None por si no encontramos nada
+        
+        for input_element in root.findall(".//input"):
+            replay_element = input_element.find('replay')
+            
+            if replay_element is not None:
+                channel_mode = replay_element.get('live')
+                if channel_mode:
+                    result = channel_mode  # Guardamos el modo de canal encontrado
+
+        if result == "False":
+            time.sleep(0.2)
+            endpoint_live = "api/?Function=ReplayLiveToggle"
+            response_3 = UIFunctions.send_request(endpoint_live)
+            if not response_3:
+                print("No se pudo realizar el 'ReplayLiveToogle' debido a la falta de conexión con vMix.")
+                return  # Salir si no hay conexión
+        else: 
+            print("Live already activated")
 
         # Desactivar clip_mode
         global clip_mode
@@ -849,6 +861,13 @@ class UIFunctions(MainWindow):
 
 
     #Gestio clips: 
+
+    def show_dialog_overwrite_clip(self, clip_code, clip_management):
+        self.popup = PopupOverwriteClip(clip_code, clip_management)
+        self.popup.exec_()
+
+
+
 
 
 

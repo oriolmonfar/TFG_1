@@ -427,7 +427,7 @@ font-size: 30px;</string>
      <string>0</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="searchtc_punt">
+   <widget class="QPushButton" name="searchtc_dospunts">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -442,6 +442,23 @@ font-size: 30px;</string>
     </property>
     <property name="text">
      <string>:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="searchtc_punt_2">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>240</y>
+      <width>71</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: transparent;
+font-size: 30px;</string>
+    </property>
+    <property name="text">
+     <string>.</string>
     </property>
    </widget>
   </widget>

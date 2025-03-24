@@ -184,10 +184,15 @@ class Ui_Dialog(object):
         self.searchtc_0.setGeometry(QRect(170, 240, 71, 61))
         self.searchtc_0.setStyleSheet(u"border: transparent;\n"
 "font-size: 30px;")
-        self.searchtc_punt = QPushButton(self.frame_2)
-        self.searchtc_punt.setObjectName(u"searchtc_punt")
-        self.searchtc_punt.setGeometry(QRect(110, 240, 71, 61))
-        self.searchtc_punt.setStyleSheet(u"border: transparent;\n"
+        self.searchtc_dospunts = QPushButton(self.frame_2)
+        self.searchtc_dospunts.setObjectName(u"searchtc_dospunts")
+        self.searchtc_dospunts.setGeometry(QRect(110, 240, 71, 61))
+        self.searchtc_dospunts.setStyleSheet(u"border: transparent;\n"
+"font-size: 30px;")
+        self.searchtc_punt_2 = QPushButton(self.frame_2)
+        self.searchtc_punt_2.setObjectName(u"searchtc_punt_2")
+        self.searchtc_punt_2.setGeometry(QRect(240, 240, 71, 61))
+        self.searchtc_punt_2.setStyleSheet(u"border: transparent;\n"
 "font-size: 30px;")
         self.frame_3 = QFrame(Dialog)
         self.frame_3.setObjectName(u"frame_3")
@@ -288,7 +293,8 @@ class Ui_Dialog(object):
         self.searchtc_9.setText(QCoreApplication.translate("Dialog", u"9", None))
         self.searchtc_7.setText(QCoreApplication.translate("Dialog", u"7", None))
         self.searchtc_0.setText(QCoreApplication.translate("Dialog", u"0", None))
-        self.searchtc_punt.setText(QCoreApplication.translate("Dialog", u":", None))
+        self.searchtc_dospunts.setText(QCoreApplication.translate("Dialog", u":", None))
+        self.searchtc_punt_2.setText(QCoreApplication.translate("Dialog", u".", None))
         self.searchtc_delete.setText(QCoreApplication.translate("Dialog", u"Delete", None))
         self.searchtc_confirm.setText(QCoreApplication.translate("Dialog", u"Confirm", None))
         self.label.setText(QCoreApplication.translate("Dialog", u"Search TC", None))
