@@ -6,7 +6,7 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient, QMouseEvent)
 from PySide2.QtWidgets import *
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 # GUI FILE
@@ -92,22 +92,20 @@ class PopupDeleteClipDictionary(QDialog):
         ## SHOW ==> CLOSE APPLICATION
         self.ui.close_confirm_deleteclipdic.clicked.connect(lambda: self.close())
         self.ui.confirm_deleteclipdic_no.clicked.connect(lambda: self.close())
-        self.ui.confirm_deleteclipdic_yes.clicked.connect(lambda: reset_clip_manager_and_clip_id())
+        self.ui.confirm_deleteclipdic_yes.clicked.connect(lambda: reset_clip_dictionary_and_clip_id())
 
-        def reset_clip_manager_and_clip_id():
-            """Resetea todos los clips a 'void' en clip_manager.json y establece clip_id en 0 en config.json."""
+        def reset_clip_dictionary_and_clip_id():
+            """Resetea todos los clips a 'void' en clip_dictionary.json y establece clip_id en 0 en config.json."""
 
-            
-            # Cargar el archivo clip_manager.json
-            clip_manager = load_clip_management()
+            # Cargar el archivo clip_dictionary.json
+            clip_dictionary = load_clip_dictionary()
 
-            # Iterar sobre los códigos de clip y restablecerlos a "void" si no lo son
-            for clip_code in clip_manager.keys():
-                if clip_manager[clip_code] != "void":
-                    clip_manager[clip_code] = "void"
+            # Iterar sobre los códigos de clip y restablecer todos los elementos de la lista a "void"
+            for clip_code in clip_dictionary.keys():
+                clip_dictionary[clip_code] = ["void"] * 7
 
-            # Guardar los cambios en clip_manager.json
-            save_clip_management(clip_manager)
+            # Guardar los cambios en clip_dictionary.json
+            save_clip_dictionary(clip_dictionary)
             print("Todos los clips han sido restablecidos a 'void'.")
 
             # Cargar y actualizar config.json
@@ -526,11 +524,8 @@ class MainWindow(QMainWindow):
         ## SET ==> WINDOW TITLE
         self.setWindowTitle('Main Window - Python Base')
         #UIFunctions.labelTitle(self, 'Main Window - Python Base')
-        self.ui.label_page.setText(f"PAGE {current_page}")
-        if current_bank ==0:
-            self.ui.label_bank.setText("   PL. BANK")  # Actualiza QLabel
-        else: 
-            self.ui.label_bank.setText(f" {current_bank} BANK")  # Actualiza QLabel
+        self.ui.label_page.setText(f"PAGE {current_page}  ")
+        self.ui.label_bank.setText(f" {current_bank} BANK")  # Actualiza QLabel
         UIFunctions.labelDescription(self, 'PL11:  113A, 232A, 342A')
         
         ################################# SET PGM
@@ -658,6 +653,18 @@ class MainWindow(QMainWindow):
         self.ui.clip_addtoplaylist.clicked.connect(lambda: UIFunctions.function_plst_page(self))
         self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
         self.ui.contec_acc_actualclip.setText(f"{current_clip}")
+        self.ui.cont_acc_mark.clicked.connect(lambda: UIFunctions.function_mark())
+        self.ui.cont_acc_lastmark.clicked.connect(lambda: UIFunctions.function_lastmark())
+        self.ui.clip_gotoestrella1.clicked.connect(lambda: UIFunctions.function_estrella1_page(self))
+        self.ui.clip_gotoestrella2.clicked.connect(lambda: UIFunctions.function_estrella2_page(self))
+        self.ui.clip_gotoestrella3.clicked.connect(lambda: UIFunctions.function_estrella3_page(self))
+
+
+
+        
+
+        
+
 
 
         #################################### END - BOTONS CLIP
@@ -673,6 +680,13 @@ class MainWindow(QMainWindow):
         self.ui.cont_acc_recordtrains.clicked.connect(self.show_dialog_recordtrains)
         self.ui.cont_acc_searchtc.clicked.connect(self.show_dialog_searchtc)
         self.ui.cont_acc_lastsearchtc.clicked.connect(lambda: UIFunctions.function_lastsearchtc())
+        self.ui.cont_acc_recall.clicked.connect(lambda: UIFunctions.get_tc_clip())
+        time_stamp, replay_path = UIFunctions.get_tc_clip()
+        self.ui.cont_acc_searchtcconfig.clicked.connect(lambda: UIFunctions.get_event_in_out_points(replay_path, 0))
+        in_point, out_point = UIFunctions.get_event_in_out_points(replay_path, 0)
+        self.ui.cont_acc_page.clicked.connect(lambda: UIFunctions.convert_in_out_to_seconds(in_point, out_point, time_stamp))
+
+        self.ui.control_2ndfastjog.clicked.connect(lambda: UIFunctions.add_point_to_timestamp(time_stamp, in_point, out_point))
 
         #################################### END - BOTONS CONTENT ACCESS
 
@@ -797,7 +811,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.function_gototc()
                 reset_shift(self)
             else:
-                UIFunctions.function_lastcue()
+                UIFunctions.function_lastmark()
         self.ui.sim_gototc.clicked.connect(lambda: execute_functions_gototc(self))
 
         def execute_functions_fastjog(self, dial):
@@ -909,15 +923,16 @@ class MainWindow(QMainWindow):
             selected_clip = wait_for_clip_selection()
             
             if selected_clip:
-                clip_management = load_clip_management()
+                clip_management = load_clip_dictionary()
                 
-                if clip_management.get(selected_clip) == "void":
-                    id = load_current_clip_id()
-                    clip_management[selected_clip] = str(id)
-                    save_clip_management(clip_management)
-                    id += 1
-                    save_current_clip_id(id)
-                    print(f"Clip {selected_clip} registrado con ID {id - 1}")
+                if clip_management.get(selected_clip, ["void"] * 7)[0] == "void":
+                    clip_id = load_current_clip_id()
+                    clip_management[selected_clip][0] = str(clip_id)  # Guardar en el primer elemento de la lista
+                    save_clip_dictionary(clip_management)
+                    
+                    clip_id += 1
+                    save_current_clip_id(clip_id)
+                    print(f"Clip {selected_clip} registrado con ID {clip_id - 1}")
                 else:
                     UIFunctions.show_dialog_overwrite_clip(self, selected_clip, clip_management)
         
@@ -990,40 +1005,32 @@ class MainWindow(QMainWindow):
                 print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
                 save_current_clip(clip_code)
                 channel_mode = get_channelmode(self)
-                UIFunctions.labelPGM_PRV(self, channel_mode)          
+                UIFunctions.labelPGM_PRV(self, channel_mode)
                 # Remover el último carácter (letra del cam angle)
                 numeric_code = clip_code[:-1]  
                 # Cargar el archivo JSON
                 try:
-                    with open("clip_management.json", "r") as file:
+                    with open(CLIP_DICTIONARY_FILE, "r") as file:
                         clip_data = json.load(file)
                 except FileNotFoundError:
-                    print("Error: El archivo clip_management.json no existe.")
+                    print(f"Error: El archivo {CLIP_DICTIONARY_FILE} no existe.")
                     return None
 
-                # Obtener el valor asignado al código
-                clip_value = clip_data.get(numeric_code, "void")
+                # Obtener la lista asignada al código
+                clip_list = clip_data.get(numeric_code, ["void"] * 7)
 
-                # Comprobar si el valor es "void"
-                if clip_value == "void":
+                # Comprobar si el primer elemento de la lista es "void"
+                if clip_list[0] == "void":
                     print("No hay ningún clip asignado.")
                     return None
 
-                # Asegurar que el valor sea una cadena y formatearlo con ceros a la izquierda
-                #formatted_id = str(clip_value).zfill(4)  # Rellena con ceros hasta 4 dígitos
-                #endpoint_1 = f"api/?Function=ReplayPlayEventsByID&Value={formatted_id}&Channel=1"
-                #endpoint_2 = "api/?Function=ReplayPause&Channel=1"
-                #UIFunctions.send_request(endpoint_1)
-                #UIFunctions.send_request(endpoint_2)
-                
                 endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
                 endpoint_2 = "api/?Function=ReplaySelectNextEvent&Channel=1"
                 UIFunctions.send_request(endpoint_1)
-                i = 1
-                for i in range(int(clip_value)):
+                
+                for _ in range(int(clip_list[0])):
                     UIFunctions.send_request(endpoint_2)
 
-                
                 
             
         def function_page(page_number):
@@ -1079,6 +1086,7 @@ class MainWindow(QMainWindow):
         self.ui.config_ipconfig.clicked.connect(self.show_dialog_myvmix)
         self.ui.config_fastjogconfig.clicked.connect(self.show_dialog_fastjog)
         self.ui.config_deleteclipdict.clicked.connect( self.show_dialog_deleteclipdic)
+        self.ui.config_resetmarks.clicked.connect(lambda: UIFunctions.function_clear_marks())
 
 
 
@@ -1087,8 +1095,6 @@ class MainWindow(QMainWindow):
 
         #################################### START - BOTONS PLAYLIST
 
-        items = ["153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","256B 18:14:23:12 \n Dur: 00:00:03:22 \n REC3","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","777C 18:14:23:12 \n Dur: 00:00:03:22 \n REC3","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1","153A 18:14:23:12 \n Dur: 00:00:03:22 \n REC1"]   
-        self.ui.playlist_combobox_pl1.addItems(items)
 
         #################################### END - BOTONS PLAYLIST
 

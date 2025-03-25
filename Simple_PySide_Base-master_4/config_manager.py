@@ -1,44 +1,12 @@
-
-"""""
-import json
-import os
-
-CONFIG_FILE = "config.json"  # Nombre del archivo JSON
-
-# Variables globales
-fast_jog = 10  # Valor inicial
-ip_vmix = "127.0.0.1:8088"  # Valor inicial
-
-def save_config(key, value):
-    config = load_config()  # Cargar la configuración actual
-    config[key] = value  # Actualizar o añadir el valor
-    with open(CONFIG_FILE, "w") as file:
-        json.dump(config, file, indent=4)  # Guardar el archivo actualizado
-
-    # Actualizar la variable global después de guardar
-    global fast_jog, ip_vmix
-    if key == "FAST_JOG":
-        fast_jog = value
-    elif key == "IP_VMIX":
-        ip_vmix = value
-
-def load_config():
-    if os.path.exists(CONFIG_FILE):
-        try:
-            with open(CONFIG_FILE, "r") as file:
-                return json.load(file)
-        except json.JSONDecodeError:
-            print("Error leyendo config.json. Se usará la configuración por defecto.")
-            return {"FAST_JOG": 25, "IP_VMIX": "127.0.0.1:8088", "VMIX_LIST": []}  # Valores predeterminados si el archivo es inválido
-    return {"FAST_JOG": 25, "IP_VMIX": "127.0.0.1:8088", "VMIX_LIST": []}  # Valores por defecto si el archivo no existe
-
-"""
+#Clip dictionary:
+#"000": [ID, Name, *, PLST, inPoint, outPoint, Dur]
 
 import json
 import os
 
 CONFIG_FILE = "config.json"
 CLIP_MANAGEMENT_FILE = "clip_management.json"
+CLIP_DICTIONARY_FILE = "clip_dictionary.json"
 
 def load_config():
     """Carga el archivo JSON y devuelve un diccionario con los valores."""
@@ -246,7 +214,21 @@ def save_clip_mode(value):
     """Guarda el estado de clip_mode en el archivo config.json y actualiza la variable global."""
     save_config("clip_mode", value)
 
+
+def load_timecodes_list():
+    """Carga la lista de VMIX desde el archivo config.json."""
+    config = load_config()
+    return config.get("timecodes", [])
+
+def save_timecodes_list(timecodes):
+    """Guarda la lista de VMIX en el archivo config.json."""
+    config = load_config()
+    config["timecodes"] = timecodes  # Actualizar la lista de VMIX
+    save_config("timecodes", timecodes)  # Guardar la lista actualizada
+
 #functiones relacionada clip_management
+"""""
+
 def load_clip_management():
     try:
         with open(CLIP_MANAGEMENT_FILE, "r") as file:
@@ -257,6 +239,29 @@ def load_clip_management():
 def save_clip_management(data):
     with open(CLIP_MANAGEMENT_FILE, "w") as file:
         json.dump(data, file, indent=4)
-def save_clip_management(data):
-    with open(CLIP_MANAGEMENT_FILE, "w") as file:
+        ""
+"""
+def load_clip_dictionary():
+    try:
+        with open(CLIP_DICTIONARY_FILE, "r") as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {str(i).zfill(3): ["void"] * 7 for i in range(1000)}
+
+def save_clip_dictionary(data):
+    with open(CLIP_DICTIONARY_FILE, "w") as file:
         json.dump(data, file, indent=4)
+
+def update_clip_dictionary(index, new_value):
+    if not (0 <= index < 7):  # Verifica que el índice esté en el rango válido
+        print("Índice fuera de rango. Debe estar entre 0 y 6.")
+        return
+
+    data = load_clip_dictionary()  # Cargar el diccionario desde el archivo
+
+    # Modificar el elemento en la posición especificada en todas las listas
+    for key in data:
+        data[key][index] = new_value  
+
+    save_clip_dictionary(data)  # Guardar los cambios en el archivo
+    print(f"Se actualizó el índice {index} en todas las listas con '{new_value}'")

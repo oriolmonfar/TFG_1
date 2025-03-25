@@ -8,10 +8,13 @@ import threading
 from PySide2.QtCore import QTimer
 from config_manager import *
 from PySide2.QtCore import Qt
+from bs4 import BeautifulSoup
 
 ## ==> GLOBALS
 GLOBAL_STATE = 0
 GLOBAL_TITLE_BAR = True
+timecodes = load_timecodes_list()
+lastmark_index = -1
 
 ## ==> COUT INITIAL MENU
 count = 1
@@ -43,22 +46,20 @@ class UIFunctions(MainWindow):
         except requests.ConnectionError:
             return None
         
-    def check_vmix_connection(main_window):
+    def check_vmix_connection(self):
         """Comprueba la conexión con vMix y actualiza los frames de estado."""
         response = UIFunctions.send_request("api/")  # Comprueba conexión con vMix
 
         if response:
             # Conectado a vMix: Muestra el frame verde y oculta el rojo
-            main_window.ui.vmix_conn_ok.setStyleSheet("background-color: rgb(0, 255, 0);")  # Verde
-            main_window.ui.vmix_conn_no.setStyleSheet("background-color: rgb(40, 40, 40);")  # Gris
-            main_window.ui.vmix_conn_ok.show()
-            main_window.ui.vmix_conn_no.hide()
+            self.ui.vmix_conn_ok.show()
+            self.ui.vmix_conn_no.setStyleSheet("border-radius: 5px; border: 1px solid rgb(0,0,0); background-color: rgb(40, 40, 40);")  # Gris
+            
         else:
             # No conectado: Muestra el frame rojo y oculta el verde
-            main_window.ui.vmix_conn_no.setStyleSheet("background-color: rgb(255, 0, 0);")  # Rojo
-            main_window.ui.vmix_conn_ok.setStyleSheet("background-color: rgb(40, 40, 40);")  # Gris
-            main_window.ui.vmix_conn_no.show()
-            main_window.ui.vmix_conn_ok.hide()
+            self.ui.vmix_conn_ok.setStyleSheet("border-radius: 5px; border: 1px solid rgb(0,0,0); background-color: rgb(40, 40, 40);")  # Gris
+            self.ui.vmix_conn_no.show()
+            
 
     def start_connection_monitor(main_window):
         """Inicia un temporizador para monitorear la conexión con vMix."""
@@ -146,7 +147,6 @@ class UIFunctions(MainWindow):
         global current_clip
         current_clip = load_current_clip()
         if text == "A":
-            self.ui.label_pgm.setAlignment(Qt.AlignCenter)
             self.ui.label_pgm.setText(f'PGM : {current_clip}')
             self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
         elif text == "B":
@@ -155,6 +155,8 @@ class UIFunctions(MainWindow):
         else: 
             self.ui.label_pgm.setText(f'LINKED A|B : {current_clip}')
             self.ui.label_pgm.setStyleSheet("color: rgb(255,165,0)")
+        self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
+        self.ui.contec_acc_actualclip.setText(f"{current_clip}")
 
         
 
@@ -254,6 +256,15 @@ class UIFunctions(MainWindow):
         self.ui.stackedWidget.setCurrentWidget(self.ui.page_playlist)
         UIFunctions.resetStyle(self, "btn_playlist")
         UIFunctions.labelPage(self, "PLAYLIST")
+    
+    def function_estrella1_page(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.page_estrella1)
+    
+    def function_estrella2_page(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.page_estrella2)
+
+    def function_estrella3_page(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.page_estrella3)
 
     
 
@@ -318,9 +329,74 @@ class UIFunctions(MainWindow):
         UIFunctions.send_request(endpoint)
 
 
+    def function_mark():
+        """
+        Obtiene el timecode actual de la API de vMix y lo añade a la lista de timecodes.
+        """
+        global timecodes
+        timecodes = load_timecodes_list()
+        response = UIFunctions.send_request("api/")
+        
+        if response:
+            tree = ET.fromstring(response)
+            timecode_element = tree.find(".//timecode")
+            timecode = timecode_element.text if timecode_element is not None else "00:00:00"
+            timecodes.append(timecode)
+            save_timecodes_list(timecodes)
+            print(f"Timecode añadido: {timecode}")
+        else:
+            print("No se pudo obtener el timecode de vMix. Conexión no disponible.")
+        
+    def function_lastmark():
+        """
+        Devuelve el último timecode añadido, luego el penúltimo y así sucesivamente.
+        Si se han agotado los timecodes, devuelve None.
+        """
+        global lastmark_index, timecodes
+        timecodes = load_timecodes_list()
+        
+        if not timecodes:
+            print("No hay timecodes almacenados.")
+            return None
+        
+        if abs(lastmark_index) <= len(timecodes):
+            timecode = timecodes[lastmark_index]
+            lastmark_index -= 1
+            print(f"Último timecode obtenido: {timecode}")
+            UIFunctions.send_request(f"api/?Function=ReplaySetTimecode&Value={timecode}")
+            UIFunctions.send_request("api/?Function=ReplayPause&Channel=1")
+        else:
+            print("No hay más timecodes disponibles.")
+        
+    def function_reset_lastmark():
+        """
+        Reinicia la cuenta de los timecodes para que function_lastmark vuelva a empezar desde el último añadido.
+        """
+        global lastmark_index
+        lastmark_index = -1
+        print("Se ha reseteado la cuenta de los timecodes.")
+
 
     ########################################################################
     ## END - FUNCIONS CONTENT ACCESS
+    ########################################################################
+
+    ########################################################################
+    ## START - FUNCTIONS CONFIG
+    ########################################################################
+
+    def function_clear_marks():
+        """
+        Vacía la lista de timecodes.
+        """
+        global timecodes, lastmark_index
+        timecodes = []
+        save_timecodes_list(timecodes)
+        lastmark_index = -1
+        print("Lista de timecodes vaciada.")
+
+    ########################################################################
+    ## START - FUNCTIONS CONFIG
     ########################################################################
 
 
@@ -533,22 +609,24 @@ class UIFunctions(MainWindow):
         print("Ejecutando funcion Network...")
 
     def function_play(self):
-        # Intentar enviar la solicitud de reproducción
-        response_1 = UIFunctions.send_request("api/?Function=ReplayPlaySelectedEvent&Channel=1")
-        if not response_1:
-            print("No se pudo ejecutar ReplayPlay. Saltando function_play.")
-            return
+        if clip_mode == True:
+            # Intentar enviar la solicitud de reproducción
+            response_1 = UIFunctions.send_request("api/?Function=ReplayPlaySelectedEvent&Channel=1")
+            if not response_1:
+                print("No se pudo ejecutar ReplayPlay. Saltando function_play.")
+                return
+        else: 
+            # Intentar enviar la solicitud de reproducción
+            response_1 = UIFunctions.send_request("api/?Function=ReplayPlay&Channel=1")
+            if not response_1:
+                print("No se pudo ejecutar ReplayPlay. Saltando function_play.")
+                return
+
 
         # Intentar ajustar la velocidad de reproducción
         response_2 = UIFunctions.send_request("api/?Function=ReplaySetSpeed&Value=1&Channel=1")
         if not response_2:
             print("No se pudo ajustar la velocidad de reproducción.")
-
-    def function_gototc():
-        print("Ejecutando function Goto TC...")
-
-    def function_lastcue():
-        print("Ejecutando function Last Cue... ")
 
     def function_fastjog(dial):
         """Cambia entre modo normal (1 frame) y modo rápido (50 frames)."""
@@ -556,9 +634,6 @@ class UIFunctions(MainWindow):
         dial.fast_mode = not dial.fast_mode
         mode = f"RÁPIDO ({FAST_JOG})" if dial.fast_mode else "NORMAL (1 frame)"
         print(f"Modo cambiado a: {mode}")
-
-    def function_mark():
-        print("Ejecutando funcion Mark...")
 
     def function_return():
         print("Ejectuando funcion Return...")
@@ -646,10 +721,10 @@ class UIFunctions(MainWindow):
 
                 # Update UI labels
                 if channel_mode == "A":
-                    self.ui.label_pgm.setText(f'                                            PRV : {current_clip}                        ')
+                    self.ui.label_pgm.setText(f'PRV : {current_clip}')
                     self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
                 else:
-                    self.ui.label_pgm.setText(f'                                            PGM : {current_clip}                     ')
+                    self.ui.label_pgm.setText(f'PGM : {current_clip}')
                     self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
 
         except ET.ParseError:
@@ -825,6 +900,7 @@ class UIFunctions(MainWindow):
             print(f"Error al parsear el XML: {e}")
             return None  # Salimos si hay un error en el XML
 
+        UIFunctions.function_reset_lastmark()
         # Paso 3: Iterar sobre todos los inputs y buscar el 'channelMode' en la sección de Replay
         result = None  # Inicializamos result como None por si no encontramos nada
         
@@ -865,6 +941,166 @@ class UIFunctions(MainWindow):
     def show_dialog_overwrite_clip(self, clip_code, clip_management):
         self.popup = PopupOverwriteClip(clip_code, clip_management)
         self.popup.exec_()
+
+    def get_tc_clip():
+        # Paso 1: Hacer una llamada a la API de vMix para obtener el directorio del preset
+        response_text = UIFunctions.send_request("api/")
+        
+        if not response_text:
+            print("Error al obtener datos de la API de vMix")
+            return None, None  # Devolver None si no hay respuesta de la API
+
+        soup = BeautifulSoup(response_text, "lxml-xml")  # Usar lxml-xml para XML
+        preset_path_tag = soup.find("preset")
+        
+        if not preset_path_tag or not preset_path_tag.text:
+            print("No se pudo encontrar el directorio del preset en la respuesta de la API.")
+            return None, None  # Devolver None si no se encuentra el directorio del preset
+
+        preset_directory = os.path.dirname(preset_path_tag.text)  # Extraer el directorio base
+
+        # Paso 2: Buscar el archivo replay2.xml en el directorio del preset
+        replay_file_path = os.path.join(preset_directory, "replay2.xml")
+
+        if not os.path.exists(replay_file_path):
+            print(f"No se encontró el archivo {replay_file_path}")
+            return None, None  # Devolver None si no se encuentra el archivo replay2.xml
+
+        # Paso 3: Extraer el primer "segment" y su "time_stamp"
+        with open(replay_file_path, "r", encoding="utf-8") as file:
+            xml_content = file.read()
+
+        soup = BeautifulSoup(xml_content, "lxml-xml")  # Usar lxml-xml para XML
+        segment = soup.find("segment")
+
+        if not segment:
+            print("No se encontró el elemento 'segment' en el archivo XML.")
+            return None, None  # Devolver None si no se encuentra el segmento
+
+        # Acceder al contenido de la etiqueta <timestamp>
+        timestamp_tag = segment.find("timestamp")
+        if not timestamp_tag:
+            print("No se encontró la etiqueta 'timestamp' dentro del 'segment'.")
+            return None, None  # Devolver None si no se encuentra la etiqueta 'timestamp'
+
+        time_stamp = timestamp_tag.text  # Obtener el texto de la etiqueta <timestamp>
+        
+        # Eliminar los últimos 10 caracteres
+        truncated_time_stamp = time_stamp[:-10]  # Elimina los últimos 10 caracteres
+        print(f"Time Stamp encontrado: {truncated_time_stamp}")
+        
+        # Devolver tanto el truncated_time_stamp como el replay_file_path
+        return truncated_time_stamp, replay_file_path
+    
+    
+    def get_event_in_out_points(xml_file_path, event_id):
+        """
+        Busca el evento con el id proporcionado en el archivo XML y obtiene sus puntos inPoint y outPoint.
+        
+        :param xml_file_path: Ruta del archivo XML donde se encuentran los eventos.
+        :param event_id: ID del evento que se busca (es un int).
+        :return: Una tupla con los valores de inPoint y outPoint, o None si no se encuentra el evento.
+        """
+        try:
+            # Leer el archivo XML
+            with open(xml_file_path, "r", encoding="utf-8") as file:
+                xml_content = file.read()
+
+            # Parsear el contenido XML
+            soup = BeautifulSoup(xml_content, "lxml-xml")
+            
+            # Buscar todos los eventos en el archivo
+            events = soup.find_all("event")
+            
+            # Buscar el evento con el ID proporcionado
+            for event in events:
+                event_id_tag = event.find("id")
+                if event_id_tag and int(event_id_tag.text) == event_id:
+                    # Encontrar los puntos inPoint y outPoint
+                    in_point = event.find("inPoint")
+                    print(in_point)
+                    out_point = event.find("outPoint")
+                    print(out_point)
+                    
+                    if in_point and out_point:
+                        # Devolver los puntos encontrados como tupla
+                        return int(in_point.text), int(out_point.text)
+                    
+            
+            # Si no se encuentra el evento, devolver None
+            print(f"No se encontró el evento con ID {event_id}.")
+            return None
+        except Exception as e:
+            print(f"Error al procesar el archivo XML: {e}")
+            return None
+        
+    def add_point_to_timestamp(truncated_time_stamp, in_point, out_point):
+        """
+        Suma los puntos de entrada (in_point) y salida (out_point) en segundos al truncated_time_stamp 
+        y devuelve los nuevos timecodes correspondientes.
+        
+        :param truncated_time_stamp: El timestamp truncado en formato 'YYYY-MM-DDTHH:MM:SS.MS'.
+        :param in_point: Punto de entrada en segundos a sumar (opcional).
+        :param out_point: Punto de salida en segundos a sumar (opcional).
+        :return: Nuevos timecodes para in_point y out_point en formato 'YYYY-MM-DDTHH:MM:SS.MS'.
+        """
+        
+        # Separar la fecha (YYYY-MM-DD) y el tiempo (HH:MM:SS.MS)
+        date_str, time_str = truncated_time_stamp.split('T')
+
+        in_point_sec = in_point /10000000
+
+        out_point_sec = out_point/10000000
+
+        dur = out_point_sec - in_point_sec
+
+        print(dur)
+        
+        # Convertir el tiempo a un objeto datetime
+        time_obj = datetime.strptime(time_str, "%H:%M:%S.%f")
+        
+        # Convertir el tiempo a segundos
+        time_in_seconds = time_obj.hour * 3600 + time_obj.minute * 60 + time_obj.second + time_obj.microsecond / 1000000.0
+        
+        # Inicializar los timecodes de salida
+        clip_in_tc = None
+        clip_out_tc = None
+        
+        # Si hay in_point, sumarlo al tiempo en segundos
+        if in_point is not None:
+            new_in_time_in_seconds = time_in_seconds + in_point_sec
+            clip_in_tc = str(timedelta(seconds=new_in_time_in_seconds))
+
+        # Si hay out_point, sumarlo al tiempo en segundos
+        if out_point is not None:
+            new_out_time_in_seconds = time_in_seconds + out_point_sec
+            clip_out_tc = str(timedelta(seconds=new_out_time_in_seconds))
+        
+        # Convertir a formato de hora:minuto:segundo:milisegundo
+        def convert_to_time_format(seconds):
+            hours, remainder = divmod(seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            return f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}.{int((seconds - int(seconds)) * 1000):03}"
+        
+        # Si se ha calculado el clip_in_tc, darle formato
+        if clip_in_tc:
+            clip_in_tc = convert_to_time_format(new_in_time_in_seconds)
+        
+        # Si se ha calculado el clip_out_tc, darle formato
+        if clip_out_tc:
+            clip_out_tc = convert_to_time_format(new_out_time_in_seconds)
+        
+        # Crear los nuevos timecodes completos (fecha + nuevos tiempos)
+        if clip_in_tc:
+            clip_in_tc = f"{date_str}T{clip_in_tc}"
+            print(clip_in_tc)
+        
+        if clip_out_tc:
+            clip_out_tc = f"{date_str}T{clip_out_tc}"
+            print(clip_out_tc)
+        
+        return clip_in_tc, clip_out_tc, dur
+
 
 
 

@@ -427,12 +427,9 @@ class Ui_MainWindow(object):
         self.frame_label_top_btns.setSizePolicy(sizePolicy1)
         self.frame_label_top_btns.setFrameShape(QFrame.NoFrame)
         self.frame_label_top_btns.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_10 = QHBoxLayout(self.frame_label_top_btns)
-        self.horizontalLayout_10.setSpacing(0)
-        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
-        self.horizontalLayout_10.setContentsMargins(5, 0, 10, 0)
         self.label_page = QLabel(self.frame_label_top_btns)
         self.label_page.setObjectName(u"label_page")
+        self.label_page.setGeometry(QRect(5, 0, 67, 41))
         font1 = QFont()
         font1.setFamily(u"Segoe UI")
         font1.setPointSize(10)
@@ -440,18 +437,15 @@ class Ui_MainWindow(object):
         font1.setWeight(75)
         self.label_page.setFont(font1)
         self.label_page.setStyleSheet(u"background-color: transparent;")
-
-        self.horizontalLayout_10.addWidget(self.label_page)
-
         self.label_bank = QLabel(self.frame_label_top_btns)
         self.label_bank.setObjectName(u"label_bank")
+        self.label_bank.setGeometry(QRect(72, 0, 71, 41))
         self.label_bank.setFont(font1)
         self.label_bank.setStyleSheet(u"background-color: transparent;")
-
-        self.horizontalLayout_10.addWidget(self.label_bank)
-
+        self.label_bank.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.label_pgm = QLabel(self.frame_label_top_btns)
         self.label_pgm.setObjectName(u"label_pgm")
+        self.label_pgm.setGeometry(QRect(250, 0, 351, 41))
         font2 = QFont()
         font2.setFamily(u"Segoe UI")
         font2.setPointSize(14)
@@ -460,44 +454,35 @@ class Ui_MainWindow(object):
         self.label_pgm.setFont(font2)
         self.label_pgm.setStyleSheet(u"background: transparent;\n"
 "")
-
-        self.horizontalLayout_10.addWidget(self.label_pgm)
-
+        self.label_pgm.setAlignment(Qt.AlignCenter)
         self.label_vmixconn = QLabel(self.frame_label_top_btns)
         self.label_vmixconn.setObjectName(u"label_vmixconn")
+        self.label_vmixconn.setGeometry(QRect(640, 0, 99, 41))
         self.label_vmixconn.setStyleSheet(u"background: transparent;")
-
-        self.horizontalLayout_10.addWidget(self.label_vmixconn)
-
+        self.label_vmixconn.setAlignment(Qt.AlignCenter)
         self.label_title_bar_top = QLabel(self.frame_label_top_btns)
         self.label_title_bar_top.setObjectName(u"label_title_bar_top")
+        self.label_title_bar_top.setGeometry(QRect(720, 0, 16, 23))
         self.label_title_bar_top.setFont(font1)
         self.label_title_bar_top.setStyleSheet(u"background: transparent;\n"
 "")
-
-        self.horizontalLayout_10.addWidget(self.label_title_bar_top)
-
         self.vmix_conn_no = QFrame(self.frame_label_top_btns)
         self.vmix_conn_no.setObjectName(u"vmix_conn_no")
+        self.vmix_conn_no.setGeometry(QRect(748, 0, 28, 42))
         self.vmix_conn_no.setStyleSheet(u"background-color: rgb(255,0,0);\n"
 "border-radius: 5px;\n"
 "border: 1px solid rgb(0,0,0);")
         self.vmix_conn_no.setFrameShape(QFrame.StyledPanel)
         self.vmix_conn_no.setFrameShadow(QFrame.Raised)
-
-        self.horizontalLayout_10.addWidget(self.vmix_conn_no)
-
         self.vmix_conn_ok = QFrame(self.frame_label_top_btns)
         self.vmix_conn_ok.setObjectName(u"vmix_conn_ok")
+        self.vmix_conn_ok.setGeometry(QRect(776, 0, 28, 42))
         self.vmix_conn_ok.setStyleSheet(u"background-color: rgb(0,255,0);\n"
 "border-radius: 5px;\n"
 "border: 1px solid rgb(0,0,0);\n"
 "")
         self.vmix_conn_ok.setFrameShape(QFrame.StyledPanel)
         self.vmix_conn_ok.setFrameShadow(QFrame.Raised)
-
-        self.horizontalLayout_10.addWidget(self.vmix_conn_ok)
-
 
         self.horizontalLayout_4.addWidget(self.frame_label_top_btns)
 
@@ -765,7 +750,7 @@ class Ui_MainWindow(object):
         self.clip_addtoplaylist.setIcon(icon3)
         self.clip_keywords = QPushButton(self.page_home)
         self.clip_keywords.setObjectName(u"clip_keywords")
-        self.clip_keywords.setGeometry(QRect(710, 140, 175, 70))
+        self.clip_keywords.setGeometry(QRect(270, 140, 175, 70))
         self.clip_keywords.setLayoutDirection(Qt.RightToLeft)
         self.clip_keywords.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
@@ -799,19 +784,19 @@ class Ui_MainWindow(object):
 "")
         self.clip_star_widget_estrelles3_1 = QLabel(self.clip_widget_estrelles3)
         self.clip_star_widget_estrelles3_1.setObjectName(u"clip_star_widget_estrelles3_1")
-        self.clip_star_widget_estrelles3_1.setGeometry(QRect(50, 10, 21, 51))
+        self.clip_star_widget_estrelles3_1.setGeometry(QRect(45, 10, 21, 51))
         self.clip_star_widget_estrelles3_1.setStyleSheet(u"background-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.clip_star_widget_estrelles3_1.setPixmap(QPixmap(u":/20x20/icons/20x20/cil-star.png"))
         self.clip_star_widget_estrelles3_2 = QLabel(self.clip_widget_estrelles3)
         self.clip_star_widget_estrelles3_2.setObjectName(u"clip_star_widget_estrelles3_2")
-        self.clip_star_widget_estrelles3_2.setGeometry(QRect(80, 10, 21, 51))
+        self.clip_star_widget_estrelles3_2.setGeometry(QRect(72, 10, 21, 51))
         self.clip_star_widget_estrelles3_2.setStyleSheet(u"background-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.clip_star_widget_estrelles3_2.setPixmap(QPixmap(u":/20x20/icons/20x20/cil-star.png"))
         self.clip_star_widget_estrelles3_3 = QLabel(self.clip_widget_estrelles3)
         self.clip_star_widget_estrelles3_3.setObjectName(u"clip_star_widget_estrelles3_3")
-        self.clip_star_widget_estrelles3_3.setGeometry(QRect(110, 10, 21, 51))
+        self.clip_star_widget_estrelles3_3.setGeometry(QRect(99, 10, 21, 51))
         self.clip_star_widget_estrelles3_3.setStyleSheet(u"background-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.clip_star_widget_estrelles3_3.setPixmap(QPixmap(u":/20x20/icons/20x20/cil-star.png"))
@@ -833,34 +818,33 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         self.clip_button_onwidget_estrelles3.setIconSize(QSize(20, 20))
-        self.clip_editmetadata = QPushButton(self.page_home)
-        self.clip_editmetadata.setObjectName(u"clip_editmetadata")
-        self.clip_editmetadata.setGeometry(QRect(490, 140, 175, 70))
-        self.clip_editmetadata.setStyleSheet(u"QPushButton {\n"
+        self.clip_gotoestrella3 = QPushButton(self.clip_widget_estrelles3)
+        self.clip_gotoestrella3.setObjectName(u"clip_gotoestrella3")
+        self.clip_gotoestrella3.setGeometry(QRect(139, 0, 34, 68))
+        self.clip_gotoestrella3.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
 "    color: white;				 /* Color del texto */\n"
 "	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"    border-radius: 9px;\n"
+"	border: 1px solid rgba(255,255,255,100);  /* Borde blanco con transparencia */\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
 "	background-color: rgba(0,150,250,50);\n"
+"	\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}\n"
-"\n"
-"\n"
-"\n"
 "")
-        self.clip_pushtofavourites = QPushButton(self.page_home)
-        self.clip_pushtofavourites.setObjectName(u"clip_pushtofavourites")
-        self.clip_pushtofavourites.setGeometry(QRect(270, 250, 175, 70))
-        self.clip_pushtofavourites.setStyleSheet(u"QPushButton {\n"
+        self.clip_gotoestrella3.setIcon(icon3)
+        self.clip_editmetadata = QPushButton(self.page_home)
+        self.clip_editmetadata.setObjectName(u"clip_editmetadata")
+        self.clip_editmetadata.setGeometry(QRect(50, 140, 175, 70))
+        self.clip_editmetadata.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -911,78 +895,6 @@ class Ui_MainWindow(object):
         icon4.addFile(u":/20x20/icons/20x20/cil-star.png", QSize(), QIcon.Normal, QIcon.Off)
         self.clip_estrella1.setIcon(icon4)
         self.clip_estrella1.setIconSize(QSize(20, 20))
-        self.clip_archive = QPushButton(self.page_home)
-        self.clip_archive.setObjectName(u"clip_archive")
-        self.clip_archive.setGeometry(QRect(50, 140, 175, 70))
-        self.clip_archive.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.clip_auxclip = QPushButton(self.page_home)
-        self.clip_auxclip.setObjectName(u"clip_auxclip")
-        self.clip_auxclip.setGeometry(QRect(270, 140, 175, 70))
-        self.clip_auxclip.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.clip_push = QPushButton(self.page_home)
-        self.clip_push.setObjectName(u"clip_push")
-        self.clip_push.setGeometry(QRect(50, 250, 175, 70))
-        self.clip_push.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
         self.clip_widget_estrelles2 = QWidget(self.page_home)
         self.clip_widget_estrelles2.setObjectName(u"clip_widget_estrelles2")
         self.clip_widget_estrelles2.setGeometry(QRect(270, 30, 175, 70))
@@ -993,13 +905,13 @@ class Ui_MainWindow(object):
 "")
         self.clip_star_widget_estrelles2_1 = QLabel(self.clip_widget_estrelles2)
         self.clip_star_widget_estrelles2_1.setObjectName(u"clip_star_widget_estrelles2_1")
-        self.clip_star_widget_estrelles2_1.setGeometry(QRect(63, 10, 21, 51))
+        self.clip_star_widget_estrelles2_1.setGeometry(QRect(55, 10, 21, 51))
         self.clip_star_widget_estrelles2_1.setStyleSheet(u"background-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.clip_star_widget_estrelles2_1.setPixmap(QPixmap(u":/20x20/icons/20x20/cil-star.png"))
         self.clip_star_widget_estrelles2_2 = QLabel(self.clip_widget_estrelles2)
         self.clip_star_widget_estrelles2_2.setObjectName(u"clip_star_widget_estrelles2_2")
-        self.clip_star_widget_estrelles2_2.setGeometry(QRect(95, 10, 21, 51))
+        self.clip_star_widget_estrelles2_2.setGeometry(QRect(85, 10, 21, 51))
         self.clip_star_widget_estrelles2_2.setStyleSheet(u"background-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);\n"
 "border")
@@ -1022,7 +934,205 @@ class Ui_MainWindow(object):
 "\n"
 "")
         self.clip_button_onwidget_estrelles2.setIconSize(QSize(20, 20))
+        self.clip_gotoestrella2 = QPushButton(self.clip_widget_estrelles2)
+        self.clip_gotoestrella2.setObjectName(u"clip_gotoestrella2")
+        self.clip_gotoestrella2.setGeometry(QRect(139, 0, 34, 68))
+        self.clip_gotoestrella2.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 9px;\n"
+"	border: 1px solid rgba(255,255,255,100);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"	\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}\n"
+"")
+        self.clip_gotoestrella2.setIcon(icon3)
+        self.clip_gotoestrella1 = QPushButton(self.page_home)
+        self.clip_gotoestrella1.setObjectName(u"clip_gotoestrella1")
+        self.clip_gotoestrella1.setGeometry(QRect(189, 31, 34, 68))
+        self.clip_gotoestrella1.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 9px;\n"
+"	border: 1px solid rgba(255,255,255,100);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"	\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}\n"
+"")
+        self.clip_gotoestrella1.setIcon(icon3)
         self.stackedWidget.addWidget(self.page_home)
+        self.page_estrella1 = QWidget()
+        self.page_estrella1.setObjectName(u"page_estrella1")
+        self.list_estrella1 = QListWidget(self.page_estrella1)
+        self.list_estrella1.setObjectName(u"list_estrella1")
+        self.list_estrella1.setGeometry(QRect(120, 70, 661, 371))
+        self.list_estrella1.setStyleSheet(u"QListWidget {\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}")
+        self.label_estrella1 = QLabel(self.page_estrella1)
+        self.label_estrella1.setObjectName(u"label_estrella1")
+        self.label_estrella1.setGeometry(QRect(120, 20, 661, 51))
+        self.label_estrella1.setStyleSheet(u"QLabel {\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}")
+        self.label_estrella1.setPixmap(QPixmap(u":/20x20/icons/20x20/cil-star.png"))
+        self.label_estrella1.setAlignment(Qt.AlignCenter)
+        self.estrella1_delete = QPushButton(self.page_estrella1)
+        self.estrella1_delete.setObjectName(u"estrella1_delete")
+        self.estrella1_delete.setGeometry(QRect(710, 20, 71, 51))
+        self.estrella1_delete.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"	border: 2px solid rgba(255,255,255,100);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"	\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        icon5 = QIcon()
+        icon5.addFile(u":/20x20/icons/20x20/cil-x.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.estrella1_delete.setIcon(icon5)
+        self.stackedWidget.addWidget(self.page_estrella1)
+        self.page_estrella2 = QWidget()
+        self.page_estrella2.setObjectName(u"page_estrella2")
+        self.label_estrella2 = QLabel(self.page_estrella2)
+        self.label_estrella2.setObjectName(u"label_estrella2")
+        self.label_estrella2.setGeometry(QRect(120, 20, 661, 51))
+        self.label_estrella2.setStyleSheet(u"QLabel {\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}")
+        self.label_estrella2.setPixmap(QPixmap(u":/20x20/icons/20x20/cil-star.png"))
+        self.label_estrella2.setAlignment(Qt.AlignCenter)
+        self.list_estrella2 = QListWidget(self.page_estrella2)
+        self.list_estrella2.setObjectName(u"list_estrella2")
+        self.list_estrella2.setGeometry(QRect(120, 70, 661, 371))
+        self.list_estrella2.setStyleSheet(u"QListWidget {\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}")
+        self.label_estrella2_2 = QLabel(self.page_estrella2)
+        self.label_estrella2_2.setObjectName(u"label_estrella2_2")
+        self.label_estrella2_2.setGeometry(QRect(465, 20, 21, 51))
+        self.label_estrella2_2.setStyleSheet(u"background-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.label_estrella2_2.setPixmap(QPixmap(u":/20x20/icons/20x20/cil-star.png"))
+        self.estrella2_delete = QPushButton(self.page_estrella2)
+        self.estrella2_delete.setObjectName(u"estrella2_delete")
+        self.estrella2_delete.setGeometry(QRect(710, 20, 71, 51))
+        self.estrella2_delete.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"	border: 2px solid rgba(255,255,255,100);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"	\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.estrella2_delete.setIcon(icon5)
+        self.stackedWidget.addWidget(self.page_estrella2)
+        self.page_estrella3 = QWidget()
+        self.page_estrella3.setObjectName(u"page_estrella3")
+        self.label_estrella3 = QLabel(self.page_estrella3)
+        self.label_estrella3.setObjectName(u"label_estrella3")
+        self.label_estrella3.setGeometry(QRect(120, 20, 661, 51))
+        self.label_estrella3.setStyleSheet(u"QLabel {\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}")
+        self.label_estrella3.setPixmap(QPixmap(u":/20x20/icons/20x20/cil-star.png"))
+        self.label_estrella3.setAlignment(Qt.AlignCenter)
+        self.label_estrella3_2 = QLabel(self.page_estrella3)
+        self.label_estrella3_2.setObjectName(u"label_estrella3_2")
+        self.label_estrella3_2.setGeometry(QRect(470, 20, 21, 51))
+        self.label_estrella3_2.setStyleSheet(u"background-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.label_estrella3_2.setPixmap(QPixmap(u":/20x20/icons/20x20/cil-star.png"))
+        self.list_estrella3 = QListWidget(self.page_estrella3)
+        self.list_estrella3.setObjectName(u"list_estrella3")
+        self.list_estrella3.setGeometry(QRect(120, 70, 661, 371))
+        self.list_estrella3.setStyleSheet(u"QListWidget {\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}")
+        self.label_estrella3_3 = QLabel(self.page_estrella3)
+        self.label_estrella3_3.setObjectName(u"label_estrella3_3")
+        self.label_estrella3_3.setGeometry(QRect(410, 20, 21, 51))
+        self.label_estrella3_3.setStyleSheet(u"background-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.label_estrella3_3.setPixmap(QPixmap(u":/20x20/icons/20x20/cil-star.png"))
+        self.estrella3_delete = QPushButton(self.page_estrella3)
+        self.estrella3_delete.setObjectName(u"estrella3_delete")
+        self.estrella3_delete.setGeometry(QRect(710, 20, 71, 51))
+        self.estrella3_delete.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"	border: 2px solid rgba(255,255,255,100);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"	\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.estrella3_delete.setIcon(icon5)
+        self.stackedWidget.addWidget(self.page_estrella3)
         self.page_simulator = QWidget()
         self.page_simulator.setObjectName(u"page_simulator")
         self.sim_menu = QPushButton(self.page_simulator)
@@ -1723,7 +1833,7 @@ class Ui_MainWindow(object):
         self.page_configuration.setObjectName(u"page_configuration")
         self.config_ipconfig = QPushButton(self.page_configuration)
         self.config_ipconfig.setObjectName(u"config_ipconfig")
-        self.config_ipconfig.setGeometry(QRect(40, 60, 251, 71))
+        self.config_ipconfig.setGeometry(QRect(50, 30, 251, 71))
         self.config_ipconfig.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -1747,7 +1857,7 @@ class Ui_MainWindow(object):
 "")
         self.config_fastjogconfig = QPushButton(self.page_configuration)
         self.config_fastjogconfig.setObjectName(u"config_fastjogconfig")
-        self.config_fastjogconfig.setGeometry(QRect(320, 60, 251, 71))
+        self.config_fastjogconfig.setGeometry(QRect(330, 30, 251, 71))
         self.config_fastjogconfig.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -1771,8 +1881,32 @@ class Ui_MainWindow(object):
 "")
         self.config_deleteclipdict = QPushButton(self.page_configuration)
         self.config_deleteclipdict.setObjectName(u"config_deleteclipdict")
-        self.config_deleteclipdict.setGeometry(QRect(600, 60, 251, 71))
+        self.config_deleteclipdict.setGeometry(QRect(610, 30, 251, 71))
         self.config_deleteclipdict.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"")
+        self.config_resetmarks = QPushButton(self.page_configuration)
+        self.config_resetmarks.setObjectName(u"config_resetmarks")
+        self.config_resetmarks.setGeometry(QRect(50, 140, 251, 71))
+        self.config_resetmarks.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1796,10 +1930,10 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.page_configuration)
         self.page_export = QWidget()
         self.page_export.setObjectName(u"page_export")
-        self.export_flattenplaylist = QPushButton(self.page_export)
-        self.export_flattenplaylist.setObjectName(u"export_flattenplaylist")
-        self.export_flattenplaylist.setGeometry(QRect(270, 30, 175, 70))
-        self.export_flattenplaylist.setStyleSheet(u"QPushButton {\n"
+        self.export_playlist = QPushButton(self.page_export)
+        self.export_playlist.setObjectName(u"export_playlist")
+        self.export_playlist.setGeometry(QRect(270, 30, 175, 70))
+        self.export_playlist.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1820,10 +1954,10 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "")
-        self.export_export = QPushButton(self.page_export)
-        self.export_export.setObjectName(u"export_export")
-        self.export_export.setGeometry(QRect(50, 30, 175, 70))
-        self.export_export.setStyleSheet(u"QPushButton {\n"
+        self.export_export_clip = QPushButton(self.page_export)
+        self.export_export_clip.setObjectName(u"export_export_clip")
+        self.export_export_clip.setGeometry(QRect(50, 30, 175, 70))
+        self.export_export_clip.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1847,78 +1981,6 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.page_export)
         self.page_generic = QWidget()
         self.page_generic.setObjectName(u"page_generic")
-        self.generic_cerebrum = QPushButton(self.page_generic)
-        self.generic_cerebrum.setObjectName(u"generic_cerebrum")
-        self.generic_cerebrum.setGeometry(QRect(270, 30, 175, 70))
-        self.generic_cerebrum.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.generic_character = QPushButton(self.page_generic)
-        self.generic_character.setObjectName(u"generic_character")
-        self.generic_character.setGeometry(QRect(490, 30, 175, 70))
-        self.generic_character.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.generic_logpoint = QPushButton(self.page_generic)
-        self.generic_logpoint.setObjectName(u"generic_logpoint")
-        self.generic_logpoint.setGeometry(QRect(50, 140, 175, 70))
-        self.generic_logpoint.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
         self.generic_none = QPushButton(self.page_generic)
         self.generic_none.setObjectName(u"generic_none")
         self.generic_none.setGeometry(QRect(50, 30, 175, 70))
@@ -1945,7 +2007,7 @@ class Ui_MainWindow(object):
 "")
         self.generic_lockremote = QPushButton(self.page_generic)
         self.generic_lockremote.setObjectName(u"generic_lockremote")
-        self.generic_lockremote.setGeometry(QRect(270, 140, 175, 70))
+        self.generic_lockremote.setGeometry(QRect(270, 30, 175, 70))
         self.generic_lockremote.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -1954,35 +2016,6 @@ class Ui_MainWindow(object):
 "	padding: 10px;           \n"
 "    border-radius: 15px;\n"
 "	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.generic_extractlogs = QPushButton(self.page_generic)
-        self.generic_extractlogs.setObjectName(u"generic_extractlogs")
-        self.generic_extractlogs.setGeometry(QRect(710, 30, 175, 70))
-        self.generic_extractlogs.setLayoutDirection(Qt.RightToLeft)
-        self.generic_extractlogs.setAutoFillBackground(False)
-        self.generic_extractlogs.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"    qproperty-iconAlignment: right;\n"
-"\n"
-"\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
@@ -2019,35 +2052,12 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        icon5 = QIcon()
-        icon5.addFile(u":/20x20/icons/20x20/cil-plus.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.playlist_btnadd_1.setIcon(icon5)
-        self.playlist_combobox_pl1 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl1.setObjectName(u"playlist_combobox_pl1")
-        self.playlist_combobox_pl1.setGeometry(QRect(110, 0, 311, 51))
-        self.playlist_combobox_pl1.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
+        icon6 = QIcon()
+        icon6.addFile(u":/20x20/icons/20x20/cil-plus.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.playlist_btnadd_1.setIcon(icon6)
         self.playlist_numclip_pl1 = QLabel(self.page_playlist)
         self.playlist_numclip_pl1.setObjectName(u"playlist_numclip_pl1")
-        self.playlist_numclip_pl1.setGeometry(QRect(330, 30, 51, 16))
+        self.playlist_numclip_pl1.setGeometry(QRect(220, 30, 51, 16))
         self.playlist_numclip_pl1.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_dur_pl1 = QLabel(self.page_playlist)
@@ -2067,7 +2077,7 @@ class Ui_MainWindow(object):
         self.playlist_codi_pl1.setStyleSheet(u"")
         self.playlist_btnadd_2 = QPushButton(self.page_playlist)
         self.playlist_btnadd_2.setObjectName(u"playlist_btnadd_2")
-        self.playlist_btnadd_2.setGeometry(QRect(10, 60, 93, 51))
+        self.playlist_btnadd_2.setGeometry(QRect(10, 80, 93, 51))
         self.playlist_btnadd_2.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -2085,48 +2095,25 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_2.setIcon(icon5)
-        self.playlist_combobox_pl2 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl2.setObjectName(u"playlist_combobox_pl2")
-        self.playlist_combobox_pl2.setGeometry(QRect(110, 60, 311, 51))
-        self.playlist_combobox_pl2.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
+        self.playlist_btnadd_2.setIcon(icon6)
         self.playlist_dur_pl2 = QLabel(self.page_playlist)
         self.playlist_dur_pl2.setObjectName(u"playlist_dur_pl2")
-        self.playlist_dur_pl2.setGeometry(QRect(120, 90, 71, 16))
+        self.playlist_dur_pl2.setGeometry(QRect(120, 110, 71, 16))
         self.playlist_dur_pl2.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl2 = QLabel(self.page_playlist)
         self.playlist_numclip_pl2.setObjectName(u"playlist_numclip_pl2")
-        self.playlist_numclip_pl2.setGeometry(QRect(330, 90, 51, 16))
+        self.playlist_numclip_pl2.setGeometry(QRect(220, 110, 51, 16))
         self.playlist_numclip_pl2.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl2 = QLabel(self.page_playlist)
         self.playlist_codi_pl2.setObjectName(u"playlist_codi_pl2")
-        self.playlist_codi_pl2.setGeometry(QRect(120, 70, 21, 16))
+        self.playlist_codi_pl2.setGeometry(QRect(120, 90, 21, 16))
         self.playlist_codi_pl2.setFont(font7)
         self.playlist_codi_pl2.setStyleSheet(u"")
         self.playlist_btnadd_3 = QPushButton(self.page_playlist)
         self.playlist_btnadd_3.setObjectName(u"playlist_btnadd_3")
-        self.playlist_btnadd_3.setGeometry(QRect(10, 120, 93, 51))
+        self.playlist_btnadd_3.setGeometry(QRect(10, 160, 93, 51))
         self.playlist_btnadd_3.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -2144,48 +2131,25 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_3.setIcon(icon5)
-        self.playlist_combobox_pl3 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl3.setObjectName(u"playlist_combobox_pl3")
-        self.playlist_combobox_pl3.setGeometry(QRect(110, 120, 311, 51))
-        self.playlist_combobox_pl3.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
+        self.playlist_btnadd_3.setIcon(icon6)
         self.playlist_dur_pl3 = QLabel(self.page_playlist)
         self.playlist_dur_pl3.setObjectName(u"playlist_dur_pl3")
-        self.playlist_dur_pl3.setGeometry(QRect(120, 150, 71, 16))
+        self.playlist_dur_pl3.setGeometry(QRect(120, 190, 71, 16))
         self.playlist_dur_pl3.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl3 = QLabel(self.page_playlist)
         self.playlist_numclip_pl3.setObjectName(u"playlist_numclip_pl3")
-        self.playlist_numclip_pl3.setGeometry(QRect(330, 150, 51, 16))
+        self.playlist_numclip_pl3.setGeometry(QRect(220, 190, 51, 16))
         self.playlist_numclip_pl3.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl3 = QLabel(self.page_playlist)
         self.playlist_codi_pl3.setObjectName(u"playlist_codi_pl3")
-        self.playlist_codi_pl3.setGeometry(QRect(120, 130, 21, 16))
+        self.playlist_codi_pl3.setGeometry(QRect(120, 170, 21, 16))
         self.playlist_codi_pl3.setFont(font7)
         self.playlist_codi_pl3.setStyleSheet(u"")
         self.playlist_btnadd_4 = QPushButton(self.page_playlist)
         self.playlist_btnadd_4.setObjectName(u"playlist_btnadd_4")
-        self.playlist_btnadd_4.setGeometry(QRect(10, 180, 93, 51))
+        self.playlist_btnadd_4.setGeometry(QRect(10, 240, 93, 51))
         self.playlist_btnadd_4.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -2203,48 +2167,25 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_4.setIcon(icon5)
-        self.playlist_combobox_pl4 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl4.setObjectName(u"playlist_combobox_pl4")
-        self.playlist_combobox_pl4.setGeometry(QRect(110, 180, 311, 51))
-        self.playlist_combobox_pl4.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
+        self.playlist_btnadd_4.setIcon(icon6)
         self.playlist_dur_pl4 = QLabel(self.page_playlist)
         self.playlist_dur_pl4.setObjectName(u"playlist_dur_pl4")
-        self.playlist_dur_pl4.setGeometry(QRect(120, 210, 71, 16))
+        self.playlist_dur_pl4.setGeometry(QRect(120, 270, 71, 16))
         self.playlist_dur_pl4.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl4 = QLabel(self.page_playlist)
         self.playlist_numclip_pl4.setObjectName(u"playlist_numclip_pl4")
-        self.playlist_numclip_pl4.setGeometry(QRect(330, 210, 51, 16))
+        self.playlist_numclip_pl4.setGeometry(QRect(220, 270, 51, 16))
         self.playlist_numclip_pl4.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl4 = QLabel(self.page_playlist)
         self.playlist_codi_pl4.setObjectName(u"playlist_codi_pl4")
-        self.playlist_codi_pl4.setGeometry(QRect(120, 190, 21, 16))
+        self.playlist_codi_pl4.setGeometry(QRect(120, 250, 21, 16))
         self.playlist_codi_pl4.setFont(font7)
         self.playlist_codi_pl4.setStyleSheet(u"")
         self.playlist_btnadd_5 = QPushButton(self.page_playlist)
         self.playlist_btnadd_5.setObjectName(u"playlist_btnadd_5")
-        self.playlist_btnadd_5.setGeometry(QRect(10, 240, 93, 51))
+        self.playlist_btnadd_5.setGeometry(QRect(10, 320, 93, 51))
         self.playlist_btnadd_5.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -2262,48 +2203,25 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_5.setIcon(icon5)
-        self.playlist_combobox_pl5 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl5.setObjectName(u"playlist_combobox_pl5")
-        self.playlist_combobox_pl5.setGeometry(QRect(110, 240, 311, 51))
-        self.playlist_combobox_pl5.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
+        self.playlist_btnadd_5.setIcon(icon6)
         self.playlist_dur_pl5 = QLabel(self.page_playlist)
         self.playlist_dur_pl5.setObjectName(u"playlist_dur_pl5")
-        self.playlist_dur_pl5.setGeometry(QRect(120, 270, 71, 16))
+        self.playlist_dur_pl5.setGeometry(QRect(120, 350, 71, 16))
         self.playlist_dur_pl5.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl5 = QLabel(self.page_playlist)
         self.playlist_numclip_pl5.setObjectName(u"playlist_numclip_pl5")
-        self.playlist_numclip_pl5.setGeometry(QRect(330, 270, 51, 16))
+        self.playlist_numclip_pl5.setGeometry(QRect(220, 350, 51, 16))
         self.playlist_numclip_pl5.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl5 = QLabel(self.page_playlist)
         self.playlist_codi_pl5.setObjectName(u"playlist_codi_pl5")
-        self.playlist_codi_pl5.setGeometry(QRect(120, 250, 21, 16))
+        self.playlist_codi_pl5.setGeometry(QRect(120, 330, 21, 16))
         self.playlist_codi_pl5.setFont(font7)
         self.playlist_codi_pl5.setStyleSheet(u"")
         self.playlist_btnadd_6 = QPushButton(self.page_playlist)
         self.playlist_btnadd_6.setObjectName(u"playlist_btnadd_6")
-        self.playlist_btnadd_6.setGeometry(QRect(10, 300, 93, 51))
+        self.playlist_btnadd_6.setGeometry(QRect(10, 400, 93, 51))
         self.playlist_btnadd_6.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -2321,87 +2239,26 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_6.setIcon(icon5)
-        self.playlist_combobox_pl6 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl6.setObjectName(u"playlist_combobox_pl6")
-        self.playlist_combobox_pl6.setGeometry(QRect(110, 300, 311, 51))
-        self.playlist_combobox_pl6.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
+        self.playlist_btnadd_6.setIcon(icon6)
         self.playlist_dur_pl6 = QLabel(self.page_playlist)
         self.playlist_dur_pl6.setObjectName(u"playlist_dur_pl6")
-        self.playlist_dur_pl6.setGeometry(QRect(120, 330, 71, 16))
+        self.playlist_dur_pl6.setGeometry(QRect(120, 430, 71, 16))
         self.playlist_dur_pl6.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl6 = QLabel(self.page_playlist)
         self.playlist_numclip_pl6.setObjectName(u"playlist_numclip_pl6")
-        self.playlist_numclip_pl6.setGeometry(QRect(330, 330, 51, 16))
+        self.playlist_numclip_pl6.setGeometry(QRect(220, 430, 51, 16))
         self.playlist_numclip_pl6.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl6 = QLabel(self.page_playlist)
         self.playlist_codi_pl6.setObjectName(u"playlist_codi_pl6")
-        self.playlist_codi_pl6.setGeometry(QRect(120, 310, 21, 16))
+        self.playlist_codi_pl6.setGeometry(QRect(120, 410, 21, 16))
         self.playlist_codi_pl6.setFont(font7)
         self.playlist_codi_pl6.setStyleSheet(u"")
-        self.playlist_codi_pl7 = QLabel(self.page_playlist)
-        self.playlist_codi_pl7.setObjectName(u"playlist_codi_pl7")
-        self.playlist_codi_pl7.setGeometry(QRect(120, 370, 21, 16))
-        self.playlist_codi_pl7.setFont(font7)
-        self.playlist_codi_pl7.setStyleSheet(u"")
-        self.playlist_numclip_pl7 = QLabel(self.page_playlist)
-        self.playlist_numclip_pl7.setObjectName(u"playlist_numclip_pl7")
-        self.playlist_numclip_pl7.setGeometry(QRect(330, 390, 51, 16))
-        self.playlist_numclip_pl7.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
-"border: rgba(255,255,255,0);")
-        self.playlist_dur_pl7 = QLabel(self.page_playlist)
-        self.playlist_dur_pl7.setObjectName(u"playlist_dur_pl7")
-        self.playlist_dur_pl7.setGeometry(QRect(120, 390, 71, 16))
-        self.playlist_dur_pl7.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
-"border: rgba(255,255,255,0);")
-        self.playlist_combobox_pl7 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl7.setObjectName(u"playlist_combobox_pl7")
-        self.playlist_combobox_pl7.setGeometry(QRect(110, 360, 311, 51))
-        self.playlist_combobox_pl7.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_btnadd_7 = QPushButton(self.page_playlist)
-        self.playlist_btnadd_7.setObjectName(u"playlist_btnadd_7")
-        self.playlist_btnadd_7.setGeometry(QRect(10, 360, 93, 51))
-        self.playlist_btnadd_7.setStyleSheet(u"QPushButton {\n"
+        self.playlist_button_pl1 = QPushButton(self.page_playlist)
+        self.playlist_button_pl1.setObjectName(u"playlist_button_pl1")
+        self.playlist_button_pl1.setGeometry(QRect(110, 0, 171, 51))
+        self.playlist_button_pl1.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2418,412 +2275,164 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_7.setIcon(icon5)
-        self.playlist_codi_pl8 = QLabel(self.page_playlist)
-        self.playlist_codi_pl8.setObjectName(u"playlist_codi_pl8")
-        self.playlist_codi_pl8.setGeometry(QRect(120, 430, 21, 16))
-        self.playlist_codi_pl8.setFont(font7)
-        self.playlist_codi_pl8.setStyleSheet(u"")
-        self.playlist_numclip_pl8 = QLabel(self.page_playlist)
-        self.playlist_numclip_pl8.setObjectName(u"playlist_numclip_pl8")
-        self.playlist_numclip_pl8.setGeometry(QRect(330, 450, 51, 16))
-        self.playlist_numclip_pl8.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
-"border: rgba(255,255,255,0);")
+        self.playlist_button_pl2 = QPushButton(self.page_playlist)
+        self.playlist_button_pl2.setObjectName(u"playlist_button_pl2")
+        self.playlist_button_pl2.setGeometry(QRect(110, 80, 171, 51))
+        self.playlist_button_pl2.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_button_pl3 = QPushButton(self.page_playlist)
+        self.playlist_button_pl3.setObjectName(u"playlist_button_pl3")
+        self.playlist_button_pl3.setGeometry(QRect(110, 160, 171, 51))
+        self.playlist_button_pl3.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_button_pl4 = QPushButton(self.page_playlist)
+        self.playlist_button_pl4.setObjectName(u"playlist_button_pl4")
+        self.playlist_button_pl4.setGeometry(QRect(110, 240, 171, 51))
+        self.playlist_button_pl4.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_button_pl5 = QPushButton(self.page_playlist)
+        self.playlist_button_pl5.setObjectName(u"playlist_button_pl5")
+        self.playlist_button_pl5.setGeometry(QRect(110, 320, 171, 51))
+        self.playlist_button_pl5.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_button_pl6 = QPushButton(self.page_playlist)
+        self.playlist_button_pl6.setObjectName(u"playlist_button_pl6")
+        self.playlist_button_pl6.setGeometry(QRect(110, 400, 171, 51))
+        self.playlist_button_pl6.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
         self.playlist_dur_pl8 = QLabel(self.page_playlist)
         self.playlist_dur_pl8.setObjectName(u"playlist_dur_pl8")
-        self.playlist_dur_pl8.setGeometry(QRect(120, 450, 71, 16))
+        self.playlist_dur_pl8.setGeometry(QRect(430, 110, 71, 16))
         self.playlist_dur_pl8.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
-        self.playlist_combobox_pl8 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl8.setObjectName(u"playlist_combobox_pl8")
-        self.playlist_combobox_pl8.setGeometry(QRect(110, 420, 311, 51))
-        self.playlist_combobox_pl8.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_btnadd_8 = QPushButton(self.page_playlist)
-        self.playlist_btnadd_8.setObjectName(u"playlist_btnadd_8")
-        self.playlist_btnadd_8.setGeometry(QRect(10, 420, 93, 51))
-        self.playlist_btnadd_8.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_btnadd_8.setIcon(icon5)
         self.playlist_numclip_pl12 = QLabel(self.page_playlist)
         self.playlist_numclip_pl12.setObjectName(u"playlist_numclip_pl12")
-        self.playlist_numclip_pl12.setGeometry(QRect(800, 210, 51, 16))
+        self.playlist_numclip_pl12.setGeometry(QRect(530, 430, 51, 16))
         self.playlist_numclip_pl12.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
-        self.playlist_combobox_pl9 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl9.setObjectName(u"playlist_combobox_pl9")
-        self.playlist_combobox_pl9.setGeometry(QRect(580, 0, 311, 51))
-        self.playlist_combobox_pl9.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_dur_pl10 = QLabel(self.page_playlist)
-        self.playlist_dur_pl10.setObjectName(u"playlist_dur_pl10")
-        self.playlist_dur_pl10.setGeometry(QRect(590, 90, 71, 16))
-        self.playlist_dur_pl10.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
-"border: rgba(255,255,255,0);")
-        self.playlist_dur_pl12 = QLabel(self.page_playlist)
-        self.playlist_dur_pl12.setObjectName(u"playlist_dur_pl12")
-        self.playlist_dur_pl12.setGeometry(QRect(590, 210, 71, 16))
-        self.playlist_dur_pl12.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
-"border: rgba(255,255,255,0);")
-        self.playlist_combobox_pl15 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl15.setObjectName(u"playlist_combobox_pl15")
-        self.playlist_combobox_pl15.setGeometry(QRect(580, 360, 311, 51))
-        self.playlist_combobox_pl15.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_numclip_pl9 = QLabel(self.page_playlist)
-        self.playlist_numclip_pl9.setObjectName(u"playlist_numclip_pl9")
-        self.playlist_numclip_pl9.setGeometry(QRect(800, 30, 51, 16))
-        self.playlist_numclip_pl9.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
-"border: rgba(255,255,255,0);")
-        self.playlist_combobox_pl13 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl13.setObjectName(u"playlist_combobox_pl13")
-        self.playlist_combobox_pl13.setGeometry(QRect(580, 240, 311, 51))
-        self.playlist_combobox_pl13.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_combobox_pl16 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl16.setObjectName(u"playlist_combobox_pl16")
-        self.playlist_combobox_pl16.setGeometry(QRect(580, 420, 311, 51))
-        self.playlist_combobox_pl16.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_combobox_pl12 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl12.setObjectName(u"playlist_combobox_pl12")
-        self.playlist_combobox_pl12.setGeometry(QRect(580, 180, 311, 51))
-        self.playlist_combobox_pl12.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
         self.playlist_codi_pl10 = QLabel(self.page_playlist)
         self.playlist_codi_pl10.setObjectName(u"playlist_codi_pl10")
-        self.playlist_codi_pl10.setGeometry(QRect(590, 70, 21, 16))
+        self.playlist_codi_pl10.setGeometry(QRect(430, 250, 21, 16))
         self.playlist_codi_pl10.setFont(font7)
         self.playlist_codi_pl10.setStyleSheet(u"")
-        self.playlist_codi_pl14 = QLabel(self.page_playlist)
-        self.playlist_codi_pl14.setObjectName(u"playlist_codi_pl14")
-        self.playlist_codi_pl14.setGeometry(QRect(590, 310, 21, 16))
-        self.playlist_codi_pl14.setFont(font7)
-        self.playlist_codi_pl14.setStyleSheet(u"")
-        self.playlist_btnadd_14 = QPushButton(self.page_playlist)
-        self.playlist_btnadd_14.setObjectName(u"playlist_btnadd_14")
-        self.playlist_btnadd_14.setGeometry(QRect(480, 300, 93, 51))
-        self.playlist_btnadd_14.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_btnadd_14.setIcon(icon5)
-        self.playlist_codi_pl9 = QLabel(self.page_playlist)
-        self.playlist_codi_pl9.setObjectName(u"playlist_codi_pl9")
-        self.playlist_codi_pl9.setGeometry(QRect(590, 10, 21, 16))
-        self.playlist_codi_pl9.setFont(font7)
-        self.playlist_codi_pl9.setStyleSheet(u"")
-        self.playlist_numclip_pl11 = QLabel(self.page_playlist)
-        self.playlist_numclip_pl11.setObjectName(u"playlist_numclip_pl11")
-        self.playlist_numclip_pl11.setGeometry(QRect(800, 150, 51, 16))
-        self.playlist_numclip_pl11.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+        self.playlist_dur_pl9 = QLabel(self.page_playlist)
+        self.playlist_dur_pl9.setObjectName(u"playlist_dur_pl9")
+        self.playlist_dur_pl9.setGeometry(QRect(430, 190, 71, 16))
+        self.playlist_dur_pl9.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
-        self.playlist_dur_pl13 = QLabel(self.page_playlist)
-        self.playlist_dur_pl13.setObjectName(u"playlist_dur_pl13")
-        self.playlist_dur_pl13.setGeometry(QRect(590, 270, 71, 16))
-        self.playlist_dur_pl13.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
-"border: rgba(255,255,255,0);")
-        self.playlist_dur_pl11 = QLabel(self.page_playlist)
-        self.playlist_dur_pl11.setObjectName(u"playlist_dur_pl11")
-        self.playlist_dur_pl11.setGeometry(QRect(590, 150, 71, 16))
-        self.playlist_dur_pl11.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
-"border: rgba(255,255,255,0);")
-        self.playlist_btnadd_13 = QPushButton(self.page_playlist)
-        self.playlist_btnadd_13.setObjectName(u"playlist_btnadd_13")
-        self.playlist_btnadd_13.setGeometry(QRect(480, 240, 93, 51))
-        self.playlist_btnadd_13.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_btnadd_13.setIcon(icon5)
-        self.playlist_combobox_pl14 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl14.setObjectName(u"playlist_combobox_pl14")
-        self.playlist_combobox_pl14.setGeometry(QRect(580, 300, 311, 51))
-        self.playlist_combobox_pl14.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_btnadd_9 = QPushButton(self.page_playlist)
-        self.playlist_btnadd_9.setObjectName(u"playlist_btnadd_9")
-        self.playlist_btnadd_9.setGeometry(QRect(480, 0, 93, 51))
-        self.playlist_btnadd_9.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_btnadd_9.setIcon(icon5)
-        self.playlist_combobox_pl10 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl10.setObjectName(u"playlist_combobox_pl10")
-        self.playlist_combobox_pl10.setGeometry(QRect(580, 60, 311, 51))
-        self.playlist_combobox_pl10.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_codi_pl12 = QLabel(self.page_playlist)
-        self.playlist_codi_pl12.setObjectName(u"playlist_codi_pl12")
-        self.playlist_codi_pl12.setGeometry(QRect(590, 190, 21, 16))
-        self.playlist_codi_pl12.setFont(font7)
-        self.playlist_codi_pl12.setStyleSheet(u"")
         self.playlist_numclip_pl10 = QLabel(self.page_playlist)
         self.playlist_numclip_pl10.setObjectName(u"playlist_numclip_pl10")
-        self.playlist_numclip_pl10.setGeometry(QRect(800, 90, 51, 16))
+        self.playlist_numclip_pl10.setGeometry(QRect(530, 270, 51, 16))
         self.playlist_numclip_pl10.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
+        self.playlist_dur_pl10 = QLabel(self.page_playlist)
+        self.playlist_dur_pl10.setObjectName(u"playlist_dur_pl10")
+        self.playlist_dur_pl10.setGeometry(QRect(430, 270, 71, 16))
+        self.playlist_dur_pl10.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_codi_pl9 = QLabel(self.page_playlist)
+        self.playlist_codi_pl9.setObjectName(u"playlist_codi_pl9")
+        self.playlist_codi_pl9.setGeometry(QRect(430, 170, 21, 16))
+        self.playlist_codi_pl9.setFont(font7)
+        self.playlist_codi_pl9.setStyleSheet(u"")
+        self.playlist_codi_pl8 = QLabel(self.page_playlist)
+        self.playlist_codi_pl8.setObjectName(u"playlist_codi_pl8")
+        self.playlist_codi_pl8.setGeometry(QRect(430, 90, 21, 16))
+        self.playlist_codi_pl8.setFont(font7)
+        self.playlist_codi_pl8.setStyleSheet(u"")
         self.playlist_codi_pl11 = QLabel(self.page_playlist)
         self.playlist_codi_pl11.setObjectName(u"playlist_codi_pl11")
-        self.playlist_codi_pl11.setGeometry(QRect(590, 130, 21, 16))
+        self.playlist_codi_pl11.setGeometry(QRect(430, 330, 21, 16))
         self.playlist_codi_pl11.setFont(font7)
         self.playlist_codi_pl11.setStyleSheet(u"")
-        self.playlist_codi_pl13 = QLabel(self.page_playlist)
-        self.playlist_codi_pl13.setObjectName(u"playlist_codi_pl13")
-        self.playlist_codi_pl13.setGeometry(QRect(590, 250, 21, 16))
-        self.playlist_codi_pl13.setFont(font7)
-        self.playlist_codi_pl13.setStyleSheet(u"")
-        self.playlist_numclip_pl14 = QLabel(self.page_playlist)
-        self.playlist_numclip_pl14.setObjectName(u"playlist_numclip_pl14")
-        self.playlist_numclip_pl14.setGeometry(QRect(800, 330, 51, 16))
-        self.playlist_numclip_pl14.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+        self.playlist_dur_pl11 = QLabel(self.page_playlist)
+        self.playlist_dur_pl11.setObjectName(u"playlist_dur_pl11")
+        self.playlist_dur_pl11.setGeometry(QRect(430, 350, 71, 16))
+        self.playlist_dur_pl11.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
-        self.playlist_btnadd_12 = QPushButton(self.page_playlist)
-        self.playlist_btnadd_12.setObjectName(u"playlist_btnadd_12")
-        self.playlist_btnadd_12.setGeometry(QRect(480, 180, 93, 51))
-        self.playlist_btnadd_12.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}")
-        self.playlist_btnadd_12.setIcon(icon5)
-        self.playlist_combobox_pl11 = QComboBox(self.page_playlist)
-        self.playlist_combobox_pl11.setObjectName(u"playlist_combobox_pl11")
-        self.playlist_combobox_pl11.setGeometry(QRect(580, 120, 311, 51))
-        self.playlist_combobox_pl11.setStyleSheet(u"QComboBox {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QComboBox:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QComboBox:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"QComboBox::item:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}")
+        self.playlist_codi_pl7 = QLabel(self.page_playlist)
+        self.playlist_codi_pl7.setObjectName(u"playlist_codi_pl7")
+        self.playlist_codi_pl7.setGeometry(QRect(430, 10, 21, 16))
+        self.playlist_codi_pl7.setFont(font7)
+        self.playlist_codi_pl7.setStyleSheet(u"")
         self.playlist_btnadd_10 = QPushButton(self.page_playlist)
         self.playlist_btnadd_10.setObjectName(u"playlist_btnadd_10")
-        self.playlist_btnadd_10.setGeometry(QRect(480, 60, 93, 51))
+        self.playlist_btnadd_10.setGeometry(QRect(320, 240, 93, 51))
         self.playlist_btnadd_10.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -2841,16 +2450,11 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_10.setIcon(icon5)
-        self.playlist_dur_pl9 = QLabel(self.page_playlist)
-        self.playlist_dur_pl9.setObjectName(u"playlist_dur_pl9")
-        self.playlist_dur_pl9.setGeometry(QRect(590, 30, 71, 16))
-        self.playlist_dur_pl9.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
-"border: rgba(255,255,255,0);")
-        self.playlist_btnadd_16 = QPushButton(self.page_playlist)
-        self.playlist_btnadd_16.setObjectName(u"playlist_btnadd_16")
-        self.playlist_btnadd_16.setGeometry(QRect(480, 420, 93, 51))
-        self.playlist_btnadd_16.setStyleSheet(u"QPushButton {\n"
+        self.playlist_btnadd_10.setIcon(icon6)
+        self.playlist_button_pl10 = QPushButton(self.page_playlist)
+        self.playlist_button_pl10.setObjectName(u"playlist_button_pl10")
+        self.playlist_button_pl10.setGeometry(QRect(420, 240, 171, 51))
+        self.playlist_button_pl10.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2867,11 +2471,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_16.setIcon(icon5)
-        self.playlist_btnadd_15 = QPushButton(self.page_playlist)
-        self.playlist_btnadd_15.setObjectName(u"playlist_btnadd_15")
-        self.playlist_btnadd_15.setGeometry(QRect(480, 360, 93, 51))
-        self.playlist_btnadd_15.setStyleSheet(u"QPushButton {\n"
+        self.playlist_button_pl12 = QPushButton(self.page_playlist)
+        self.playlist_button_pl12.setObjectName(u"playlist_button_pl12")
+        self.playlist_button_pl12.setGeometry(QRect(420, 400, 171, 51))
+        self.playlist_button_pl12.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2888,15 +2491,141 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_15.setIcon(icon5)
-        self.playlist_numclip_pl13 = QLabel(self.page_playlist)
-        self.playlist_numclip_pl13.setObjectName(u"playlist_numclip_pl13")
-        self.playlist_numclip_pl13.setGeometry(QRect(800, 270, 51, 16))
-        self.playlist_numclip_pl13.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+        self.playlist_button_pl9 = QPushButton(self.page_playlist)
+        self.playlist_button_pl9.setObjectName(u"playlist_button_pl9")
+        self.playlist_button_pl9.setGeometry(QRect(420, 160, 171, 51))
+        self.playlist_button_pl9.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_numclip_pl11 = QLabel(self.page_playlist)
+        self.playlist_numclip_pl11.setObjectName(u"playlist_numclip_pl11")
+        self.playlist_numclip_pl11.setGeometry(QRect(530, 350, 51, 16))
+        self.playlist_numclip_pl11.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
+        self.playlist_btnadd_7 = QPushButton(self.page_playlist)
+        self.playlist_btnadd_7.setObjectName(u"playlist_btnadd_7")
+        self.playlist_btnadd_7.setGeometry(QRect(320, 0, 93, 51))
+        self.playlist_btnadd_7.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_7.setIcon(icon6)
+        self.playlist_btnadd_8 = QPushButton(self.page_playlist)
+        self.playlist_btnadd_8.setObjectName(u"playlist_btnadd_8")
+        self.playlist_btnadd_8.setGeometry(QRect(320, 80, 93, 51))
+        self.playlist_btnadd_8.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_8.setIcon(icon6)
+        self.playlist_numclip_pl8 = QLabel(self.page_playlist)
+        self.playlist_numclip_pl8.setObjectName(u"playlist_numclip_pl8")
+        self.playlist_numclip_pl8.setGeometry(QRect(530, 110, 51, 16))
+        self.playlist_numclip_pl8.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_button_pl8 = QPushButton(self.page_playlist)
+        self.playlist_button_pl8.setObjectName(u"playlist_button_pl8")
+        self.playlist_button_pl8.setGeometry(QRect(420, 80, 171, 51))
+        self.playlist_button_pl8.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_numclip_pl9 = QLabel(self.page_playlist)
+        self.playlist_numclip_pl9.setObjectName(u"playlist_numclip_pl9")
+        self.playlist_numclip_pl9.setGeometry(QRect(530, 190, 51, 16))
+        self.playlist_numclip_pl9.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_dur_pl12 = QLabel(self.page_playlist)
+        self.playlist_dur_pl12.setObjectName(u"playlist_dur_pl12")
+        self.playlist_dur_pl12.setGeometry(QRect(430, 430, 71, 16))
+        self.playlist_dur_pl12.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_codi_pl12 = QLabel(self.page_playlist)
+        self.playlist_codi_pl12.setObjectName(u"playlist_codi_pl12")
+        self.playlist_codi_pl12.setGeometry(QRect(430, 410, 21, 16))
+        self.playlist_codi_pl12.setFont(font7)
+        self.playlist_codi_pl12.setStyleSheet(u"")
+        self.playlist_numclip_pl7 = QLabel(self.page_playlist)
+        self.playlist_numclip_pl7.setObjectName(u"playlist_numclip_pl7")
+        self.playlist_numclip_pl7.setGeometry(QRect(530, 30, 51, 16))
+        self.playlist_numclip_pl7.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_button_pl11 = QPushButton(self.page_playlist)
+        self.playlist_button_pl11.setObjectName(u"playlist_button_pl11")
+        self.playlist_button_pl11.setGeometry(QRect(420, 320, 171, 51))
+        self.playlist_button_pl11.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
         self.playlist_btnadd_11 = QPushButton(self.page_playlist)
         self.playlist_btnadd_11.setObjectName(u"playlist_btnadd_11")
-        self.playlist_btnadd_11.setGeometry(QRect(480, 120, 93, 51))
+        self.playlist_btnadd_11.setGeometry(QRect(320, 320, 93, 51))
         self.playlist_btnadd_11.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -2914,125 +2643,551 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_11.setIcon(icon5)
+        self.playlist_btnadd_11.setIcon(icon6)
+        self.playlist_dur_pl7 = QLabel(self.page_playlist)
+        self.playlist_dur_pl7.setObjectName(u"playlist_dur_pl7")
+        self.playlist_dur_pl7.setGeometry(QRect(430, 30, 71, 16))
+        self.playlist_dur_pl7.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_button_pl7 = QPushButton(self.page_playlist)
+        self.playlist_button_pl7.setObjectName(u"playlist_button_pl7")
+        self.playlist_button_pl7.setGeometry(QRect(420, 0, 171, 51))
+        self.playlist_button_pl7.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_9 = QPushButton(self.page_playlist)
+        self.playlist_btnadd_9.setObjectName(u"playlist_btnadd_9")
+        self.playlist_btnadd_9.setGeometry(QRect(320, 160, 93, 51))
+        self.playlist_btnadd_9.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_9.setIcon(icon6)
+        self.playlist_btnadd_12 = QPushButton(self.page_playlist)
+        self.playlist_btnadd_12.setObjectName(u"playlist_btnadd_12")
+        self.playlist_btnadd_12.setGeometry(QRect(320, 400, 93, 51))
+        self.playlist_btnadd_12.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_12.setIcon(icon6)
         self.playlist_dur_pl14 = QLabel(self.page_playlist)
         self.playlist_dur_pl14.setObjectName(u"playlist_dur_pl14")
-        self.playlist_dur_pl14.setGeometry(QRect(590, 330, 71, 16))
+        self.playlist_dur_pl14.setGeometry(QRect(750, 110, 71, 16))
         self.playlist_dur_pl14.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
-        self.playlist_numclip_pl15 = QLabel(self.page_playlist)
-        self.playlist_numclip_pl15.setObjectName(u"playlist_numclip_pl15")
-        self.playlist_numclip_pl15.setGeometry(QRect(800, 390, 51, 16))
-        self.playlist_numclip_pl15.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+        self.playlist_numclip_pl18 = QLabel(self.page_playlist)
+        self.playlist_numclip_pl18.setObjectName(u"playlist_numclip_pl18")
+        self.playlist_numclip_pl18.setGeometry(QRect(850, 430, 51, 16))
+        self.playlist_numclip_pl18.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
-        self.playlist_codi_pl15 = QLabel(self.page_playlist)
-        self.playlist_codi_pl15.setObjectName(u"playlist_codi_pl15")
-        self.playlist_codi_pl15.setGeometry(QRect(590, 370, 21, 16))
-        self.playlist_codi_pl15.setFont(font7)
-        self.playlist_codi_pl15.setStyleSheet(u"")
+        self.playlist_codi_pl16 = QLabel(self.page_playlist)
+        self.playlist_codi_pl16.setObjectName(u"playlist_codi_pl16")
+        self.playlist_codi_pl16.setGeometry(QRect(750, 250, 21, 16))
+        self.playlist_codi_pl16.setFont(font7)
+        self.playlist_codi_pl16.setStyleSheet(u"")
         self.playlist_dur_pl15 = QLabel(self.page_playlist)
         self.playlist_dur_pl15.setObjectName(u"playlist_dur_pl15")
-        self.playlist_dur_pl15.setGeometry(QRect(590, 390, 71, 16))
+        self.playlist_dur_pl15.setGeometry(QRect(750, 190, 71, 16))
         self.playlist_dur_pl15.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl16 = QLabel(self.page_playlist)
         self.playlist_numclip_pl16.setObjectName(u"playlist_numclip_pl16")
-        self.playlist_numclip_pl16.setGeometry(QRect(800, 450, 51, 16))
+        self.playlist_numclip_pl16.setGeometry(QRect(850, 270, 51, 16))
         self.playlist_numclip_pl16.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_dur_pl16 = QLabel(self.page_playlist)
         self.playlist_dur_pl16.setObjectName(u"playlist_dur_pl16")
-        self.playlist_dur_pl16.setGeometry(QRect(590, 450, 71, 16))
+        self.playlist_dur_pl16.setGeometry(QRect(750, 270, 71, 16))
         self.playlist_dur_pl16.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
-        self.playlist_codi_pl16 = QLabel(self.page_playlist)
-        self.playlist_codi_pl16.setObjectName(u"playlist_codi_pl16")
-        self.playlist_codi_pl16.setGeometry(QRect(590, 430, 21, 16))
-        self.playlist_codi_pl16.setFont(font7)
-        self.playlist_codi_pl16.setStyleSheet(u"")
+        self.playlist_codi_pl15 = QLabel(self.page_playlist)
+        self.playlist_codi_pl15.setObjectName(u"playlist_codi_pl15")
+        self.playlist_codi_pl15.setGeometry(QRect(750, 170, 21, 16))
+        self.playlist_codi_pl15.setFont(font7)
+        self.playlist_codi_pl15.setStyleSheet(u"")
+        self.playlist_codi_pl14 = QLabel(self.page_playlist)
+        self.playlist_codi_pl14.setObjectName(u"playlist_codi_pl14")
+        self.playlist_codi_pl14.setGeometry(QRect(750, 90, 21, 16))
+        self.playlist_codi_pl14.setFont(font7)
+        self.playlist_codi_pl14.setStyleSheet(u"")
+        self.playlist_codi_pl17 = QLabel(self.page_playlist)
+        self.playlist_codi_pl17.setObjectName(u"playlist_codi_pl17")
+        self.playlist_codi_pl17.setGeometry(QRect(750, 330, 21, 16))
+        self.playlist_codi_pl17.setFont(font7)
+        self.playlist_codi_pl17.setStyleSheet(u"")
+        self.playlist_dur_pl17 = QLabel(self.page_playlist)
+        self.playlist_dur_pl17.setObjectName(u"playlist_dur_pl17")
+        self.playlist_dur_pl17.setGeometry(QRect(750, 350, 71, 16))
+        self.playlist_dur_pl17.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_codi_pl13 = QLabel(self.page_playlist)
+        self.playlist_codi_pl13.setObjectName(u"playlist_codi_pl13")
+        self.playlist_codi_pl13.setGeometry(QRect(750, 10, 21, 16))
+        self.playlist_codi_pl13.setFont(font7)
+        self.playlist_codi_pl13.setStyleSheet(u"")
+        self.playlist_btnadd_16 = QPushButton(self.page_playlist)
+        self.playlist_btnadd_16.setObjectName(u"playlist_btnadd_16")
+        self.playlist_btnadd_16.setGeometry(QRect(640, 240, 93, 51))
+        self.playlist_btnadd_16.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_16.setIcon(icon6)
+        self.playlist_button_pl16 = QPushButton(self.page_playlist)
+        self.playlist_button_pl16.setObjectName(u"playlist_button_pl16")
+        self.playlist_button_pl16.setGeometry(QRect(740, 240, 171, 51))
+        self.playlist_button_pl16.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_button_pl18 = QPushButton(self.page_playlist)
+        self.playlist_button_pl18.setObjectName(u"playlist_button_pl18")
+        self.playlist_button_pl18.setGeometry(QRect(740, 400, 171, 51))
+        self.playlist_button_pl18.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_button_pl15 = QPushButton(self.page_playlist)
+        self.playlist_button_pl15.setObjectName(u"playlist_button_pl15")
+        self.playlist_button_pl15.setGeometry(QRect(740, 160, 171, 51))
+        self.playlist_button_pl15.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_numclip_pl17 = QLabel(self.page_playlist)
+        self.playlist_numclip_pl17.setObjectName(u"playlist_numclip_pl17")
+        self.playlist_numclip_pl17.setGeometry(QRect(850, 350, 51, 16))
+        self.playlist_numclip_pl17.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_btnadd_13 = QPushButton(self.page_playlist)
+        self.playlist_btnadd_13.setObjectName(u"playlist_btnadd_13")
+        self.playlist_btnadd_13.setGeometry(QRect(640, 0, 93, 51))
+        self.playlist_btnadd_13.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_13.setIcon(icon6)
+        self.playlist_btnadd_14 = QPushButton(self.page_playlist)
+        self.playlist_btnadd_14.setObjectName(u"playlist_btnadd_14")
+        self.playlist_btnadd_14.setGeometry(QRect(640, 80, 93, 51))
+        self.playlist_btnadd_14.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_14.setIcon(icon6)
+        self.playlist_numclip_pl14 = QLabel(self.page_playlist)
+        self.playlist_numclip_pl14.setObjectName(u"playlist_numclip_pl14")
+        self.playlist_numclip_pl14.setGeometry(QRect(850, 110, 51, 16))
+        self.playlist_numclip_pl14.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_button_pl14 = QPushButton(self.page_playlist)
+        self.playlist_button_pl14.setObjectName(u"playlist_button_pl14")
+        self.playlist_button_pl14.setGeometry(QRect(740, 80, 171, 51))
+        self.playlist_button_pl14.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_numclip_pl15 = QLabel(self.page_playlist)
+        self.playlist_numclip_pl15.setObjectName(u"playlist_numclip_pl15")
+        self.playlist_numclip_pl15.setGeometry(QRect(850, 190, 51, 16))
+        self.playlist_numclip_pl15.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_dur_pl18 = QLabel(self.page_playlist)
+        self.playlist_dur_pl18.setObjectName(u"playlist_dur_pl18")
+        self.playlist_dur_pl18.setGeometry(QRect(750, 430, 71, 16))
+        self.playlist_dur_pl18.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_codi_pl18 = QLabel(self.page_playlist)
+        self.playlist_codi_pl18.setObjectName(u"playlist_codi_pl18")
+        self.playlist_codi_pl18.setGeometry(QRect(750, 410, 21, 16))
+        self.playlist_codi_pl18.setFont(font7)
+        self.playlist_codi_pl18.setStyleSheet(u"")
+        self.playlist_numclip_pl13 = QLabel(self.page_playlist)
+        self.playlist_numclip_pl13.setObjectName(u"playlist_numclip_pl13")
+        self.playlist_numclip_pl13.setGeometry(QRect(850, 30, 51, 16))
+        self.playlist_numclip_pl13.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_button_pl17 = QPushButton(self.page_playlist)
+        self.playlist_button_pl17.setObjectName(u"playlist_button_pl17")
+        self.playlist_button_pl17.setGeometry(QRect(740, 320, 171, 51))
+        self.playlist_button_pl17.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_17 = QPushButton(self.page_playlist)
+        self.playlist_btnadd_17.setObjectName(u"playlist_btnadd_17")
+        self.playlist_btnadd_17.setGeometry(QRect(640, 320, 93, 51))
+        self.playlist_btnadd_17.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_17.setIcon(icon6)
+        self.playlist_dur_pl13 = QLabel(self.page_playlist)
+        self.playlist_dur_pl13.setObjectName(u"playlist_dur_pl13")
+        self.playlist_dur_pl13.setGeometry(QRect(750, 30, 71, 16))
+        self.playlist_dur_pl13.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
+"border: rgba(255,255,255,0);")
+        self.playlist_button_pl13 = QPushButton(self.page_playlist)
+        self.playlist_button_pl13.setObjectName(u"playlist_button_pl13")
+        self.playlist_button_pl13.setGeometry(QRect(740, 0, 171, 51))
+        self.playlist_button_pl13.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_15 = QPushButton(self.page_playlist)
+        self.playlist_btnadd_15.setObjectName(u"playlist_btnadd_15")
+        self.playlist_btnadd_15.setGeometry(QRect(640, 160, 93, 51))
+        self.playlist_btnadd_15.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_15.setIcon(icon6)
+        self.playlist_btnadd_18 = QPushButton(self.page_playlist)
+        self.playlist_btnadd_18.setObjectName(u"playlist_btnadd_18")
+        self.playlist_btnadd_18.setGeometry(QRect(640, 400, 93, 51))
+        self.playlist_btnadd_18.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}")
+        self.playlist_btnadd_18.setIcon(icon6)
         self.stackedWidget.addWidget(self.page_playlist)
-        self.playlist_combobox_pl12.raise_()
-        self.playlist_combobox_pl11.raise_()
-        self.playlist_combobox_pl10.raise_()
-        self.playlist_combobox_pl14.raise_()
-        self.playlist_combobox_pl8.raise_()
-        self.playlist_combobox_pl7.raise_()
         self.playlist_btnadd_1.raise_()
-        self.playlist_combobox_pl1.raise_()
         self.playlist_numclip_pl1.raise_()
         self.playlist_dur_pl1.raise_()
         self.playlist_codi_pl1.raise_()
         self.playlist_btnadd_2.raise_()
-        self.playlist_combobox_pl2.raise_()
         self.playlist_dur_pl2.raise_()
         self.playlist_numclip_pl2.raise_()
         self.playlist_codi_pl2.raise_()
         self.playlist_btnadd_3.raise_()
-        self.playlist_combobox_pl3.raise_()
         self.playlist_dur_pl3.raise_()
         self.playlist_numclip_pl3.raise_()
         self.playlist_codi_pl3.raise_()
         self.playlist_btnadd_4.raise_()
-        self.playlist_combobox_pl4.raise_()
         self.playlist_dur_pl4.raise_()
         self.playlist_numclip_pl4.raise_()
         self.playlist_codi_pl4.raise_()
         self.playlist_btnadd_5.raise_()
-        self.playlist_combobox_pl5.raise_()
         self.playlist_dur_pl5.raise_()
         self.playlist_numclip_pl5.raise_()
         self.playlist_codi_pl5.raise_()
         self.playlist_btnadd_6.raise_()
-        self.playlist_combobox_pl6.raise_()
         self.playlist_dur_pl6.raise_()
         self.playlist_numclip_pl6.raise_()
         self.playlist_codi_pl6.raise_()
-        self.playlist_codi_pl7.raise_()
-        self.playlist_numclip_pl7.raise_()
-        self.playlist_dur_pl7.raise_()
-        self.playlist_btnadd_7.raise_()
-        self.playlist_codi_pl8.raise_()
-        self.playlist_numclip_pl8.raise_()
         self.playlist_dur_pl8.raise_()
-        self.playlist_btnadd_8.raise_()
         self.playlist_numclip_pl12.raise_()
-        self.playlist_combobox_pl9.raise_()
-        self.playlist_dur_pl10.raise_()
-        self.playlist_dur_pl12.raise_()
-        self.playlist_combobox_pl15.raise_()
-        self.playlist_numclip_pl9.raise_()
-        self.playlist_combobox_pl13.raise_()
-        self.playlist_combobox_pl16.raise_()
         self.playlist_codi_pl10.raise_()
-        self.playlist_codi_pl14.raise_()
-        self.playlist_btnadd_14.raise_()
-        self.playlist_codi_pl9.raise_()
-        self.playlist_numclip_pl11.raise_()
-        self.playlist_dur_pl13.raise_()
-        self.playlist_dur_pl11.raise_()
-        self.playlist_btnadd_13.raise_()
-        self.playlist_btnadd_9.raise_()
-        self.playlist_codi_pl12.raise_()
-        self.playlist_numclip_pl10.raise_()
-        self.playlist_codi_pl11.raise_()
-        self.playlist_codi_pl13.raise_()
-        self.playlist_numclip_pl14.raise_()
-        self.playlist_btnadd_12.raise_()
-        self.playlist_btnadd_10.raise_()
         self.playlist_dur_pl9.raise_()
-        self.playlist_btnadd_16.raise_()
-        self.playlist_btnadd_15.raise_()
-        self.playlist_numclip_pl13.raise_()
+        self.playlist_numclip_pl10.raise_()
+        self.playlist_dur_pl10.raise_()
+        self.playlist_codi_pl9.raise_()
+        self.playlist_codi_pl8.raise_()
+        self.playlist_codi_pl11.raise_()
+        self.playlist_dur_pl11.raise_()
+        self.playlist_codi_pl7.raise_()
+        self.playlist_btnadd_10.raise_()
+        self.playlist_numclip_pl11.raise_()
+        self.playlist_btnadd_7.raise_()
+        self.playlist_btnadd_8.raise_()
+        self.playlist_numclip_pl8.raise_()
+        self.playlist_numclip_pl9.raise_()
+        self.playlist_dur_pl12.raise_()
+        self.playlist_codi_pl12.raise_()
+        self.playlist_numclip_pl7.raise_()
         self.playlist_btnadd_11.raise_()
+        self.playlist_dur_pl7.raise_()
+        self.playlist_btnadd_9.raise_()
+        self.playlist_btnadd_12.raise_()
         self.playlist_dur_pl14.raise_()
-        self.playlist_numclip_pl15.raise_()
-        self.playlist_codi_pl15.raise_()
+        self.playlist_numclip_pl18.raise_()
+        self.playlist_codi_pl16.raise_()
         self.playlist_dur_pl15.raise_()
         self.playlist_numclip_pl16.raise_()
         self.playlist_dur_pl16.raise_()
-        self.playlist_codi_pl16.raise_()
+        self.playlist_codi_pl15.raise_()
+        self.playlist_codi_pl14.raise_()
+        self.playlist_codi_pl17.raise_()
+        self.playlist_dur_pl17.raise_()
+        self.playlist_codi_pl13.raise_()
+        self.playlist_btnadd_16.raise_()
+        self.playlist_numclip_pl17.raise_()
+        self.playlist_btnadd_13.raise_()
+        self.playlist_btnadd_14.raise_()
+        self.playlist_numclip_pl14.raise_()
+        self.playlist_numclip_pl15.raise_()
+        self.playlist_dur_pl18.raise_()
+        self.playlist_codi_pl18.raise_()
+        self.playlist_numclip_pl13.raise_()
+        self.playlist_btnadd_17.raise_()
+        self.playlist_dur_pl13.raise_()
+        self.playlist_btnadd_15.raise_()
+        self.playlist_btnadd_18.raise_()
+        self.playlist_button_pl1.raise_()
+        self.playlist_button_pl2.raise_()
+        self.playlist_button_pl3.raise_()
+        self.playlist_button_pl4.raise_()
+        self.playlist_button_pl5.raise_()
+        self.playlist_button_pl6.raise_()
+        self.playlist_button_pl7.raise_()
+        self.playlist_button_pl8.raise_()
+        self.playlist_button_pl9.raise_()
+        self.playlist_button_pl10.raise_()
+        self.playlist_button_pl11.raise_()
+        self.playlist_button_pl12.raise_()
+        self.playlist_button_pl13.raise_()
+        self.playlist_button_pl14.raise_()
+        self.playlist_button_pl15.raise_()
+        self.playlist_button_pl16.raise_()
+        self.playlist_button_pl17.raise_()
+        self.playlist_button_pl18.raise_()
         self.page_clipmanagement = QWidget()
         self.page_clipmanagement.setObjectName(u"page_clipmanagement")
+        self.clip_manag_name_clip = QPushButton(self.page_clipmanagement)
+        self.clip_manag_name_clip.setObjectName(u"clip_manag_name_clip")
+        self.clip_manag_name_clip.setGeometry(QRect(50, 30, 175, 70))
+        self.clip_manag_name_clip.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"")
+        self.clip_mang_name_angles = QPushButton(self.page_clipmanagement)
+        self.clip_mang_name_angles.setObjectName(u"clip_mang_name_angles")
+        self.clip_mang_name_angles.setGeometry(QRect(270, 30, 175, 70))
+        self.clip_mang_name_angles.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"")
         self.stackedWidget.addWidget(self.page_clipmanagement)
         self.page_control = QWidget()
         self.page_control.setObjectName(u"page_control")
@@ -3061,10 +3216,10 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "")
-        self.control_pgm_prv = QPushButton(self.page_control)
-        self.control_pgm_prv.setObjectName(u"control_pgm_prv")
-        self.control_pgm_prv.setGeometry(QRect(710, 250, 175, 70))
-        self.control_pgm_prv.setStyleSheet(u"QPushButton {\n"
+        self.control_prv_ctl = QPushButton(self.page_control)
+        self.control_prv_ctl.setObjectName(u"control_prv_ctl")
+        self.control_prv_ctl.setGeometry(QRect(710, 30, 175, 70))
+        self.control_prv_ctl.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -3087,32 +3242,8 @@ class Ui_MainWindow(object):
 "")
         self.control_syncprv = QPushButton(self.page_control)
         self.control_syncprv.setObjectName(u"control_syncprv")
-        self.control_syncprv.setGeometry(QRect(490, 250, 175, 70))
+        self.control_syncprv.setGeometry(QRect(490, 30, 175, 70))
         self.control_syncprv.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.control_2ndlever = QPushButton(self.page_control)
-        self.control_2ndlever.setObjectName(u"control_2ndlever")
-        self.control_2ndlever.setGeometry(QRect(50, 30, 175, 70))
-        self.control_2ndlever.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -3135,7 +3266,7 @@ class Ui_MainWindow(object):
 "")
         self.control_fast_jog = QPushButton(self.page_control)
         self.control_fast_jog.setObjectName(u"control_fast_jog")
-        self.control_fast_jog.setGeometry(QRect(710, 30, 175, 70))
+        self.control_fast_jog.setGeometry(QRect(270, 30, 175, 70))
         self.control_fast_jog.setLayoutDirection(Qt.RightToLeft)
         self.control_fast_jog.setAutoFillBackground(False)
         self.control_fast_jog.setStyleSheet(u"QPushButton {\n"
@@ -3166,30 +3297,6 @@ class Ui_MainWindow(object):
         self.control_gotoout.setObjectName(u"control_gotoout")
         self.control_gotoout.setGeometry(QRect(270, 140, 175, 70))
         self.control_gotoout.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.control_vsplit = QPushButton(self.page_control)
-        self.control_vsplit.setObjectName(u"control_vsplit")
-        self.control_vsplit.setGeometry(QRect(270, 360, 175, 70))
-        self.control_vsplit.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -3258,58 +3365,10 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "")
-        self.control_varmax = QPushButton(self.page_control)
-        self.control_varmax.setObjectName(u"control_varmax")
-        self.control_varmax.setGeometry(QRect(490, 30, 175, 70))
-        self.control_varmax.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.control_pgmspeed = QPushButton(self.page_control)
-        self.control_pgmspeed.setObjectName(u"control_pgmspeed")
-        self.control_pgmspeed.setGeometry(QRect(270, 30, 175, 70))
-        self.control_pgmspeed.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.control_hsplit = QPushButton(self.page_control)
-        self.control_hsplit.setObjectName(u"control_hsplit")
-        self.control_hsplit.setGeometry(QRect(490, 360, 175, 70))
-        self.control_hsplit.setStyleSheet(u"QPushButton {\n"
+        self.control_2ndfastjog = QPushButton(self.page_control)
+        self.control_2ndfastjog.setObjectName(u"control_2ndfastjog")
+        self.control_2ndfastjog.setGeometry(QRect(50, 30, 175, 70))
+        self.control_2ndfastjog.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -3332,81 +3391,8 @@ class Ui_MainWindow(object):
 "")
         self.control_return = QPushButton(self.page_control)
         self.control_return.setObjectName(u"control_return")
-        self.control_return.setGeometry(QRect(270, 250, 175, 70))
+        self.control_return.setGeometry(QRect(50, 250, 175, 70))
         self.control_return.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.control_resetcam = QPushButton(self.page_control)
-        self.control_resetcam.setObjectName(u"control_resetcam")
-        self.control_resetcam.setGeometry(QRect(50, 250, 175, 70))
-        self.control_resetcam.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.control_multipgm = QPushButton(self.page_control)
-        self.control_multipgm.setObjectName(u"control_multipgm")
-        self.control_multipgm.setGeometry(QRect(50, 360, 175, 70))
-        self.control_multipgm.setLayoutDirection(Qt.RightToLeft)
-        self.control_multipgm.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.control_splitmix = QPushButton(self.page_control)
-        self.control_splitmix.setObjectName(u"control_splitmix")
-        self.control_splitmix.setGeometry(QRect(710, 360, 175, 70))
-        self.control_splitmix.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -3430,62 +3416,9 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.page_control)
         self.page_contentacc = QWidget()
         self.page_contentacc.setObjectName(u"page_contentacc")
-        self.cont_acc_addtoshotbox = QPushButton(self.page_contentacc)
-        self.cont_acc_addtoshotbox.setObjectName(u"cont_acc_addtoshotbox")
-        self.cont_acc_addtoshotbox.setGeometry(QRect(490, 30, 175, 70))
-        self.cont_acc_addtoshotbox.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.cont_acc_shotbox = QPushButton(self.page_contentacc)
-        self.cont_acc_shotbox.setObjectName(u"cont_acc_shotbox")
-        self.cont_acc_shotbox.setGeometry(QRect(710, 30, 175, 70))
-        self.cont_acc_shotbox.setLayoutDirection(Qt.RightToLeft)
-        self.cont_acc_shotbox.setAutoFillBackground(False)
-        self.cont_acc_shotbox.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"    qproperty-iconAlignment: right;\n"
-"\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
         self.cont_acc_lastmark = QPushButton(self.page_contentacc)
         self.cont_acc_lastmark.setObjectName(u"cont_acc_lastmark")
-        self.cont_acc_lastmark.setGeometry(QRect(270, 140, 175, 70))
+        self.cont_acc_lastmark.setGeometry(QRect(50, 140, 175, 70))
         self.cont_acc_lastmark.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -3509,32 +3442,8 @@ class Ui_MainWindow(object):
 "")
         self.cont_acc_mark = QPushButton(self.page_contentacc)
         self.cont_acc_mark.setObjectName(u"cont_acc_mark")
-        self.cont_acc_mark.setGeometry(QRect(490, 140, 175, 70))
+        self.cont_acc_mark.setGeometry(QRect(270, 140, 175, 70))
         self.cont_acc_mark.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.cont_acc_trains = QPushButton(self.page_contentacc)
-        self.cont_acc_trains.setObjectName(u"cont_acc_trains")
-        self.cont_acc_trains.setGeometry(QRect(270, 360, 175, 70))
-        self.cont_acc_trains.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -3557,32 +3466,8 @@ class Ui_MainWindow(object):
 "")
         self.cont_acc_recall = QPushButton(self.page_contentacc)
         self.cont_acc_recall.setObjectName(u"cont_acc_recall")
-        self.cont_acc_recall.setGeometry(QRect(710, 250, 175, 70))
+        self.cont_acc_recall.setGeometry(QRect(710, 30, 175, 70))
         self.cont_acc_recall.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.cont_acc_backtolocal = QPushButton(self.page_contentacc)
-        self.cont_acc_backtolocal.setObjectName(u"cont_acc_backtolocal")
-        self.cont_acc_backtolocal.setGeometry(QRect(50, 140, 175, 70))
-        self.cont_acc_backtolocal.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -3630,7 +3515,7 @@ class Ui_MainWindow(object):
 "")
         self.cont_acc_page = QPushButton(self.page_contentacc)
         self.cont_acc_page.setObjectName(u"cont_acc_page")
-        self.cont_acc_page.setGeometry(QRect(490, 250, 175, 70))
+        self.cont_acc_page.setGeometry(QRect(490, 30, 175, 70))
         self.cont_acc_page.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -3654,7 +3539,7 @@ class Ui_MainWindow(object):
 "")
         self.cont_acc_searchtcconfig = QPushButton(self.page_contentacc)
         self.cont_acc_searchtcconfig.setObjectName(u"cont_acc_searchtcconfig")
-        self.cont_acc_searchtcconfig.setGeometry(QRect(270, 250, 175, 70))
+        self.cont_acc_searchtcconfig.setGeometry(QRect(50, 250, 175, 70))
         self.cont_acc_searchtcconfig.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -3678,7 +3563,7 @@ class Ui_MainWindow(object):
 "")
         self.cont_acc_recordtrains = QPushButton(self.page_contentacc)
         self.cont_acc_recordtrains.setObjectName(u"cont_acc_recordtrains")
-        self.cont_acc_recordtrains.setGeometry(QRect(50, 360, 175, 70))
+        self.cont_acc_recordtrains.setGeometry(QRect(270, 250, 175, 70))
         self.cont_acc_recordtrains.setLayoutDirection(Qt.RightToLeft)
         self.cont_acc_recordtrains.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
@@ -3704,7 +3589,7 @@ class Ui_MainWindow(object):
         self.cont_acc_recordtrains.setIcon(icon3)
         self.cont_acc_searchtc = QPushButton(self.page_contentacc)
         self.cont_acc_searchtc.setObjectName(u"cont_acc_searchtc")
-        self.cont_acc_searchtc.setGeometry(QRect(50, 250, 175, 70))
+        self.cont_acc_searchtc.setGeometry(QRect(490, 140, 175, 70))
         self.cont_acc_searchtc.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
@@ -3744,6 +3629,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "")
+        self.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
         self.contec_acc_actualplaylist = QLabel(self.page_contentacc)
         self.contec_acc_actualplaylist.setObjectName(u"contec_acc_actualplaylist")
         self.contec_acc_actualplaylist.setGeometry(QRect(270, 30, 175, 70))
@@ -3762,6 +3648,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "")
+        self.contec_acc_actualplaylist.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_contentacc)
         self.page_widgets = QWidget()
         self.page_widgets.setObjectName(u"page_widgets")
@@ -3836,9 +3723,9 @@ class Ui_MainWindow(object):
 "	background-color: rgb(35, 40, 49);\n"
 "	border: 2px solid rgb(43, 50, 61);\n"
 "}")
-        icon6 = QIcon()
-        icon6.addFile(u":/16x16/icons/16x16/cil-folder-open.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton.setIcon(icon6)
+        icon7 = QIcon()
+        icon7.addFile(u":/16x16/icons/16x16/cil-folder-open.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton.setIcon(icon7)
 
         self.gridLayout.addWidget(self.pushButton, 0, 1, 1, 1)
 
@@ -4037,9 +3924,9 @@ class Ui_MainWindow(object):
 "	color: rgb(210, 210, 210);\n"
 "	background-color: rgb(52, 58, 71);\n"
 "}")
-        icon7 = QIcon()
-        icon7.addFile(u":/16x16/icons/16x16/cil-link.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.commandLinkButton.setIcon(icon7)
+        icon8 = QIcon()
+        icon8.addFile(u":/16x16/icons/16x16/cil-link.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.commandLinkButton.setIcon(icon8)
 
         self.gridLayout_2.addWidget(self.commandLinkButton, 1, 6, 1, 1)
 
@@ -4324,7 +4211,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(8)
+        self.stackedWidget.setCurrentIndex(11)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -4335,7 +4222,7 @@ class Ui_MainWindow(object):
         self.btn_toggle_menu.setText("")
         self.label_page.setText(QCoreApplication.translate("MainWindow", u"PAGE 0  ", None))
         self.label_bank.setText(QCoreApplication.translate("MainWindow", u" 1 BANK", None))
-        self.label_pgm.setText(QCoreApplication.translate("MainWindow", u"                                             PGM  A                      ", None))
+        self.label_pgm.setText(QCoreApplication.translate("MainWindow", u"PGM  A", None))
         self.label_vmixconn.setText(QCoreApplication.translate("MainWindow", u"vMix connection: ", None))
         self.label_title_bar_top.setText("")
 #if QT_CONFIG(tooltip)
@@ -4359,15 +4246,23 @@ class Ui_MainWindow(object):
         self.clip_star_widget_estrelles3_2.setText("")
         self.clip_star_widget_estrelles3_3.setText("")
         self.clip_button_onwidget_estrelles3.setText("")
+        self.clip_gotoestrella3.setText("")
         self.clip_editmetadata.setText(QCoreApplication.translate("MainWindow", u"Edit Metadata", None))
-        self.clip_pushtofavourites.setText(QCoreApplication.translate("MainWindow", u"Push to Favourites", None))
         self.clip_estrella1.setText("")
-        self.clip_archive.setText(QCoreApplication.translate("MainWindow", u"Archive", None))
-        self.clip_auxclip.setText(QCoreApplication.translate("MainWindow", u"AUX Clip", None))
-        self.clip_push.setText(QCoreApplication.translate("MainWindow", u"Push", None))
         self.clip_star_widget_estrelles2_1.setText("")
         self.clip_star_widget_estrelles2_2.setText("")
         self.clip_button_onwidget_estrelles2.setText("")
+        self.clip_gotoestrella2.setText("")
+        self.clip_gotoestrella1.setText("")
+        self.label_estrella1.setText("")
+        self.estrella1_delete.setText("")
+        self.label_estrella2.setText("")
+        self.label_estrella2_2.setText("")
+        self.estrella2_delete.setText("")
+        self.label_estrella3.setText("")
+        self.label_estrella3_2.setText("")
+        self.label_estrella3_3.setText("")
+        self.estrella3_delete.setText("")
         self.sim_menu.setText(QCoreApplication.translate("MainWindow", u"MENU", None))
         self.sim_take.setText(QCoreApplication.translate("MainWindow", u"Lever \n"
 " --------------------------------\n"
@@ -4427,14 +4322,11 @@ class Ui_MainWindow(object):
         self.config_ipconfig.setText(QCoreApplication.translate("MainWindow", u"vMix IP Configuration", None))
         self.config_fastjogconfig.setText(QCoreApplication.translate("MainWindow", u"Fast Jog Configuration", None))
         self.config_deleteclipdict.setText(QCoreApplication.translate("MainWindow", u"Delete Clip Dictionary", None))
-        self.export_flattenplaylist.setText(QCoreApplication.translate("MainWindow", u"Flatten Playlist", None))
-        self.export_export.setText(QCoreApplication.translate("MainWindow", u"Export", None))
-        self.generic_cerebrum.setText(QCoreApplication.translate("MainWindow", u"Cerebrum", None))
-        self.generic_character.setText(QCoreApplication.translate("MainWindow", u"Character", None))
-        self.generic_logpoint.setText(QCoreApplication.translate("MainWindow", u"Log Point", None))
+        self.config_resetmarks.setText(QCoreApplication.translate("MainWindow", u"Reset Marks", None))
+        self.export_playlist.setText(QCoreApplication.translate("MainWindow", u"Export Playlist", None))
+        self.export_export_clip.setText(QCoreApplication.translate("MainWindow", u"Export Clip", None))
         self.generic_none.setText(QCoreApplication.translate("MainWindow", u"None", None))
         self.generic_lockremote.setText(QCoreApplication.translate("MainWindow", u"Lock Remote", None))
-        self.generic_extractlogs.setText(QCoreApplication.translate("MainWindow", u"Extract Logs", None))
         self.playlist_btnadd_1.setText("")
         self.playlist_numclip_pl1.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_dur_pl1.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
@@ -4459,76 +4351,93 @@ class Ui_MainWindow(object):
         self.playlist_dur_pl6.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
         self.playlist_numclip_pl6.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_codi_pl6.setText(QCoreApplication.translate("MainWindow", u"6", None))
-        self.playlist_codi_pl7.setText(QCoreApplication.translate("MainWindow", u"7", None))
-        self.playlist_numclip_pl7.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_dur_pl7.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
-        self.playlist_btnadd_7.setText("")
-        self.playlist_codi_pl8.setText(QCoreApplication.translate("MainWindow", u"8", None))
-        self.playlist_numclip_pl8.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_button_pl1.setText("")
+        self.playlist_button_pl2.setText("")
+        self.playlist_button_pl3.setText("")
+        self.playlist_button_pl4.setText("")
+        self.playlist_button_pl5.setText("")
+        self.playlist_button_pl6.setText("")
         self.playlist_dur_pl8.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
-        self.playlist_btnadd_8.setText("")
         self.playlist_numclip_pl12.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_dur_pl10.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
-        self.playlist_dur_pl12.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
-        self.playlist_numclip_pl9.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_codi_pl10.setText(QCoreApplication.translate("MainWindow", u"10", None))
-        self.playlist_codi_pl14.setText(QCoreApplication.translate("MainWindow", u"14", None))
-        self.playlist_btnadd_14.setText("")
-        self.playlist_codi_pl9.setText(QCoreApplication.translate("MainWindow", u"9", None))
-        self.playlist_numclip_pl11.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_dur_pl13.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
-        self.playlist_dur_pl11.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
-        self.playlist_btnadd_13.setText("")
-        self.playlist_btnadd_9.setText("")
-        self.playlist_codi_pl12.setText(QCoreApplication.translate("MainWindow", u"12", None))
-        self.playlist_numclip_pl10.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_codi_pl11.setText(QCoreApplication.translate("MainWindow", u"11", None))
-        self.playlist_codi_pl13.setText(QCoreApplication.translate("MainWindow", u"13", None))
-        self.playlist_numclip_pl14.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_btnadd_12.setText("")
-        self.playlist_btnadd_10.setText("")
         self.playlist_dur_pl9.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
-        self.playlist_btnadd_16.setText("")
-        self.playlist_btnadd_15.setText("")
-        self.playlist_numclip_pl13.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_numclip_pl10.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_dur_pl10.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_codi_pl9.setText(QCoreApplication.translate("MainWindow", u"9", None))
+        self.playlist_codi_pl8.setText(QCoreApplication.translate("MainWindow", u"8", None))
+        self.playlist_codi_pl11.setText(QCoreApplication.translate("MainWindow", u"11", None))
+        self.playlist_dur_pl11.setText(QCoreApplication.translate("MainWindow", u"00.00:00:00", None))
+        self.playlist_codi_pl7.setText(QCoreApplication.translate("MainWindow", u"7", None))
+        self.playlist_btnadd_10.setText("")
+        self.playlist_button_pl10.setText("")
+        self.playlist_button_pl12.setText("")
+        self.playlist_button_pl9.setText("")
+        self.playlist_numclip_pl11.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_btnadd_7.setText("")
+        self.playlist_btnadd_8.setText("")
+        self.playlist_numclip_pl8.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_button_pl8.setText("")
+        self.playlist_numclip_pl9.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_dur_pl12.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_codi_pl12.setText(QCoreApplication.translate("MainWindow", u"12", None))
+        self.playlist_numclip_pl7.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_button_pl11.setText("")
         self.playlist_btnadd_11.setText("")
+        self.playlist_dur_pl7.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_button_pl7.setText("")
+        self.playlist_btnadd_9.setText("")
+        self.playlist_btnadd_12.setText("")
         self.playlist_dur_pl14.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
-        self.playlist_numclip_pl15.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_codi_pl15.setText(QCoreApplication.translate("MainWindow", u"15", None))
+        self.playlist_numclip_pl18.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_codi_pl16.setText(QCoreApplication.translate("MainWindow", u"16", None))
         self.playlist_dur_pl15.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
         self.playlist_numclip_pl16.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_dur_pl16.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
-        self.playlist_codi_pl16.setText(QCoreApplication.translate("MainWindow", u"16", None))
+        self.playlist_codi_pl15.setText(QCoreApplication.translate("MainWindow", u"15", None))
+        self.playlist_codi_pl14.setText(QCoreApplication.translate("MainWindow", u"14", None))
+        self.playlist_codi_pl17.setText(QCoreApplication.translate("MainWindow", u"17", None))
+        self.playlist_dur_pl17.setText(QCoreApplication.translate("MainWindow", u"00.00:00:00", None))
+        self.playlist_codi_pl13.setText(QCoreApplication.translate("MainWindow", u"13", None))
+        self.playlist_btnadd_16.setText("")
+        self.playlist_button_pl16.setText("")
+        self.playlist_button_pl18.setText("")
+        self.playlist_button_pl15.setText("")
+        self.playlist_numclip_pl17.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_btnadd_13.setText("")
+        self.playlist_btnadd_14.setText("")
+        self.playlist_numclip_pl14.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_button_pl14.setText("")
+        self.playlist_numclip_pl15.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_dur_pl18.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_codi_pl18.setText(QCoreApplication.translate("MainWindow", u"18", None))
+        self.playlist_numclip_pl13.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.playlist_button_pl17.setText("")
+        self.playlist_btnadd_17.setText("")
+        self.playlist_dur_pl13.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_button_pl13.setText("")
+        self.playlist_btnadd_15.setText("")
+        self.playlist_btnadd_18.setText("")
+        self.clip_manag_name_clip.setText(QCoreApplication.translate("MainWindow", u"Name Clip", None))
+        self.clip_mang_name_angles.setText(QCoreApplication.translate("MainWindow", u"Name Angles", None))
         self.control_loop.setText(QCoreApplication.translate("MainWindow", u"Loop", None))
-        self.control_pgm_prv.setText(QCoreApplication.translate("MainWindow", u"PGM/PRV", None))
+        self.control_prv_ctl.setText(QCoreApplication.translate("MainWindow", u"PRV CTL", None))
         self.control_syncprv.setText(QCoreApplication.translate("MainWindow", u"Sync PRV", None))
-        self.control_2ndlever.setText(QCoreApplication.translate("MainWindow", u"2nd Lever", None))
         self.control_fast_jog.setText(QCoreApplication.translate("MainWindow", u"Fast Jog", None))
         self.control_gotoout.setText(QCoreApplication.translate("MainWindow", u"Go to OUT", None))
-        self.control_vsplit.setText(QCoreApplication.translate("MainWindow", u"V Split", None))
         self.control_gotoin.setText(QCoreApplication.translate("MainWindow", u"Go to IN", None))
         self.control_gototc.setText(QCoreApplication.translate("MainWindow", u"Go to TC", None))
-        self.control_varmax.setText(QCoreApplication.translate("MainWindow", u"VarMax", None))
-        self.control_pgmspeed.setText(QCoreApplication.translate("MainWindow", u"PGMSpeed", None))
-        self.control_hsplit.setText(QCoreApplication.translate("MainWindow", u"H Split", None))
+        self.control_2ndfastjog.setText(QCoreApplication.translate("MainWindow", u"2nd FastJog Speed", None))
         self.control_return.setText(QCoreApplication.translate("MainWindow", u"Return", None))
-        self.control_resetcam.setText(QCoreApplication.translate("MainWindow", u"Reset CAM", None))
-        self.control_multipgm.setText(QCoreApplication.translate("MainWindow", u"MULTI PGM", None))
-        self.control_splitmix.setText(QCoreApplication.translate("MainWindow", u"SplitMix", None))
-        self.cont_acc_addtoshotbox.setText(QCoreApplication.translate("MainWindow", u"Add to Shotbox", None))
-        self.cont_acc_shotbox.setText(QCoreApplication.translate("MainWindow", u"Shotbox", None))
         self.cont_acc_lastmark.setText(QCoreApplication.translate("MainWindow", u"Last Mark", None))
         self.cont_acc_mark.setText(QCoreApplication.translate("MainWindow", u"Mark", None))
-        self.cont_acc_trains.setText(QCoreApplication.translate("MainWindow", u"Trains", None))
         self.cont_acc_recall.setText(QCoreApplication.translate("MainWindow", u"Recall", None))
-        self.cont_acc_backtolocal.setText(QCoreApplication.translate("MainWindow", u"Back to Local", None))
         self.cont_acc_lastsearchtc.setText(QCoreApplication.translate("MainWindow", u"Last Search TC", None))
         self.cont_acc_page.setText(QCoreApplication.translate("MainWindow", u"Page", None))
         self.cont_acc_searchtcconfig.setText(QCoreApplication.translate("MainWindow", u"Search TC Config", None))
         self.cont_acc_recordtrains.setText(QCoreApplication.translate("MainWindow", u"Record Trains", None))
         self.cont_acc_searchtc.setText(QCoreApplication.translate("MainWindow", u"Search TC", None))
-        self.contec_acc_actualclip.setText(QCoreApplication.translate("MainWindow", u"       Actual Clip", None))
-        self.contec_acc_actualplaylist.setText(QCoreApplication.translate("MainWindow", u"    Actual Playlist", None))
+        self.contec_acc_actualclip.setText(QCoreApplication.translate("MainWindow", u"Actual Clip", None))
+        self.contec_acc_actualplaylist.setText(QCoreApplication.translate("MainWindow", u"Actual Playlist", None))
         self.labelBoxBlenderInstalation.setText(QCoreApplication.translate("MainWindow", u"BLENDER INSTALLATION", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Open Blender", None))
         self.labelVersion_3.setText(QCoreApplication.translate("MainWindow", u"Ex: C:Program FilesBlender FoundationBlender 2.82 blender.exe", None))
