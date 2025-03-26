@@ -71,7 +71,12 @@ def get_default_config():
         "current_camangle": "A",
         "clip_id": 0,
         "last_date": "2025-03-22",
-        "last_time": "12:45:33.00"
+        "last_time": "12:45:33.00",
+        "timecodes": [],
+        "mark_in_tc": "00:00:00:00",
+        "estrella1": [],
+        "estrella2": [],
+        "estrella3": []
     }
 
 # Funciones de carga y guardado de FAST_JOG
@@ -214,6 +219,16 @@ def save_clip_mode(value):
     """Guarda el estado de clip_mode en el archivo config.json y actualiza la variable global."""
     save_config("clip_mode", value)
 
+def load_mark_in_tc():
+    """Carga el estado de clip_mode desde el archivo config.json."""
+    global mark_in_tc
+    mark_in_tc = load_config().get("mark_in_tc", "00:00:00:00")  # Establece el valor por defecto como False
+    return mark_in_tc
+
+def save_mark_in_tc(value):
+    """Guarda el estado de clip_mode en el archivo config.json y actualiza la variable global."""
+    save_config("mark_in_tc", value)
+
 
 def load_timecodes_list():
     """Carga la lista de VMIX desde el archivo config.json."""
@@ -226,21 +241,41 @@ def save_timecodes_list(timecodes):
     config["timecodes"] = timecodes  # Actualizar la lista de VMIX
     save_config("timecodes", timecodes)  # Guardar la lista actualizada
 
+def load_estrella1_list():
+    """Carga la lista de VMIX desde el archivo config.json."""
+    config = load_config()
+    return config.get("estrella1", [])
+
+def save_estrella1_list(element):
+    """Guarda la lista de VMIX en el archivo config.json."""
+    config = load_config()
+    config["estrella1"] = element  # Actualizar la lista de VMIX
+    save_config("estrella1", element)  # Guardar la lista actualizada
+
+def load_estrella2_list():
+    """Carga la lista de VMIX desde el archivo config.json."""
+    config = load_config()
+    return config.get("estrella2", [])
+
+def save_estrella2_list(element):
+    """Guarda la lista de VMIX en el archivo config.json."""
+    config = load_config()
+    config["estrella2"] = element  # Actualizar la lista de VMIX
+    save_config("estrella2", element)  # Guardar la lista actualizada
+
+def load_estrella3_list():
+    """Carga la lista de VMIX desde el archivo config.json."""
+    config = load_config()
+    return config.get("estrella3", [])
+
+def save_estrella3_list(element):
+    """Guarda la lista de VMIX en el archivo config.json."""
+    config = load_config()
+    config["estrella3"] = element  # Actualizar la lista de VMIX
+    save_config("estrella3", element)  # Guardar la lista actualizada
+
+
 #functiones relacionada clip_management
-"""""
-
-def load_clip_management():
-    try:
-        with open(CLIP_MANAGEMENT_FILE, "r") as file:
-            return json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {str(i).zfill(3): "void" for i in range(1000)}
-
-def save_clip_management(data):
-    with open(CLIP_MANAGEMENT_FILE, "w") as file:
-        json.dump(data, file, indent=4)
-        ""
-"""
 def load_clip_dictionary():
     try:
         with open(CLIP_DICTIONARY_FILE, "r") as file:

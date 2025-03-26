@@ -1011,13 +1011,13 @@ class Ui_MainWindow(object):
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
 "    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"	border: 2px solid rgba(255,255,255,100);  /* Borde blanco con transparencia */\n"
+"	padding: 10px;   \n"
+"	background-color: rgba(250,50,50,10);        \n"
+"	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"	\n"
+"	background-color: rgba(250,50,50,50);\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
@@ -1063,13 +1063,13 @@ class Ui_MainWindow(object):
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
 "    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"	border: 2px solid rgba(255,255,255,100);  /* Borde blanco con transparencia */\n"
+"	padding: 10px;   \n"
+"	background-color: rgba(250,50,50,10);        \n"
+"	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"	\n"
+"	background-color: rgba(250,50,50,50);\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
@@ -1119,13 +1119,13 @@ class Ui_MainWindow(object):
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
 "    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"	border: 2px solid rgba(255,255,255,100);  /* Borde blanco con transparencia */\n"
+"	padding: 10px;   \n"
+"	background-color: rgba(250,50,50,10);        \n"
+"	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"	\n"
+"	background-color: rgba(250,50,50,50);\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
@@ -4211,7 +4211,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(11)
+        self.stackedWidget.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

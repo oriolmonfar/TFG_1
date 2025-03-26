@@ -35,6 +35,10 @@ modo_page = False
 clip_id = load_current_clip_id()
 last_date = load_last_date()
 last_time = load_last_time()
+mark_in_tc = load_mark_in_tc()
+estrella1 = load_estrella1_list()
+estrella2 = load_estrella2_list()
+estrella3 = load_estrella3_list()
 
 
 
@@ -76,6 +80,8 @@ class PopupOverwriteClip(QDialog):
 
         def no(clip_code): 
             id = load_current_clip_id()
+            endpoint = f"api/?Function=ReplayDeleteSelectedEvent&Value={id}&Channel=1"
+            UIFunctions.send_request(endpoint)
             print(f"Se mantuvo el ID original para el clip {clip_code}.")
             id +=1 
             save_current_clip_id(id)
@@ -651,21 +657,18 @@ class MainWindow(QMainWindow):
         #################################### START- BOTONS CLIP
 
         self.ui.clip_addtoplaylist.clicked.connect(lambda: UIFunctions.function_plst_page(self))
-        self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
-        self.ui.contec_acc_actualclip.setText(f"{current_clip}")
-        self.ui.cont_acc_mark.clicked.connect(lambda: UIFunctions.function_mark())
-        self.ui.cont_acc_lastmark.clicked.connect(lambda: UIFunctions.function_lastmark())
+        UIFunctions.refresh_estrella1_list(self)
+        self.ui.clip_estrella1.clicked.connect(lambda: UIFunctions.function_estrella1(self))
+        UIFunctions.refresh_estrella2_list(self)
+        self.ui.clip_button_onwidget_estrelles2.clicked.connect(lambda: UIFunctions.function_estrella2(self))
+        UIFunctions.refresh_estrella3_list(self)
+        self.ui.clip_button_onwidget_estrelles3.clicked.connect(lambda: UIFunctions.function_estrella3(self))
         self.ui.clip_gotoestrella1.clicked.connect(lambda: UIFunctions.function_estrella1_page(self))
         self.ui.clip_gotoestrella2.clicked.connect(lambda: UIFunctions.function_estrella2_page(self))
         self.ui.clip_gotoestrella3.clicked.connect(lambda: UIFunctions.function_estrella3_page(self))
-
-
-
-        
-
-        
-
-
+        self.ui.estrella1_delete.clicked.connect(lambda: UIFunctions.remove_estrella1(self))
+        self.ui.estrella2_delete.clicked.connect(lambda: UIFunctions.remove_estrella2(self))
+        self.ui.estrella3_delete.clicked.connect(lambda: UIFunctions.remove_estrella3(self))
 
         #################################### END - BOTONS CLIP
 
@@ -677,16 +680,14 @@ class MainWindow(QMainWindow):
         #################################### END - BOTONS CONTROL
 
         #################################### START - BOTONS CONTENT ACCESS
+        self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
+        self.ui.contec_acc_actualclip.setText(f"{current_clip}")
+        self.ui.cont_acc_mark.clicked.connect(lambda: UIFunctions.function_mark())
+        self.ui.cont_acc_lastmark.clicked.connect(lambda: UIFunctions.function_lastmark())
         self.ui.cont_acc_recordtrains.clicked.connect(self.show_dialog_recordtrains)
         self.ui.cont_acc_searchtc.clicked.connect(self.show_dialog_searchtc)
         self.ui.cont_acc_lastsearchtc.clicked.connect(lambda: UIFunctions.function_lastsearchtc())
-        self.ui.cont_acc_recall.clicked.connect(lambda: UIFunctions.get_tc_clip())
-        time_stamp, replay_path = UIFunctions.get_tc_clip()
-        self.ui.cont_acc_searchtcconfig.clicked.connect(lambda: UIFunctions.get_event_in_out_points(replay_path, 0))
-        in_point, out_point = UIFunctions.get_event_in_out_points(replay_path, 0)
-        self.ui.cont_acc_page.clicked.connect(lambda: UIFunctions.convert_in_out_to_seconds(in_point, out_point, time_stamp))
 
-        self.ui.control_2ndfastjog.clicked.connect(lambda: UIFunctions.add_point_to_timestamp(time_stamp, in_point, out_point))
 
         #################################### END - BOTONS CONTENT ACCESS
 
@@ -908,15 +909,18 @@ class MainWindow(QMainWindow):
         
         def function_out():
     
-            global clip_id
+            global clip_id, mark_in_tc
             
-            endpoint = "api/?Function=ReplayMarkOut"
-            response = UIFunctions.send_request(endpoint)
+            endpoint_1 = "api/?Function=ReplayMarkOut"
+            response_1 = UIFunctions.send_request(endpoint_1)
+            clip_out_tc = UIFunctions.get_tc()
+            mark_in_tc = load_mark_in_tc()
             
-            if not response:
+            
+            if not response_1:
                 print("No se pudo marcar el 'Out' debido a la falta de conexión con vMix.")
                 return
-            
+ 
             print("Replay mark 'Out' set successfully.")
             
             print("Esperando selección de clip...")
@@ -927,7 +931,11 @@ class MainWindow(QMainWindow):
                 
                 if clip_management.get(selected_clip, ["void"] * 7)[0] == "void":
                     clip_id = load_current_clip_id()
+                    clip_dur_tc = UIFunctions.calculate_clip_duration(mark_in_tc, clip_out_tc)
                     clip_management[selected_clip][0] = str(clip_id)  # Guardar en el primer elemento de la lista
+                    clip_management[selected_clip][4] = str(mark_in_tc)
+                    clip_management[selected_clip][5] = str(clip_out_tc)
+                    clip_management[selected_clip][6] = str(clip_dur_tc)
                     save_clip_dictionary(clip_management)
                     
                     clip_id += 1
@@ -1023,13 +1031,20 @@ class MainWindow(QMainWindow):
                 if clip_list[0] == "void":
                     print("No hay ningún clip asignado.")
                     return None
-
-                endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
-                endpoint_2 = "api/?Function=ReplaySelectNextEvent&Channel=1"
-                UIFunctions.send_request(endpoint_1)
                 
-                for _ in range(int(clip_list[0])):
+                else: 
+                    id = clip_list[0].zfill(4)
+                    endpoint_1 = f"api/?Function=ReplayPlayEventsByID&Value={id}&Channel=1"
+                    endpoint_2 = "api/?Function=ReplayPause&Channel=1"
+                    UIFunctions.send_request(endpoint_1)
                     UIFunctions.send_request(endpoint_2)
+
+                #endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
+                #endpoint_2 = "api/?Function=ReplaySelectNextEvent&Channel=1"
+                #UIFunctions.send_request(endpoint_1)
+                
+                #for _ in range(int(clip_list[0])):
+                 #   UIFunctions.send_request(endpoint_2)
 
                 
             

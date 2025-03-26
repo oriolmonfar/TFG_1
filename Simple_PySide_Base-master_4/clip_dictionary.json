@@ -6797,7 +6797,7 @@
     "755": [
         "void",
         "void",
-        "void",
+        "**",
         "void",
         "void",
         "void",

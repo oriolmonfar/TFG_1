@@ -256,6 +256,268 @@ class UIFunctions(MainWindow):
         self.ui.stackedWidget.setCurrentWidget(self.ui.page_playlist)
         UIFunctions.resetStyle(self, "btn_playlist")
         UIFunctions.labelPage(self, "PLAYLIST")
+
+    def refresh_estrella1_list(self):
+        global estrella1
+        estrella1 = load_estrella1_list()
+  
+        for item in estrella1:
+            self.ui.list_estrella1.addItem(item)  # Añadir cada elemento a la lista
+
+    def refresh_estrella2_list(self):
+        global estrella2
+        estrella2 = load_estrella2_list()
+  
+        for item in estrella2:
+            self.ui.list_estrella2.addItem(item)  # Añadir cada elemento a la lista
+
+    def refresh_estrella3_list(self):
+        global estrella3
+        estrella3 = load_estrella3_list()
+  
+        for item in estrella3:
+            self.ui.list_estrella3.addItem(item)  # Añadir cada elemento a la lista
+
+    def function_estrella1(self):
+        global current_clip, estrella1
+        current_clip = load_current_clip()
+        numeric_code = current_clip[:-1]
+
+        try:
+            # Cargar el clip_dictionary.json usando la función ya definida
+            clip_data = load_clip_dictionary()
+
+            # Verificar si el código numérico existe en el diccionario
+            if numeric_code in clip_data:
+                # Obtener la lista correspondiente a ese código numérico
+                clip_list = clip_data[numeric_code]
+                
+                # Escribir "*" en la tercera posición (índice 2)
+                clip_list[2] = "*"
+                
+                # Guardar los cambios en el archivo clip_dictionary.json usando la función ya definida
+                save_clip_dictionary(clip_data)
+
+                if clip_list[1]== "void":
+                    name = "No name assigned"
+                else: 
+                    name = clip_list[1]
+
+                if clip_list[3]== "void":
+                    pl = "No Playlist assigned"
+                else: 
+                    pl = clip_list[3]
+
+                if clip_list[4]== "void":
+                    tc_in = "No TC IN assigned"
+                else: 
+                    tc_in = clip_list[4][11:]
+
+                if clip_list[5]== "void":
+                    tc_out = "No TC OUT assigned"
+                else: 
+                    tc_out = clip_list[5][11:]
+
+                if clip_list[6]== "void":
+                    dur = "No duration assigned"
+                else: 
+                    dur = clip_list[6]
+                
+                clip_info = f"{current_clip},   {name},   {pl},   {tc_in},   {tc_out},   {dur}"
+
+                # Añadir el numeric_code a la QListWidget
+
+                self.ui.list_estrella1.addItem(clip_info)
+                estrella1 = load_estrella1_list()
+                estrella1.append(clip_info)
+                save_estrella1_list(estrella1)
+
+                print(f"Se ha actualizado el código {clip_info} en clip_dictionary.json y añadido a la lista.")
+            else:
+                print(f"El código {clip_info} no existe en el archivo clip_dictionary.json.")
+
+        except FileNotFoundError:
+            print("Error: El archivo clip_dictionary.json no existe.")
+        except json.JSONDecodeError:
+            print("Error al leer el archivo JSON. Asegúrate de que el archivo tiene el formato correcto.")
+
+    def function_estrella2(self):
+        global current_clip, estrella2
+        current_clip = load_current_clip()
+        numeric_code = current_clip[:-1]
+
+        try:
+            # Cargar el clip_dictionary.json usando la función ya definida
+            clip_data = load_clip_dictionary()
+
+            # Verificar si el código numérico existe en el diccionario
+            if numeric_code in clip_data:
+                # Obtener la lista correspondiente a ese código numérico
+                clip_list = clip_data[numeric_code]
+                
+                # Escribir "*" en la tercera posición (índice 2)
+                clip_list[2] = "**"
+                
+                # Guardar los cambios en el archivo clip_dictionary.json usando la función ya definida
+                save_clip_dictionary(clip_data)
+                if clip_list[1]== "void":
+                    name = "No name assigned"
+                else: 
+                    name = clip_list[1]
+
+                if clip_list[3]== "void":
+                    pl = "No Playlist assigned"
+                else: 
+                    pl = clip_list[3]
+
+                if clip_list[4]== "void":
+                    tc_in = "No TC IN assigned"
+                else: 
+                    tc_in = clip_list[4][11:]
+
+                if clip_list[5]== "void":
+                    tc_out = "No TC OUT assigned"
+                else: 
+                    tc_out = clip_list[5][11:]
+
+                if clip_list[6]== "void":
+                    dur = "No duration assigned"
+                else: 
+                    dur = clip_list[6]
+                
+
+
+
+                clip_info = f"{current_clip},   {name},   {pl},   {tc_in},   {tc_out},   {dur}"
+                
+
+                # Añadir el numeric_code a la QListWidget
+
+                self.ui.list_estrella2.addItem(clip_info)
+                estrella2 = load_estrella2_list()
+                estrella2.append(clip_info)
+                save_estrella2_list(estrella2)
+
+                print(f"Se ha actualizado el código {clip_info} en clip_dictionary.json y añadido a la lista.")
+            else:
+                print(f"El código {clip_info} no existe en el archivo clip_dictionary.json.")
+
+        except FileNotFoundError:
+            print("Error: El archivo clip_dictionary.json no existe.")
+        except json.JSONDecodeError:
+            print("Error al leer el archivo JSON. Asegúrate de que el archivo tiene el formato correcto.")
+
+    def function_estrella3(self):
+        global current_clip, estrella3
+        current_clip = load_current_clip()
+        numeric_code = current_clip[:-1]
+
+        try:
+            # Cargar el clip_dictionary.json usando la función ya definida
+            clip_data = load_clip_dictionary()
+
+            # Verificar si el código numérico existe en el diccionario
+            if numeric_code in clip_data:
+                # Obtener la lista correspondiente a ese código numérico
+                clip_list = clip_data[numeric_code]
+                
+                # Escribir "*" en la tercera posición (índice 2)
+                clip_list[2] = "***"
+                
+                # Guardar los cambios en el archivo clip_dictionary.json usando la función ya definida
+                save_clip_dictionary(clip_data)
+
+                if clip_list[1]== "void":
+                    name = "No name assigned"
+                else: 
+                    name = clip_list[1]
+
+                if clip_list[3]== "void":
+                    pl = "No Playlist assigned"
+                else: 
+                    pl = clip_list[3]
+
+                if clip_list[4]== "void":
+                    tc_in = "No TC IN assigned"
+                else: 
+                    tc_in = clip_list[4][11:]
+
+                if clip_list[5]== "void":
+                    tc_out = "No TC OUT assigned"
+                else: 
+                    tc_out = clip_list[5][11:]
+
+                if clip_list[6]== "void":
+                    dur = "No duration assigned"
+                else: 
+                    dur = clip_list[6]
+                
+
+                clip_info = f"{current_clip},   {name},   {pl},   {tc_in},   {tc_out},   {dur}"
+                
+
+                # Añadir el numeric_code a la QListWidget
+
+                self.ui.list_estrella3.addItem(clip_info)
+                estrella3 = load_estrella3_list()
+                estrella3.append(clip_info)
+                save_estrella3_list(estrella3)
+
+                print(f"Se ha actualizado el código {clip_info} en clip_dictionary.json y añadido a la lista.")
+            else:
+                print(f"El código {clip_info} no existe en el archivo clip_dictionary.json.")
+
+        except FileNotFoundError:
+            print("Error: El archivo clip_dictionary.json no existe.")
+        except json.JSONDecodeError:
+            print("Error al leer el archivo JSON. Asegúrate de que el archivo tiene el formato correcto.")
+        
+    def remove_estrella1(self):
+        global estrella1
+        selected_item = self.ui.list_estrella1.currentItem()  # Obtener el ítem seleccionado
+        
+        if selected_item:  # Verificar que hay un ítem seleccionado
+            item_text = selected_item.text()  # Obtener el texto del elemento
+            self.ui.list_estrella1.takeItem(self.ui.list_estrella1.row(selected_item))  # Eliminar el ítem
+
+            if item_text in estrella1:  # Verificar si está en la lista estrella1
+                estrella1.remove(item_text)  # Eliminar de la lista estrella1
+                print(f"Elemento '{selected_item.text()}' eliminado de la lista.")
+                save_estrella1_list(estrella1)
+        else:
+            print("No hay ningún elemento seleccionado para eliminar.")
+
+    def remove_estrella2(self):
+        global estrella2
+        selected_item = self.ui.list_estrella2.currentItem()  # Obtener el ítem seleccionado
+        
+        if selected_item:  # Verificar que hay un ítem seleccionado
+            item_text = selected_item.text()  # Obtener el texto del elemento
+            self.ui.list_estrella2.takeItem(self.ui.list_estrella2.row(selected_item))  # Eliminar el ítem
+
+            if item_text in estrella2:  # Verificar si está en la lista estrella1
+                estrella2.remove(item_text)  # Eliminar de la lista estrella1
+                print(f"Elemento '{selected_item.text()}' eliminado de la lista.")
+                save_estrella2_list(estrella2)
+        else:
+            print("No hay ningún elemento seleccionado para eliminar.")
+
+    def remove_estrella3(self):
+        global estrella3
+        selected_item = self.ui.list_estrella3.currentItem()  # Obtener el ítem seleccionado
+        
+        if selected_item:  # Verificar que hay un ítem seleccionado
+            item_text = selected_item.text()  # Obtener el texto del elemento
+            self.ui.list_estrella3.takeItem(self.ui.list_estrella3.row(selected_item))  # Eliminar el ítem
+
+            if item_text in estrella3:  # Verificar si está en la lista estrella1
+                estrella3.remove(item_text)  # Eliminar de la lista estrella1
+                print(f"Elemento '{selected_item.text()}' eliminado de la lista.")
+                save_estrella3_list(estrella3)
+        else:
+            print("No hay ningún elemento seleccionado para eliminar.")
+        
+        
     
     def function_estrella1_page(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.page_estrella1)
@@ -744,6 +1006,10 @@ class UIFunctions(MainWindow):
         
     def function_in():
         """Marks the current position as 'in' for replay."""
+        global mark_in_tc
+
+        current_mark_in_tc = UIFunctions.get_tc()
+        mark_in_tc = save_mark_in_tc(current_mark_in_tc)
         
         # Endpoint para la función 'ReplayMarkIn'
         endpoint = "api/?Function=ReplayMarkIn"
@@ -799,12 +1065,50 @@ class UIFunctions(MainWindow):
     def function_rodeta(dial):
         """Configura el QDial para controlar la replay de vMix frame por frame."""
 
+
         dial.setWrapping(True)  # Permite giros infinitos
         dial.setNotchesVisible(False)
         dial.previous_value = dial.value()  # Guarda el estado inicial
         dial.fast_mode = False  # Modo normal por defecto
 
         def on_dial_moved(value):
+
+            #Activar live si no esta activado 
+            check_live = UIFunctions.send_request("api/")  # Usamos send_request con el endpoint de la API
+            
+            if not check_live:
+                print("No se pudo obtener el XML debido a la falta de conexión con vMix.")
+                return None  # Salimos de la función si no hay conexión
+
+            # Paso 2: Parsear el XML
+            try:
+                root = ET.fromstring(check_live)  # Convertimos el texto XML en una estructura de árbol
+            except ET.ParseError as e:
+                print(f"Error al parsear el XML: {e}")
+                return None  # Salimos si hay un error en el XML
+
+            
+            # Paso 3: Iterar sobre todos los inputs y buscar el 'channelMode' en la sección de Replay
+            result = None  # Inicializamos result como None por si no encontramos nada
+            
+            for input_element in root.findall(".//input"):
+                replay_element = input_element.find('replay')
+                
+                if replay_element is not None:
+                    channel_mode = replay_element.get('live')
+                    if channel_mode:
+                        result = channel_mode  # Guardamos el modo de canal encontrado
+
+            if result == "True":
+                time.sleep(0.2)
+                endpoint_live = "api/?Function=ReplayLiveToggle"
+                response_3 = UIFunctions.send_request(endpoint_live)
+                if not response_3:
+                    print("No se pudo realizar el 'ReplayLiveToogle' debido a la falta de conexión con vMix.")
+                    return  # Salir si no hay conexión
+            else: 
+                print("Live already desactivated")
+
             """Detecta el movimiento del dial y envía la petición HTTP a vMix."""
             FAST_JOG = load_fast_jog()
             step = FAST_JOG if dial.fast_mode else 1  # Define si avanza 1 o 25 frames
@@ -865,6 +1169,8 @@ class UIFunctions(MainWindow):
 
     def function_e_e():
         """Jumps to current time in replay and plays it."""
+
+        UIFunctions.function_reset_lastmark()
         
         # Step 1: ReplayJumpToNow
         endpoint_now = "api/?Function=ReplayJumpToNow&Channel=1"
@@ -900,7 +1206,7 @@ class UIFunctions(MainWindow):
             print(f"Error al parsear el XML: {e}")
             return None  # Salimos si hay un error en el XML
 
-        UIFunctions.function_reset_lastmark()
+        
         # Paso 3: Iterar sobre todos los inputs y buscar el 'channelMode' en la sección de Replay
         result = None  # Inicializamos result como None por si no encontramos nada
         
@@ -942,165 +1248,59 @@ class UIFunctions(MainWindow):
         self.popup = PopupOverwriteClip(clip_code, clip_management)
         self.popup.exec_()
 
-    def get_tc_clip():
-        # Paso 1: Hacer una llamada a la API de vMix para obtener el directorio del preset
-        response_text = UIFunctions.send_request("api/")
-        
-        if not response_text:
-            print("Error al obtener datos de la API de vMix")
-            return None, None  # Devolver None si no hay respuesta de la API
-
-        soup = BeautifulSoup(response_text, "lxml-xml")  # Usar lxml-xml para XML
-        preset_path_tag = soup.find("preset")
-        
-        if not preset_path_tag or not preset_path_tag.text:
-            print("No se pudo encontrar el directorio del preset en la respuesta de la API.")
-            return None, None  # Devolver None si no se encuentra el directorio del preset
-
-        preset_directory = os.path.dirname(preset_path_tag.text)  # Extraer el directorio base
-
-        # Paso 2: Buscar el archivo replay2.xml en el directorio del preset
-        replay_file_path = os.path.join(preset_directory, "replay2.xml")
-
-        if not os.path.exists(replay_file_path):
-            print(f"No se encontró el archivo {replay_file_path}")
-            return None, None  # Devolver None si no se encuentra el archivo replay2.xml
-
-        # Paso 3: Extraer el primer "segment" y su "time_stamp"
-        with open(replay_file_path, "r", encoding="utf-8") as file:
-            xml_content = file.read()
-
-        soup = BeautifulSoup(xml_content, "lxml-xml")  # Usar lxml-xml para XML
-        segment = soup.find("segment")
-
-        if not segment:
-            print("No se encontró el elemento 'segment' en el archivo XML.")
-            return None, None  # Devolver None si no se encuentra el segmento
-
-        # Acceder al contenido de la etiqueta <timestamp>
-        timestamp_tag = segment.find("timestamp")
-        if not timestamp_tag:
-            print("No se encontró la etiqueta 'timestamp' dentro del 'segment'.")
-            return None, None  # Devolver None si no se encuentra la etiqueta 'timestamp'
-
-        time_stamp = timestamp_tag.text  # Obtener el texto de la etiqueta <timestamp>
-        
-        # Eliminar los últimos 10 caracteres
-        truncated_time_stamp = time_stamp[:-10]  # Elimina los últimos 10 caracteres
-        print(f"Time Stamp encontrado: {truncated_time_stamp}")
-        
-        # Devolver tanto el truncated_time_stamp como el replay_file_path
-        return truncated_time_stamp, replay_file_path
     
+    def get_tc(): 
+        response = UIFunctions.send_request("api/")
+        
+        if response:
+            tree = ET.fromstring(response)
+            timecode_element = tree.find(".//timecode")
+            timecode = timecode_element.text if timecode_element is not None else "00:00:00:00"
+            print(f"Timecode obtenido: {timecode}")
+        else:
+            print("No se pudo obtener el timecode de vMix. Conexión no disponible.")
+        return timecode
     
-    def get_event_in_out_points(xml_file_path, event_id):
+
+    def calculate_clip_duration(clip_tc_in, clip_tc_out):
         """
-        Busca el evento con el id proporcionado en el archivo XML y obtiene sus puntos inPoint y outPoint.
-        
-        :param xml_file_path: Ruta del archivo XML donde se encuentran los eventos.
-        :param event_id: ID del evento que se busca (es un int).
-        :return: Una tupla con los valores de inPoint y outPoint, o None si no se encuentra el evento.
+        Calcula la duración entre clip_tc_in y clip_tc_out en formato "HH:MM:SS.sss".
+
+        Parámetros:
+            clip_tc_in (str): Timecode de entrada en formato "YYYY-MM-DDTHH:MM:SS.sss".
+            clip_tc_out (str): Timecode de salida en formato "YYYY-MM-DDTHH:MM:SS.sss".
+
+        Retorna:
+            str: Duración del clip en formato "HH:MM:SS.sss".
         """
-        try:
-            # Leer el archivo XML
-            with open(xml_file_path, "r", encoding="utf-8") as file:
-                xml_content = file.read()
+        # Formato de los timecodes proporcionados con "T" entre fecha y hora
+        format_tc = "%Y-%m-%dT%H:%M:%S.%f"
 
-            # Parsear el contenido XML
-            soup = BeautifulSoup(xml_content, "lxml-xml")
-            
-            # Buscar todos los eventos en el archivo
-            events = soup.find_all("event")
-            
-            # Buscar el evento con el ID proporcionado
-            for event in events:
-                event_id_tag = event.find("id")
-                if event_id_tag and int(event_id_tag.text) == event_id:
-                    # Encontrar los puntos inPoint y outPoint
-                    in_point = event.find("inPoint")
-                    print(in_point)
-                    out_point = event.find("outPoint")
-                    print(out_point)
-                    
-                    if in_point and out_point:
-                        # Devolver los puntos encontrados como tupla
-                        return int(in_point.text), int(out_point.text)
-                    
-            
-            # Si no se encuentra el evento, devolver None
-            print(f"No se encontró el evento con ID {event_id}.")
-            return None
-        except Exception as e:
-            print(f"Error al procesar el archivo XML: {e}")
-            return None
-        
-    def add_point_to_timestamp(truncated_time_stamp, in_point, out_point):
-        """
-        Suma los puntos de entrada (in_point) y salida (out_point) en segundos al truncated_time_stamp 
-        y devuelve los nuevos timecodes correspondientes.
-        
-        :param truncated_time_stamp: El timestamp truncado en formato 'YYYY-MM-DDTHH:MM:SS.MS'.
-        :param in_point: Punto de entrada en segundos a sumar (opcional).
-        :param out_point: Punto de salida en segundos a sumar (opcional).
-        :return: Nuevos timecodes para in_point y out_point en formato 'YYYY-MM-DDTHH:MM:SS.MS'.
-        """
-        
-        # Separar la fecha (YYYY-MM-DD) y el tiempo (HH:MM:SS.MS)
-        date_str, time_str = truncated_time_stamp.split('T')
+        # Convertir los timecodes a objetos datetime
+        time_in = datetime.strptime(clip_tc_in, format_tc)
+        time_out = datetime.strptime(clip_tc_out, format_tc)
 
-        in_point_sec = in_point /10000000
+        print(time_in)
+        print(time_out)
 
-        out_point_sec = out_point/10000000
+        # Calcular la diferencia (duración)
+        duration = time_out - time_in
 
-        dur = out_point_sec - in_point_sec
+        print(duration)
 
-        print(dur)
-        
-        # Convertir el tiempo a un objeto datetime
-        time_obj = datetime.strptime(time_str, "%H:%M:%S.%f")
-        
-        # Convertir el tiempo a segundos
-        time_in_seconds = time_obj.hour * 3600 + time_obj.minute * 60 + time_obj.second + time_obj.microsecond / 1000000.0
-        
-        # Inicializar los timecodes de salida
-        clip_in_tc = None
-        clip_out_tc = None
-        
-        # Si hay in_point, sumarlo al tiempo en segundos
-        if in_point is not None:
-            new_in_time_in_seconds = time_in_seconds + in_point_sec
-            clip_in_tc = str(timedelta(seconds=new_in_time_in_seconds))
+        # Convertir la duración a segundos (float) y luego formatear a horas, minutos, segundos y milisegundos
+        total_seconds = duration.total_seconds()
+        hours = int(total_seconds // 3600)
+        minutes = int((total_seconds % 3600) // 60)
+        seconds = int(total_seconds % 60)
+        milliseconds = int((total_seconds % 1) * 1000)
 
-        # Si hay out_point, sumarlo al tiempo en segundos
-        if out_point is not None:
-            new_out_time_in_seconds = time_in_seconds + out_point_sec
-            clip_out_tc = str(timedelta(seconds=new_out_time_in_seconds))
-        
-        # Convertir a formato de hora:minuto:segundo:milisegundo
-        def convert_to_time_format(seconds):
-            hours, remainder = divmod(seconds, 3600)
-            minutes, seconds = divmod(remainder, 60)
-            return f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}.{int((seconds - int(seconds)) * 1000):03}"
-        
-        # Si se ha calculado el clip_in_tc, darle formato
-        if clip_in_tc:
-            clip_in_tc = convert_to_time_format(new_in_time_in_seconds)
-        
-        # Si se ha calculado el clip_out_tc, darle formato
-        if clip_out_tc:
-            clip_out_tc = convert_to_time_format(new_out_time_in_seconds)
-        
-        # Crear los nuevos timecodes completos (fecha + nuevos tiempos)
-        if clip_in_tc:
-            clip_in_tc = f"{date_str}T{clip_in_tc}"
-            print(clip_in_tc)
-        
-        if clip_out_tc:
-            clip_out_tc = f"{date_str}T{clip_out_tc}"
-            print(clip_out_tc)
-        
-        return clip_in_tc, clip_out_tc, dur
+        # Formatear el resultado en formato HH:MM:SS.sss
+        duration_str = f"{hours:02}:{minutes:02}:{seconds:02}.{milliseconds:03}"
 
+        print(duration_str)
+
+        return duration_str
 
 
 
