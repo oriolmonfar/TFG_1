@@ -1026,10 +1026,10 @@ class Ui_MainWindow(object):
         icon5 = QIcon()
         icon5.addFile(u":/20x20/icons/20x20/cil-x.png", QSize(), QIcon.Normal, QIcon.Off)
         self.estrella1_delete.setIcon(icon5)
-        self.estrella1_refresh = QPushButton(self.page_estrella1)
-        self.estrella1_refresh.setObjectName(u"estrella1_refresh")
-        self.estrella1_refresh.setGeometry(QRect(120, 20, 71, 51))
-        self.estrella1_refresh.setStyleSheet(u"QPushButton {\n"
+        self.estrella1_add = QPushButton(self.page_estrella1)
+        self.estrella1_add.setObjectName(u"estrella1_add")
+        self.estrella1_add.setGeometry(QRect(120, 20, 71, 51))
+        self.estrella1_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1047,15 +1047,15 @@ class Ui_MainWindow(object):
 "    background-color: rgba(0,150,250,50);\n"
 "}")
         icon6 = QIcon()
-        icon6.addFile(u":/20x20/icons/20x20/cil-loop-circular.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.estrella1_refresh.setIcon(icon6)
+        icon6.addFile(u":/20x20/icons/20x20/cil-plus.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.estrella1_add.setIcon(icon6)
         self.stackedWidget.addWidget(self.page_estrella1)
         self.page_pl11 = QWidget()
         self.page_pl11.setObjectName(u"page_pl11")
-        self.pl11_refresh = QPushButton(self.page_pl11)
-        self.pl11_refresh.setObjectName(u"pl11_refresh")
-        self.pl11_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl11_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl11_add = QPushButton(self.page_pl11)
+        self.pl11_add.setObjectName(u"pl11_add")
+        self.pl11_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl11_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1072,7 +1072,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl11_refresh.setIcon(icon6)
+        self.pl11_add.setIcon(icon6)
         self.pl11_delete = QPushButton(self.page_pl11)
         self.pl11_delete.setObjectName(u"pl11_delete")
         self.pl11_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1135,17 +1135,17 @@ class Ui_MainWindow(object):
         self.label_pl11.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl11)
         self.label_pl11.raise_()
-        self.pl11_refresh.raise_()
+        self.pl11_add.raise_()
         self.pl11_delete.raise_()
         self.label_nclips_11.raise_()
         self.list_pl11.raise_()
         self.label_dur_11.raise_()
         self.page_pl13 = QWidget()
         self.page_pl13.setObjectName(u"page_pl13")
-        self.pl13_refresh = QPushButton(self.page_pl13)
-        self.pl13_refresh.setObjectName(u"pl13_refresh")
-        self.pl13_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl13_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl13_add = QPushButton(self.page_pl13)
+        self.pl13_add.setObjectName(u"pl13_add")
+        self.pl13_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl13_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1162,7 +1162,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl13_refresh.setIcon(icon6)
+        self.pl13_add.setIcon(icon6)
         self.pl13_delete = QPushButton(self.page_pl13)
         self.pl13_delete.setObjectName(u"pl13_delete")
         self.pl13_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1219,12 +1219,18 @@ class Ui_MainWindow(object):
 "}")
         self.label_pl13.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl13)
+        self.label_pl13.raise_()
+        self.pl13_add.raise_()
+        self.pl13_delete.raise_()
+        self.label_nclips_13.raise_()
+        self.list_pl13.raise_()
+        self.label_dur_13.raise_()
         self.page_pl18 = QWidget()
         self.page_pl18.setObjectName(u"page_pl18")
-        self.pl18_refresh = QPushButton(self.page_pl18)
-        self.pl18_refresh.setObjectName(u"pl18_refresh")
-        self.pl18_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl18_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl18_add = QPushButton(self.page_pl18)
+        self.pl18_add.setObjectName(u"pl18_add")
+        self.pl18_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl18_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1241,7 +1247,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl18_refresh.setIcon(icon6)
+        self.pl18_add.setIcon(icon6)
         self.pl18_delete = QPushButton(self.page_pl18)
         self.pl18_delete.setObjectName(u"pl18_delete")
         self.pl18_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1298,12 +1304,18 @@ class Ui_MainWindow(object):
 "}")
         self.label_pl18.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl18)
+        self.label_pl18.raise_()
+        self.pl18_add.raise_()
+        self.pl18_delete.raise_()
+        self.label_nclips_18.raise_()
+        self.list_pl18.raise_()
+        self.label_dur_18.raise_()
         self.page_pl17 = QWidget()
         self.page_pl17.setObjectName(u"page_pl17")
-        self.pl17_refresh = QPushButton(self.page_pl17)
-        self.pl17_refresh.setObjectName(u"pl17_refresh")
-        self.pl17_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl17_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl17_add = QPushButton(self.page_pl17)
+        self.pl17_add.setObjectName(u"pl17_add")
+        self.pl17_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl17_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1320,7 +1332,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl17_refresh.setIcon(icon6)
+        self.pl17_add.setIcon(icon6)
         self.pl17_delete = QPushButton(self.page_pl17)
         self.pl17_delete.setObjectName(u"pl17_delete")
         self.pl17_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1378,17 +1390,17 @@ class Ui_MainWindow(object):
         self.label_pl17.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl17)
         self.label_pl17.raise_()
-        self.pl17_refresh.raise_()
+        self.pl17_add.raise_()
         self.pl17_delete.raise_()
         self.label_nclips_17.raise_()
         self.list_pl17.raise_()
         self.label_dur_17.raise_()
         self.page_pl16 = QWidget()
         self.page_pl16.setObjectName(u"page_pl16")
-        self.pl16_refresh = QPushButton(self.page_pl16)
-        self.pl16_refresh.setObjectName(u"pl16_refresh")
-        self.pl16_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl16_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl16_add = QPushButton(self.page_pl16)
+        self.pl16_add.setObjectName(u"pl16_add")
+        self.pl16_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl16_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1405,7 +1417,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl16_refresh.setIcon(icon6)
+        self.pl16_add.setIcon(icon6)
         self.pl16_delete = QPushButton(self.page_pl16)
         self.pl16_delete.setObjectName(u"pl16_delete")
         self.pl16_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1463,17 +1475,17 @@ class Ui_MainWindow(object):
         self.label_pl16.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl16)
         self.label_pl16.raise_()
-        self.pl16_refresh.raise_()
+        self.pl16_add.raise_()
         self.pl16_delete.raise_()
         self.label_nclips_16.raise_()
         self.list_pl16.raise_()
         self.label_dur_16.raise_()
         self.page_pl15 = QWidget()
         self.page_pl15.setObjectName(u"page_pl15")
-        self.pl15_refresh = QPushButton(self.page_pl15)
-        self.pl15_refresh.setObjectName(u"pl15_refresh")
-        self.pl15_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl15_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl15_add = QPushButton(self.page_pl15)
+        self.pl15_add.setObjectName(u"pl15_add")
+        self.pl15_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl15_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1490,7 +1502,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl15_refresh.setIcon(icon6)
+        self.pl15_add.setIcon(icon6)
         self.pl15_delete = QPushButton(self.page_pl15)
         self.pl15_delete.setObjectName(u"pl15_delete")
         self.pl15_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1547,12 +1559,18 @@ class Ui_MainWindow(object):
 "}")
         self.label_pl15.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl15)
+        self.label_pl15.raise_()
+        self.pl15_add.raise_()
+        self.pl15_delete.raise_()
+        self.label_nclips_15.raise_()
+        self.list_pl15.raise_()
+        self.label_dur_15.raise_()
         self.page_pl14 = QWidget()
         self.page_pl14.setObjectName(u"page_pl14")
-        self.pl14_refresh = QPushButton(self.page_pl14)
-        self.pl14_refresh.setObjectName(u"pl14_refresh")
-        self.pl14_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl14_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl14_add = QPushButton(self.page_pl14)
+        self.pl14_add.setObjectName(u"pl14_add")
+        self.pl14_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl14_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1569,7 +1587,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl14_refresh.setIcon(icon6)
+        self.pl14_add.setIcon(icon6)
         self.pl14_delete = QPushButton(self.page_pl14)
         self.pl14_delete.setObjectName(u"pl14_delete")
         self.pl14_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1626,12 +1644,18 @@ class Ui_MainWindow(object):
 "}")
         self.label_pl14.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl14)
+        self.label_pl14.raise_()
+        self.pl14_add.raise_()
+        self.pl14_delete.raise_()
+        self.label_nclips_14.raise_()
+        self.list_pl14.raise_()
+        self.label_dur_14.raise_()
         self.page_pl12 = QWidget()
         self.page_pl12.setObjectName(u"page_pl12")
-        self.pl12_refresh = QPushButton(self.page_pl12)
-        self.pl12_refresh.setObjectName(u"pl12_refresh")
-        self.pl12_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl12_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl12_add = QPushButton(self.page_pl12)
+        self.pl12_add.setObjectName(u"pl12_add")
+        self.pl12_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl12_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1648,7 +1672,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl12_refresh.setIcon(icon6)
+        self.pl12_add.setIcon(icon6)
         self.pl12_delete = QPushButton(self.page_pl12)
         self.pl12_delete.setObjectName(u"pl12_delete")
         self.pl12_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1705,12 +1729,18 @@ class Ui_MainWindow(object):
 "}")
         self.label_pl12.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl12)
+        self.label_pl12.raise_()
+        self.pl12_add.raise_()
+        self.pl12_delete.raise_()
+        self.label_nclips_12.raise_()
+        self.list_pl12.raise_()
+        self.label_dur_12.raise_()
         self.page_pl9 = QWidget()
         self.page_pl9.setObjectName(u"page_pl9")
-        self.pl9_refresh = QPushButton(self.page_pl9)
-        self.pl9_refresh.setObjectName(u"pl9_refresh")
-        self.pl9_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl9_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl9_add = QPushButton(self.page_pl9)
+        self.pl9_add.setObjectName(u"pl9_add")
+        self.pl9_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl9_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1727,7 +1757,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl9_refresh.setIcon(icon6)
+        self.pl9_add.setIcon(icon6)
         self.pl9_delete = QPushButton(self.page_pl9)
         self.pl9_delete.setObjectName(u"pl9_delete")
         self.pl9_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1785,17 +1815,17 @@ class Ui_MainWindow(object):
         self.label_pl9.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl9)
         self.label_pl9.raise_()
-        self.pl9_refresh.raise_()
+        self.pl9_add.raise_()
         self.pl9_delete.raise_()
         self.label_nclips_9.raise_()
         self.list_pl9.raise_()
         self.label_dur_9.raise_()
         self.page_pl10 = QWidget()
         self.page_pl10.setObjectName(u"page_pl10")
-        self.pl10_refresh = QPushButton(self.page_pl10)
-        self.pl10_refresh.setObjectName(u"pl10_refresh")
-        self.pl10_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl10_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl10_add = QPushButton(self.page_pl10)
+        self.pl10_add.setObjectName(u"pl10_add")
+        self.pl10_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl10_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1812,7 +1842,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl10_refresh.setIcon(icon6)
+        self.pl10_add.setIcon(icon6)
         self.pl10_delete = QPushButton(self.page_pl10)
         self.pl10_delete.setObjectName(u"pl10_delete")
         self.pl10_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1869,12 +1899,18 @@ class Ui_MainWindow(object):
 "}")
         self.label_pl10.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl10)
+        self.label_pl10.raise_()
+        self.pl10_add.raise_()
+        self.pl10_delete.raise_()
+        self.label_nclips_10.raise_()
+        self.list_pl10.raise_()
+        self.label_dur_10.raise_()
         self.page_pl8 = QWidget()
         self.page_pl8.setObjectName(u"page_pl8")
-        self.pl8_refresh = QPushButton(self.page_pl8)
-        self.pl8_refresh.setObjectName(u"pl8_refresh")
-        self.pl8_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl8_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl8_add = QPushButton(self.page_pl8)
+        self.pl8_add.setObjectName(u"pl8_add")
+        self.pl8_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl8_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1891,7 +1927,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl8_refresh.setIcon(icon6)
+        self.pl8_add.setIcon(icon6)
         self.pl8_delete = QPushButton(self.page_pl8)
         self.pl8_delete.setObjectName(u"pl8_delete")
         self.pl8_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -1949,17 +1985,17 @@ class Ui_MainWindow(object):
         self.label_pl8.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl8)
         self.label_pl8.raise_()
-        self.pl8_refresh.raise_()
+        self.pl8_add.raise_()
         self.pl8_delete.raise_()
         self.label_nclips_8.raise_()
         self.list_pl8.raise_()
         self.label_dur_8.raise_()
         self.page_pl3 = QWidget()
         self.page_pl3.setObjectName(u"page_pl3")
-        self.pl3_refresh = QPushButton(self.page_pl3)
-        self.pl3_refresh.setObjectName(u"pl3_refresh")
-        self.pl3_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl3_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl3_add = QPushButton(self.page_pl3)
+        self.pl3_add.setObjectName(u"pl3_add")
+        self.pl3_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl3_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -1976,7 +2012,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl3_refresh.setIcon(icon6)
+        self.pl3_add.setIcon(icon6)
         self.pl3_delete = QPushButton(self.page_pl3)
         self.pl3_delete.setObjectName(u"pl3_delete")
         self.pl3_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -2034,17 +2070,17 @@ class Ui_MainWindow(object):
         self.label_pl3.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl3)
         self.label_pl3.raise_()
-        self.pl3_refresh.raise_()
+        self.pl3_add.raise_()
         self.pl3_delete.raise_()
         self.label_nclips_3.raise_()
         self.list_pl3.raise_()
         self.label_dur_3.raise_()
         self.page_pl4 = QWidget()
         self.page_pl4.setObjectName(u"page_pl4")
-        self.pl4_refresh = QPushButton(self.page_pl4)
-        self.pl4_refresh.setObjectName(u"pl4_refresh")
-        self.pl4_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl4_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl4_add = QPushButton(self.page_pl4)
+        self.pl4_add.setObjectName(u"pl4_add")
+        self.pl4_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl4_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2061,7 +2097,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl4_refresh.setIcon(icon6)
+        self.pl4_add.setIcon(icon6)
         self.pl4_delete = QPushButton(self.page_pl4)
         self.pl4_delete.setObjectName(u"pl4_delete")
         self.pl4_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -2118,12 +2154,18 @@ class Ui_MainWindow(object):
 "}")
         self.label_pl4.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl4)
+        self.label_pl4.raise_()
+        self.pl4_add.raise_()
+        self.pl4_delete.raise_()
+        self.label_nclips_4.raise_()
+        self.list_pl4.raise_()
+        self.label_dur_4.raise_()
         self.page_pl7 = QWidget()
         self.page_pl7.setObjectName(u"page_pl7")
-        self.pl7_refresh = QPushButton(self.page_pl7)
-        self.pl7_refresh.setObjectName(u"pl7_refresh")
-        self.pl7_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl7_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl7_add = QPushButton(self.page_pl7)
+        self.pl7_add.setObjectName(u"pl7_add")
+        self.pl7_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl7_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2140,7 +2182,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl7_refresh.setIcon(icon6)
+        self.pl7_add.setIcon(icon6)
         self.pl7_delete = QPushButton(self.page_pl7)
         self.pl7_delete.setObjectName(u"pl7_delete")
         self.pl7_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -2198,17 +2240,17 @@ class Ui_MainWindow(object):
         self.label_pl7.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl7)
         self.label_pl7.raise_()
-        self.pl7_refresh.raise_()
+        self.pl7_add.raise_()
         self.pl7_delete.raise_()
         self.label_nclips_7.raise_()
         self.list_pl7.raise_()
         self.label_dur_7.raise_()
         self.page_pl6 = QWidget()
         self.page_pl6.setObjectName(u"page_pl6")
-        self.pl6_refresh = QPushButton(self.page_pl6)
-        self.pl6_refresh.setObjectName(u"pl6_refresh")
-        self.pl6_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl6_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl6_add = QPushButton(self.page_pl6)
+        self.pl6_add.setObjectName(u"pl6_add")
+        self.pl6_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl6_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2225,7 +2267,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl6_refresh.setIcon(icon6)
+        self.pl6_add.setIcon(icon6)
         self.pl6_delete = QPushButton(self.page_pl6)
         self.pl6_delete.setObjectName(u"pl6_delete")
         self.pl6_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -2283,17 +2325,17 @@ class Ui_MainWindow(object):
         self.label_pl6.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl6)
         self.label_pl6.raise_()
-        self.pl6_refresh.raise_()
+        self.pl6_add.raise_()
         self.pl6_delete.raise_()
         self.label_nclips_6.raise_()
         self.list_pl6.raise_()
         self.label_dur_6.raise_()
         self.page_pl5 = QWidget()
         self.page_pl5.setObjectName(u"page_pl5")
-        self.pl5_refresh = QPushButton(self.page_pl5)
-        self.pl5_refresh.setObjectName(u"pl5_refresh")
-        self.pl5_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl5_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl5_add = QPushButton(self.page_pl5)
+        self.pl5_add.setObjectName(u"pl5_add")
+        self.pl5_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl5_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2310,7 +2352,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl5_refresh.setIcon(icon6)
+        self.pl5_add.setIcon(icon6)
         self.pl5_delete = QPushButton(self.page_pl5)
         self.pl5_delete.setObjectName(u"pl5_delete")
         self.pl5_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -2367,12 +2409,18 @@ class Ui_MainWindow(object):
 "}")
         self.label_pl5.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl5)
+        self.label_pl5.raise_()
+        self.pl5_add.raise_()
+        self.pl5_delete.raise_()
+        self.label_nclips_5.raise_()
+        self.list_pl5.raise_()
+        self.label_dur_5.raise_()
         self.page_pl2 = QWidget()
         self.page_pl2.setObjectName(u"page_pl2")
-        self.pl2_refresh = QPushButton(self.page_pl2)
-        self.pl2_refresh.setObjectName(u"pl2_refresh")
-        self.pl2_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl2_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl2_add = QPushButton(self.page_pl2)
+        self.pl2_add.setObjectName(u"pl2_add")
+        self.pl2_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl2_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2389,7 +2437,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl2_refresh.setIcon(icon6)
+        self.pl2_add.setIcon(icon6)
         self.pl2_delete = QPushButton(self.page_pl2)
         self.pl2_delete.setObjectName(u"pl2_delete")
         self.pl2_delete.setGeometry(QRect(680, 30, 71, 51))
@@ -2446,6 +2494,12 @@ class Ui_MainWindow(object):
 "}")
         self.label_pl2.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl2)
+        self.label_pl2.raise_()
+        self.pl2_add.raise_()
+        self.pl2_delete.raise_()
+        self.label_nclips_2.raise_()
+        self.list_pl2.raise_()
+        self.label_dur_2.raise_()
         self.page_pl1 = QWidget()
         self.page_pl1.setObjectName(u"page_pl1")
         self.list_pl1 = QListWidget(self.page_pl1)
@@ -2493,10 +2547,10 @@ class Ui_MainWindow(object):
 "	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
 "}")
         self.label_pl1.setAlignment(Qt.AlignCenter)
-        self.pl1_refresh = QPushButton(self.page_pl1)
-        self.pl1_refresh.setObjectName(u"pl1_refresh")
-        self.pl1_refresh.setGeometry(QRect(150, 30, 71, 51))
-        self.pl1_refresh.setStyleSheet(u"QPushButton {\n"
+        self.pl1_add = QPushButton(self.page_pl1)
+        self.pl1_add.setObjectName(u"pl1_add")
+        self.pl1_add.setGeometry(QRect(150, 30, 71, 51))
+        self.pl1_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2513,24 +2567,24 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.pl1_refresh.setIcon(icon6)
-        self.label_dur = QLabel(self.page_pl1)
-        self.label_dur.setObjectName(u"label_dur")
-        self.label_dur.setGeometry(QRect(220, 60, 101, 20))
-        self.label_dur.setFont(font7)
-        self.label_dur.setAlignment(Qt.AlignCenter)
-        self.label_nclips = QLabel(self.page_pl1)
-        self.label_nclips.setObjectName(u"label_nclips")
-        self.label_nclips.setGeometry(QRect(620, 60, 61, 20))
-        self.label_nclips.setFont(font7)
-        self.label_nclips.setAlignment(Qt.AlignCenter)
+        self.pl1_add.setIcon(icon6)
+        self.label_dur_1 = QLabel(self.page_pl1)
+        self.label_dur_1.setObjectName(u"label_dur_1")
+        self.label_dur_1.setGeometry(QRect(220, 60, 101, 20))
+        self.label_dur_1.setFont(font7)
+        self.label_dur_1.setAlignment(Qt.AlignCenter)
+        self.label_nclips_1 = QLabel(self.page_pl1)
+        self.label_nclips_1.setObjectName(u"label_nclips_1")
+        self.label_nclips_1.setGeometry(QRect(620, 60, 61, 20))
+        self.label_nclips_1.setFont(font7)
+        self.label_nclips_1.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_pl1)
         self.label_pl1.raise_()
         self.list_pl1.raise_()
         self.pl1_delete.raise_()
-        self.pl1_refresh.raise_()
-        self.label_dur.raise_()
-        self.label_nclips.raise_()
+        self.pl1_add.raise_()
+        self.label_dur_1.raise_()
+        self.label_nclips_1.raise_()
         self.page_estrella2 = QWidget()
         self.page_estrella2.setObjectName(u"page_estrella2")
         self.label_estrella2 = QLabel(self.page_estrella2)
@@ -2580,10 +2634,10 @@ class Ui_MainWindow(object):
 "    background-color: rgba(0,150,250,50);\n"
 "}")
         self.estrella2_delete.setIcon(icon5)
-        self.estrella2_refresh = QPushButton(self.page_estrella2)
-        self.estrella2_refresh.setObjectName(u"estrella2_refresh")
-        self.estrella2_refresh.setGeometry(QRect(120, 20, 71, 51))
-        self.estrella2_refresh.setStyleSheet(u"QPushButton {\n"
+        self.estrella2_add = QPushButton(self.page_estrella2)
+        self.estrella2_add.setObjectName(u"estrella2_add")
+        self.estrella2_add.setGeometry(QRect(120, 20, 71, 51))
+        self.estrella2_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2600,7 +2654,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.estrella2_refresh.setIcon(icon6)
+        self.estrella2_add.setIcon(icon6)
         self.stackedWidget.addWidget(self.page_estrella2)
         self.page_estrella3 = QWidget()
         self.page_estrella3.setObjectName(u"page_estrella3")
@@ -2657,10 +2711,10 @@ class Ui_MainWindow(object):
 "    background-color: rgba(0,150,250,50);\n"
 "}")
         self.estrella3_delete.setIcon(icon5)
-        self.estrella3_refresh = QPushButton(self.page_estrella3)
-        self.estrella3_refresh.setObjectName(u"estrella3_refresh")
-        self.estrella3_refresh.setGeometry(QRect(120, 20, 71, 51))
-        self.estrella3_refresh.setStyleSheet(u"QPushButton {\n"
+        self.estrella3_add = QPushButton(self.page_estrella3)
+        self.estrella3_add.setObjectName(u"estrella3_add")
+        self.estrella3_add.setGeometry(QRect(120, 20, 71, 51))
+        self.estrella3_add.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 20px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -2677,7 +2731,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.estrella3_refresh.setIcon(icon6)
+        self.estrella3_add.setIcon(icon6)
         self.stackedWidget.addWidget(self.page_estrella3)
         self.page_simulator = QWidget()
         self.page_simulator.setObjectName(u"page_simulator")
@@ -3598,9 +3652,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        icon7 = QIcon()
-        icon7.addFile(u":/20x20/icons/20x20/cil-plus.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.playlist_btnadd_1.setIcon(icon7)
+        self.playlist_btnadd_1.setIcon(icon6)
         self.playlist_numclip_pl1 = QLabel(self.page_playlist)
         self.playlist_numclip_pl1.setObjectName(u"playlist_numclip_pl1")
         self.playlist_numclip_pl1.setGeometry(QRect(220, 30, 51, 16))
@@ -3608,7 +3660,7 @@ class Ui_MainWindow(object):
 "border: rgba(255,255,255,0);")
         self.playlist_dur_pl1 = QLabel(self.page_playlist)
         self.playlist_dur_pl1.setObjectName(u"playlist_dur_pl1")
-        self.playlist_dur_pl1.setGeometry(QRect(120, 30, 71, 16))
+        self.playlist_dur_pl1.setGeometry(QRect(120, 30, 81, 16))
         self.playlist_dur_pl1.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl1 = QLabel(self.page_playlist)
@@ -3641,10 +3693,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_2.setIcon(icon7)
+        self.playlist_btnadd_2.setIcon(icon6)
         self.playlist_dur_pl2 = QLabel(self.page_playlist)
         self.playlist_dur_pl2.setObjectName(u"playlist_dur_pl2")
-        self.playlist_dur_pl2.setGeometry(QRect(120, 110, 71, 16))
+        self.playlist_dur_pl2.setGeometry(QRect(120, 110, 81, 16))
         self.playlist_dur_pl2.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl2 = QLabel(self.page_playlist)
@@ -3677,10 +3729,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_3.setIcon(icon7)
+        self.playlist_btnadd_3.setIcon(icon6)
         self.playlist_dur_pl3 = QLabel(self.page_playlist)
         self.playlist_dur_pl3.setObjectName(u"playlist_dur_pl3")
-        self.playlist_dur_pl3.setGeometry(QRect(120, 190, 71, 16))
+        self.playlist_dur_pl3.setGeometry(QRect(120, 190, 81, 16))
         self.playlist_dur_pl3.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl3 = QLabel(self.page_playlist)
@@ -3713,10 +3765,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_4.setIcon(icon7)
+        self.playlist_btnadd_4.setIcon(icon6)
         self.playlist_dur_pl4 = QLabel(self.page_playlist)
         self.playlist_dur_pl4.setObjectName(u"playlist_dur_pl4")
-        self.playlist_dur_pl4.setGeometry(QRect(120, 270, 71, 16))
+        self.playlist_dur_pl4.setGeometry(QRect(120, 270, 81, 16))
         self.playlist_dur_pl4.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl4 = QLabel(self.page_playlist)
@@ -3749,10 +3801,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_5.setIcon(icon7)
+        self.playlist_btnadd_5.setIcon(icon6)
         self.playlist_dur_pl5 = QLabel(self.page_playlist)
         self.playlist_dur_pl5.setObjectName(u"playlist_dur_pl5")
-        self.playlist_dur_pl5.setGeometry(QRect(120, 350, 71, 16))
+        self.playlist_dur_pl5.setGeometry(QRect(120, 350, 81, 16))
         self.playlist_dur_pl5.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl5 = QLabel(self.page_playlist)
@@ -3785,10 +3837,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_6.setIcon(icon7)
+        self.playlist_btnadd_6.setIcon(icon6)
         self.playlist_dur_pl6 = QLabel(self.page_playlist)
         self.playlist_dur_pl6.setObjectName(u"playlist_dur_pl6")
-        self.playlist_dur_pl6.setGeometry(QRect(120, 430, 71, 16))
+        self.playlist_dur_pl6.setGeometry(QRect(120, 430, 81, 16))
         self.playlist_dur_pl6.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl6 = QLabel(self.page_playlist)
@@ -3923,7 +3975,7 @@ class Ui_MainWindow(object):
 "}")
         self.playlist_dur_pl8 = QLabel(self.page_playlist)
         self.playlist_dur_pl8.setObjectName(u"playlist_dur_pl8")
-        self.playlist_dur_pl8.setGeometry(QRect(430, 110, 71, 16))
+        self.playlist_dur_pl8.setGeometry(QRect(430, 110, 81, 16))
         self.playlist_dur_pl8.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl12 = QLabel(self.page_playlist)
@@ -3938,7 +3990,7 @@ class Ui_MainWindow(object):
         self.playlist_codi_pl10.setStyleSheet(u"")
         self.playlist_dur_pl9 = QLabel(self.page_playlist)
         self.playlist_dur_pl9.setObjectName(u"playlist_dur_pl9")
-        self.playlist_dur_pl9.setGeometry(QRect(430, 190, 71, 16))
+        self.playlist_dur_pl9.setGeometry(QRect(430, 190, 81, 16))
         self.playlist_dur_pl9.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl10 = QLabel(self.page_playlist)
@@ -3948,7 +4000,7 @@ class Ui_MainWindow(object):
 "border: rgba(255,255,255,0);")
         self.playlist_dur_pl10 = QLabel(self.page_playlist)
         self.playlist_dur_pl10.setObjectName(u"playlist_dur_pl10")
-        self.playlist_dur_pl10.setGeometry(QRect(430, 270, 71, 16))
+        self.playlist_dur_pl10.setGeometry(QRect(430, 270, 81, 16))
         self.playlist_dur_pl10.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl9 = QLabel(self.page_playlist)
@@ -3968,7 +4020,7 @@ class Ui_MainWindow(object):
         self.playlist_codi_pl11.setStyleSheet(u"")
         self.playlist_dur_pl11 = QLabel(self.page_playlist)
         self.playlist_dur_pl11.setObjectName(u"playlist_dur_pl11")
-        self.playlist_dur_pl11.setGeometry(QRect(430, 350, 71, 16))
+        self.playlist_dur_pl11.setGeometry(QRect(430, 350, 81, 16))
         self.playlist_dur_pl11.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl7 = QLabel(self.page_playlist)
@@ -3996,7 +4048,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_10.setIcon(icon7)
+        self.playlist_btnadd_10.setIcon(icon6)
         self.playlist_button_pl10 = QPushButton(self.page_playlist)
         self.playlist_button_pl10.setObjectName(u"playlist_button_pl10")
         self.playlist_button_pl10.setGeometry(QRect(420, 240, 171, 51))
@@ -4082,7 +4134,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_7.setIcon(icon7)
+        self.playlist_btnadd_7.setIcon(icon6)
         self.playlist_btnadd_8 = QPushButton(self.page_playlist)
         self.playlist_btnadd_8.setObjectName(u"playlist_btnadd_8")
         self.playlist_btnadd_8.setGeometry(QRect(320, 80, 93, 51))
@@ -4103,7 +4155,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_8.setIcon(icon7)
+        self.playlist_btnadd_8.setIcon(icon6)
         self.playlist_numclip_pl8 = QLabel(self.page_playlist)
         self.playlist_numclip_pl8.setObjectName(u"playlist_numclip_pl8")
         self.playlist_numclip_pl8.setGeometry(QRect(530, 110, 51, 16))
@@ -4136,7 +4188,7 @@ class Ui_MainWindow(object):
 "border: rgba(255,255,255,0);")
         self.playlist_dur_pl12 = QLabel(self.page_playlist)
         self.playlist_dur_pl12.setObjectName(u"playlist_dur_pl12")
-        self.playlist_dur_pl12.setGeometry(QRect(430, 430, 71, 16))
+        self.playlist_dur_pl12.setGeometry(QRect(430, 430, 81, 16))
         self.playlist_dur_pl12.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl12 = QLabel(self.page_playlist)
@@ -4189,10 +4241,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_11.setIcon(icon7)
+        self.playlist_btnadd_11.setIcon(icon6)
         self.playlist_dur_pl7 = QLabel(self.page_playlist)
         self.playlist_dur_pl7.setObjectName(u"playlist_dur_pl7")
-        self.playlist_dur_pl7.setGeometry(QRect(430, 30, 71, 16))
+        self.playlist_dur_pl7.setGeometry(QRect(430, 30, 81, 16))
         self.playlist_dur_pl7.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_button_pl7 = QPushButton(self.page_playlist)
@@ -4235,7 +4287,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_9.setIcon(icon7)
+        self.playlist_btnadd_9.setIcon(icon6)
         self.playlist_btnadd_12 = QPushButton(self.page_playlist)
         self.playlist_btnadd_12.setObjectName(u"playlist_btnadd_12")
         self.playlist_btnadd_12.setGeometry(QRect(320, 400, 93, 51))
@@ -4256,10 +4308,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_12.setIcon(icon7)
+        self.playlist_btnadd_12.setIcon(icon6)
         self.playlist_dur_pl14 = QLabel(self.page_playlist)
         self.playlist_dur_pl14.setObjectName(u"playlist_dur_pl14")
-        self.playlist_dur_pl14.setGeometry(QRect(750, 110, 71, 16))
+        self.playlist_dur_pl14.setGeometry(QRect(750, 110, 81, 16))
         self.playlist_dur_pl14.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl18 = QLabel(self.page_playlist)
@@ -4274,7 +4326,7 @@ class Ui_MainWindow(object):
         self.playlist_codi_pl16.setStyleSheet(u"")
         self.playlist_dur_pl15 = QLabel(self.page_playlist)
         self.playlist_dur_pl15.setObjectName(u"playlist_dur_pl15")
-        self.playlist_dur_pl15.setGeometry(QRect(750, 190, 71, 16))
+        self.playlist_dur_pl15.setGeometry(QRect(750, 190, 81, 16))
         self.playlist_dur_pl15.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_numclip_pl16 = QLabel(self.page_playlist)
@@ -4284,7 +4336,7 @@ class Ui_MainWindow(object):
 "border: rgba(255,255,255,0);")
         self.playlist_dur_pl16 = QLabel(self.page_playlist)
         self.playlist_dur_pl16.setObjectName(u"playlist_dur_pl16")
-        self.playlist_dur_pl16.setGeometry(QRect(750, 270, 71, 16))
+        self.playlist_dur_pl16.setGeometry(QRect(750, 270, 81, 16))
         self.playlist_dur_pl16.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl15 = QLabel(self.page_playlist)
@@ -4304,7 +4356,7 @@ class Ui_MainWindow(object):
         self.playlist_codi_pl17.setStyleSheet(u"")
         self.playlist_dur_pl17 = QLabel(self.page_playlist)
         self.playlist_dur_pl17.setObjectName(u"playlist_dur_pl17")
-        self.playlist_dur_pl17.setGeometry(QRect(750, 350, 71, 16))
+        self.playlist_dur_pl17.setGeometry(QRect(750, 350, 81, 16))
         self.playlist_dur_pl17.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl13 = QLabel(self.page_playlist)
@@ -4332,7 +4384,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_16.setIcon(icon7)
+        self.playlist_btnadd_16.setIcon(icon6)
         self.playlist_button_pl16 = QPushButton(self.page_playlist)
         self.playlist_button_pl16.setObjectName(u"playlist_button_pl16")
         self.playlist_button_pl16.setGeometry(QRect(740, 240, 171, 51))
@@ -4418,7 +4470,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_13.setIcon(icon7)
+        self.playlist_btnadd_13.setIcon(icon6)
         self.playlist_btnadd_14 = QPushButton(self.page_playlist)
         self.playlist_btnadd_14.setObjectName(u"playlist_btnadd_14")
         self.playlist_btnadd_14.setGeometry(QRect(640, 80, 93, 51))
@@ -4439,7 +4491,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_14.setIcon(icon7)
+        self.playlist_btnadd_14.setIcon(icon6)
         self.playlist_numclip_pl14 = QLabel(self.page_playlist)
         self.playlist_numclip_pl14.setObjectName(u"playlist_numclip_pl14")
         self.playlist_numclip_pl14.setGeometry(QRect(850, 110, 51, 16))
@@ -4472,7 +4524,7 @@ class Ui_MainWindow(object):
 "border: rgba(255,255,255,0);")
         self.playlist_dur_pl18 = QLabel(self.page_playlist)
         self.playlist_dur_pl18.setObjectName(u"playlist_dur_pl18")
-        self.playlist_dur_pl18.setGeometry(QRect(750, 430, 71, 16))
+        self.playlist_dur_pl18.setGeometry(QRect(750, 430, 81, 16))
         self.playlist_dur_pl18.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_codi_pl18 = QLabel(self.page_playlist)
@@ -4525,10 +4577,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_17.setIcon(icon7)
+        self.playlist_btnadd_17.setIcon(icon6)
         self.playlist_dur_pl13 = QLabel(self.page_playlist)
         self.playlist_dur_pl13.setObjectName(u"playlist_dur_pl13")
-        self.playlist_dur_pl13.setGeometry(QRect(750, 30, 71, 16))
+        self.playlist_dur_pl13.setGeometry(QRect(750, 30, 81, 16))
         self.playlist_dur_pl13.setStyleSheet(u"backgound-color: rgba(255,255,255,0);\n"
 "border: rgba(255,255,255,0);")
         self.playlist_button_pl13 = QPushButton(self.page_playlist)
@@ -4571,7 +4623,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_15.setIcon(icon7)
+        self.playlist_btnadd_15.setIcon(icon6)
         self.playlist_btnadd_18 = QPushButton(self.page_playlist)
         self.playlist_btnadd_18.setObjectName(u"playlist_btnadd_18")
         self.playlist_btnadd_18.setGeometry(QRect(640, 400, 93, 51))
@@ -4592,7 +4644,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "    background-color: rgba(0,150,250,50);\n"
 "}")
-        self.playlist_btnadd_18.setIcon(icon7)
+        self.playlist_btnadd_18.setIcon(icon6)
         self.stackedWidget.addWidget(self.page_playlist)
         self.playlist_btnadd_1.raise_()
         self.playlist_numclip_pl1.raise_()
@@ -5176,10 +5228,10 @@ class Ui_MainWindow(object):
 "\n"
 "")
         self.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
-        self.contec_acc_actualplaylist = QLabel(self.page_contentacc)
-        self.contec_acc_actualplaylist.setObjectName(u"contec_acc_actualplaylist")
-        self.contec_acc_actualplaylist.setGeometry(QRect(270, 30, 175, 70))
-        self.contec_acc_actualplaylist.setStyleSheet(u"QLabel {\n"
+        self.cont_acc_actualplaylist = QPushButton(self.page_contentacc)
+        self.cont_acc_actualplaylist.setObjectName(u"cont_acc_actualplaylist")
+        self.cont_acc_actualplaylist.setGeometry(QRect(270, 30, 175, 70))
+        self.cont_acc_actualplaylist.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -5189,12 +5241,17 @@ class Ui_MainWindow(object):
 "	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
 "}\n"
 "\n"
-"QLabel:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: rgba(0,150,250,50);\n"
 "}\n"
 "\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
 "")
-        self.contec_acc_actualplaylist.setAlignment(Qt.AlignCenter)
         self.stackedWidget.addWidget(self.page_contentacc)
         self.page_widgets = QWidget()
         self.page_widgets.setObjectName(u"page_widgets")
@@ -5269,9 +5326,9 @@ class Ui_MainWindow(object):
 "	background-color: rgb(35, 40, 49);\n"
 "	border: 2px solid rgb(43, 50, 61);\n"
 "}")
-        icon8 = QIcon()
-        icon8.addFile(u":/16x16/icons/16x16/cil-folder-open.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton.setIcon(icon8)
+        icon7 = QIcon()
+        icon7.addFile(u":/16x16/icons/16x16/cil-folder-open.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton.setIcon(icon7)
 
         self.gridLayout.addWidget(self.pushButton, 0, 1, 1, 1)
 
@@ -5470,9 +5527,9 @@ class Ui_MainWindow(object):
 "	color: rgb(210, 210, 210);\n"
 "	background-color: rgb(52, 58, 71);\n"
 "}")
-        icon9 = QIcon()
-        icon9.addFile(u":/16x16/icons/16x16/cil-link.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.commandLinkButton.setIcon(icon9)
+        icon8 = QIcon()
+        icon8.addFile(u":/16x16/icons/16x16/cil-link.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.commandLinkButton.setIcon(icon8)
 
         self.gridLayout_2.addWidget(self.commandLinkButton, 1, 6, 1, 1)
 
@@ -5757,7 +5814,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(4)
+        self.stackedWidget.setCurrentIndex(19)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -5802,106 +5859,106 @@ class Ui_MainWindow(object):
         self.clip_gotoestrella1.setText("")
         self.label_estrella1.setText("")
         self.estrella1_delete.setText("")
-        self.estrella1_refresh.setText("")
-        self.pl11_refresh.setText("")
+        self.estrella1_add.setText("")
+        self.pl11_add.setText("")
         self.pl11_delete.setText("")
         self.label_nclips_11.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_11.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_11.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl11.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 11", None))
-        self.pl13_refresh.setText("")
+        self.pl13_add.setText("")
         self.pl13_delete.setText("")
         self.label_nclips_13.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_13.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_13.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl13.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 13", None))
-        self.pl18_refresh.setText("")
+        self.pl18_add.setText("")
         self.pl18_delete.setText("")
         self.label_nclips_18.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_18.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_18.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl18.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 18", None))
-        self.pl17_refresh.setText("")
+        self.pl17_add.setText("")
         self.pl17_delete.setText("")
         self.label_nclips_17.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_17.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_17.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl17.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 17", None))
-        self.pl16_refresh.setText("")
+        self.pl16_add.setText("")
         self.pl16_delete.setText("")
         self.label_nclips_16.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_16.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_16.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl16.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 16", None))
-        self.pl15_refresh.setText("")
+        self.pl15_add.setText("")
         self.pl15_delete.setText("")
         self.label_nclips_15.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_15.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_15.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl15.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 15", None))
-        self.pl14_refresh.setText("")
+        self.pl14_add.setText("")
         self.pl14_delete.setText("")
         self.label_nclips_14.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_14.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_14.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl14.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 14", None))
-        self.pl12_refresh.setText("")
+        self.pl12_add.setText("")
         self.pl12_delete.setText("")
         self.label_nclips_12.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_12.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_12.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl12.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 12", None))
-        self.pl9_refresh.setText("")
+        self.pl9_add.setText("")
         self.pl9_delete.setText("")
         self.label_nclips_9.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_9.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_9.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl9.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 9", None))
-        self.pl10_refresh.setText("")
+        self.pl10_add.setText("")
         self.pl10_delete.setText("")
         self.label_nclips_10.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_10.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_10.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl10.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 10", None))
-        self.pl8_refresh.setText("")
+        self.pl8_add.setText("")
         self.pl8_delete.setText("")
         self.label_nclips_8.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_8.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_8.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl8.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 8", None))
-        self.pl3_refresh.setText("")
+        self.pl3_add.setText("")
         self.pl3_delete.setText("")
         self.label_nclips_3.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_3.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_3.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl3.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 3", None))
-        self.pl4_refresh.setText("")
+        self.pl4_add.setText("")
         self.pl4_delete.setText("")
         self.label_nclips_4.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_4.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_4.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl4.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 4", None))
-        self.pl7_refresh.setText("")
+        self.pl7_add.setText("")
         self.pl7_delete.setText("")
         self.label_nclips_7.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_7.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_7.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl7.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 7", None))
-        self.pl6_refresh.setText("")
+        self.pl6_add.setText("")
         self.pl6_delete.setText("")
         self.label_nclips_6.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_6.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_6.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl6.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 6", None))
-        self.pl5_refresh.setText("")
+        self.pl5_add.setText("")
         self.pl5_delete.setText("")
         self.label_nclips_5.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_5.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_5.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl5.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 5", None))
-        self.pl2_refresh.setText("")
+        self.pl2_add.setText("")
         self.pl2_delete.setText("")
         self.label_nclips_2.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.label_dur_2.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.label_dur_2.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.label_pl2.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 2", None))
         self.pl1_delete.setText("")
         self.label_pl1.setText(QCoreApplication.translate("MainWindow", u"PLAYLIST 1", None))
-        self.pl1_refresh.setText("")
-        self.label_dur.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
-        self.label_nclips.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
+        self.pl1_add.setText("")
+        self.label_dur_1.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
+        self.label_nclips_1.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.label_estrella2.setText("")
         self.label_estrella2_2.setText("")
         self.estrella2_delete.setText("")
-        self.estrella2_refresh.setText("")
+        self.estrella2_add.setText("")
         self.label_estrella3.setText("")
         self.label_estrella3_2.setText("")
         self.label_estrella3_3.setText("")
         self.estrella3_delete.setText("")
-        self.estrella3_refresh.setText("")
+        self.estrella3_add.setText("")
         self.sim_menu.setText(QCoreApplication.translate("MainWindow", u"MENU", None))
         self.sim_take.setText(QCoreApplication.translate("MainWindow", u"Lever \n"
 " --------------------------------\n"
@@ -5968,26 +6025,26 @@ class Ui_MainWindow(object):
         self.generic_lockremote.setText(QCoreApplication.translate("MainWindow", u"Lock Remote", None))
         self.playlist_btnadd_1.setText("")
         self.playlist_numclip_pl1.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_dur_pl1.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl1.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_codi_pl1.setText(QCoreApplication.translate("MainWindow", u"1", None))
         self.playlist_btnadd_2.setText("")
-        self.playlist_dur_pl2.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl2.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_numclip_pl2.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_codi_pl2.setText(QCoreApplication.translate("MainWindow", u"2", None))
         self.playlist_btnadd_3.setText("")
-        self.playlist_dur_pl3.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl3.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_numclip_pl3.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_codi_pl3.setText(QCoreApplication.translate("MainWindow", u"3", None))
         self.playlist_btnadd_4.setText("")
-        self.playlist_dur_pl4.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl4.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_numclip_pl4.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_codi_pl4.setText(QCoreApplication.translate("MainWindow", u"4", None))
         self.playlist_btnadd_5.setText("")
-        self.playlist_dur_pl5.setText(QCoreApplication.translate("MainWindow", u"00.00:00:00", None))
+        self.playlist_dur_pl5.setText(QCoreApplication.translate("MainWindow", u"00.00:00:000", None))
         self.playlist_numclip_pl5.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_codi_pl5.setText(QCoreApplication.translate("MainWindow", u"5", None))
         self.playlist_btnadd_6.setText("")
-        self.playlist_dur_pl6.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl6.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_numclip_pl6.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_codi_pl6.setText(QCoreApplication.translate("MainWindow", u"6", None))
         self.playlist_button_pl1.setText("")
@@ -5996,16 +6053,16 @@ class Ui_MainWindow(object):
         self.playlist_button_pl4.setText("")
         self.playlist_button_pl5.setText("")
         self.playlist_button_pl6.setText("")
-        self.playlist_dur_pl8.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl8.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_numclip_pl12.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_codi_pl10.setText(QCoreApplication.translate("MainWindow", u"10", None))
-        self.playlist_dur_pl9.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl9.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_numclip_pl10.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_dur_pl10.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl10.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_codi_pl9.setText(QCoreApplication.translate("MainWindow", u"9", None))
         self.playlist_codi_pl8.setText(QCoreApplication.translate("MainWindow", u"8", None))
         self.playlist_codi_pl11.setText(QCoreApplication.translate("MainWindow", u"11", None))
-        self.playlist_dur_pl11.setText(QCoreApplication.translate("MainWindow", u"00.00:00:00", None))
+        self.playlist_dur_pl11.setText(QCoreApplication.translate("MainWindow", u"00.00:00:000", None))
         self.playlist_codi_pl7.setText(QCoreApplication.translate("MainWindow", u"7", None))
         self.playlist_btnadd_10.setText("")
         self.playlist_button_pl10.setText("")
@@ -6017,25 +6074,25 @@ class Ui_MainWindow(object):
         self.playlist_numclip_pl8.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_button_pl8.setText("")
         self.playlist_numclip_pl9.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_dur_pl12.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl12.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_codi_pl12.setText(QCoreApplication.translate("MainWindow", u"12", None))
         self.playlist_numclip_pl7.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_button_pl11.setText("")
         self.playlist_btnadd_11.setText("")
-        self.playlist_dur_pl7.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl7.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_button_pl7.setText("")
         self.playlist_btnadd_9.setText("")
         self.playlist_btnadd_12.setText("")
-        self.playlist_dur_pl14.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl14.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_numclip_pl18.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_codi_pl16.setText(QCoreApplication.translate("MainWindow", u"16", None))
-        self.playlist_dur_pl15.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl15.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_numclip_pl16.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_dur_pl16.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl16.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_codi_pl15.setText(QCoreApplication.translate("MainWindow", u"15", None))
         self.playlist_codi_pl14.setText(QCoreApplication.translate("MainWindow", u"14", None))
         self.playlist_codi_pl17.setText(QCoreApplication.translate("MainWindow", u"17", None))
-        self.playlist_dur_pl17.setText(QCoreApplication.translate("MainWindow", u"00.00:00:00", None))
+        self.playlist_dur_pl17.setText(QCoreApplication.translate("MainWindow", u"00.00:00:000", None))
         self.playlist_codi_pl13.setText(QCoreApplication.translate("MainWindow", u"13", None))
         self.playlist_btnadd_16.setText("")
         self.playlist_button_pl16.setText("")
@@ -6047,12 +6104,12 @@ class Ui_MainWindow(object):
         self.playlist_numclip_pl14.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_button_pl14.setText("")
         self.playlist_numclip_pl15.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
-        self.playlist_dur_pl18.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl18.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_codi_pl18.setText(QCoreApplication.translate("MainWindow", u"18", None))
         self.playlist_numclip_pl13.setText(QCoreApplication.translate("MainWindow", u"0 clips", None))
         self.playlist_button_pl17.setText("")
         self.playlist_btnadd_17.setText("")
-        self.playlist_dur_pl13.setText(QCoreApplication.translate("MainWindow", u"00:00:00:00", None))
+        self.playlist_dur_pl13.setText(QCoreApplication.translate("MainWindow", u"00:00:00:000", None))
         self.playlist_button_pl13.setText("")
         self.playlist_btnadd_15.setText("")
         self.playlist_btnadd_18.setText("")
@@ -6076,7 +6133,7 @@ class Ui_MainWindow(object):
         self.cont_acc_recordtrains.setText(QCoreApplication.translate("MainWindow", u"Record Trains", None))
         self.cont_acc_searchtc.setText(QCoreApplication.translate("MainWindow", u"Search TC", None))
         self.contec_acc_actualclip.setText(QCoreApplication.translate("MainWindow", u"Actual Clip", None))
-        self.contec_acc_actualplaylist.setText(QCoreApplication.translate("MainWindow", u"Actual Playlist", None))
+        self.cont_acc_actualplaylist.setText(QCoreApplication.translate("MainWindow", u"Actual Playlist", None))
         self.labelBoxBlenderInstalation.setText(QCoreApplication.translate("MainWindow", u"BLENDER INSTALLATION", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Open Blender", None))
         self.labelVersion_3.setText(QCoreApplication.translate("MainWindow", u"Ex: C:Program FilesBlender FoundationBlender 2.82 blender.exe", None))

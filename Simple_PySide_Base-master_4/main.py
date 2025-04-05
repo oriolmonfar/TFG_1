@@ -43,6 +43,24 @@ estrella2 = load_estrella2_list()
 estrella3 = load_estrella3_list()
 modo_playlist = False
 active_playlist = load_active_playlist()
+playlist1 = load_plst(1)
+playlist2 = load_plst(2)
+playlist3 = load_plst(3)
+playlist4 = load_plst(4)
+playlist5 = load_plst(5)
+playlist6 = load_plst(6)
+playlist7 = load_plst(7)
+playlist8 = load_plst(8)
+playlist9 = load_plst(9)
+playlist10 = load_plst(10)
+playlist11 = load_plst(11)
+playlist12 = load_plst(12)
+playlist13 = load_plst(13)
+playlist14 = load_plst(14)
+playlist15 = load_plst(15)
+playlist16 = load_plst(16)
+playlist17 = load_plst(17)
+playlist18 = load_plst(18)
 
 
 
@@ -118,9 +136,9 @@ class PopupDeleteClipDictionary(QDialog):
         ## SHOW ==> CLOSE APPLICATION
         self.ui.close_confirm_deleteclipdic.clicked.connect(lambda: self.close())
         self.ui.confirm_deleteclipdic_no.clicked.connect(lambda: self.close())
-        self.ui.confirm_deleteclipdic_yes.clicked.connect(lambda: reset_clip_dictionary_and_clip_id())
+        self.ui.confirm_deleteclipdic_yes.clicked.connect(lambda: reset_clip_dictionary_and_clip_id(self))
 
-        def reset_clip_dictionary_and_clip_id():
+        def reset_clip_dictionary_and_clip_id(self):
             """Resetea todos los clips a 'void' en clip_dictionary.json y establece clip_id en 0 en config.json."""
 
             # Cargar el archivo clip_dictionary.json
@@ -138,8 +156,18 @@ class PopupDeleteClipDictionary(QDialog):
             config = load_config()
             config["clip_id"] = 0
             save_config("clip_id", 0)
+
+            # Guardar las listas de las playlists vacías
+            for i in range(1, 19):  # Desde playlist1 hasta playlist18
+                save_plst(i, [])  # Guardar la lista vacía en la función save_plst
+
+            save_estrella1_list([])
+            save_estrella2_list([])
+            save_estrella3_list([])
             
             print("clip_id ha sido restablecido a 0 en 'config.json'.")
+
+
 
             time.sleep(0.1)
             self.close()
@@ -734,9 +762,9 @@ class MainWindow(QMainWindow):
         self.ui.estrella1_delete.clicked.connect(lambda: UIFunctions.remove_estrella1(self))
         self.ui.estrella2_delete.clicked.connect(lambda: UIFunctions.remove_estrella2(self))
         self.ui.estrella3_delete.clicked.connect(lambda: UIFunctions.remove_estrella3(self))
-        self.ui.estrella1_refresh.clicked.connect(lambda: UIFunctions.refresh_estrella1_list(self))
-        self.ui.estrella2_refresh.clicked.connect(lambda: UIFunctions.refresh_estrella2_list(self))
-        self.ui.estrella3_refresh.clicked.connect(lambda: UIFunctions.refresh_estrella3_list(self))
+        self.ui.estrella1_add.clicked.connect(lambda: UIFunctions.function_estrella1(self))
+        self.ui.estrella2_add.clicked.connect(lambda: UIFunctions.function_estrella2(self))
+        self.ui.estrella3_add.clicked.connect(lambda: UIFunctions.function_estrella3(self))
 
         #################################### END - BOTONS CLIP
 
@@ -752,8 +780,11 @@ class MainWindow(QMainWindow):
         #################################### END - BOTONS CONTROL
 
         #################################### START - BOTONS CONTENT ACCESS
+        UIFunctions.restore_all_playlists_on_startup(self)
         self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
         self.ui.contec_acc_actualclip.setText(f"{current_clip}")
+        self.ui.cont_acc_actualplaylist.setText(f"{active_playlist}")
+        self.ui.cont_acc_actualplaylist.clicked.connect(lambda: UIFunctions.cont_acc_gotopl(self))
         self.ui.cont_acc_page.clicked.connect(lambda: function_page_activate())
         self.ui.cont_acc_mark.clicked.connect(lambda: UIFunctions.function_mark())
         self.ui.cont_acc_lastmark.clicked.connect(lambda: UIFunctions.function_lastmark())
@@ -924,7 +955,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.function_loop()
                 reset_shift(self)
             else:
-                UIFunctions.function_plst_page(self)
+                UIFunctions.cont_acc_gotopl(self)
         self.ui.sim_loop.clicked.connect(lambda: execute_functions_loop(self))
 
         def execute_functions_insert(self):
@@ -1031,15 +1062,6 @@ class MainWindow(QMainWindow):
                     print(f"Clip {selected_clip} registrado con ID {clip_id - 1}")
                 else:
                     UIFunctions.show_dialog_overwrite_clip(self, selected_clip, clip_management)
-
-
-
-
-
-
-
-
-
                     
         
         def wait_for_clip_selection():
@@ -1209,6 +1231,27 @@ class MainWindow(QMainWindow):
         self.ui.playlist_btnadd_16.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 16))
         self.ui.playlist_btnadd_17.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 17))
         self.ui.playlist_btnadd_18.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 18))
+
+        self.ui.pl1_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 1))
+        self.ui.pl2_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 2))
+        self.ui.pl3_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 3))
+        self.ui.pl4_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 4))
+        self.ui.pl5_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 5))
+        self.ui.pl6_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 6))
+        self.ui.pl7_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 7))
+        self.ui.pl8_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 8))
+        self.ui.pl9_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 9))
+        self.ui.pl10_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 10))
+        self.ui.pl11_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 11))
+        self.ui.pl12_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 12))
+        self.ui.pl13_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 13))
+        self.ui.pl14_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 14))
+        self.ui.pl15_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 15))
+        self.ui.pl16_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 16))
+        self.ui.pl17_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 17))
+        self.ui.pl18_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 18))
+
+
         self.ui.playlist_button_pl1.clicked.connect(lambda: UIFunctions.goto_pl(self, 1))
         self.ui.playlist_button_pl2.clicked.connect(lambda: UIFunctions.goto_pl(self, 2))
         self.ui.playlist_button_pl3.clicked.connect(lambda: UIFunctions.goto_pl(self, 3))
@@ -1227,6 +1270,25 @@ class MainWindow(QMainWindow):
         self.ui.playlist_button_pl16.clicked.connect(lambda: UIFunctions.goto_pl(self, 16))
         self.ui.playlist_button_pl17.clicked.connect(lambda: UIFunctions.goto_pl(self, 17))
         self.ui.playlist_button_pl18.clicked.connect(lambda: UIFunctions.goto_pl(self, 18))
+
+        self.ui.pl1_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 1))
+        self.ui.pl2_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 2))
+        self.ui.pl3_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 3))
+        self.ui.pl4_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 4))
+        self.ui.pl5_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 5))
+        self.ui.pl6_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 6))
+        self.ui.pl7_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 7))
+        self.ui.pl8_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 8))
+        self.ui.pl9_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 9))
+        self.ui.pl10_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 10))
+        self.ui.pl11_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 11))
+        self.ui.pl12_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 12))
+        self.ui.pl13_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 13))
+        self.ui.pl14_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 14))
+        self.ui.pl15_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 15))
+        self.ui.pl16_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 16))
+        self.ui.pl17_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 17))
+        self.ui.pl18_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 18))
 
 
         #################################### END - BOTONS PLAYLIST

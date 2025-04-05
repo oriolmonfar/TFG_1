@@ -292,14 +292,14 @@ class UIFunctions(MainWindow):
 
     def refresh_estrella2_list(self):
         global estrella2
-        estrella2 = load_estrella1_list()  # Cargar la lista desde el archivo
+        estrella2 = load_estrella2_list()  # Cargar la lista desde el archivo
         self.ui.list_estrella2.clear()  # Limpiar la QListWidget antes de actualizarla
 
         updated_estrella2 = []  # Nueva lista actualizada con la información formateada
 
         clip_data = load_clip_dictionary()  # Cargar el diccionario de clips
 
-        for item in estrella1:
+        for item in estrella2:
             numeric_code = item[:3]  # Extraer los primeros 3 caracteres
 
             if numeric_code in clip_data:
@@ -334,7 +334,7 @@ class UIFunctions(MainWindow):
 
         clip_data = load_clip_dictionary()  # Cargar el diccionario de clips
 
-        for item in estrella1:
+        for item in estrella3:
             numeric_code = item[:3]  # Extraer los primeros 3 caracteres
 
             if numeric_code in clip_data:
@@ -603,12 +603,15 @@ class UIFunctions(MainWindow):
     
     def function_estrella1_page(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.page_estrella1)
+        UIFunctions.refresh_estrella1_list(self)
     
     def function_estrella2_page(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.page_estrella2)
+        UIFunctions.refresh_estrella2_list(self)
 
     def function_estrella3_page(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.page_estrella3)
+        UIFunctions.refresh_estrella3_list(self)
 
     
 
@@ -789,7 +792,6 @@ class UIFunctions(MainWindow):
     ########################################################################
 
     def add_to_playlist(self, plst_num):
-
         global current_clip, clip_id
 
         current_clip = load_current_clip()
@@ -804,84 +806,300 @@ class UIFunctions(MainWindow):
         except FileNotFoundError:
             print(f"Error: El archivo {CLIP_DICTIONARY_FILE} no existe.")
             return None
-        
 
-        # Obtener la lista asignada al código
         clip_list = clip_data.get(numeric_code, ["void"] * 7)
 
         if clip_list[0] == "void":
             print("No hay ningún clip asignado.")
             return None
 
-        clip_list[3] = f"PL{plst_num}"
+        new_playlist = f"PL{plst_num}"
 
-        if clip_list[1]== "void":
-            name = "No name assigned"
-        else: 
-            name = clip_list[1]
+        # Añadir la nueva playlist al campo correspondiente del clip
+        if clip_list[3] == "void":
+            clip_list[3] = new_playlist
+        else:
+            if clip_list[3].startswith("{") and clip_list[3].endswith("}"):
+                existing_playlists = [pl.strip() for pl in clip_list[3][1:-1].split(",")]
+            else:
+                existing_playlists = [clip_list[3].strip()]
 
-        if clip_list[2]== "void":
-            rank = "No ranking assigned"
-        else: 
-            rank = clip_list[3]
+            if new_playlist not in existing_playlists:
+                existing_playlists.append(new_playlist)
 
-        if clip_list[4]== "void":
-            tc_in = "No TC IN assigned"
-        else: 
-            tc_in = clip_list[4][11:]
+            if len(existing_playlists) == 1:
+                clip_list[3] = existing_playlists[0]
+            else:
+                clip_list[3] = "{" + ", ".join(existing_playlists) + "}"
 
-        if clip_list[5]== "void":
-            tc_out = "No TC OUT assigned"
-        else: 
-            tc_out = clip_list[5][11:]
+        # Construir la información del clip actualizada
+        name = clip_list[1] if clip_list[1] != "void" else "No name assigned"
+        rank = clip_list[2] if clip_list[2] != "void" else "No ranking assigned"
+        tc_in = clip_list[4][11:] if clip_list[4] != "void" else "No TC IN assigned"
+        tc_out = clip_list[5][11:] if clip_list[5] != "void" else "No TC OUT assigned"
+        dur = clip_list[6] if clip_list[6] != "void" else "No duration assigned"
 
-        if clip_list[6]== "void":
-            dur = "No duration assigned"
-        else: 
-            dur = clip_list[6]
-        
+        clip_info = f"{current_clip},  {name},   {rank}, {clip_list[3]},  {tc_in},   {tc_out},   {dur}"
 
-        clip_info = f"{current_clip},   {name},   {rank},   {tc_in},   {tc_out},   {dur}"
-
+        # Actualizar la QListWidget actual y guardar en la playlist correspondiente
         list_name = f"list_pl{plst_num}"
         list_widget = getattr(self.ui, list_name, None)
-        list_widget.addItem(clip_info)  # Agrega el ítem a la lista
-   
-        
-        #estrella3 = load_estrella3_list()
-        #estrella3.append(clip_info)
-        #save_estrella3_list(estrella3)
+        if list_widget:
+            list_widget.addItem(clip_info)
+
+        # Guardar el clip en la lista persistente
+        playlist_data = load_plst(plst_num)
+        playlist_data.append(clip_info)
+        save_plst(plst_num, playlist_data)
 
 
+        # Actualizar otras playlists en las que ya estaba este clip
+        if clip_list[3].startswith("{") and clip_list[3].endswith("}"):
+            playlists = [pl.strip() for pl in clip_list[3][1:-1].split(",")]
+        else:
+            playlists = [clip_list[3].strip()]
 
-        
+        for pl in playlists:
+            pl_number = int(pl.replace("PL", ""))
+            if pl_number == plst_num:
+                continue  # Ya se ha añadido
 
+            old_data = load_plst(pl_number)
+            updated_data = []
+            for item in old_data:
+                if item.startswith(current_clip):
+                    updated_data.append(clip_info)
+                else:
+                    updated_data.append(item)
+            save_plst(pl_number, updated_data)
 
-        # Comprobar si el primer elemento de la lista es "void"
+            # También actualizar visualmente en la lista
+            other_list_widget = getattr(self.ui, f"list_pl{pl_number}", None)
+            if other_list_widget:
+                for row in range(other_list_widget.count()):
+                    if other_list_widget.item(row).text().startswith(current_clip):
+                        other_list_widget.item(row).setText(clip_info)
 
-                
+        # Guardar clip_dictionary actualizado
+        save_clip_dictionary(clip_data)
+
+        # Avanzar eventos en vMix
         for _ in range(int(clip_list[0])):
             UIFunctions.send_request(endpoint_2)
- 
+
         event = plst_num + 1
         endpoint_3 = f"api/?Function=ReplayCopySelectedEvent&Value={event}"
         UIFunctions.send_request(endpoint_3)
 
         clip_id = load_current_clip_id()
-        clip_id +=1
+        clip_id += 1
         save_current_clip_id(clip_id)
 
+        UIFunctions.dur_playlist(self, plst_num)
+
+    
+
+
+
+    def cont_acc_gotopl(self):
+        global active_playlist
+        active_playlist = load_active_playlist()
+        num = active_playlist[-1]
+        UIFunctions.goto_pl(self, num)
+
+
     def goto_pl(self, page_number):
+        UIFunctions.refresh_playlist(self, page_number)
         global active_playlist
         pl = f"PL{page_number}"
         save_active_playlist(pl)
+        UIFunctions.labelDescription(self, f"PL{page_number}")
         page_name = f"page_pl{page_number}"
         page_widget = getattr(self.ui, page_name, None)  # Obtiene el widget dinámicamente
+        active_playlist = load_active_playlist()
+        self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
+        self.ui.cont_acc_actualplaylist.setText(f"{active_playlist}") 
 
         if page_widget:  # Verifica si la página existe
             self.ui.stackedWidget.setCurrentWidget(page_widget)
         else:
             print(f"La página {page_name} no existe.")
+
+    def restore_all_playlists_on_startup(self):
+        total_playlists = 18  # Cambia este número según cuántas playlists tengas
+
+        for plst_num in range(1, total_playlists + 1):
+            list_name = f"list_pl{plst_num}"
+            list_widget = getattr(self.ui, list_name, None)
+
+            if list_widget is not None:
+                list_widget.clear()  # Limpiar por si ya tenía elementos
+
+                saved_playlist = load_plst(plst_num)
+
+                for item in saved_playlist:
+                    list_widget.addItem(item)
+
+            else:
+                print(f"Advertencia: No se encontró QListWidget con el nombre '{list_name}'")
+
+    def delete_element_plst(self, num_plst):
+        """Elimina el clip seleccionado de la QListWidget, de la lista de la playlist y del clip_dictionary."""
+
+        list_widget = getattr(self.ui, f"list_pl{num_plst}", None)
+        if not list_widget:
+            print(f"No se encontró list_pl{num_plst}")
+            return
+
+        selected_item = list_widget.currentItem()
+        if not selected_item:
+            print("No hay ningún item seleccionado.")
+            return
+
+        # 1. Obtener el texto del elemento seleccionado
+        clip_info = selected_item.text()
+
+        # 2. Obtener el código del clip del texto (antes de la primera coma)
+        current_clip = clip_info.split(",")[0].strip()
+        numeric_code = current_clip[:3]  # Los primeros 3 caracteres
+
+        # 3. Eliminar de la QListWidget
+        list_widget.takeItem(list_widget.row(selected_item))
+
+        # 4. Eliminar de la lista de la playlist correspondiente
+        pl_list_name = f"playlist{num_plst}"
+        pl_list = globals().get(pl_list_name, [])
+        updated_pl_list = [clip for clip in pl_list if not clip.startswith(current_clip)]
+        globals()[pl_list_name] = updated_pl_list
+        save_plst(num_plst, updated_pl_list)
+
+        # 5. Eliminar la playlist del clip en el diccionario
+        clip_data = load_clip_dictionary()
+        if numeric_code in clip_data:
+            clip_entry = clip_data[numeric_code]
+            playlist_field = clip_entry[3]
+
+            if playlist_field.startswith("{") and playlist_field.endswith("}"):
+                # Está en formato {PL1, PL2}
+                playlists = [pl.strip() for pl in playlist_field[1:-1].split(",")]
+                if f"PL{num_plst}" in playlists:
+                    playlists.remove(f"PL{num_plst}")
+                    if playlists:
+                        clip_entry[3] = "{" + ", ".join(playlists) + "}"
+                    else:
+                        clip_entry[3] = "void"
+            elif playlist_field == f"PL{num_plst}":
+                clip_entry[3] = "void"
+
+            # Guardar el diccionario actualizado
+            save_clip_dictionary(clip_data)
+            print(f"Se eliminó PL{num_plst} del clip {numeric_code} en clip_dictionary.")
+        else:
+            print(f"Clip {numeric_code} no encontrado en el diccionario.")
+
+
+    def refresh_playlist(self, num_plst):
+        """
+        Refresca visual y lógicamente la playlist especificada.
+        - Actualiza la QListWidget correspondiente.
+        - Reconstruye los datos desde el clip_dictionary.
+        - Guarda la nueva lista formateada.
+        """
+        # Acceder a la lista global de la playlist
+        pl_list_name = f"playlist{num_plst}"
+        pl_list = load_plst(num_plst)  # <-- Cargar desde archivo
+        globals()[pl_list_name] = pl_list  # <-- Actualizar variable global
+
+        
+
+        # Limpiar la QListWidget
+        getattr(self.ui, f"list_pl{num_plst}").clear()
+
+        updated_playlist = []
+        clip_data = load_clip_dictionary()
+
+        for item in pl_list:
+            clip_code = item.split(",")[0].strip()
+            numeric_code = clip_code[:3]
+
+            if numeric_code in clip_data:
+                clip_list = clip_data[numeric_code]
+
+                # Extraer información con valores por defecto
+                name = "No name assigned" if clip_list[1] == "void" else clip_list[1]
+                pl = "No Playlist assigned" if clip_list[3] == "void" else clip_list[3]
+                tc_in = "No TC IN assigned" if clip_list[4] == "void" else clip_list[4][11:]
+                tc_out = "No TC OUT assigned" if clip_list[5] == "void" else clip_list[5][11:]
+                dur = "No duration assigned" if clip_list[6] == "void" else clip_list[6]
+
+                # Construir string formateado
+                clip_info = f"{clip_code},   {name},   {pl},   {tc_in},   {tc_out},   {dur}"
+
+                # Añadir a lista actualizada y widget
+                updated_playlist.append(clip_info)
+                getattr(self.ui, f"list_pl{num_plst}").addItem(clip_info)
+
+        # Guardar la lista actualizada en la variable global y archivo
+        globals()[pl_list_name] = updated_playlist
+        save_plst(num_plst, updated_playlist)
+
+    def dur_playlist(self, num_plst):
+        # Construir nombres de lista y labels
+        pl_list_name = f"playlist{num_plst}"
+        label1_name = f"label_dur_{num_plst}"
+        label2_name = f"playlist_dur_pl{num_plst}"
+
+        # Obtener la lista de la playlist correspondiente
+        pl_list = globals().get(pl_list_name, [])
+        clip_data = load_clip_dictionary()
+
+        total_ms = 0
+
+        # Iterar sobre todos los elementos de la playlist
+        for item in pl_list:
+            numeric_code = item[:3]  # Obtener el código del clip
+            if numeric_code in clip_data:
+                dur_str = clip_data[numeric_code][6]  # Duración en formato "hh:mm:ss:fff"
+                print(dur_str)
+
+                if dur_str != "void":
+                    try:
+                        # Intentamos descomponer la duración en horas, minutos, segundos y milisegundos
+                        h, m, s, ms = map(int, dur_str.split(":"))
+                        # Sumar la duración al total en milisegundos
+                        total_ms += (((h * 60 + m) * 60 + s) * 1000) + ms
+                    except ValueError:
+                        print(f"Error en el formato de duración para el clip {numeric_code}: {dur_str}")
+                        continue  # Si el formato es incorrecto, lo ignoramos
+
+        # Convertir total_ms a hh:mm:ss:fff
+        h = total_ms // 3600000
+        m = (total_ms % 3600000) // 60000
+        s = (total_ms % 60000) // 1000
+        ms = total_ms % 1000
+
+        # Formatear el total en "hh:mm:ss:fff"
+        duracion_total = f"{h:02}:{m:02}:{s:02}:{ms:03}"
+
+        # Actualizar las labels correspondientes
+        getattr(self.ui, label1_name).setText(duracion_total)
+        getattr(self.ui, label2_name).setText(duracion_total)
+
+        # Para depuración, imprimimos el total calculado
+        print(f"Duración total para playlist {num_plst}: {duracion_total}")
+
+
+
+
+
+
+
+        
+
+
+
+
+
 
     ########################################################################
     ## START - FUNCTIONS PLAYLIST

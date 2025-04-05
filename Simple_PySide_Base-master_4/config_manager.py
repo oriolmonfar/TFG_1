@@ -342,3 +342,21 @@ def update_clip_dictionary(index, new_value):
 
     save_clip_dictionary(data)  # Guardar los cambios en el archivo
     print(f"Se actualizó el índice {index} en todas las listas con '{new_value}'")
+
+
+#cargar playlists
+
+def load_plst(num):
+    """Carga la lista de VMIX desde el archivo config.json."""
+    config = load_config()
+    return config.get(f"playlist{num}", [])
+
+def save_plst(num, element):
+    """Guarda la lista de VMIX en el archivo config.json."""
+    config = load_config()
+    config[f"playlist{num}"] = element  # Actualizar la lista de VMIX
+    save_config(f"playlist{num}", element)  # Guardar la lista actualizada
+
+
+
+
