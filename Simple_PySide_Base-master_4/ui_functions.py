@@ -4,11 +4,9 @@ from main import *
 import requests
 import xml.etree.ElementTree as ET
 import time
-import threading
 from PySide2.QtCore import QTimer
 from config_manager import *
 from PySide2.QtCore import Qt
-from bs4 import BeautifulSoup
 
 ## ==> GLOBALS
 GLOBAL_STATE = 0
@@ -259,24 +257,108 @@ class UIFunctions(MainWindow):
 
     def refresh_estrella1_list(self):
         global estrella1
-        estrella1 = load_estrella1_list()
-  
+        estrella1 = load_estrella1_list()  # Cargar la lista desde el archivo
+        self.ui.list_estrella1.clear()  # Limpiar la QListWidget antes de actualizarla
+
+        updated_estrella1 = []  # Nueva lista actualizada con la información formateada
+
+        clip_data = load_clip_dictionary()  # Cargar el diccionario de clips
+
         for item in estrella1:
-            self.ui.list_estrella1.addItem(item)  # Añadir cada elemento a la lista
+            numeric_code = item[:3]  # Extraer los primeros 3 caracteres
+
+            if numeric_code in clip_data:
+                clip_list = clip_data[numeric_code]
+
+                # Extraer información del diccionario con valores por defecto
+                name = "No name assigned" if clip_list[1] == "void" else clip_list[1]
+                pl = "No Playlist assigned" if clip_list[3] == "void" else clip_list[3]
+                tc_in = "No TC IN assigned" if clip_list[4] == "void" else clip_list[4][11:]
+                tc_out = "No TC OUT assigned" if clip_list[5] == "void" else clip_list[5][11:]
+                dur = "No duration assigned" if clip_list[6] == "void" else clip_list[6]
+
+                # Crear string formateado con la información
+                clip_info = f"{current_clip},   {name},   {pl},   {tc_in},   {tc_out},   {dur}"
+
+                # Añadir a la lista actualizada
+                updated_estrella1.append(clip_info)
+
+                # Añadir el nuevo elemento a la QListWidget
+                self.ui.list_estrella1.addItem(clip_info)
+
+        # Guardar la lista actualizada
+        estrella1 = updated_estrella1
+        save_estrella1_list(estrella1)
 
     def refresh_estrella2_list(self):
         global estrella2
-        estrella2 = load_estrella2_list()
-  
-        for item in estrella2:
-            self.ui.list_estrella2.addItem(item)  # Añadir cada elemento a la lista
+        estrella2 = load_estrella1_list()  # Cargar la lista desde el archivo
+        self.ui.list_estrella2.clear()  # Limpiar la QListWidget antes de actualizarla
+
+        updated_estrella2 = []  # Nueva lista actualizada con la información formateada
+
+        clip_data = load_clip_dictionary()  # Cargar el diccionario de clips
+
+        for item in estrella1:
+            numeric_code = item[:3]  # Extraer los primeros 3 caracteres
+
+            if numeric_code in clip_data:
+                clip_list = clip_data[numeric_code]
+
+                # Extraer información del diccionario con valores por defecto
+                name = "No name assigned" if clip_list[1] == "void" else clip_list[1]
+                pl = "No Playlist assigned" if clip_list[3] == "void" else clip_list[3]
+                tc_in = "No TC IN assigned" if clip_list[4] == "void" else clip_list[4][11:]
+                tc_out = "No TC OUT assigned" if clip_list[5] == "void" else clip_list[5][11:]
+                dur = "No duration assigned" if clip_list[6] == "void" else clip_list[6]
+
+                # Crear string formateado con la información
+                clip_info = f"{current_clip},   {name},   {pl},   {tc_in},   {tc_out},   {dur}"
+
+                # Añadir a la lista actualizada
+                updated_estrella2.append(clip_info)
+
+                # Añadir el nuevo elemento a la QListWidget
+                self.ui.list_estrella2.addItem(clip_info)
+
+        # Guardar la lista actualizada
+        estrella2 = updated_estrella2
+        save_estrella2_list(estrella2)
 
     def refresh_estrella3_list(self):
         global estrella3
-        estrella3 = load_estrella3_list()
-  
-        for item in estrella3:
-            self.ui.list_estrella3.addItem(item)  # Añadir cada elemento a la lista
+        estrella3 = load_estrella3_list()  # Cargar la lista desde el archivo
+        self.ui.list_estrella3.clear()  # Limpiar la QListWidget antes de actualizarla
+
+        updated_estrella3 = []  # Nueva lista actualizada con la información formateada
+
+        clip_data = load_clip_dictionary()  # Cargar el diccionario de clips
+
+        for item in estrella1:
+            numeric_code = item[:3]  # Extraer los primeros 3 caracteres
+
+            if numeric_code in clip_data:
+                clip_list = clip_data[numeric_code]
+
+                # Extraer información del diccionario con valores por defecto
+                name = "No name assigned" if clip_list[1] == "void" else clip_list[1]
+                pl = "No Playlist assigned" if clip_list[3] == "void" else clip_list[3]
+                tc_in = "No TC IN assigned" if clip_list[4] == "void" else clip_list[4][11:]
+                tc_out = "No TC OUT assigned" if clip_list[5] == "void" else clip_list[5][11:]
+                dur = "No duration assigned" if clip_list[6] == "void" else clip_list[6]
+
+                # Crear string formateado con la información
+                clip_info = f"{current_clip},   {name},   {pl},   {tc_in},   {tc_out},   {dur}"
+
+                # Añadir a la lista actualizada
+                updated_estrella3.append(clip_info)
+
+                # Añadir el nuevo elemento a la QListWidget
+                self.ui.list_estrella3.addItem(clip_info)
+
+        # Guardar la lista actualizada
+        estrella3 = updated_estrella3
+        save_estrella3_list(estrella3)
 
     def function_estrella1(self):
         global current_clip, estrella1
@@ -567,6 +649,65 @@ class UIFunctions(MainWindow):
                 return  # Salir tras encontrar y procesar el primer input "Replay"
 
         print("No se encontró ningún input con type='Replay'.")
+
+    def function_gotoin():
+        global current_clip
+        current_clip = load_current_clip()
+        numeric_code = current_clip[:-1]
+        try:
+            # Cargar el clip_dictionary.json usando la función ya definida
+            clip_data = load_clip_dictionary()
+            
+
+            # Verificar si el código numérico existe en el diccionario
+            if numeric_code in clip_data:
+                # Obtener la lista correspondiente a ese código numérico
+                clip_list = clip_data[numeric_code]
+                
+                # Escribir "*" en la tercera posición (índice 2)
+                tc_in = clip_list[4]
+                endpoint_1 = f"api/?Function=ReplaySetTimecode&Value={tc_in}"
+                endpoint_2 = "api/?Function=ReplayPause&Channel=1"
+                UIFunctions.send_request(endpoint_1)
+                UIFunctions.send_request(endpoint_2)
+
+        except FileNotFoundError:
+            print("Error: El archivo clip_dictionary.json no existe.")
+        except json.JSONDecodeError:
+            print("Error al leer el archivo JSON. Asegúrate de que el archivo tiene el formato correcto.")
+
+    def function_gotoout():
+        global current_clip
+        current_clip = load_current_clip()
+        numeric_code = current_clip[:-1]
+        try:
+            # Cargar el clip_dictionary.json usando la función ya definida
+            clip_data = load_clip_dictionary()
+            
+
+            # Verificar si el código numérico existe en el diccionario
+            if numeric_code in clip_data:
+                # Obtener la lista correspondiente a ese código numérico
+                clip_list = clip_data[numeric_code]
+                
+                # Escribir "*" en la tercera posición (índice 2)
+                tc_out = clip_list[5]
+                endpoint_1 = f"api/?Function=ReplaySetTimecode&Value={tc_out}"
+                endpoint_2 = "api/?Function=ReplayPause&Channel=1"
+                UIFunctions.send_request(endpoint_1)
+                UIFunctions.send_request(endpoint_2)
+
+        except FileNotFoundError:
+            print("Error: El archivo clip_dictionary.json no existe.")
+        except json.JSONDecodeError:
+            print("Error al leer el archivo JSON. Asegúrate de que el archivo tiene el formato correcto.")
+
+    def function_gototc(self):
+        self.show_dialog_searchtc()
+    
+
+    
+
     ########################################################################
     ## END - FUNCIONS CONTROL
     ########################################################################
@@ -644,6 +785,109 @@ class UIFunctions(MainWindow):
     ########################################################################
 
     ########################################################################
+    ## START - FUNCTIONS PLAYLIST
+    ########################################################################
+
+    def add_to_playlist(self, plst_num):
+
+        global current_clip, clip_id
+
+        current_clip = load_current_clip()
+        numeric_code = current_clip[:-1]
+        endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
+        endpoint_2 = "api/?Function=ReplaySelectNextEvent&Channel=1"
+        UIFunctions.send_request(endpoint_1)
+
+        try:
+            with open(CLIP_DICTIONARY_FILE, "r") as file:
+                clip_data = json.load(file)
+        except FileNotFoundError:
+            print(f"Error: El archivo {CLIP_DICTIONARY_FILE} no existe.")
+            return None
+        
+
+        # Obtener la lista asignada al código
+        clip_list = clip_data.get(numeric_code, ["void"] * 7)
+
+        if clip_list[0] == "void":
+            print("No hay ningún clip asignado.")
+            return None
+
+        clip_list[3] = f"PL{plst_num}"
+
+        if clip_list[1]== "void":
+            name = "No name assigned"
+        else: 
+            name = clip_list[1]
+
+        if clip_list[2]== "void":
+            rank = "No ranking assigned"
+        else: 
+            rank = clip_list[3]
+
+        if clip_list[4]== "void":
+            tc_in = "No TC IN assigned"
+        else: 
+            tc_in = clip_list[4][11:]
+
+        if clip_list[5]== "void":
+            tc_out = "No TC OUT assigned"
+        else: 
+            tc_out = clip_list[5][11:]
+
+        if clip_list[6]== "void":
+            dur = "No duration assigned"
+        else: 
+            dur = clip_list[6]
+        
+
+        clip_info = f"{current_clip},   {name},   {rank},   {tc_in},   {tc_out},   {dur}"
+
+        list_name = f"list_pl{plst_num}"
+        list_widget = getattr(self.ui, list_name, None)
+        list_widget.addItem(clip_info)  # Agrega el ítem a la lista
+   
+        
+        #estrella3 = load_estrella3_list()
+        #estrella3.append(clip_info)
+        #save_estrella3_list(estrella3)
+
+
+
+        
+
+
+        # Comprobar si el primer elemento de la lista es "void"
+
+                
+        for _ in range(int(clip_list[0])):
+            UIFunctions.send_request(endpoint_2)
+ 
+        event = plst_num + 1
+        endpoint_3 = f"api/?Function=ReplayCopySelectedEvent&Value={event}"
+        UIFunctions.send_request(endpoint_3)
+
+        clip_id = load_current_clip_id()
+        clip_id +=1
+        save_current_clip_id(clip_id)
+
+    def goto_pl(self, page_number):
+        global active_playlist
+        pl = f"PL{page_number}"
+        save_active_playlist(pl)
+        page_name = f"page_pl{page_number}"
+        page_widget = getattr(self.ui, page_name, None)  # Obtiene el widget dinámicamente
+
+        if page_widget:  # Verifica si la página existe
+            self.ui.stackedWidget.setCurrentWidget(page_widget)
+        else:
+            print(f"La página {page_name} no existe.")
+
+    ########################################################################
+    ## START - FUNCTIONS PLAYLIST
+    ########################################################################
+
+    ########################################################################
     ## START - FUNCTIONS CONFIG
     ########################################################################
 
@@ -658,7 +902,7 @@ class UIFunctions(MainWindow):
         print("Lista de timecodes vaciada.")
 
     ########################################################################
-    ## START - FUNCTIONS CONFIG
+    ## END - FUNCTIONS CONFIG
     ########################################################################
 
 
@@ -894,7 +1138,16 @@ class UIFunctions(MainWindow):
         """Cambia entre modo normal (1 frame) y modo rápido (50 frames)."""
         FAST_JOG = load_fast_jog()
         dial.fast_mode = not dial.fast_mode
+        dial.super_fast_mode = False
         mode = f"RÁPIDO ({FAST_JOG})" if dial.fast_mode else "NORMAL (1 frame)"
+        print(f"Modo cambiado a: {mode}")
+
+    def function_sec_fastjog(dial):
+        """Cambia entre modo normal (1 frame) y modo super rápido (100 frames)."""
+        SEC_FAST_JOG = load_sec_fast_jog()
+        dial.super_fast_mode = not dial.super_fast_mode
+        dial.fast_mode = False
+        mode = f"RÁPIDO ({SEC_FAST_JOG})" if dial.super_fast_mode else "NORMAL (1 frame)"
         print(f"Modo cambiado a: {mode}")
 
     def function_return():
@@ -1000,9 +1253,6 @@ class UIFunctions(MainWindow):
 
     def function_browse():
         print("Ejecutando function Browse... ")
-
-    def function_gotoin():
-        print("Ejecutando funcion Goto IN...")
         
     def function_in():
         """Marks the current position as 'in' for replay."""
@@ -1022,30 +1272,7 @@ class UIFunctions(MainWindow):
             return  # Salir si no hay conexión
         
         print("Replay mark 'In' set successfully.")
-
-    def function_gotoout():
-        print("Ejecutando funcion Goto OUT...")
     
-    """"
-    def function_out():
-        
-        # Endpoint para la función 'ReplayMarkOut'
-        endpoint = "api/?Function=ReplayMarkOut"
-        
-        # Usamos UIFunctions.send_request para realizar la solicitud
-        response = UIFunctions.send_request(endpoint)
-        
-        if not response:
-            print("No se pudo marcar el 'Out' debido a la falta de conexión con vMix.")
-            return  # Salir si no hay conexión
-        
-        # guardar clip a F
-        
-        # id++
-
-        print("Replay mark 'Out' set successfully.")
-
-    """
 
     def function_lever():
         print("Ejecutando funcion lever...")
@@ -1070,6 +1297,7 @@ class UIFunctions(MainWindow):
         dial.setNotchesVisible(False)
         dial.previous_value = dial.value()  # Guarda el estado inicial
         dial.fast_mode = False  # Modo normal por defecto
+        dial.super_fast_mode = False
 
         def on_dial_moved(value):
 
@@ -1111,7 +1339,14 @@ class UIFunctions(MainWindow):
 
             """Detecta el movimiento del dial y envía la petición HTTP a vMix."""
             FAST_JOG = load_fast_jog()
-            step = FAST_JOG if dial.fast_mode else 1  # Define si avanza 1 o 25 frames
+            SEC_FAST_JOG = load_sec_fast_jog()
+
+            if dial.fast_mode:
+                step = FAST_JOG
+            elif dial.super_fast_mode:
+                step = SEC_FAST_JOG
+            else:
+                step = 1  
             direction = step if value > dial.previous_value else -step if value < dial.previous_value else 0
 
             if direction != 0:

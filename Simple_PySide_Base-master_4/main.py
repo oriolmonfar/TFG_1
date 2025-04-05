@@ -6,7 +6,8 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient, QMouseEvent)
 from PySide2.QtWidgets import *
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
+import requests
 
 
 # GUI FILE
@@ -25,6 +26,7 @@ from config_manager import *
 
 IP_VMIX = load_ip_vmix()
 FAST_JOG = load_fast_jog()
+SEC_FAST_JOG = load_sec_fast_jog()
 SHIFT = False
 current_page = load_current_page()
 current_bank = load_current_bank()
@@ -39,6 +41,8 @@ mark_in_tc = load_mark_in_tc()
 estrella1 = load_estrella1_list()
 estrella2 = load_estrella2_list()
 estrella3 = load_estrella3_list()
+modo_playlist = False
+active_playlist = load_active_playlist()
 
 
 
@@ -55,6 +59,7 @@ class PopupRecordTrains(QDialog):
         self.ui.close_recordtrains.clicked.connect(lambda: self.close())
 
 class PopupOverwriteClip(QDialog):  
+
     def __init__(self, clip_code, clip_management):  
         super().__init__()  
         self.ui = Dialog_overwrite()  # Instancia de la UI generada
@@ -63,30 +68,45 @@ class PopupOverwriteClip(QDialog):
         ## ==> MAXIMIZE/RESTORE
         ## SHOW ==> CLOSE APPLICATION
         self.ui.close_overwrite.clicked.connect(lambda: self.close())
-        self.ui.overwrite_no.clicked.connect(lambda: no(clip_code))
-        self.ui.overwrite_yes.clicked.connect(lambda: yes(self, clip_code, clip_management))
+        self.ui.overwrite_no.clicked.connect(lambda: self.no(clip_code))
+        self.ui.overwrite_yes.clicked.connect(lambda: self.yes(self, clip_code, clip_management))
 
-        def yes(self, clip_code, clip_management):
-            """Overwrites the clip ID in clip_manager.json."""
-            id = load_current_clip_id()
-            clip_management[clip_code] = str(id)
-            save_clip_management(clip_management)
-            id += 1
-            save_current_clip_id(id)
-            #print(f"Clip {clip_code} registrado con ID {clip_id - 1}")
-            print(f"El clip {clip_code} ya está registrado con ID {clip_management[clip_code]}")
-            time.sleep(0.2)
-            self.close()
+    def send_request(endpoint):
+        """ Envía una request HTTP a la API de vMix y maneja errores. """
+        IP_VMIX = load_ip_vmix()
+        url = f"http://{IP_VMIX}/{endpoint}"
+        
+        try:
+            response = requests.get(url, timeout=2)  # Timeout para evitar que se quede bloqueado
+            
+            if response.status_code == 200:
+                return response.text  # Devuelve el contenido si la request fue exitosa
+            else:
+                print(f"Error en la request: {response.status_code}")
+                return None
+                
+        except requests.ConnectionError:
+            return None
 
-        def no(clip_code): 
-            id = load_current_clip_id()
-            endpoint = f"api/?Function=ReplayDeleteSelectedEvent&Value={id}&Channel=1"
-            UIFunctions.send_request(endpoint)
-            print(f"Se mantuvo el ID original para el clip {clip_code}.")
-            id +=1 
-            save_current_clip_id(id)
-            time.sleep(0.1)
-            self.close()
+    def yes(self, clip_code, clip_management):
+        """Overwrites the clip ID in clip_manager.json."""
+        id = load_current_clip_id()
+        clip_management[clip_code] = str(id)
+        save_clip_management(clip_management)
+        id += 1
+        save_current_clip_id(id)
+        #print(f"Clip {clip_code} registrado con ID {clip_id - 1}")
+        print(f"El clip {clip_code} ya está registrado con ID {clip_management[clip_code]}")
+        time.sleep(0.2)
+        self.close()
+
+    def no(self, clip_code): 
+
+        endpoint = f"api/?Function=ReplayDeleteSelectedEvent&Value=1&Channel=1"
+        PopupOverwriteClip.send_request(endpoint)
+        print(f"Se mantuvo el ID original para el clip {clip_code}.")
+        time.sleep(0.1)
+        self.close()
 
 class PopupDeleteClipDictionary(QDialog):  
     def __init__(self):  
@@ -163,10 +183,12 @@ class PopupSearchTC(QDialog):
             cursor.deletePreviousChar()  # Borra el último carácter
     def confirm(self): 
         global last_date, last_time
+        last_date = load_last_date()
+        last_time = load_last_time()
         texto = self.ui.searchtc_textedit.toPlainText()  # Recupera el texto
         date = datetime.now().date()
-        last_time = save_last_time(texto)
-        last_date = save_last_date(date)
+        last_time = save_last_time(str(texto))
+        last_date = save_last_date(str(date))
         endpoint = f"api/?Function=ReplaySetTimecode&Value={date}T{texto}0"
         UIFunctions.send_request(endpoint)
         time.sleep(0.1)
@@ -179,6 +201,9 @@ class PopupFastJog(QDialog):
         self.ui = Dialog_fastjog()
         self.ui.setupUi(self)
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+
+        self.ui.tabWidget.setTabText(0, "Fast Jog")
+        self.ui.tabWidget.setTabText(1, "2nd Fast Jog")
 
         self.ui.minimize_fastjog.clicked.connect(lambda: self.showMinimized())
         self.ui.maximize_fastjog.clicked.connect(lambda: UIFunctions.maximize_restore(self))
@@ -197,15 +222,38 @@ class PopupFastJog(QDialog):
         self.ui.fastjogconfig_delete.clicked.connect(lambda: self.delete())
         self.ui.fastjogconfig_confirm.clicked.connect(lambda: self.confirm())
 
+        self.ui.sec_fastjogconfig_0.clicked.connect(lambda: self.write_sec("0"))
+        self.ui.sec_fastjogconfig_1.clicked.connect(lambda: self.write_sec("1"))
+        self.ui.sec_fastjogconfig_2.clicked.connect(lambda: self.write_sec("2"))
+        self.ui.sec_fastjogconfig_3.clicked.connect(lambda: self.write_sec("3"))
+        self.ui.sec_fastjogconfig_4.clicked.connect(lambda: self.write_sec("4"))
+        self.ui.sec_fastjogconfig_5.clicked.connect(lambda: self.write_sec("5"))
+        self.ui.sec_fastjogconfig_6.clicked.connect(lambda: self.write_sec("6"))
+        self.ui.sec_fastjogconfig_7.clicked.connect(lambda: self.write_sec("7"))
+        self.ui.sec_fastjogconfig_8.clicked.connect(lambda: self.write_sec("8"))
+        self.ui.sec_fastjogconfig_9.clicked.connect(lambda: self.write_sec("9"))
+        self.ui.sec_fastjogconfig_delete.clicked.connect(lambda: self.delete_sec())
+        self.ui.sec_fastjogconfig_confirm.clicked.connect(lambda: self.confirm_sec())
+
         # Inicializar con el valor actual de FAST_JOG
         self.ui.textedit_fastjog.setPlainText(str(FAST_JOG))  
+        self.ui.textedit_sec_fastjog.setPlainText(str(SEC_FAST_JOG)) 
 
     def write(self, text):
         self.ui.textedit_fastjog.insertPlainText(text)
 
+    def write_sec(self, text):
+        self.ui.textedit_sec_fastjog.insertPlainText(text)
+
     def delete(self):
         if self.ui.textedit_fastjog:
             cursor = self.ui.textedit_fastjog.textCursor()
+            cursor.movePosition(cursor.End)
+            cursor.deletePreviousChar()
+
+    def delete_sec(self):
+        if self.ui.textedit_sec_fastjog:
+            cursor = self.ui.textedit_sec_fastjog.textCursor()
             cursor.movePosition(cursor.End)
             cursor.deletePreviousChar()
 
@@ -220,6 +268,23 @@ class PopupFastJog(QDialog):
             FAST_JOG = load_fast_jog()
 
             print(f"Nuevo valor de FAST_JOG guardado y recargado: {FAST_JOG}")
+            time.sleep(0.2)
+            self.close()
+
+        else:
+            print("Entrada no válida. Ingresa un número.")
+
+    def confirm_sec(self):
+        global SEC_FAST_JOG  # Asegurar que trabajamos con la variable global
+
+        texto = self.ui.textedit_sec_fastjog.toPlainText().strip()
+        if texto.isdigit():  
+            save_sec_fast_jog(int(texto))  # Guardamos el nuevo valor en el JSON
+            
+            # Recargamos la variable global desde el archivo JSON
+            SEC_FAST_JOG = load_sec_fast_jog()
+
+            print(f"Nuevo valor de SEC_FAST_JOG guardado y recargado: {SEC_FAST_JOG}")
             time.sleep(0.2)
             self.close()
 
@@ -532,7 +597,7 @@ class MainWindow(QMainWindow):
         #UIFunctions.labelTitle(self, 'Main Window - Python Base')
         self.ui.label_page.setText(f"PAGE {current_page}  ")
         self.ui.label_bank.setText(f" {current_bank} BANK")  # Actualiza QLabel
-        UIFunctions.labelDescription(self, 'PL11:  113A, 232A, 342A')
+        UIFunctions.labelDescription(self, f"{active_playlist}")
         
         ################################# SET PGM
         def get_channelmode(self):
@@ -669,6 +734,9 @@ class MainWindow(QMainWindow):
         self.ui.estrella1_delete.clicked.connect(lambda: UIFunctions.remove_estrella1(self))
         self.ui.estrella2_delete.clicked.connect(lambda: UIFunctions.remove_estrella2(self))
         self.ui.estrella3_delete.clicked.connect(lambda: UIFunctions.remove_estrella3(self))
+        self.ui.estrella1_refresh.clicked.connect(lambda: UIFunctions.refresh_estrella1_list(self))
+        self.ui.estrella2_refresh.clicked.connect(lambda: UIFunctions.refresh_estrella2_list(self))
+        self.ui.estrella3_refresh.clicked.connect(lambda: UIFunctions.refresh_estrella3_list(self))
 
         #################################### END - BOTONS CLIP
 
@@ -676,16 +744,20 @@ class MainWindow(QMainWindow):
         self.ui.control_syncprv.clicked.connect(lambda: UIFunctions.function_syncprv(self))
         self.ui.control_loop.clicked.connect(lambda: UIFunctions.function_loop())
         self.ui.control_fast_jog.clicked.connect(lambda: UIFunctions.function_fastjog(self.dial))
+        self.ui.control_2ndfastjog.clicked.connect(lambda: UIFunctions.function_sec_fastjog(self.dial))
+        self.ui.control_gotoin.clicked.connect(lambda: UIFunctions.function_gotoin())
+        self.ui.control_gotoout.clicked.connect(lambda: UIFunctions.function_gotoout())
+        self.ui.control_gototc.clicked.connect(self.show_dialog_searchtc)
 
         #################################### END - BOTONS CONTROL
 
         #################################### START - BOTONS CONTENT ACCESS
         self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
         self.ui.contec_acc_actualclip.setText(f"{current_clip}")
+        self.ui.cont_acc_page.clicked.connect(lambda: function_page_activate())
         self.ui.cont_acc_mark.clicked.connect(lambda: UIFunctions.function_mark())
         self.ui.cont_acc_lastmark.clicked.connect(lambda: UIFunctions.function_lastmark())
         self.ui.cont_acc_recordtrains.clicked.connect(self.show_dialog_recordtrains)
-        self.ui.cont_acc_searchtc.clicked.connect(self.show_dialog_searchtc)
         self.ui.cont_acc_lastsearchtc.clicked.connect(lambda: UIFunctions.function_lastsearchtc())
 
 
@@ -696,6 +768,7 @@ class MainWindow(QMainWindow):
         def toggle_shift(self):
             """Alterna el estado de SHIFT y cambia el color del botón."""
             global SHIFT
+            SHIFT = load_shift()
             SHIFT = not SHIFT
 
             if SHIFT:
@@ -704,14 +777,17 @@ class MainWindow(QMainWindow):
                 self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")   # Transparente cuando está desactivado
 
             print(f"Shift activado: {SHIFT}")  # Depuración
+            save_shift(SHIFT)
 
         def reset_shift(self):
             """Desactiva SHIFT si está activado y restablece el color."""
             global SHIFT
+            SHIFT = load_shift()
             if SHIFT:
                 SHIFT = False
                 self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
                 print("Shift desactivado")
+                save_shift(SHIFT)
 
         self.ui.sim_shift.setCheckable(True)
         self.ui.sim_shift.clicked.connect(lambda: toggle_shift(self))
@@ -809,7 +885,7 @@ class MainWindow(QMainWindow):
         def execute_functions_gototc(self):
             global SHIFT
             if SHIFT:
-                UIFunctions.function_gototc()
+                UIFunctions.function_gototc(self)
                 reset_shift(self)
             else:
                 UIFunctions.function_lastmark()
@@ -905,45 +981,65 @@ class MainWindow(QMainWindow):
             """Activa el modo de selección de página."""
             global modo_page
             modo_page = True
+            save_page_mode(modo_page)
             print("Modo de selección de página activado.")
         
+
         def function_out():
-    
-            global clip_id, mark_in_tc
-            
+            global clip_id, mark_in_tc, SHIFT, modo_page
+
+            # Simula el proceso de "Out"
             endpoint_1 = "api/?Function=ReplayMarkOut"
             response_1 = UIFunctions.send_request(endpoint_1)
             clip_out_tc = UIFunctions.get_tc()
             mark_in_tc = load_mark_in_tc()
-            
-            
+
             if not response_1:
                 print("No se pudo marcar el 'Out' debido a la falta de conexión con vMix.")
                 return
- 
+
             print("Replay mark 'Out' set successfully.")
-            
+
+            # Iniciar el modo de página si es necesario
+            modo_page = load_page_mode()
+            SHIFT = load_shift()
+
+            if modo_page:
+                print("Modo de selección de página activado.")
+                f_button = get_button_event()
+                function_page(f_button)  # Cambiar página según el botón presionado
+
+            # Espera por la selección de un botón sim_f
             print("Esperando selección de clip...")
             selected_clip = wait_for_clip_selection()
-            
+
             if selected_clip:
                 clip_management = load_clip_dictionary()
-                
+
+                # Asigna el clip al slot seleccionado, si no está asignado ya
                 if clip_management.get(selected_clip, ["void"] * 7)[0] == "void":
                     clip_id = load_current_clip_id()
                     clip_dur_tc = UIFunctions.calculate_clip_duration(mark_in_tc, clip_out_tc)
-                    clip_management[selected_clip][0] = str(clip_id)  # Guardar en el primer elemento de la lista
+                    clip_management[selected_clip][0] = str(clip_id)
                     clip_management[selected_clip][4] = str(mark_in_tc)
                     clip_management[selected_clip][5] = str(clip_out_tc)
                     clip_management[selected_clip][6] = str(clip_dur_tc)
                     save_clip_dictionary(clip_management)
-                    
+
                     clip_id += 1
                     save_current_clip_id(clip_id)
                     print(f"Clip {selected_clip} registrado con ID {clip_id - 1}")
                 else:
                     UIFunctions.show_dialog_overwrite_clip(self, selected_clip, clip_management)
-        
+
+
+
+
+
+
+
+
+
                     
         
         def wait_for_clip_selection():
@@ -1009,7 +1105,6 @@ class MainWindow(QMainWindow):
             else:
                 clip_mode = True  # Activar modo clip
                 clip_code = f"{current_page}{current_bank}{f_button_number}{current_camangle}"
-                print(clip_mode)
                 print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
                 save_current_clip(clip_code)
                 channel_mode = get_channelmode(self)
@@ -1062,11 +1157,10 @@ class MainWindow(QMainWindow):
             self.ui.label_bank.setText(f" {current_bank} BANK")  # Actualiza QLabel
             print(f"Página {current_page} seleccionada. Banco actual: {current_bank}")
 
-            
-
+    
         def change_bank(button_number):
-            """Cambia el banco para la página actual si Shift está presionado."""
             global current_bank
+            SHIFT = load_shift()
             if SHIFT:
                 save_current_bank(button_number)
                 current_bank = button_number  # Actualizamos la variable global
@@ -1093,6 +1187,49 @@ class MainWindow(QMainWindow):
 
 
         #################################### END - BOTONS SIMULATOR
+
+
+        #################################### START - BOTONS PLAYLIST
+
+        self.ui.playlist_btnadd_1.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 1))
+        self.ui.playlist_btnadd_2.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 2))
+        self.ui.playlist_btnadd_3.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 3))
+        self.ui.playlist_btnadd_4.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 4))
+        self.ui.playlist_btnadd_5.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 5))
+        self.ui.playlist_btnadd_6.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 6))
+        self.ui.playlist_btnadd_7.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 7))
+        self.ui.playlist_btnadd_8.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 8))
+        self.ui.playlist_btnadd_9.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 9))
+        self.ui.playlist_btnadd_10.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 10))
+        self.ui.playlist_btnadd_11.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 11))
+        self.ui.playlist_btnadd_12.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 12))
+        self.ui.playlist_btnadd_13.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 13))
+        self.ui.playlist_btnadd_14.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 14))
+        self.ui.playlist_btnadd_15.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 15))
+        self.ui.playlist_btnadd_16.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 16))
+        self.ui.playlist_btnadd_17.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 17))
+        self.ui.playlist_btnadd_18.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 18))
+        self.ui.playlist_button_pl1.clicked.connect(lambda: UIFunctions.goto_pl(self, 1))
+        self.ui.playlist_button_pl2.clicked.connect(lambda: UIFunctions.goto_pl(self, 2))
+        self.ui.playlist_button_pl3.clicked.connect(lambda: UIFunctions.goto_pl(self, 3))
+        self.ui.playlist_button_pl4.clicked.connect(lambda: UIFunctions.goto_pl(self, 4))
+        self.ui.playlist_button_pl5.clicked.connect(lambda: UIFunctions.goto_pl(self, 5))
+        self.ui.playlist_button_pl6.clicked.connect(lambda: UIFunctions.goto_pl(self, 6))
+        self.ui.playlist_button_pl7.clicked.connect(lambda: UIFunctions.goto_pl(self, 7))
+        self.ui.playlist_button_pl8.clicked.connect(lambda: UIFunctions.goto_pl(self, 8))
+        self.ui.playlist_button_pl9.clicked.connect(lambda: UIFunctions.goto_pl(self, 9))
+        self.ui.playlist_button_pl10.clicked.connect(lambda: UIFunctions.goto_pl(self, 10))
+        self.ui.playlist_button_pl11.clicked.connect(lambda: UIFunctions.goto_pl(self, 11))
+        self.ui.playlist_button_pl12.clicked.connect(lambda: UIFunctions.goto_pl(self, 12))
+        self.ui.playlist_button_pl13.clicked.connect(lambda: UIFunctions.goto_pl(self, 13))
+        self.ui.playlist_button_pl14.clicked.connect(lambda: UIFunctions.goto_pl(self, 14))
+        self.ui.playlist_button_pl15.clicked.connect(lambda: UIFunctions.goto_pl(self, 15))
+        self.ui.playlist_button_pl16.clicked.connect(lambda: UIFunctions.goto_pl(self, 16))
+        self.ui.playlist_button_pl17.clicked.connect(lambda: UIFunctions.goto_pl(self, 17))
+        self.ui.playlist_button_pl18.clicked.connect(lambda: UIFunctions.goto_pl(self, 18))
+
+
+        #################################### END - BOTONS PLAYLIST
         
 
         #################################### START - BOTONS CONFIGURATION

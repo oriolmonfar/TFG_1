@@ -46,6 +46,7 @@ def get_default_config():
     """Devuelve la configuración predeterminada."""
     return {
         "FAST_JOG": 50,
+        "SEC_FAST_JOG": 100,
         "IP_VMIX": "127.0.0.1:8088",
         "VMIX_LIST": [
             "VMIX_URI (127.0.0.1:8088)"
@@ -90,6 +91,16 @@ def load_fast_jog():
 def save_fast_jog(value):
     """Guarda el valor de FAST_JOG en el archivo config.json y actualiza la variable global."""
     save_config("FAST_JOG", value)  # Llama a la función genérica save_config para actualizar FAST_JOG
+
+def load_sec_fast_jog():
+    """Carga el valor de FAST_JOG desde el archivo config.json."""
+    global sec_fast_jog
+    sec_fast_jog = load_config().get("SEC_FAST_JOG", 100)  # Actualiza la variable global
+    return sec_fast_jog
+
+def save_sec_fast_jog(value):
+    """Guarda el valor de FAST_JOG en el archivo config.json y actualiza la variable global."""
+    save_config("SEC_FAST_JOG", value)  # Llama a la función genérica save_config para actualizar FAST_JOG
 
 # Funciones de carga y guardado de IP_VMIX
 
@@ -219,6 +230,27 @@ def save_clip_mode(value):
     """Guarda el estado de clip_mode en el archivo config.json y actualiza la variable global."""
     save_config("clip_mode", value)
 
+def load_page_mode():
+    """Carga el estado de clip_mode desde el archivo config.json."""
+    global modo_page
+    modo_page = load_config().get("modo_page", False)  # Establece el valor por defecto como False
+    return modo_page
+
+def save_page_mode(value):
+    """Guarda el estado de clip_mode en el archivo config.json y actualiza la variable global."""
+    save_config("modo_page", value)
+
+def load_shift():
+    """Carga el estado de clip_mode desde el archivo config.json."""
+    global SHIFT
+    SHIFT = load_config().get("SHIFT", False)  # Establece el valor por defecto como False
+    return SHIFT
+
+def save_shift(value):
+    """Guarda el estado de clip_mode en el archivo config.json y actualiza la variable global."""
+    save_config("SHIFT", value)
+
+
 def load_mark_in_tc():
     """Carga el estado de clip_mode desde el archivo config.json."""
     global mark_in_tc
@@ -228,6 +260,16 @@ def load_mark_in_tc():
 def save_mark_in_tc(value):
     """Guarda el estado de clip_mode en el archivo config.json y actualiza la variable global."""
     save_config("mark_in_tc", value)
+
+def load_active_playlist():
+    """Carga el estado de clip_mode desde el archivo config.json."""
+    global active_playlist
+    active_playlist = load_config().get("active_playlist", "PL1")  # Establece el valor por defecto como False
+    return active_playlist
+
+def save_active_playlist(value):
+    """Guarda el estado de clip_mode en el archivo config.json y actualiza la variable global."""
+    save_config("active_playlist", value)
 
 
 def load_timecodes_list():

@@ -555,9 +555,9 @@ QPushButton:pressed {
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>210</x>
      <y>170</y>
-     <width>121</width>
+     <width>101</width>
      <height>20</height>
     </rect>
    </property>
@@ -571,7 +571,7 @@ QPushButton:pressed {
 }</string>
    </property>
    <property name="text">
-    <string>Search TC</string>
+    <string>Go to TC</string>
    </property>
   </widget>
   <widget class="QFrame" name="frame_4">

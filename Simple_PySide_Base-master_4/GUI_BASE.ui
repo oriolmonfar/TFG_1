@@ -1668,7 +1668,7 @@ QPushButton:pressed {
                    <string notr="true">background: transparent;</string>
                   </property>
                   <property name="currentIndex">
-                   <number>3</number>
+                   <number>4</number>
                   </property>
                   <widget class="QWidget" name="page_home">
                    <widget class="QPushButton" name="clip_addtoplaylist">
@@ -2264,6 +2264,3138 @@ QPushButton:pressed {
                       <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
                     </property>
                    </widget>
+                   <widget class="QPushButton" name="estrella1_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>120</x>
+                      <y>20</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="page_pl11">
+                   <widget class="QPushButton" name="pl11_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl11_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_11">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl11">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_11">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl11">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 11</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <zorder>label_pl11</zorder>
+                   <zorder>pl11_refresh</zorder>
+                   <zorder>pl11_delete</zorder>
+                   <zorder>label_nclips_11</zorder>
+                   <zorder>list_pl11</zorder>
+                   <zorder>label_dur_11</zorder>
+                  </widget>
+                  <widget class="QWidget" name="page_pl13">
+                   <widget class="QPushButton" name="pl13_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl13_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_13">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl13">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_13">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl13">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 13</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="page_pl18">
+                   <widget class="QPushButton" name="pl18_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl18_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_18">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl18">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_18">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl18">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 18</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="page_pl17">
+                   <widget class="QPushButton" name="pl17_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl17_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_17">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl17">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_17">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl17">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 17</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <zorder>label_pl17</zorder>
+                   <zorder>pl17_refresh</zorder>
+                   <zorder>pl17_delete</zorder>
+                   <zorder>label_nclips_17</zorder>
+                   <zorder>list_pl17</zorder>
+                   <zorder>label_dur_17</zorder>
+                  </widget>
+                  <widget class="QWidget" name="page_pl16">
+                   <widget class="QPushButton" name="pl16_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl16_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_16">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl16">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_16">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl16">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 16</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <zorder>label_pl16</zorder>
+                   <zorder>pl16_refresh</zorder>
+                   <zorder>pl16_delete</zorder>
+                   <zorder>label_nclips_16</zorder>
+                   <zorder>list_pl16</zorder>
+                   <zorder>label_dur_16</zorder>
+                  </widget>
+                  <widget class="QWidget" name="page_pl15">
+                   <widget class="QPushButton" name="pl15_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl15_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_15">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl15">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_15">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl15">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 15</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="page_pl14">
+                   <widget class="QPushButton" name="pl14_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl14_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_14">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl14">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_14">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl14">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 14</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="page_pl12">
+                   <widget class="QPushButton" name="pl12_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl12_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_12">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl12">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_12">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl12">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 12</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="page_pl9">
+                   <widget class="QPushButton" name="pl9_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl9_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_9">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl9">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_9">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl9">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 9</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <zorder>label_pl9</zorder>
+                   <zorder>pl9_refresh</zorder>
+                   <zorder>pl9_delete</zorder>
+                   <zorder>label_nclips_9</zorder>
+                   <zorder>list_pl9</zorder>
+                   <zorder>label_dur_9</zorder>
+                  </widget>
+                  <widget class="QWidget" name="page_pl10">
+                   <widget class="QPushButton" name="pl10_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl10_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_10">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl10">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_10">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl10">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 10</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="page_pl8">
+                   <widget class="QPushButton" name="pl8_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl8_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_8">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl8">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_8">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl8">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 8</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <zorder>label_pl8</zorder>
+                   <zorder>pl8_refresh</zorder>
+                   <zorder>pl8_delete</zorder>
+                   <zorder>label_nclips_8</zorder>
+                   <zorder>list_pl8</zorder>
+                   <zorder>label_dur_8</zorder>
+                  </widget>
+                  <widget class="QWidget" name="page_pl3">
+                   <widget class="QPushButton" name="pl3_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl3_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_3">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl3">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_3">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl3">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 3</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <zorder>label_pl3</zorder>
+                   <zorder>pl3_refresh</zorder>
+                   <zorder>pl3_delete</zorder>
+                   <zorder>label_nclips_3</zorder>
+                   <zorder>list_pl3</zorder>
+                   <zorder>label_dur_3</zorder>
+                  </widget>
+                  <widget class="QWidget" name="page_pl4">
+                   <widget class="QPushButton" name="pl4_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl4_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_4">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl4">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_4">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl4">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 4</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="page_pl7">
+                   <widget class="QPushButton" name="pl7_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl7_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_7">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl7">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_7">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl7">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 7</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <zorder>label_pl7</zorder>
+                   <zorder>pl7_refresh</zorder>
+                   <zorder>pl7_delete</zorder>
+                   <zorder>label_nclips_7</zorder>
+                   <zorder>list_pl7</zorder>
+                   <zorder>label_dur_7</zorder>
+                  </widget>
+                  <widget class="QWidget" name="page_pl6">
+                   <widget class="QPushButton" name="pl6_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl6_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_6">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl6">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_6">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl6">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 6</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <zorder>label_pl6</zorder>
+                   <zorder>pl6_refresh</zorder>
+                   <zorder>pl6_delete</zorder>
+                   <zorder>label_nclips_6</zorder>
+                   <zorder>list_pl6</zorder>
+                   <zorder>label_dur_6</zorder>
+                  </widget>
+                  <widget class="QWidget" name="page_pl5">
+                   <widget class="QPushButton" name="pl5_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl5_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_5">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl5">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_5">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl5">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 5</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="page_pl2">
+                   <widget class="QPushButton" name="pl2_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl2_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips_2">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QListWidget" name="list_pl2">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur_2">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl2">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 2</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="page_pl1">
+                   <widget class="QListWidget" name="list_pl1">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>80</y>
+                      <width>601</width>
+                      <height>351</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QListWidget {
+    font-weight: bold;
+    background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl1_delete">
+                    <property name="geometry">
+                     <rect>
+                      <x>680</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;   
+	background-color: rgba(250,50,50,10);        
+	border: 2px solid rgba(200,200,200,200);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(250,50,50,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_pl1">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>601</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel {
+	font &quot;arial&quot;
+    font-weight: bold;
+	font-size: 20px;
+	background-color: transparent;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}</string>
+                    </property>
+                    <property name="text">
+                     <string>PLAYLIST 1</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="pl1_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>150</x>
+                      <y>30</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_dur">
+                    <property name="geometry">
+                     <rect>
+                      <x>220</x>
+                      <y>60</y>
+                      <width>101</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_nclips">
+                    <property name="geometry">
+                     <rect>
+                      <x>620</x>
+                      <y>60</y>
+                      <width>61</width>
+                      <height>20</height>
+                     </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0 clips</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                   <zorder>label_pl1</zorder>
+                   <zorder>list_pl1</zorder>
+                   <zorder>pl1_delete</zorder>
+                   <zorder>pl1_refresh</zorder>
+                   <zorder>label_dur</zorder>
+                   <zorder>label_nclips</zorder>
                   </widget>
                   <widget class="QWidget" name="page_estrella2">
                    <widget class="QLabel" name="label_estrella2">
@@ -2365,6 +5497,42 @@ QPushButton:pressed {
                     <property name="icon">
                      <iconset resource="files.qrc">
                       <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="estrella2_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>120</x>
+                      <y>20</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
                     </property>
                    </widget>
                   </widget>
@@ -2488,6 +5656,42 @@ QPushButton:pressed {
                     <property name="icon">
                      <iconset resource="files.qrc">
                       <normaloff>:/20x20/icons/20x20/cil-x.png</normaloff>:/20x20/icons/20x20/cil-x.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="estrella3_refresh">
+                    <property name="geometry">
+                     <rect>
+                      <x>120</x>
+                      <y>20</y>
+                      <width>71</width>
+                      <height>51</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;  
+	background-color: rgba(75,175,250,10);         
+	border: 2px solid rgba(200,200,200,200);   /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="files.qrc">
+                      <normaloff>:/20x20/icons/20x20/cil-loop-circular.png</normaloff>:/20x20/icons/20x20/cil-loop-circular.png</iconset>
                     </property>
                    </widget>
                   </widget>
@@ -3660,7 +6864,7 @@ QPushButton:pressed {
                     <property name="text">
                      <string>Goto TC 
  --------------------
- Last Cue</string>
+ Last Mark</string>
                     </property>
                    </widget>
                   </widget>

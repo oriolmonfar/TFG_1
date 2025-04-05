@@ -249,7 +249,7 @@ class Ui_Dialog(object):
 "}")
         self.label = QLabel(Dialog)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(190, 170, 121, 20))
+        self.label.setGeometry(QRect(210, 170, 101, 20))
         self.label.setStyleSheet(u"QLabel {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 24px;         /* Tama\u00f1o del texto */\n"
@@ -297,6 +297,6 @@ class Ui_Dialog(object):
         self.searchtc_punt_2.setText(QCoreApplication.translate("Dialog", u".", None))
         self.searchtc_delete.setText(QCoreApplication.translate("Dialog", u"Delete", None))
         self.searchtc_confirm.setText(QCoreApplication.translate("Dialog", u"Confirm", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"Search TC", None))
+        self.label.setText(QCoreApplication.translate("Dialog", u"Go to TC", None))
     # retranslateUi
 

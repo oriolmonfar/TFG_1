@@ -1,41 +1,37 @@
 {
     "FAST_JOG": 50,
+    "SEC_FAST_JOG": 100,
     "IP_VMIX": "127.0.0.1:8088",
     "VMIX_LIST": [
         "VMIX_URI (127.0.0.1:8088)"
     ],
-    "CURRENT_PAGE": 7,
+    "CURRENT_PAGE": 1,
     "CURRENT_BANK": 1,
-    "CURRENT_CLIP": "755A",
+    "CURRENT_CLIP": "115A",
     "last_page": 1,
     "last_bank_per_page": {
         "1": 1,
-        "2": 0,
-        "3": 0,
-        "4": 7,
-        "5": 7,
-        "6": 4,
-        "7": 5,
-        "8": 6,
-        "9": 2,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
         "10": 1
     },
     "last_clip": 1,
     "clip_mode": false,
     "current_camangle": "A",
-    "clip_id": 0,
-    "last_date": "2025-03-22",
-    "last_time": "12:45:33.00",
+    "clip_id": 5,
+    "last_date": "2025-03-28",
+    "last_time": "12:13:30.00",
     "timecodes": [],
-    "mark_in_tc": "2025-03-26T16:02:48.673",
-    "estrella1": [
-        "755A,   No name assigned,   No Playlist assigned,   No TC IN assigned,   No TC OUT assigned,   No duration assigned"
-    ],
-    "estrella2": [
-        "755A,   No name assigned,   No Playlist assigned,   No TC IN assigned,   No TC OUT assigned,   No duration assigned",
-        "755A,   No name assigned,   No Playlist assigned,   No TC IN assigned,   No TC OUT assigned,   No duration assigned"
-    ],
-    "estrella3": [
-        "755A,   No name assigned,   No Playlist assigned,   No TC IN assigned,   No TC OUT assigned,   No duration assigned"
-    ]
+    "mark_in_tc": "2025-03-28T14:51:50.315",
+    "estrella1": [],
+    "estrella2": [],
+    "estrella3": [],
+    "active_playlist": "PL18",
+    "SHIFT": false
 }
