@@ -887,7 +887,7 @@ class UIFunctions(MainWindow):
         for _ in range(int(clip_list[0])):
             UIFunctions.send_request(endpoint_2)
 
-        event = plst_num + 1
+        event = plst_num
         endpoint_3 = f"api/?Function=ReplayCopySelectedEvent&Value={event}"
         UIFunctions.send_request(endpoint_3)
 
@@ -896,9 +896,7 @@ class UIFunctions(MainWindow):
         save_current_clip_id(clip_id)
 
         UIFunctions.dur_playlist(self, plst_num)
-
-    
-
+        UIFunctions.num_clips_playlist(self, plst_num)
 
 
     def cont_acc_gotopl(self):
@@ -931,6 +929,8 @@ class UIFunctions(MainWindow):
         for plst_num in range(1, total_playlists + 1):
             list_name = f"list_pl{plst_num}"
             list_widget = getattr(self.ui, list_name, None)
+            UIFunctions.dur_playlist(self, plst_num)
+            UIFunctions.num_clips_playlist(self, plst_num)
 
             if list_widget is not None:
                 list_widget.clear()  # Limpiar por si ya tenía elementos
@@ -943,8 +943,9 @@ class UIFunctions(MainWindow):
             else:
                 print(f"Advertencia: No se encontró QListWidget con el nombre '{list_name}'")
 
+        
     def delete_element_plst(self, num_plst):
-        """Elimina el clip seleccionado de la QListWidget, de la lista de la playlist y del clip_dictionary."""
+        """Elimina el clip seleccionado de la QListWidget, de la lista de la playlist, del clip_dictionary, y realiza la eliminación en vMix."""
 
         list_widget = getattr(self.ui, f"list_pl{num_plst}", None)
         if not list_widget:
@@ -958,44 +959,76 @@ class UIFunctions(MainWindow):
 
         # 1. Obtener el texto del elemento seleccionado
         clip_info = selected_item.text()
-
-        # 2. Obtener el código del clip del texto (antes de la primera coma)
         current_clip = clip_info.split(",")[0].strip()
-        numeric_code = current_clip[:3]  # Los primeros 3 caracteres
+        numeric_code = current_clip[:3]
 
-        # 3. Eliminar de la QListWidget
+        # 2. Eliminar del QListWidget
         list_widget.takeItem(list_widget.row(selected_item))
 
-        # 4. Eliminar de la lista de la playlist correspondiente
+        # 3. Eliminar de la lista global
         pl_list_name = f"playlist{num_plst}"
         pl_list = globals().get(pl_list_name, [])
-        updated_pl_list = [clip for clip in pl_list if not clip.startswith(current_clip)]
+        
+        # Eliminar solo el clip seleccionado de la lista, sin eliminar todos los clips con el mismo código
+        updated_pl_list = [clip for clip in pl_list if clip.split(",")[0].strip() != current_clip]
+
+        # ✅ Actualizar lista global
         globals()[pl_list_name] = updated_pl_list
+
+        # ✅ Guardar la lista en archivo
         save_plst(num_plst, updated_pl_list)
 
-        # 5. Eliminar la playlist del clip en el diccionario
+        # 4. Eliminar la playlist del campo del clip en el diccionario
         clip_data = load_clip_dictionary()
         if numeric_code in clip_data:
             clip_entry = clip_data[numeric_code]
             playlist_field = clip_entry[3]
 
             if playlist_field.startswith("{") and playlist_field.endswith("}"):
-                # Está en formato {PL1, PL2}
                 playlists = [pl.strip() for pl in playlist_field[1:-1].split(",")]
                 if f"PL{num_plst}" in playlists:
                     playlists.remove(f"PL{num_plst}")
-                    if playlists:
-                        clip_entry[3] = "{" + ", ".join(playlists) + "}"
-                    else:
-                        clip_entry[3] = "void"
+                    clip_entry[3] = "{" + ", ".join(playlists) + "}" if playlists else "void"
             elif playlist_field == f"PL{num_plst}":
                 clip_entry[3] = "void"
 
-            # Guardar el diccionario actualizado
             save_clip_dictionary(clip_data)
             print(f"Se eliminó PL{num_plst} del clip {numeric_code} en clip_dictionary.")
+            
+            # --- Interacción con vMix ---
+            # Obtener el ID del clip para interactuar con vMix
+            id_vmix = clip_entry[0].zfill(4)  # Asumimos que clip_entry[0] es el ID de vMix
+
+            # 5. Realizar las solicitudes a vMix
+            event = num_plst + 1
+            endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
+            endpoint_2 = "api/?Function=ReplaySelectNextEvent&Channel=1"
+            endpoint_3 = f"api/?Function=ReplaySelectEvents{event}&Channel=1"
+
+            # Seleccionamos el primer evento
+            UIFunctions.send_request(endpoint_3)
+            UIFunctions.send_request(endpoint_1)
+
+            # Avanzamos hasta el evento con el ID correspondiente
+            for _ in range(int(clip_entry[0])):
+                UIFunctions.send_request(endpoint_2)
+
+
+            # Eliminar el evento seleccionado en vMix
+            endpoint_4 = f"api/?Function=ReplayDeleteSelectedEvent&Value={id_vmix}&Channel=1"
+            UIFunctions.send_request(endpoint_4)
+
         else:
             print(f"Clip {numeric_code} no encontrado en el diccionario.")
+
+        # 6. Volver a cargar la lista actual desde el archivo para estar seguros
+        updated_pl_list_final = load_plst(num_plst)
+        globals()[pl_list_name] = updated_pl_list_final  # Aseguramos la sincronización final
+
+        # ✅ Recalcular la duración y el número de clips con la lista ya actualizada
+        UIFunctions.dur_playlist(self, num_plst)
+        UIFunctions.num_clips_playlist(self, num_plst)
+
 
 
     def refresh_playlist(self, num_plst):
@@ -1009,8 +1042,6 @@ class UIFunctions(MainWindow):
         pl_list_name = f"playlist{num_plst}"
         pl_list = load_plst(num_plst)  # <-- Cargar desde archivo
         globals()[pl_list_name] = pl_list  # <-- Actualizar variable global
-
-        
 
         # Limpiar la QListWidget
         getattr(self.ui, f"list_pl{num_plst}").clear()
@@ -1027,13 +1058,14 @@ class UIFunctions(MainWindow):
 
                 # Extraer información con valores por defecto
                 name = "No name assigned" if clip_list[1] == "void" else clip_list[1]
+                rank = "No rank assigned" if clip_list[1] == "void" else clip_list[2]
                 pl = "No Playlist assigned" if clip_list[3] == "void" else clip_list[3]
                 tc_in = "No TC IN assigned" if clip_list[4] == "void" else clip_list[4][11:]
                 tc_out = "No TC OUT assigned" if clip_list[5] == "void" else clip_list[5][11:]
                 dur = "No duration assigned" if clip_list[6] == "void" else clip_list[6]
 
                 # Construir string formateado
-                clip_info = f"{clip_code},   {name},   {pl},   {tc_in},   {tc_out},   {dur}"
+                clip_info = f"{clip_code},   {name}, {rank},   {pl},   {tc_in},   {tc_out},   {dur}"
 
                 # Añadir a lista actualizada y widget
                 updated_playlist.append(clip_info)
@@ -1042,15 +1074,17 @@ class UIFunctions(MainWindow):
         # Guardar la lista actualizada en la variable global y archivo
         globals()[pl_list_name] = updated_playlist
         save_plst(num_plst, updated_playlist)
+        UIFunctions.dur_playlist(self, num_plst)
+        UIFunctions.num_clips_playlist(self, num_plst)
 
     def dur_playlist(self, num_plst):
         # Construir nombres de lista y labels
-        pl_list_name = f"playlist{num_plst}"
+        
         label1_name = f"label_dur_{num_plst}"
         label2_name = f"playlist_dur_pl{num_plst}"
 
         # Obtener la lista de la playlist correspondiente
-        pl_list = globals().get(pl_list_name, [])
+        pl_list = load_plst(num_plst)
         clip_data = load_clip_dictionary()
 
         total_ms = 0
@@ -1059,34 +1093,59 @@ class UIFunctions(MainWindow):
         for item in pl_list:
             numeric_code = item[:3]  # Obtener el código del clip
             if numeric_code in clip_data:
-                dur_str = clip_data[numeric_code][6]  # Duración en formato "hh:mm:ss:fff"
-                print(dur_str)
+                dur_str = clip_data[numeric_code][6]  # Duración en formato "hh:mm:ss.mmm"
 
                 if dur_str != "void":
                     try:
-                        # Intentamos descomponer la duración en horas, minutos, segundos y milisegundos
-                        h, m, s, ms = map(int, dur_str.split(":"))
+                        # Separar en hh:mm:ss y milisegundos
+                        time_part, ms_part = dur_str.split(".")
+                        h, m, s = map(int, time_part.split(":"))
+                        ms = int(ms_part)
+                        
                         # Sumar la duración al total en milisegundos
                         total_ms += (((h * 60 + m) * 60 + s) * 1000) + ms
                     except ValueError:
                         print(f"Error en el formato de duración para el clip {numeric_code}: {dur_str}")
                         continue  # Si el formato es incorrecto, lo ignoramos
 
-        # Convertir total_ms a hh:mm:ss:fff
+        # Convertir total_ms a hh:mm:ss.mmm
         h = total_ms // 3600000
         m = (total_ms % 3600000) // 60000
         s = (total_ms % 60000) // 1000
         ms = total_ms % 1000
 
-        # Formatear el total en "hh:mm:ss:fff"
-        duracion_total = f"{h:02}:{m:02}:{s:02}:{ms:03}"
+        # Formatear el total en "hh:mm:ss.mmm"
+        duracion_total = f"{h:02}:{m:02}:{s:02}.{ms:03}"
 
         # Actualizar las labels correspondientes
         getattr(self.ui, label1_name).setText(duracion_total)
         getattr(self.ui, label2_name).setText(duracion_total)
 
-        # Para depuración, imprimimos el total calculado
+        # Para depuración
         print(f"Duración total para playlist {num_plst}: {duracion_total}")
+
+    def num_clips_playlist(self, num_plst):
+        # Nombre de la lista y labels basados en el número de playlist
+        label1_name = f"label_nclips_{num_plst}"
+        label2_name = f"playlist_numclip_pl{num_plst}"
+
+        # Obtener la lista desde las variables globales
+        pl_list = load_plst(num_plst)
+
+        # Contar el número de clips
+        num_clips = len(pl_list)
+
+        # Formatear el texto
+        texto = f"{num_clips} clips"
+
+        # Actualizar los QLabel
+        getattr(self.ui, label1_name).setText(texto)
+        getattr(self.ui, label2_name).setText(texto)
+
+        # Para debug
+        print(f"Playlist {num_plst} tiene {num_clips} clips.")
+
+
 
 
 
