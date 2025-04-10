@@ -12,8 +12,9 @@ import requests
 
 # GUI FILE
 from app_modules import *
-from ui_popup_recordtrains import Ui_Dialog as Dialog_recordtrains
+#from ui_popup_recordtrains import Ui_Dialog as Dialog_recordtrains
 from ui_popup_searchtc import Ui_Dialog as Dialog_searchtc
+from ui_popup_name_clip import Ui_Dialog as Dialog_nameclip
 from ui_popup_fastjog import Ui_Dialog as Dialog_fastjog
 from ui_popup_ipconfig import Ui_Dialog as Dialog_ipconfig
 from ui_popup_myvmix import Ui_Dialog as Dialog_myvmix
@@ -23,6 +24,7 @@ from ui_popup_confirm_connected import Ui_Dialog as Dialog_connected
 from ui_popup_overwrite_clip import Ui_Dialog as Dialog_overwrite
 from ui_popup_delete_clip_dictionary import Ui_Dialog as Dialog_delete_clip_dictionary
 from config_manager import *
+
 
 IP_VMIX = load_ip_vmix()
 FAST_JOG = load_fast_jog()
@@ -61,9 +63,13 @@ playlist15 = load_plst(15)
 playlist16 = load_plst(16)
 playlist17 = load_plst(17)
 playlist18 = load_plst(18)
+CLEAR_MODE = False
+CLEAR_SELECTION = None
+browse_mode = False
+selected_index = 0
 
 
-
+"""""
 class PopupRecordTrains(QDialog):  
     def __init__(self):  
         super().__init__()  
@@ -75,6 +81,108 @@ class PopupRecordTrains(QDialog):
         self.ui.maximizerecord_trains.clicked.connect(lambda: UIFunctions.maximize_restore(self))
         ## SHOW ==> CLOSE APPLICATION
         self.ui.close_recordtrains.clicked.connect(lambda: self.close())
+"""
+
+class PopupNameClip(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.ui = Dialog_nameclip()  # Instancia de la UI generada
+        self.ui.setupUi(self)  # Aplica la UI a la ventana de diálogo
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.ui.minimize_nameclip.clicked.connect(lambda: self.showMinimized())
+        self.ui.maximize_nameclip.clicked.connect(lambda: UIFunctions.maximize_restore(self))
+        self.ui.close_nameclip.clicked.connect(lambda: self.close())
+
+        # Conectar botones para escribir en el QTextEdit
+        self.ui.nameclip_0.clicked.connect(lambda: self.write("0"))
+        self.ui.nameclip_1.clicked.connect(lambda: self.write("1"))
+        self.ui.nameclip_2.clicked.connect(lambda: self.write("2"))
+        self.ui.nameclip_3.clicked.connect(lambda: self.write("3"))
+        self.ui.nameclip_4.clicked.connect(lambda: self.write("4"))
+        self.ui.nameclip_5.clicked.connect(lambda: self.write("5"))
+        self.ui.nameclip_6.clicked.connect(lambda: self.write("6"))
+        self.ui.nameclip_7.clicked.connect(lambda: self.write("7"))
+        self.ui.nameclip_8.clicked.connect(lambda: self.write("8"))
+        self.ui.nameclip_9.clicked.connect(lambda: self.write("9"))
+        self.ui.nameclip_A.clicked.connect(lambda: self.write("A"))
+        self.ui.nameclip_B.clicked.connect(lambda: self.write("B"))
+        self.ui.nameclip_C.clicked.connect(lambda: self.write("C"))
+        self.ui.nameclip_D.clicked.connect(lambda: self.write("D"))
+        self.ui.nameclip_E.clicked.connect(lambda: self.write("E"))
+        self.ui.nameclip_F.clicked.connect(lambda: self.write("F"))
+        self.ui.nameclip_G.clicked.connect(lambda: self.write("G"))
+        self.ui.nameclip_H.clicked.connect(lambda: self.write("H"))
+        self.ui.nameclip_I.clicked.connect(lambda: self.write("I"))
+        self.ui.nameclip_J.clicked.connect(lambda: self.write("J"))
+        self.ui.nameclip_K.clicked.connect(lambda: self.write("K"))
+        self.ui.nameclip_L.clicked.connect(lambda: self.write("L"))
+        self.ui.nameclip_M.clicked.connect(lambda: self.write("M"))
+        self.ui.nameclip_N.clicked.connect(lambda: self.write("N"))
+        self.ui.nameclip_O.clicked.connect(lambda: self.write("O"))
+        self.ui.nameclip_P.clicked.connect(lambda: self.write("P"))
+        self.ui.nameclip_Q.clicked.connect(lambda: self.write("Q"))
+        self.ui.nameclip_R.clicked.connect(lambda: self.write("R"))
+        self.ui.nameclip_S.clicked.connect(lambda: self.write("S"))
+        self.ui.nameclip_T.clicked.connect(lambda: self.write("T"))
+        self.ui.nameclip_U.clicked.connect(lambda: self.write("U"))
+        self.ui.nameclip_V.clicked.connect(lambda: self.write("V"))
+        self.ui.nameclip_W.clicked.connect(lambda: self.write("W"))
+        self.ui.nameclip_X.clicked.connect(lambda: self.write("X"))
+        self.ui.nameclip_Y.clicked.connect(lambda: self.write("Y"))
+        self.ui.nameclip_Z.clicked.connect(lambda: self.write("Z"))
+        self.ui.nameclip_barra.clicked.connect(lambda: self.write("-"))
+        self.ui.nameclip_barra_baixa.clicked.connect(lambda: self.write("_"))
+        self.ui.nameclip_punt.clicked.connect(lambda: self.write("."))
+        self.ui.nameclip_dospunts.clicked.connect(lambda: self.write(":"))
+        self.ui.nameclip_delete.clicked.connect(lambda: self.delete())
+        self.ui.nameclip_confirm.clicked.connect(lambda: self.confirm())
+
+        # Inicialmente, no hay QTextEdit activo
+        self.active_textedit = None
+
+        # Conectar eventos de foco para detectar qué QTextEdit está seleccionado
+
+
+    def write(self, text):
+        self.ui.textedit_clipname_name.insertPlainText(text)
+
+    def delete(self):
+        """Elimina el último carácter directamente en la interfaz"""
+        if self.ui.textedit_clipname_name:  # Verifica que el QTextEdit esté inicializado
+            cursor = self.ui.textedit_clipname_name.textCursor()  # Obtiene el cursor de QTextEdit
+            cursor.movePosition(cursor.End)  # Mueve el cursor al final
+            cursor.deletePreviousChar()  # Borra el último carácter
+
+    def confirm(self):
+        current_clip = load_current_clip()
+        numeric_code = current_clip[:-1]
+        texto = self.ui.textedit_clipname_name.toPlainText().strip()
+
+        clip_data = load_clip_dictionary()
+        if numeric_code in clip_data:
+            clip_entry = clip_data[numeric_code]
+
+            # Extraer información con valores por defecto
+            id = clip_entry[0]
+            clip_entry[1] = f"{texto}"
+
+        save_clip_dictionary(clip_data)
+
+        endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
+        endpoint_2 = "api/?Function=ReplaySelectNextEvent&Channel=1"
+        UIFunctions.send_request(endpoint_1)
+
+        for _ in range(int(id)):
+            UIFunctions.send_request(endpoint_2)
+
+        endpoint_3 = f"api/?Function=ReplaySetSelectedEventText&Value={texto}"
+        UIFunctions.send_request(endpoint_3)
+
+        time.sleep(0.1)
+        self.close()
+
+
+
 
 class PopupOverwriteClip(QDialog):  
 
@@ -87,7 +195,7 @@ class PopupOverwriteClip(QDialog):
         ## SHOW ==> CLOSE APPLICATION
         self.ui.close_overwrite.clicked.connect(lambda: self.close())
         self.ui.overwrite_no.clicked.connect(lambda: self.no(clip_code))
-        self.ui.overwrite_yes.clicked.connect(lambda: self.yes(self, clip_code, clip_management))
+        self.ui.overwrite_yes.clicked.connect(lambda: self.yes(clip_code, clip_management))
 
     def send_request(endpoint):
         """ Envía una request HTTP a la API de vMix y maneja errores. """
@@ -683,9 +791,9 @@ class MainWindow(QMainWindow):
         UIFunctions.addNewMenu(self, "CONTENT ACCESS", "btn_new_user", "url(:/16x16/icons/16x16/cil-input.png)", True)
         UIFunctions.addNewMenu(self, "CONTROL", "btn_control", "url(:/16x16/icons/16x16/cil-clipboard.png)", True)
         UIFunctions.addNewMenu(self, "EXPORT", "btn_export", "url(:/16x16/icons/16x16/cil-paper-plane.png)", True)
-        UIFunctions.addNewMenu(self, "GENERIC", "btn_generic", "url(:/16x16/icons/16x16/cil-folder-open.png)", True)
+        #UIFunctions.addNewMenu(self, "GENERIC", "btn_generic", "url(:/16x16/icons/16x16/cil-folder-open.png)", True)
         UIFunctions.addNewMenu(self, "PLAYLIST", "btn_playlist", "url(:/16x16/icons/16x16/cil-library-add.png)", True)
-        UIFunctions.addNewMenu(self, "CLIP MANAGEMENT", "btn_clipmanagement", "url(:/16x16/icons/16x16/cil-featured-playlist.png)", True)
+        #UIFunctions.addNewMenu(self, "CLIP MANAGEMENT", "btn_clipmanagement", "url(:/16x16/icons/16x16/cil-featured-playlist.png)", True)
         UIFunctions.addNewMenu(self, "SIMULATOR", "btn_simulator", "url(:/16x16/icons/16x16/cil-devices.png)", True)
         UIFunctions.addNewMenu(self, "CONFIGURATION", "btn_config", "url(:/16x16/icons/16x16/cil-equalizer.png)", False)
         #UIFunctions.addNewMenu(self, "WIDGETS", "btn_widgets", "url(:/16x16/icons/16x16/cil-equalizer.png)", False)
@@ -749,7 +857,7 @@ class MainWindow(QMainWindow):
 
         #################################### START- BOTONS CLIP
 
-        self.ui.clip_addtoplaylist.clicked.connect(lambda: UIFunctions.function_plst_page(self))
+        self.ui.clip_addtoplaylist.clicked.connect(lambda: UIFunctions.cont_acc_gotopl(self))
         UIFunctions.refresh_estrella1_list(self)
         self.ui.clip_estrella1.clicked.connect(lambda: UIFunctions.function_estrella1(self))
         UIFunctions.refresh_estrella2_list(self)
@@ -765,6 +873,7 @@ class MainWindow(QMainWindow):
         self.ui.estrella1_add.clicked.connect(lambda: UIFunctions.function_estrella1(self))
         self.ui.estrella2_add.clicked.connect(lambda: UIFunctions.function_estrella2(self))
         self.ui.estrella3_add.clicked.connect(lambda: UIFunctions.function_estrella3(self))
+        self.ui.clip_nameclip.clicked.connect(lambda: self.show_dialog_nameclip())
 
         #################################### END - BOTONS CLIP
 
@@ -788,11 +897,27 @@ class MainWindow(QMainWindow):
         self.ui.cont_acc_page.clicked.connect(lambda: function_page_activate())
         self.ui.cont_acc_mark.clicked.connect(lambda: UIFunctions.function_mark())
         self.ui.cont_acc_lastmark.clicked.connect(lambda: UIFunctions.function_lastmark())
-        self.ui.cont_acc_recordtrains.clicked.connect(self.show_dialog_recordtrains)
-        self.ui.cont_acc_lastsearchtc.clicked.connect(lambda: UIFunctions.function_lastsearchtc())
+        #self.ui.cont_acc_recordtrains.clicked.connect(self.show_dialog_recordtrains)
+        self.ui.cont_acc_lasttc.clicked.connect(lambda: UIFunctions.function_lasttc())
 
 
         #################################### END - BOTONS CONTENT ACCESS
+
+        #################################### START - BOTONS EXPORT
+
+        self.ui.export_playlist.clicked.connect(lambda: UIFunctions.export_playlist())
+        self.ui.export_export_clip.clicked.connect(lambda: UIFunctions.export_clip())
+
+
+
+
+
+        #################################### END - BOTONS EXPORT
+
+
+
+
+
 
         #################################### START- BOTONS SIMULATOR
 
@@ -820,8 +945,35 @@ class MainWindow(QMainWindow):
                 print("Shift desactivado")
                 save_shift(SHIFT)
 
+        def toggle_clear_mode(self):
+            """Activa o desactiva el modo CLEAR y espera la selección de IN u OUT."""
+            global CLEAR_MODE, CLEAR_SELECTION
+            CLEAR_MODE = not CLEAR_MODE
+
+            if CLEAR_MODE:
+                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255); background-color: rgba(255,165,0,150);} QPushButton:hover {background-color: rgba(255,165,0,100);} QPushButton:pressed { background-color: rgba(255,165,0,50);}")
+                print("Modo CLEAR activado")
+                endpoint = "api/?Function=ReplayMarkCancel"
+                UIFunctions.send_request(endpoint)
+            else:
+                CLEAR_SELECTION = None
+                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(255,165,0,50);} QPushButton:pressed { background-color: rgba(255,165,0,50);}")
+                print("Modo CLEAR desactivado")
+
+
+        def reset_clear_mode(self):
+            """Apaga el modo CLEAR y resetea estilos del botón CLEAR únicamente"""
+            global CLEAR_MODE, CLEAR_SELECTION
+            CLEAR_MODE = False
+            CLEAR_SELECTION = None
+            self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
+            print("Modo CLEAR desactivado automáticamente después de la selección")
+
         self.ui.sim_shift.setCheckable(True)
         self.ui.sim_shift.clicked.connect(lambda: toggle_shift(self))
+
+        self.ui.sim_clear.setCheckable(True)
+        self.ui.sim_clear.clicked.connect(lambda: toggle_clear_mode(self))
 
         def execute_functions_A(self):
             """Ejecuta la función correspondiente según el estado de SHIFT."""
@@ -964,7 +1116,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.function_insert()
                 reset_shift(self)
             else:
-                UIFunctions.function_browse()
+                UIFunctions.toggle_browse_mode(self)
         self.ui.sim_insert.clicked.connect(lambda: execute_functions_insert(self))
 
         def execute_functions_in(self):
@@ -974,7 +1126,19 @@ class MainWindow(QMainWindow):
                 reset_shift(self)
             else:
                 UIFunctions.function_in()
-        self.ui.sim_in.clicked.connect(lambda: execute_functions_in(self))
+
+        def handle_sim_in(self):
+            global CLEAR_MODE, CLEAR_SELECTION
+            if CLEAR_MODE:
+                CLEAR_SELECTION = "in"
+                print("Modo CLEAR: Seleccionado IN")
+                UIFunctions.send_request("api/?Function=ReplayUpdateSelectedInPoint&Channel=1")
+                reset_clear_mode(self)  # Se desactiva el modo después de la request
+            else:
+                execute_functions_in(self)
+
+
+        self.ui.sim_in.clicked.connect(lambda: handle_sim_in(self))
 
         def execute_functions_out(self):
             global SHIFT
@@ -983,7 +1147,20 @@ class MainWindow(QMainWindow):
                 reset_shift(self)
             else:
                 function_out()
-        self.ui.sim_out.clicked.connect(lambda: execute_functions_out(self))
+
+        def handle_sim_out(self):
+            global CLEAR_MODE, CLEAR_SELECTION
+            if CLEAR_MODE:
+                CLEAR_SELECTION = "out"
+                print("Modo CLEAR: Seleccionado OUT")
+                UIFunctions.send_request("api/?Function=ReplayUpdateSelectedOutPoint&Channel=1")
+                reset_clear_mode(self)  # Se desactiva el modo después de la request
+            else:
+                execute_functions_out(self)
+                
+
+        self.ui.sim_out.clicked.connect(lambda: handle_sim_out(self))
+            
 
         def execute_functions_take(self):
             global SHIFT
@@ -1000,7 +1177,7 @@ class MainWindow(QMainWindow):
         self.ui.sim_rodeta.setMaximum(100)
         self.ui.sim_rodeta.setWrapping(True)  # Hacer que el dial sea cíclico
         self.dial = self.findChild(QDial, "sim_rodeta")  # Busca el QDial en la UI
-        UIFunctions.function_rodeta(self.dial)  # Configura el dial
+        UIFunctions.function_rodeta(self, self.dial)  # Configura el dial
 
         self.slider = self.findChild(QSlider, "sim_palanqueta")  # Find the slider
         UIFunctions.setup_replay_speed_slider(self.slider)  # Setup slider functionality
@@ -1018,6 +1195,7 @@ class MainWindow(QMainWindow):
 
         def function_out():
             global clip_id, mark_in_tc, SHIFT, modo_page
+
 
             # Simula el proceso de "Out"
             endpoint_1 = "api/?Function=ReplayMarkOut"
@@ -1207,6 +1385,10 @@ class MainWindow(QMainWindow):
         self.ui.sim_f9.clicked.connect(lambda: handle_sim_f_button(self, 9))
         self.ui.sim_f10.clicked.connect(lambda: handle_sim_f_button(self, 0))
 
+        
+        self.ui.sim_menu.clicked.connect(lambda: UIFunctions.function_menu(self))
+        self.ui.sim_enter.clicked.connect(lambda: UIFunctions.function_enter(self))
+
 
         #################################### END - BOTONS SIMULATOR
 
@@ -1333,12 +1515,18 @@ class MainWindow(QMainWindow):
     ########################################################################
     ## MENUS ==> DYNAMIC MENUS FUNCTIONS
     ########################################################################
+    """""
     def show_dialog_recordtrains(self):
         self.popup = PopupRecordTrains()  # Guardar en un atributo para evitar que se elimine
         self.popup.exec_()  # Muestra el diálogo de forma modal
+    """
 
     def show_dialog_searchtc(self):
         self.popup = PopupSearchTC()  # Guardar en un atributo para evitar que se elimine
+        self.popup.exec_()  # Muestra el diálogo de forma modal
+
+    def show_dialog_nameclip(self):
+        self.popup = PopupNameClip()  # Guardar en un atributo para evitar que se elimine
         self.popup.exec_()  # Muestra el diálogo de forma modal
     
 
@@ -1400,6 +1588,7 @@ class MainWindow(QMainWindow):
 
         if btnWidget.objectName() == "btn_playlist":
             self.ui.stackedWidget.setCurrentWidget(self.ui.page_playlist)
+            UIFunctions.refresh_all_playlists(self, 18)
             UIFunctions.resetStyle(self, "btn_playlist")
             UIFunctions.labelPage(self, "PLAYLIST")
             btnWidget.setStyleSheet(UIFunctions.selectMenu(btnWidget.styleSheet()))

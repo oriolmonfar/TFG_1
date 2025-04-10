@@ -748,32 +748,6 @@ class Ui_MainWindow(object):
         icon3 = QIcon()
         icon3.addFile(u":/16x16/icons/16x16/cil-chevron-right.png", QSize(), QIcon.Normal, QIcon.Off)
         self.clip_addtoplaylist.setIcon(icon3)
-        self.clip_keywords = QPushButton(self.page_home)
-        self.clip_keywords.setObjectName(u"clip_keywords")
-        self.clip_keywords.setGeometry(QRect(270, 140, 175, 70))
-        self.clip_keywords.setLayoutDirection(Qt.RightToLeft)
-        self.clip_keywords.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.clip_keywords.setIcon(icon3)
         self.clip_widget_estrelles3 = QWidget(self.page_home)
         self.clip_widget_estrelles3.setObjectName(u"clip_widget_estrelles3")
         self.clip_widget_estrelles3.setGeometry(QRect(490, 30, 175, 70))
@@ -841,30 +815,6 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         self.clip_gotoestrella3.setIcon(icon3)
-        self.clip_editmetadata = QPushButton(self.page_home)
-        self.clip_editmetadata.setObjectName(u"clip_editmetadata")
-        self.clip_editmetadata.setGeometry(QRect(50, 140, 175, 70))
-        self.clip_editmetadata.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
         self.clip_estrella1 = QPushButton(self.page_home)
         self.clip_estrella1.setObjectName(u"clip_estrella1")
         self.clip_estrella1.setGeometry(QRect(50, 30, 175, 70))
@@ -980,6 +930,30 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         self.clip_gotoestrella1.setIcon(icon3)
+        self.clip_nameclip = QPushButton(self.page_home)
+        self.clip_nameclip.setObjectName(u"clip_nameclip")
+        self.clip_nameclip.setGeometry(QRect(50, 140, 175, 70))
+        self.clip_nameclip.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"")
         self.stackedWidget.addWidget(self.page_home)
         self.page_estrella1 = QWidget()
         self.page_estrella1.setObjectName(u"page_estrella1")
@@ -4762,30 +4736,6 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "")
-        self.clip_mang_name_angles = QPushButton(self.page_clipmanagement)
-        self.clip_mang_name_angles.setObjectName(u"clip_mang_name_angles")
-        self.clip_mang_name_angles.setGeometry(QRect(270, 30, 175, 70))
-        self.clip_mang_name_angles.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
         self.stackedWidget.addWidget(self.page_clipmanagement)
         self.page_control = QWidget()
         self.page_control.setObjectName(u"page_control")
@@ -4987,30 +4937,6 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "")
-        self.control_return = QPushButton(self.page_control)
-        self.control_return.setObjectName(u"control_return")
-        self.control_return.setGeometry(QRect(50, 250, 175, 70))
-        self.control_return.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
         self.stackedWidget.addWidget(self.page_control)
         self.page_contentacc = QWidget()
         self.page_contentacc.setObjectName(u"page_contentacc")
@@ -5062,35 +4988,11 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "")
-        self.cont_acc_recall = QPushButton(self.page_contentacc)
-        self.cont_acc_recall.setObjectName(u"cont_acc_recall")
-        self.cont_acc_recall.setGeometry(QRect(710, 30, 175, 70))
-        self.cont_acc_recall.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.cont_acc_lastsearchtc = QPushButton(self.page_contentacc)
-        self.cont_acc_lastsearchtc.setObjectName(u"cont_acc_lastsearchtc")
-        self.cont_acc_lastsearchtc.setGeometry(QRect(710, 140, 175, 70))
-        self.cont_acc_lastsearchtc.setLayoutDirection(Qt.RightToLeft)
-        self.cont_acc_lastsearchtc.setStyleSheet(u"QPushButton {\n"
+        self.cont_acc_lasttc = QPushButton(self.page_contentacc)
+        self.cont_acc_lasttc.setObjectName(u"cont_acc_lasttc")
+        self.cont_acc_lasttc.setGeometry(QRect(710, 30, 175, 70))
+        self.cont_acc_lasttc.setLayoutDirection(Qt.RightToLeft)
+        self.cont_acc_lasttc.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -5115,80 +5017,6 @@ class Ui_MainWindow(object):
         self.cont_acc_page.setObjectName(u"cont_acc_page")
         self.cont_acc_page.setGeometry(QRect(490, 30, 175, 70))
         self.cont_acc_page.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.cont_acc_searchtcconfig = QPushButton(self.page_contentacc)
-        self.cont_acc_searchtcconfig.setObjectName(u"cont_acc_searchtcconfig")
-        self.cont_acc_searchtcconfig.setGeometry(QRect(50, 250, 175, 70))
-        self.cont_acc_searchtcconfig.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.cont_acc_recordtrains = QPushButton(self.page_contentacc)
-        self.cont_acc_recordtrains.setObjectName(u"cont_acc_recordtrains")
-        self.cont_acc_recordtrains.setGeometry(QRect(270, 250, 175, 70))
-        self.cont_acc_recordtrains.setLayoutDirection(Qt.RightToLeft)
-        self.cont_acc_recordtrains.setStyleSheet(u"QPushButton {\n"
-"    font-family: \"Arial\";    /* Cambia la fuente */\n"
-"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
-"    font-weight: bold;       /* Negrita */    \n"
-"    color: white;				 /* Color del texto */\n"
-"	padding: 10px;           \n"
-"    border-radius: 15px;\n"
-"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgba(0,150,250,50);\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.cont_acc_recordtrains.setIcon(icon3)
-        self.cont_acc_searchtc = QPushButton(self.page_contentacc)
-        self.cont_acc_searchtc.setObjectName(u"cont_acc_searchtc")
-        self.cont_acc_searchtc.setGeometry(QRect(490, 140, 175, 70))
-        self.cont_acc_searchtc.setStyleSheet(u"QPushButton {\n"
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
@@ -5814,7 +5642,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(19)
+        self.stackedWidget.setCurrentIndex(29)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -5844,19 +5672,18 @@ class Ui_MainWindow(object):
         self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| CLIP", None))
         self.label_user_icon.setText(QCoreApplication.translate("MainWindow", u"WM", None))
         self.clip_addtoplaylist.setText(QCoreApplication.translate("MainWindow", u"Add to Playlist   ", None))
-        self.clip_keywords.setText(QCoreApplication.translate("MainWindow", u"Keywords   ", None))
         self.clip_star_widget_estrelles3_1.setText("")
         self.clip_star_widget_estrelles3_2.setText("")
         self.clip_star_widget_estrelles3_3.setText("")
         self.clip_button_onwidget_estrelles3.setText("")
         self.clip_gotoestrella3.setText("")
-        self.clip_editmetadata.setText(QCoreApplication.translate("MainWindow", u"Edit Metadata", None))
         self.clip_estrella1.setText("")
         self.clip_star_widget_estrelles2_1.setText("")
         self.clip_star_widget_estrelles2_2.setText("")
         self.clip_button_onwidget_estrelles2.setText("")
         self.clip_gotoestrella2.setText("")
         self.clip_gotoestrella1.setText("")
+        self.clip_nameclip.setText(QCoreApplication.translate("MainWindow", u"Name Clip", None))
         self.label_estrella1.setText("")
         self.estrella1_delete.setText("")
         self.estrella1_add.setText("")
@@ -5960,9 +5787,7 @@ class Ui_MainWindow(object):
         self.estrella3_delete.setText("")
         self.estrella3_add.setText("")
         self.sim_menu.setText(QCoreApplication.translate("MainWindow", u"MENU", None))
-        self.sim_take.setText(QCoreApplication.translate("MainWindow", u"Lever \n"
-" --------------------------------\n"
-" TAKE", None))
+        self.sim_take.setText(QCoreApplication.translate("MainWindow", u"TAKE", None))
         self.sim_shift.setText(QCoreApplication.translate("MainWindow", u"SHIFT", None))
         self.sim_f1.setText(QCoreApplication.translate("MainWindow", u"F1", None))
         self.sim_f2.setText(QCoreApplication.translate("MainWindow", u"F2", None))
@@ -5976,21 +5801,11 @@ class Ui_MainWindow(object):
         self.sim_f10.setText(QCoreApplication.translate("MainWindow", u"F10", None))
         self.sim_clear.setText(QCoreApplication.translate("MainWindow", u"CLEAR", None))
         self.sim_enter.setText(QCoreApplication.translate("MainWindow", u"ENTER", None))
-        self.sim_A.setText(QCoreApplication.translate("MainWindow", u"A'\n"
-" -----------------\n"
-"A", None))
-        self.sim_B.setText(QCoreApplication.translate("MainWindow", u"B'\n"
-" ----------------\n"
-"B", None))
-        self.sim_C.setText(QCoreApplication.translate("MainWindow", u"C'\n"
-" ----------------\n"
-"C", None))
-        self.sim_D.setText(QCoreApplication.translate("MainWindow", u"D'\n"
-" ----------------\n"
-"D", None))
-        self.sim_play.setText(QCoreApplication.translate("MainWindow", u"Network\n"
-" ---------------------\n"
-"PLAY", None))
+        self.sim_A.setText(QCoreApplication.translate("MainWindow", u"A", None))
+        self.sim_B.setText(QCoreApplication.translate("MainWindow", u"B", None))
+        self.sim_C.setText(QCoreApplication.translate("MainWindow", u"C", None))
+        self.sim_D.setText(QCoreApplication.translate("MainWindow", u"D", None))
+        self.sim_play.setText(QCoreApplication.translate("MainWindow", u"PLAY", None))
         self.sim_fastjog.setText(QCoreApplication.translate("MainWindow", u"Fast Jog\n"
 " ---------------------\n"
 " Mark", None))
@@ -6114,7 +5929,6 @@ class Ui_MainWindow(object):
         self.playlist_btnadd_15.setText("")
         self.playlist_btnadd_18.setText("")
         self.clip_manag_name_clip.setText(QCoreApplication.translate("MainWindow", u"Name Clip", None))
-        self.clip_mang_name_angles.setText(QCoreApplication.translate("MainWindow", u"Name Angles", None))
         self.control_loop.setText(QCoreApplication.translate("MainWindow", u"Loop", None))
         self.control_prv_ctl.setText(QCoreApplication.translate("MainWindow", u"PRV CTL", None))
         self.control_syncprv.setText(QCoreApplication.translate("MainWindow", u"Sync PRV", None))
@@ -6123,15 +5937,10 @@ class Ui_MainWindow(object):
         self.control_gotoin.setText(QCoreApplication.translate("MainWindow", u"Go to IN", None))
         self.control_gototc.setText(QCoreApplication.translate("MainWindow", u"Go to TC", None))
         self.control_2ndfastjog.setText(QCoreApplication.translate("MainWindow", u"2nd FastJog Speed", None))
-        self.control_return.setText(QCoreApplication.translate("MainWindow", u"Return", None))
         self.cont_acc_lastmark.setText(QCoreApplication.translate("MainWindow", u"Last Mark", None))
         self.cont_acc_mark.setText(QCoreApplication.translate("MainWindow", u"Mark", None))
-        self.cont_acc_recall.setText(QCoreApplication.translate("MainWindow", u"Recall", None))
-        self.cont_acc_lastsearchtc.setText(QCoreApplication.translate("MainWindow", u"Last Search TC", None))
+        self.cont_acc_lasttc.setText(QCoreApplication.translate("MainWindow", u"Last TC", None))
         self.cont_acc_page.setText(QCoreApplication.translate("MainWindow", u"Page", None))
-        self.cont_acc_searchtcconfig.setText(QCoreApplication.translate("MainWindow", u"Search TC Config", None))
-        self.cont_acc_recordtrains.setText(QCoreApplication.translate("MainWindow", u"Record Trains", None))
-        self.cont_acc_searchtc.setText(QCoreApplication.translate("MainWindow", u"Search TC", None))
         self.contec_acc_actualclip.setText(QCoreApplication.translate("MainWindow", u"Actual Clip", None))
         self.cont_acc_actualplaylist.setText(QCoreApplication.translate("MainWindow", u"Actual Playlist", None))
         self.labelBoxBlenderInstalation.setText(QCoreApplication.translate("MainWindow", u"BLENDER INSTALLATION", None))

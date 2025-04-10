@@ -1668,7 +1668,7 @@ QPushButton:pressed {
                    <string notr="true">background: transparent;</string>
                   </property>
                   <property name="currentIndex">
-                   <number>19</number>
+                   <number>29</number>
                   </property>
                   <widget class="QWidget" name="page_home">
                    <widget class="QPushButton" name="clip_addtoplaylist">
@@ -1714,49 +1714,6 @@ QPushButton:pressed {
                     </property>
                     <property name="text">
                      <string>Add to Playlist   </string>
-                    </property>
-                    <property name="icon">
-                     <iconset resource="files.qrc">
-                      <normaloff>:/16x16/icons/16x16/cil-chevron-right.png</normaloff>:/16x16/icons/16x16/cil-chevron-right.png</iconset>
-                    </property>
-                   </widget>
-                   <widget class="QPushButton" name="clip_keywords">
-                    <property name="geometry">
-                     <rect>
-                      <x>270</x>
-                      <y>140</y>
-                      <width>175</width>
-                      <height>70</height>
-                     </rect>
-                    </property>
-                    <property name="layoutDirection">
-                     <enum>Qt::RightToLeft</enum>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QPushButton {
-    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
-    font-size: 16px;         /* Tamaño del texto */
-    font-weight: bold;       /* Negrita */    
-    color: white;				 /* Color del texto */
-	padding: 10px;           
-    border-radius: 15px;
-	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
-}
-
-QPushButton:hover {
-	background-color: rgba(0,150,250,50);
-}
-
-QPushButton:pressed {
-    background-color: rgba(0,150,250,50);
-}
-
-
-
-</string>
-                    </property>
-                    <property name="text">
-                     <string>Keywords   </string>
                     </property>
                     <property name="icon">
                      <iconset resource="files.qrc">
@@ -1914,42 +1871,6 @@ QPushButton:pressed {
                        <normaloff>:/16x16/icons/16x16/cil-chevron-right.png</normaloff>:/16x16/icons/16x16/cil-chevron-right.png</iconset>
                      </property>
                     </widget>
-                   </widget>
-                   <widget class="QPushButton" name="clip_editmetadata">
-                    <property name="geometry">
-                     <rect>
-                      <x>50</x>
-                      <y>140</y>
-                      <width>175</width>
-                      <height>70</height>
-                     </rect>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QPushButton {
-    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
-    font-size: 16px;         /* Tamaño del texto */
-    font-weight: bold;       /* Negrita */    
-    color: white;				 /* Color del texto */
-	padding: 10px;           
-    border-radius: 15px;
-	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
-}
-
-QPushButton:hover {
-	background-color: rgba(0,150,250,50);
-}
-
-QPushButton:pressed {
-    background-color: rgba(0,150,250,50);
-}
-
-
-
-</string>
-                    </property>
-                    <property name="text">
-                     <string>Edit Metadata</string>
-                    </property>
                    </widget>
                    <widget class="QPushButton" name="clip_estrella1">
                     <property name="geometry">
@@ -2179,6 +2100,42 @@ QPushButton:pressed {
                     <property name="icon">
                      <iconset resource="files.qrc">
                       <normaloff>:/16x16/icons/16x16/cil-chevron-right.png</normaloff>:/16x16/icons/16x16/cil-chevron-right.png</iconset>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="clip_nameclip">
+                    <property name="geometry">
+                     <rect>
+                      <x>50</x>
+                      <y>140</y>
+                      <width>175</width>
+                      <height>70</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+
+
+</string>
+                    </property>
+                    <property name="text">
+                     <string>Name Clip</string>
                     </property>
                    </widget>
                   </widget>
@@ -5827,9 +5784,7 @@ QPushButton:pressed {
 </string>
                     </property>
                     <property name="text">
-                     <string>Lever 
- --------------------------------
- TAKE</string>
+                     <string>TAKE</string>
                     </property>
                    </widget>
                    <widget class="QPushButton" name="sim_shift">
@@ -6437,9 +6392,7 @@ QPushButton:pressed {
 </string>
                     </property>
                     <property name="text">
-                     <string>A'
- -----------------
-A</string>
+                     <string>A</string>
                     </property>
                    </widget>
                    <widget class="QPushButton" name="sim_B">
@@ -6475,9 +6428,7 @@ QPushButton:pressed {
 </string>
                     </property>
                     <property name="text">
-                     <string>B'
- ----------------
-B</string>
+                     <string>B</string>
                     </property>
                    </widget>
                    <widget class="QPushButton" name="sim_C">
@@ -6513,9 +6464,7 @@ QPushButton:pressed {
 </string>
                     </property>
                     <property name="text">
-                     <string>C'
- ----------------
-C</string>
+                     <string>C</string>
                     </property>
                    </widget>
                    <widget class="QPushButton" name="sim_D">
@@ -6551,9 +6500,7 @@ QPushButton:pressed {
 </string>
                     </property>
                     <property name="text">
-                     <string>D'
- ----------------
-D</string>
+                     <string>D</string>
                     </property>
                    </widget>
                    <widget class="QPushButton" name="sim_play">
@@ -6589,9 +6536,7 @@ QPushButton:pressed {
 </string>
                     </property>
                     <property name="text">
-                     <string>Network
- ---------------------
-PLAY</string>
+                     <string>PLAY</string>
                     </property>
                    </widget>
                    <widget class="QPushButton" name="sim_fastjog">
@@ -9613,42 +9558,6 @@ QPushButton:pressed {
                      <string>Name Clip</string>
                     </property>
                    </widget>
-                   <widget class="QPushButton" name="clip_mang_name_angles">
-                    <property name="geometry">
-                     <rect>
-                      <x>270</x>
-                      <y>30</y>
-                      <width>175</width>
-                      <height>70</height>
-                     </rect>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QPushButton {
-    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
-    font-size: 16px;         /* Tamaño del texto */
-    font-weight: bold;       /* Negrita */    
-    color: white;				 /* Color del texto */
-	padding: 10px;           
-    border-radius: 15px;
-	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
-}
-
-QPushButton:hover {
-	background-color: rgba(0,150,250,50);
-}
-
-QPushButton:pressed {
-    background-color: rgba(0,150,250,50);
-}
-
-
-
-</string>
-                    </property>
-                    <property name="text">
-                     <string>Name Angles</string>
-                    </property>
-                   </widget>
                   </widget>
                   <widget class="QWidget" name="page_control">
                    <widget class="QPushButton" name="control_loop">
@@ -9951,42 +9860,6 @@ QPushButton:pressed {
                      <string>2nd FastJog Speed</string>
                     </property>
                    </widget>
-                   <widget class="QPushButton" name="control_return">
-                    <property name="geometry">
-                     <rect>
-                      <x>50</x>
-                      <y>250</y>
-                      <width>175</width>
-                      <height>70</height>
-                     </rect>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QPushButton {
-    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
-    font-size: 16px;         /* Tamaño del texto */
-    font-weight: bold;       /* Negrita */    
-    color: white;				 /* Color del texto */
-	padding: 10px;           
-    border-radius: 15px;
-	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
-}
-
-QPushButton:hover {
-	background-color: rgba(0,150,250,50);
-}
-
-QPushButton:pressed {
-    background-color: rgba(0,150,250,50);
-}
-
-
-
-</string>
-                    </property>
-                    <property name="text">
-                     <string>Return</string>
-                    </property>
-                   </widget>
                   </widget>
                   <widget class="QWidget" name="page_contentacc">
                    <widget class="QPushButton" name="cont_acc_lastmark">
@@ -10061,47 +9934,11 @@ QPushButton:pressed {
                      <string>Mark</string>
                     </property>
                    </widget>
-                   <widget class="QPushButton" name="cont_acc_recall">
+                   <widget class="QPushButton" name="cont_acc_lasttc">
                     <property name="geometry">
                      <rect>
                       <x>710</x>
                       <y>30</y>
-                      <width>175</width>
-                      <height>70</height>
-                     </rect>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QPushButton {
-    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
-    font-size: 16px;         /* Tamaño del texto */
-    font-weight: bold;       /* Negrita */    
-    color: white;				 /* Color del texto */
-	padding: 10px;           
-    border-radius: 15px;
-	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
-}
-
-QPushButton:hover {
-	background-color: rgba(0,150,250,50);
-}
-
-QPushButton:pressed {
-    background-color: rgba(0,150,250,50);
-}
-
-
-
-</string>
-                    </property>
-                    <property name="text">
-                     <string>Recall</string>
-                    </property>
-                   </widget>
-                   <widget class="QPushButton" name="cont_acc_lastsearchtc">
-                    <property name="geometry">
-                     <rect>
-                      <x>710</x>
-                      <y>140</y>
                       <width>175</width>
                       <height>70</height>
                      </rect>
@@ -10133,7 +9970,7 @@ QPushButton:pressed {
 </string>
                     </property>
                     <property name="text">
-                     <string>Last Search TC</string>
+                     <string>Last TC</string>
                     </property>
                    </widget>
                    <widget class="QPushButton" name="cont_acc_page">
@@ -10170,121 +10007,6 @@ QPushButton:pressed {
                     </property>
                     <property name="text">
                      <string>Page</string>
-                    </property>
-                   </widget>
-                   <widget class="QPushButton" name="cont_acc_searchtcconfig">
-                    <property name="geometry">
-                     <rect>
-                      <x>50</x>
-                      <y>250</y>
-                      <width>175</width>
-                      <height>70</height>
-                     </rect>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QPushButton {
-    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
-    font-size: 16px;         /* Tamaño del texto */
-    font-weight: bold;       /* Negrita */    
-    color: white;				 /* Color del texto */
-	padding: 10px;           
-    border-radius: 15px;
-	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
-}
-
-QPushButton:hover {
-	background-color: rgba(0,150,250,50);
-}
-
-QPushButton:pressed {
-    background-color: rgba(0,150,250,50);
-}
-
-
-
-</string>
-                    </property>
-                    <property name="text">
-                     <string>Search TC Config</string>
-                    </property>
-                   </widget>
-                   <widget class="QPushButton" name="cont_acc_recordtrains">
-                    <property name="geometry">
-                     <rect>
-                      <x>270</x>
-                      <y>250</y>
-                      <width>175</width>
-                      <height>70</height>
-                     </rect>
-                    </property>
-                    <property name="layoutDirection">
-                     <enum>Qt::RightToLeft</enum>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QPushButton {
-    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
-    font-size: 16px;         /* Tamaño del texto */
-    font-weight: bold;       /* Negrita */    
-    color: white;				 /* Color del texto */
-	padding: 10px;           
-    border-radius: 15px;
-	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
-}
-
-QPushButton:hover {
-	background-color: rgba(0,150,250,50);
-}
-
-QPushButton:pressed {
-    background-color: rgba(0,150,250,50);
-}
-
-
-
-</string>
-                    </property>
-                    <property name="text">
-                     <string>Record Trains</string>
-                    </property>
-                    <property name="icon">
-                     <iconset resource="files.qrc">
-                      <normaloff>:/16x16/icons/16x16/cil-chevron-right.png</normaloff>:/16x16/icons/16x16/cil-chevron-right.png</iconset>
-                    </property>
-                   </widget>
-                   <widget class="QPushButton" name="cont_acc_searchtc">
-                    <property name="geometry">
-                     <rect>
-                      <x>490</x>
-                      <y>140</y>
-                      <width>175</width>
-                      <height>70</height>
-                     </rect>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QPushButton {
-    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
-    font-size: 16px;         /* Tamaño del texto */
-    font-weight: bold;       /* Negrita */    
-    color: white;				 /* Color del texto */
-	padding: 10px;           
-    border-radius: 15px;
-	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
-}
-
-QPushButton:hover {
-	background-color: rgba(0,150,250,50);
-}
-
-QPushButton:pressed {
-    background-color: rgba(0,150,250,50);
-}
-
-
-
-</string>
-                    </property>
-                    <property name="text">
-                     <string>Search TC</string>
                     </property>
                    </widget>
                    <widget class="QLabel" name="contec_acc_actualclip">
