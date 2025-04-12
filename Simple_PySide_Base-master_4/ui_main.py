@@ -5642,7 +5642,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(29)
+        self.stackedWidget.setCurrentIndex(22)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -5818,9 +5818,7 @@ class Ui_MainWindow(object):
         self.sim_out.setText(QCoreApplication.translate("MainWindow", u"Goto OUT \n"
 " ------------------------- \n"
 " OUT", None))
-        self.sim_insert.setText(QCoreApplication.translate("MainWindow", u"Insert\n"
-" ----------------\n"
-" Browse", None))
+        self.sim_insert.setText(QCoreApplication.translate("MainWindow", u"Browse", None))
         self.sim_in.setText(QCoreApplication.translate("MainWindow", u"Goto IN\n"
 " --------------------------\n"
 "IN", None))

@@ -14,6 +14,7 @@ import requests
 from app_modules import *
 #from ui_popup_recordtrains import Ui_Dialog as Dialog_recordtrains
 from ui_popup_searchtc import Ui_Dialog as Dialog_searchtc
+from ui_popup_delete_marks import Ui_Dialog as Dialog_deletemarks
 from ui_popup_name_clip import Ui_Dialog as Dialog_nameclip
 from ui_popup_fastjog import Ui_Dialog as Dialog_fastjog
 from ui_popup_ipconfig import Ui_Dialog as Dialog_ipconfig
@@ -68,20 +69,6 @@ CLEAR_SELECTION = None
 browse_mode = False
 selected_index = 0
 
-
-"""""
-class PopupRecordTrains(QDialog):  
-    def __init__(self):  
-        super().__init__()  
-        self.ui = Dialog_recordtrains()  # Instancia de la UI generada
-        self.ui.setupUi(self)  # Aplica la UI a la ventana de diálogo
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.ui.minimize_recordtrains.clicked.connect(lambda: self.showMinimized())
-        ## ==> MAXIMIZE/RESTORE
-        self.ui.maximizerecord_trains.clicked.connect(lambda: UIFunctions.maximize_restore(self))
-        ## SHOW ==> CLOSE APPLICATION
-        self.ui.close_recordtrains.clicked.connect(lambda: self.close())
-"""
 
 class PopupNameClip(QDialog):
     def __init__(self):
@@ -181,6 +168,30 @@ class PopupNameClip(QDialog):
         time.sleep(0.1)
         self.close()
 
+class PopupDeleteMarks(QDialog):  
+    def __init__(self):  
+        super().__init__()  
+        self.ui = Dialog_deletemarks()  # Instancia de la UI generada
+        self.ui.setupUi(self)  # Aplica la UI a la ventana de diálogo
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        ## ==> MAXIMIZE/RESTORE
+        ## SHOW ==> CLOSE APPLICATION
+        self.ui.close_confirm_deletemarks.clicked.connect(lambda: self.close())
+        self.ui.confirm_deletemarks_no.clicked.connect(lambda: self.close())
+        self.ui.confirm_deletemarks_yes.clicked.connect(lambda: yes())
+
+        def yes():
+            """
+            Vacía la lista de timecodes.
+            """
+            global timecodes, lastmark_index
+            timecodes = []
+            save_timecodes_list(timecodes)
+            lastmark_index = -1
+            print("Lista de timecodes vaciada.")
+
+            time.sleep(0.1)
+            self.close()
 
 
 
@@ -551,6 +562,7 @@ class PopupMyVmix(QDialog):
         self.ui.myvmix_delete.clicked.connect(lambda: self.show_dialog_deleteip())
         self.ui.myvmix_checkconnection.clicked.connect(lambda: self.check_connection())
         self.ui.myvmix_confirm.clicked.connect(lambda: self.confirm_selection())
+
         
         self.myvmix_combobox= self.ui.myvmix_combobox 
 
@@ -953,8 +965,6 @@ class MainWindow(QMainWindow):
             if CLEAR_MODE:
                 self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255); background-color: rgba(255,165,0,150);} QPushButton:hover {background-color: rgba(255,165,0,100);} QPushButton:pressed { background-color: rgba(255,165,0,50);}")
                 print("Modo CLEAR activado")
-                endpoint = "api/?Function=ReplayMarkCancel"
-                UIFunctions.send_request(endpoint)
             else:
                 CLEAR_SELECTION = None
                 self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(255,165,0,50);} QPushButton:pressed { background-color: rgba(255,165,0,50);}")
@@ -990,7 +1000,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.labelPGM_PRV(self, channel_mode)
             else: 
                 if SHIFT:
-                    UIFunctions.function_A_prima()
+                    UIFunctions.function_A(self)
                     reset_shift(self)
                 else:
                     UIFunctions.function_A(self)
@@ -1010,7 +1020,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.labelPGM_PRV(self, channel_mode)
             else: 
                 if SHIFT:
-                    UIFunctions.function_B_prima()
+                    UIFunctions.function_B(self)
                     reset_shift(self)
                 else:
                     UIFunctions.function_B(self)
@@ -1030,7 +1040,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.labelPGM_PRV(self, channel_mode)
             else: 
                 if SHIFT:
-                    UIFunctions.function_C_prima()
+                    UIFunctions.function_C(self)
                     reset_shift(self)
                 else:
                     UIFunctions.function_C(self)
@@ -1050,7 +1060,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.labelPGM_PRV(self, channel_mode)
             else: 
                 if SHIFT:
-                    UIFunctions.function_D_prima()
+                    UIFunctions.function_D(self)
                     reset_shift(self)
                 else:
                     UIFunctions.function_D(self)
@@ -1059,7 +1069,7 @@ class MainWindow(QMainWindow):
         def execute_functions_play(self):
             global SHIFT
             if SHIFT:
-                UIFunctions.function_network()
+                UIFunctions.function_play()
                 reset_shift(self)
             else:
                 UIFunctions.function_play(self)
@@ -1113,7 +1123,7 @@ class MainWindow(QMainWindow):
         def execute_functions_insert(self):
             global SHIFT
             if SHIFT:
-                UIFunctions.function_insert()
+                UIFunctions.toggle_browse_mode(self)
                 reset_shift(self)
             else:
                 UIFunctions.toggle_browse_mode(self)
@@ -1482,7 +1492,7 @@ class MainWindow(QMainWindow):
         self.ui.config_ipconfig.clicked.connect(self.show_dialog_myvmix)
         self.ui.config_fastjogconfig.clicked.connect(self.show_dialog_fastjog)
         self.ui.config_deleteclipdict.clicked.connect( self.show_dialog_deleteclipdic)
-        self.ui.config_resetmarks.clicked.connect(lambda: UIFunctions.function_clear_marks())
+        self.ui.config_resetmarks.clicked.connect(self.show_dialog_delete_marks)
 
 
 
@@ -1515,11 +1525,10 @@ class MainWindow(QMainWindow):
     ########################################################################
     ## MENUS ==> DYNAMIC MENUS FUNCTIONS
     ########################################################################
-    """""
-    def show_dialog_recordtrains(self):
-        self.popup = PopupRecordTrains()  # Guardar en un atributo para evitar que se elimine
+
+    def show_dialog_delete_marks(self):
+        self.popup = PopupDeleteMarks()  # Guardar en un atributo para evitar que se elimine
         self.popup.exec_()  # Muestra el diálogo de forma modal
-    """
 
     def show_dialog_searchtc(self):
         self.popup = PopupSearchTC()  # Guardar en un atributo para evitar que se elimine

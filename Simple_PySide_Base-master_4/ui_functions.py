@@ -1138,9 +1138,6 @@ class UIFunctions(MainWindow):
         getattr(self.ui, label1_name).setText(duracion_total)
         getattr(self.ui, label2_name).setText(duracion_total)
 
-        # Para depuración
-        print(f"Duración total para playlist {num_plst}: {duracion_total}")
-
     def num_clips_playlist(self, num_plst):
         # Nombre de la lista y labels basados en el número de playlist
         label1_name = f"label_nclips_{num_plst}"
@@ -1158,9 +1155,6 @@ class UIFunctions(MainWindow):
         # Actualizar los QLabel
         getattr(self.ui, label1_name).setText(texto)
         getattr(self.ui, label2_name).setText(texto)
-
-        # Para debug
-        print(f"Playlist {num_plst} tiene {num_clips} clips.")
 
 
 
@@ -1208,205 +1202,210 @@ class UIFunctions(MainWindow):
     def function_A(self):
         """Fetches XML from vMix, checks the replay section, and sends the appropriate command based on channel mode."""
         
-        # Step 1: Fetch the XML from vMix
-        response = UIFunctions.send_request("api/")  # Usamos la función send_request con el endpoint "api/"
+        if clip_mode == True: 
+            endpoint = "api/?Function=ReplayToggleSelectedEventCamera1"
+            UIFunctions.send_request(endpoint)
+        else: 
+
         
-        if not response:
-            print("No se pudo obtener la información de vMix debido a la falta de conexión.")
-            return  # Salir si no hay conexión
+            # Step 1: Fetch the XML from vMix
+            response = UIFunctions.send_request("api/")  # Usamos la función send_request con el endpoint "api/"
+            
+            if not response:
+                print("No se pudo obtener la información de vMix debido a la falta de conexión.")
+                return  # Salir si no hay conexión
 
-        # Step 2: Parse the XML
-        try:
-            root = ET.fromstring(response)  # Intentamos analizar la respuesta como XML
-        except ET.ParseError as e:
-            print(f"Error al parsear el XML: {e}")
-            return  # Salir si el XML no es válido
+            # Step 2: Parse the XML
+            try:
+                root = ET.fromstring(response)  # Intentamos analizar la respuesta como XML
+            except ET.ParseError as e:
+                print(f"Error al parsear el XML: {e}")
+                return  # Salir si el XML no es válido
 
-        # Find the <replay> section inside <input type="Replay">
-        replay_section = root.find(".//input[@type='Replay']/replay")
+            # Find the <replay> section inside <input type="Replay">
+            replay_section = root.find(".//input[@type='Replay']/replay")
 
-        if replay_section is None:
-            print("Replay section not found in XML")
-            return
+            if replay_section is None:
+                print("Replay section not found in XML")
+                return
 
-        # Get the channelMode attribute
-        channel_mode = replay_section.get("channelMode")  
+            # Get the channelMode attribute
+            channel_mode = replay_section.get("channelMode")  
 
-        # Step 3: Determine the appropriate action based on channel_mode
-        if channel_mode == "A":
-            endpoint = "api/?Function=ReplayACamera1"
-        elif channel_mode == "B":
-            endpoint = "api/?Function=ReplayBCamera1"
-        elif channel_mode == "AB":
-            endpoint = "api/?Function=ReplayACamera1"
-        else:
-            print(f"Unexpected channel mode: {channel_mode}")
-            return
+            # Step 3: Determine the appropriate action based on channel_mode
+            if channel_mode == "A":
+                endpoint = "api/?Function=ReplayACamera1"
+            elif channel_mode == "B":
+                endpoint = "api/?Function=ReplayBCamera1"
+            elif channel_mode == "AB":
+                endpoint = "api/?Function=ReplayACamera1"
+            else:
+                print(f"Unexpected channel mode: {channel_mode}")
+                return
 
-        # Send the command to vMix
-        api_response = UIFunctions.send_request(endpoint)  # Usamos send_request para enviar la solicitud
+            # Send the command to vMix
+            api_response = UIFunctions.send_request(endpoint)  # Usamos send_request para enviar la solicitud
 
-        if not api_response:
-            print(f"No se pudo enviar la solicitud para {endpoint} debido a la falta de conexión con vMix.")
-            return  # Salir si no hay conexión
-        
-        print(f"Comando {endpoint} enviado correctamente.")
-
-    def function_A_prima():
-        print("ejecutando funcion A prima...")
+            if not api_response:
+                print(f"No se pudo enviar la solicitud para {endpoint} debido a la falta de conexión con vMix.")
+                return  # Salir si no hay conexión
+            
+            print(f"Comando {endpoint} enviado correctamente.")
 
     def function_B(self):
         """Fetches XML from vMix, checks the replay section, and sends the appropriate command based on channel mode."""
         
-        # Step 1: Fetch the XML from vMix
-        response = UIFunctions.send_request("api/")  # Usamos la función send_request con el endpoint "api/"
-        
-        if not response:
-            print("No se pudo obtener la información de vMix debido a la falta de conexión.")
-            return  # Salir si no hay conexión
+        if clip_mode == True: 
+            endpoint = "api/?Function=ReplayToggleSelectedEventCamera2"
+            UIFunctions.send_request(endpoint)
+        else: 
 
-        # Step 2: Parse the XML
-        try:
-            root = ET.fromstring(response)  # Intentamos analizar la respuesta como XML
-        except ET.ParseError as e:
-            print(f"Error al parsear el XML: {e}")
-            return  # Salir si el XML no es válido
+            # Step 1: Fetch the XML from vMix
+            response = UIFunctions.send_request("api/")  # Usamos la función send_request con el endpoint "api/"
+            
+            if not response:
+                print("No se pudo obtener la información de vMix debido a la falta de conexión.")
+                return  # Salir si no hay conexión
 
-        # Find the <replay> section inside <input type="Replay">
-        replay_section = root.find(".//input[@type='Replay']/replay")
+            # Step 2: Parse the XML
+            try:
+                root = ET.fromstring(response)  # Intentamos analizar la respuesta como XML
+            except ET.ParseError as e:
+                print(f"Error al parsear el XML: {e}")
+                return  # Salir si el XML no es válido
 
-        if replay_section is None:
-            print("Replay section not found in XML")
-            return
+            # Find the <replay> section inside <input type="Replay">
+            replay_section = root.find(".//input[@type='Replay']/replay")
 
-        # Get the channelMode attribute
-        channel_mode = replay_section.get("channelMode")  
+            if replay_section is None:
+                print("Replay section not found in XML")
+                return
 
-        # Step 3: Determine the appropriate action based on channel_mode
-        if channel_mode == "A":
-            endpoint = "api/?Function=ReplayACamera2"
-        elif channel_mode == "B":
-            endpoint = "api/?Function=ReplayBCamera2"
-        elif channel_mode == "AB":
-            endpoint = "api/?Function=ReplayACamera2"
-        else:
-            print(f"Unexpected channel mode: {channel_mode}")
-            return
+            # Get the channelMode attribute
+            channel_mode = replay_section.get("channelMode")  
 
-        # Send the command to vMix
-        api_response = UIFunctions.send_request(endpoint)  # Usamos send_request para enviar la solicitud
+            # Step 3: Determine the appropriate action based on channel_mode
+            if channel_mode == "A":
+                endpoint = "api/?Function=ReplayACamera2"
+            elif channel_mode == "B":
+                endpoint = "api/?Function=ReplayBCamera2"
+            elif channel_mode == "AB":
+                endpoint = "api/?Function=ReplayACamera2"
+            else:
+                print(f"Unexpected channel mode: {channel_mode}")
+                return
 
-        if not api_response:
-            print(f"No se pudo enviar la solicitud para {endpoint} debido a la falta de conexión con vMix.")
-            return  # Salir si no hay conexión
-        
-        print(f"Comando {endpoint} enviado correctamente.")
+            # Send the command to vMix
+            api_response = UIFunctions.send_request(endpoint)  # Usamos send_request para enviar la solicitud
 
-    def function_B_prima():
-        print("ejecutando funcion B prima...")
+            if not api_response:
+                print(f"No se pudo enviar la solicitud para {endpoint} debido a la falta de conexión con vMix.")
+                return  # Salir si no hay conexión
+            
+            print(f"Comando {endpoint} enviado correctamente.")
 
     def function_C(self):
         """Fetches XML from vMix, checks the replay section, and sends the appropriate command based on channel mode."""
         
-        # Step 1: Fetch the XML from vMix
-        response = UIFunctions.send_request("api/")  # Usamos la función send_request con el endpoint "api/"
-        
-        if not response:
-            print("No se pudo obtener la información de vMix debido a la falta de conexión.")
-            return  # Salir si no hay conexión
+        if clip_mode == True: 
+            endpoint = "api/?Function=ReplayToggleSelectedEventCamera3"
+            UIFunctions.send_request(endpoint)
+        else: 
 
-        # Step 2: Parse the XML
-        try:
-            root = ET.fromstring(response)  # Intentamos analizar la respuesta como XML
-        except ET.ParseError as e:
-            print(f"Error al parsear el XML: {e}")
-            return  # Salir si el XML no es válido
+            # Step 1: Fetch the XML from vMix
+            response = UIFunctions.send_request("api/")  # Usamos la función send_request con el endpoint "api/"
+            
+            if not response:
+                print("No se pudo obtener la información de vMix debido a la falta de conexión.")
+                return  # Salir si no hay conexión
 
-        # Find the <replay> section inside <input type="Replay">
-        replay_section = root.find(".//input[@type='Replay']/replay")
+            # Step 2: Parse the XML
+            try:
+                root = ET.fromstring(response)  # Intentamos analizar la respuesta como XML
+            except ET.ParseError as e:
+                print(f"Error al parsear el XML: {e}")
+                return  # Salir si el XML no es válido
 
-        if replay_section is None:
-            print("Replay section not found in XML")
-            return
+            # Find the <replay> section inside <input type="Replay">
+            replay_section = root.find(".//input[@type='Replay']/replay")
 
-        # Get the channelMode attribute
-        channel_mode = replay_section.get("channelMode")  
+            if replay_section is None:
+                print("Replay section not found in XML")
+                return
 
-        # Step 3: Determine the appropriate action based on channel_mode
-        if channel_mode == "A":
-            endpoint = "api/?Function=ReplayACamera3"
-        elif channel_mode == "B":
-            endpoint = "api/?Function=ReplayBCamera3"
-        elif channel_mode == "AB":
-            endpoint = "api/?Function=ReplayACamera3"
-        else:
-            print(f"Unexpected channel mode: {channel_mode}")
-            return
+            # Get the channelMode attribute
+            channel_mode = replay_section.get("channelMode")  
 
-        # Send the command to vMix
-        api_response = UIFunctions.send_request(endpoint)  # Usamos send_request para enviar la solicitud
+            # Step 3: Determine the appropriate action based on channel_mode
+            if channel_mode == "A":
+                endpoint = "api/?Function=ReplayACamera3"
+            elif channel_mode == "B":
+                endpoint = "api/?Function=ReplayBCamera3"
+            elif channel_mode == "AB":
+                endpoint = "api/?Function=ReplayACamera3"
+            else:
+                print(f"Unexpected channel mode: {channel_mode}")
+                return
 
-        if not api_response:
-            print(f"No se pudo enviar la solicitud para {endpoint} debido a la falta de conexión con vMix.")
-            return  # Salir si no hay conexión
-        
-        print(f"Comando {endpoint} enviado correctamente.")
+            # Send the command to vMix
+            api_response = UIFunctions.send_request(endpoint)  # Usamos send_request para enviar la solicitud
 
-    def function_C_prima():
-        print("ejecutando funcion C prima...")
+            if not api_response:
+                print(f"No se pudo enviar la solicitud para {endpoint} debido a la falta de conexión con vMix.")
+                return  # Salir si no hay conexión
+            
+            print(f"Comando {endpoint} enviado correctamente.")
 
     def function_D(self):
         """Fetches XML from vMix, checks the replay section, and sends the appropriate command based on channel mode."""
-        
-        # Step 1: Fetch the XML from vMix
-        response = UIFunctions.send_request("api/")  # Usamos la función send_request con el endpoint "api/"
-        
-        if not response:
-            print("No se pudo obtener la información de vMix debido a la falta de conexión.")
-            return  # Salir si no hay conexión
 
-        # Step 2: Parse the XML
-        try:
-            root = ET.fromstring(response)  # Intentamos analizar la respuesta como XML
-        except ET.ParseError as e:
-            print(f"Error al parsear el XML: {e}")
-            return  # Salir si el XML no es válido
+        if clip_mode == True: 
+            endpoint = "api/?Function=ReplayToggleSelectedEventCamera4"
+            UIFunctions.send_request(endpoint)
+        else: 
+            # Step 1: Fetch the XML from vMix
+            response = UIFunctions.send_request("api/")  # Usamos la función send_request con el endpoint "api/"
+            
+            if not response:
+                print("No se pudo obtener la información de vMix debido a la falta de conexión.")
+                return  # Salir si no hay conexión
 
-        # Find the <replay> section inside <input type="Replay">
-        replay_section = root.find(".//input[@type='Replay']/replay")
+            # Step 2: Parse the XML
+            try:
+                root = ET.fromstring(response)  # Intentamos analizar la respuesta como XML
+            except ET.ParseError as e:
+                print(f"Error al parsear el XML: {e}")
+                return  # Salir si el XML no es válido
 
-        if replay_section is None:
-            print("Replay section not found in XML")
-            return
+            # Find the <replay> section inside <input type="Replay">
+            replay_section = root.find(".//input[@type='Replay']/replay")
 
-        # Get the channelMode attribute
-        channel_mode = replay_section.get("channelMode")  
+            if replay_section is None:
+                print("Replay section not found in XML")
+                return
 
-        # Step 3: Determine the appropriate action based on channel_mode
-        if channel_mode == "A":
-            endpoint = "api/?Function=ReplayACamera4"
-        elif channel_mode == "B":
-            endpoint = "api/?Function=ReplayBCamera4"
-        elif channel_mode == "AB":
-            endpoint = "api/?Function=ReplayACamera4"
-        else:
-            print(f"Unexpected channel mode: {channel_mode}")
-            return
+            # Get the channelMode attribute
+            channel_mode = replay_section.get("channelMode")  
 
-        # Send the command to vMix
-        api_response = UIFunctions.send_request(endpoint)  # Usamos send_request para enviar la solicitud
+            # Step 3: Determine the appropriate action based on channel_mode
+            if channel_mode == "A":
+                endpoint = "api/?Function=ReplayACamera4"
+            elif channel_mode == "B":
+                endpoint = "api/?Function=ReplayBCamera4"
+            elif channel_mode == "AB":
+                endpoint = "api/?Function=ReplayACamera4"
+            else:
+                print(f"Unexpected channel mode: {channel_mode}")
+                return
 
-        if not api_response:
-            print(f"No se pudo enviar la solicitud para {endpoint} debido a la falta de conexión con vMix.")
-            return  # Salir si no hay conexión
-        
-        print(f"Comando {endpoint} enviado correctamente.")
+            # Send the command to vMix
+            api_response = UIFunctions.send_request(endpoint)  # Usamos send_request para enviar la solicitud
 
-    def function_D_prima():
-        print("ejecutando funcion D prima...")
-
-    def function_network():
-        print("Ejecutando funcion Network...")
+            if not api_response:
+                print(f"No se pudo enviar la solicitud para {endpoint} debido a la falta de conexión con vMix.")
+                return  # Salir si no hay conexión
+            
+            print(f"Comando {endpoint} enviado correctamente.")
 
     def function_play(self):
         if modo_playlist == True:
@@ -1421,7 +1420,6 @@ class UIFunctions(MainWindow):
                 return
 
 
-
         if clip_mode == True:
             # Intentar enviar la solicitud de reproducción
             response_1 = UIFunctions.send_request("api/?Function=ReplayPlaySelectedEvent&Channel=1")
@@ -1434,7 +1432,6 @@ class UIFunctions(MainWindow):
             if not response_1:
                 print("No se pudo ejecutar ReplayPlay. Saltando function_play.")
                 return
-
 
         # Intentar ajustar la velocidad de reproducción
         response_2 = UIFunctions.send_request("api/?Function=ReplaySetSpeed&Value=1&Channel=1")
@@ -1555,11 +1552,6 @@ class UIFunctions(MainWindow):
     #function_plst_page declarada a FUNCTIONS CLIP
     #function_loop declarada a FUNCTIONS CONTROL
 
-    def function_insert():
-        print("Ejecutando function Insert... ")
-
-    def function_browse():
-        print("Ejecutando function Browse... ")
         
     def function_in():
         """Marks the current position as 'in' for replay."""
@@ -1726,11 +1718,6 @@ class UIFunctions(MainWindow):
 
         dial.valueChanged.connect(on_dial_moved)
 
-
-
-
-
-
     #Slider
     def setup_replay_speed_slider(slider: QSlider):
         """Sets up the vertical slider to control vMix replay speed with smooth values between 0 (pause) and 1 (full speed)."""
@@ -1773,7 +1760,8 @@ class UIFunctions(MainWindow):
 
     def function_e_e():
         """Jumps to current time in replay and plays it."""
-
+      
+        UIFunctions.send_request("api/?Function=ReplayMarkCancel")
         UIFunctions.send_request("api/?Function=ReplaySelectEvents1&Channel=1")
         UIFunctions.function_reset_lastmark()
         

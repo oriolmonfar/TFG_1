@@ -1668,7 +1668,7 @@ QPushButton:pressed {
                    <string notr="true">background: transparent;</string>
                   </property>
                   <property name="currentIndex">
-                   <number>29</number>
+                   <number>22</number>
                   </property>
                   <widget class="QWidget" name="page_home">
                    <widget class="QPushButton" name="clip_addtoplaylist">
@@ -6724,9 +6724,7 @@ QPushButton:pressed {
 </string>
                     </property>
                     <property name="text">
-                     <string>Insert
- ----------------
- Browse</string>
+                     <string>Browse</string>
                     </property>
                    </widget>
                    <widget class="QPushButton" name="sim_in">
