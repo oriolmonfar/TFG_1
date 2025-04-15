@@ -725,6 +725,8 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        UIFunctions.function_record()
+        UIFunctions.function_e_e()
         UIFunctions.check_vmix_connection(self)
         UIFunctions.start_connection_monitor(self)
 
@@ -744,7 +746,12 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('Main Window - Python Base')
         #UIFunctions.labelTitle(self, 'Main Window - Python Base')
         self.ui.label_page.setText(f"PAGE {current_page}  ")
-        self.ui.label_bank.setText(f" {current_bank} BANK")  # Actualiza QLabel
+        label_bank = current_bank
+        if label_bank == 0:
+            text = "PL"
+        else: 
+            text = current_bank
+        self.ui.label_bank.setText(f" {text} BANK")  # Actualiza QLabel
         UIFunctions.labelDescription(self, f"{active_playlist}")
         
         ################################# SET PGM
@@ -896,6 +903,7 @@ class MainWindow(QMainWindow):
         self.ui.control_2ndfastjog.clicked.connect(lambda: UIFunctions.function_sec_fastjog(self.dial))
         self.ui.control_gotoin.clicked.connect(lambda: UIFunctions.function_gotoin())
         self.ui.control_gotoout.clicked.connect(lambda: UIFunctions.function_gotoout())
+        self.ui.control_cancel_in.clicked.connect(lambda: UIFunctions.function_cancel_in())
         self.ui.control_gototc.clicked.connect(self.show_dialog_searchtc)
 
         #################################### END - BOTONS CONTROL
@@ -920,15 +928,7 @@ class MainWindow(QMainWindow):
         self.ui.export_playlist.clicked.connect(lambda: UIFunctions.export_playlist())
         self.ui.export_export_clip.clicked.connect(lambda: UIFunctions.export_clip())
 
-
-
-
-
         #################################### END - BOTONS EXPORT
-
-
-
-
 
 
         #################################### START- BOTONS SIMULATOR
@@ -1123,7 +1123,7 @@ class MainWindow(QMainWindow):
         def execute_functions_insert(self):
             global SHIFT
             if SHIFT:
-                UIFunctions.toggle_browse_mode(self)
+                UIFunctions.function_cancel_in()
                 reset_shift(self)
             else:
                 UIFunctions.toggle_browse_mode(self)
@@ -1203,6 +1203,7 @@ class MainWindow(QMainWindow):
             print("Modo de selección de página activado.")
         
 
+        """""
         def function_out():
             global clip_id, mark_in_tc, SHIFT, modo_page
 
@@ -1250,7 +1251,7 @@ class MainWindow(QMainWindow):
                     print(f"Clip {selected_clip} registrado con ID {clip_id - 1}")
                 else:
                     UIFunctions.show_dialog_overwrite_clip(self, selected_clip, clip_management)
-                    
+  
         
         def wait_for_clip_selection():
             while True:
@@ -1266,12 +1267,10 @@ class MainWindow(QMainWindow):
         
                 
         def get_button_event():
-            """Espera la pulsación de un botón sim_f y devuelve su número."""
             loop = QEventLoop()
             button_pressed = None
 
             def on_button_press(button_number):
-                """Captura el número del botón pulsado y sale del loop."""
                 nonlocal button_pressed
                 button_pressed = button_number
                 loop.quit()
@@ -1294,6 +1293,155 @@ class MainWindow(QMainWindow):
             loop.exec_()  # Espera a que se presione un botón
 
             return button_pressed  # Retorna el botón presionado o None si se agotó el tiempo
+
+        """
+        def function_out():
+            global clip_id, mark_in_tc
+
+            set_page_mode(False)
+            set_shift(False)
+            
+            
+            # 1. Marcar el Out en vMix
+            endpoint = "api/?Function=ReplayMarkOut"
+            if not UIFunctions.send_request(endpoint):
+                print("Error: No se pudo marcar el 'Out'")
+                return
+            
+            clip_out_tc = UIFunctions.get_tc()
+            mark_in_tc = load_mark_in_tc()
+            print("Replay mark 'Out' set successfully.")
+
+            # Estado inicial
+            operation_mode = "normal"  # Puede ser: "normal", "page", "bank"
+            
+            while True:
+                # Obtener el estado ACTUAL de los botones especiales
+                current_shift = load_shift()
+                current_page_mode = load_page_mode()
+                
+                # Determinar el modo de operación actual
+                if current_page_mode:
+                    operation_mode = "page"
+                elif current_shift:
+                    operation_mode = "bank"
+                else:
+                    operation_mode = "normal"
+
+                print(f"Modo actual: {operation_mode}")  # Debug
+                
+                # Esperar pulsación de botón
+                button_num = wait_for_button_press()
+                
+                if button_num is None:
+                    continue  # Timeout, reintentar
+                    
+                # Manejar según el modo actual
+                if operation_mode == "page":
+                    print(f"Cambiando a página {button_num}")
+                    function_page(button_num)
+                    set_page_mode(False)  # Desactivar modo página
+                    continue
+                    
+                elif operation_mode == "bank":
+                    print(f"Cambiando banco a {button_num}")
+                    change_bank(button_num)
+                    set_shift(False)  # Desactivar shift
+                    continue
+                    
+                elif operation_mode == "normal":
+                    # Guardar clip - TU LÓGICA ORIGINAL
+                    page = load_config().get("CURRENT_PAGE", 1)
+                    bank = load_config().get("last_bank_per_page", {}).get(str(page), 1)
+                    clip_pos = f"{page}{bank}{button_num}"
+                    
+                    clips = load_clip_dictionary()
+                    if clips.get(clip_pos, ["void"] * 7)[0] == "void":
+                        clip_id = load_current_clip_id()
+                        duration = UIFunctions.calculate_clip_duration(mark_in_tc, clip_out_tc)
+                        
+                        clips[clip_pos] = [
+                            str(clip_id), "void", "void", "void",
+                            str(mark_in_tc), str(clip_out_tc), str(duration)
+                        ]
+                        save_clip_dictionary(clips)
+                        
+                        clip_id += 1
+                        save_current_clip_id(clip_id)
+                        print(f"Clip guardado en {clip_pos} (ID: {clip_id-1})")
+                    else:
+                        UIFunctions.show_dialog_overwrite_clip(self, clip_pos, clips)
+                    
+                    break  # Salir del bucle después de guardar
+
+            # Limpieza final
+            set_page_mode(False)
+            set_shift(False)
+
+        def set_page_mode(active):
+            """Activa o desactiva el modo de cambio de página"""
+            global modo_page
+            modo_page = active
+            save_page_mode(active)
+
+        def set_shift(active):
+            """Activa o desactiva el modo de cambio de banco (SHIFT)"""
+            global SHIFT
+            SHIFT = active
+            save_shift(active)
+
+        def wait_for_button_press():
+            """Espera la pulsación de un botón F de manera segura"""
+            button_pressed = None
+            loop = QEventLoop()
+            timer = QTimer()
+            timer.setSingleShot(True)
+            
+            # Mapeo de botones
+            buttons = {
+                1: self.ui.sim_f1,
+                2: self.ui.sim_f2,
+                3: self.ui.sim_f3,
+                4: self.ui.sim_f4,
+                5: self.ui.sim_f5,
+                6: self.ui.sim_f6,
+                7: self.ui.sim_f7,
+                8: self.ui.sim_f8,
+                9: self.ui.sim_f9,
+                0: self.ui.sim_f10
+            }
+            
+            # Handler que captura el parámetro checked
+            def create_handler(num):
+                def handler(checked):
+                    nonlocal button_pressed
+                    button_pressed = num
+                    loop.quit()
+                return handler
+            
+            # Conectar todos los botones
+            connections = []
+            for num, btn in buttons.items():
+                handler = create_handler(num)
+                btn.clicked.connect(handler)
+                connections.append((btn, handler))
+            
+            # Configurar timeout
+            timer.timeout.connect(loop.quit)
+            timer.start(200)  # 0.2 segundos
+            
+            # Ejecutar el loop de eventos
+            loop.exec_()
+            
+            # Limpieza garantizada
+            timer.stop()
+            for btn, handler in connections:
+                try:
+                    btn.clicked.disconnect(handler)
+                except RuntimeError:
+                    pass  # Ignorar si ya está desconectado
+            
+            return button_pressed
 
         def handle_sim_f_button(self, f_button_number):
             """Maneja la funcionalidad de los botones sim_f1 a sim_f10."""
@@ -1322,6 +1470,44 @@ class MainWindow(QMainWindow):
                 # Remover el último carácter (letra del cam angle)
                 numeric_code = clip_code[:-1]  
                 # Cargar el archivo JSON
+                if numeric_code == "101":
+                    UIFunctions.goto_pl(self, 1)
+                if numeric_code == "102":
+                    UIFunctions.goto_pl(self, 2)
+                if numeric_code == "201":
+                    UIFunctions.goto_pl(self, 3)
+                if numeric_code == "202":
+                    UIFunctions.goto_pl(self, 4)
+                if numeric_code == "301":
+                    UIFunctions.goto_pl(self, 5)
+                if numeric_code == "302":
+                    UIFunctions.goto_pl(self, 6)
+                if numeric_code == "401":
+                    UIFunctions.goto_pl(self, 7)
+                if numeric_code == "402":
+                    UIFunctions.goto_pl(self, 8)
+                if numeric_code == "501":
+                    UIFunctions.goto_pl(self, 8)
+                if numeric_code == "502":
+                    UIFunctions.goto_pl(self, 9)
+                if numeric_code == "602":
+                    UIFunctions.goto_pl(self, 10)
+                if numeric_code == "701":
+                    UIFunctions.goto_pl(self, 11)
+                if numeric_code == "702":
+                    UIFunctions.goto_pl(self, 12)
+                if numeric_code == "801":
+                    UIFunctions.goto_pl(self, 13)
+                if numeric_code == "802":
+                    UIFunctions.goto_pl(self, 14)
+                if numeric_code == "901":
+                    UIFunctions.goto_pl(self, 15)
+                if numeric_code == "902":
+                    UIFunctions.goto_pl(self, 16)
+                if numeric_code == "001":
+                    UIFunctions.goto_pl(self, 17)
+                if numeric_code == "002":
+                    UIFunctions.goto_pl(self, 18)
                 try:
                     with open(CLIP_DICTIONARY_FILE, "r") as file:
                         clip_data = json.load(file)
@@ -1343,6 +1529,8 @@ class MainWindow(QMainWindow):
                     endpoint_2 = "api/?Function=ReplayPause&Channel=1"
                     UIFunctions.send_request(endpoint_1)
                     UIFunctions.send_request(endpoint_2)
+
+
 
                 #endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
                 #endpoint_2 = "api/?Function=ReplaySelectNextEvent&Channel=1"
@@ -1377,7 +1565,7 @@ class MainWindow(QMainWindow):
                 self.ui.label_bank.setText(f"{current_bank} BANK")  # Actualiza QLabel
                 print(f"Banco actualizado a {button_number} para la página {current_page}.")
                 if current_bank == 0:
-                    self.ui.label_bank.setText("   PL. BANK")  # Actualiza QLabel
+                    self.ui.label_bank.setText("PL. BANK")  # Actualiza QLabel
 
             else:
                 print("Shift no está presionado, no se puede cambiar el banco.")

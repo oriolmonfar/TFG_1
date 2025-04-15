@@ -1756,12 +1756,19 @@ class UIFunctions(MainWindow):
         # Connect signals
         slider.sliderPressed.connect(on_slider_pressed)   # Pause on touch
         slider.sliderReleased.connect(on_slider_released) # Resume with new speed
-        slider.valueChanged.connect(on_slider_changed)    # Change speed while moving        
+        slider.valueChanged.connect(on_slider_changed)    # Change speed while moving   
+
+    def function_cancel_in():
+        global clip_id
+        UIFunctions.send_request("api/?Function=ReplayMarkCancel")
+        clip_id = load_current_clip_id()
+        clip_id +=1
+        save_current_clip_id(clip_id)
+
 
     def function_e_e():
         """Jumps to current time in replay and plays it."""
-      
-        UIFunctions.send_request("api/?Function=ReplayMarkCancel")
+        
         UIFunctions.send_request("api/?Function=ReplaySelectEvents1&Channel=1")
         UIFunctions.function_reset_lastmark()
         
@@ -2093,7 +2100,12 @@ class UIFunctions(MainWindow):
         self.ui.btn_maximize_restore.clicked.connect(lambda: UIFunctions.maximize_restore(self))
 
         ## SHOW ==> CLOSE APPLICATION
-        self.ui.btn_close.clicked.connect(lambda: self.close())
+        #self.ui.btn_close.clicked.connect(lambda: self.close())
+        self.ui.btn_close.clicked.connect(lambda: close_app())
+        
+        def close_app():
+            UIFunctions.function_record()
+            self.close()
 
 
     ########################################################################

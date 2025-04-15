@@ -1016,7 +1016,7 @@ QPushButton:pressed {
                     <rect>
                      <x>72</x>
                      <y>0</y>
-                     <width>71</width>
+                     <width>91</width>
                      <height>41</height>
                     </rect>
                    </property>
@@ -1668,7 +1668,7 @@ QPushButton:pressed {
                    <string notr="true">background: transparent;</string>
                   </property>
                   <property name="currentIndex">
-                   <number>22</number>
+                   <number>28</number>
                   </property>
                   <widget class="QWidget" name="page_home">
                    <widget class="QPushButton" name="clip_addtoplaylist">
@@ -6610,9 +6610,7 @@ QPushButton:pressed {
 </string>
                     </property>
                     <property name="text">
-                     <string>Return
- ------------------------ 
-Record</string>
+                     <string>Record</string>
                     </property>
                    </widget>
                    <widget class="QPushButton" name="sim_prvctl">
@@ -6724,7 +6722,9 @@ QPushButton:pressed {
 </string>
                     </property>
                     <property name="text">
-                     <string>Browse</string>
+                     <string> Cancel IN
+ ------------------------- 
+Browse</string>
                     </property>
                    </widget>
                    <widget class="QPushButton" name="sim_in">
@@ -9856,6 +9856,42 @@ QPushButton:pressed {
                     </property>
                     <property name="text">
                      <string>2nd FastJog Speed</string>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="control_cancel_in">
+                    <property name="geometry">
+                     <rect>
+                      <x>50</x>
+                      <y>250</y>
+                      <width>175</width>
+                      <height>70</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+
+
+</string>
+                    </property>
+                    <property name="text">
+                     <string>Cancel IN</string>
                     </property>
                    </widget>
                   </widget>

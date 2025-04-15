@@ -439,7 +439,7 @@ class Ui_MainWindow(object):
         self.label_page.setStyleSheet(u"background-color: transparent;")
         self.label_bank = QLabel(self.frame_label_top_btns)
         self.label_bank.setObjectName(u"label_bank")
-        self.label_bank.setGeometry(QRect(72, 0, 71, 41))
+        self.label_bank.setGeometry(QRect(72, 0, 91, 41))
         self.label_bank.setFont(font1)
         self.label_bank.setStyleSheet(u"background-color: transparent;")
         self.label_bank.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
@@ -4937,6 +4937,30 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "")
+        self.control_cancel_in = QPushButton(self.page_control)
+        self.control_cancel_in.setObjectName(u"control_cancel_in")
+        self.control_cancel_in.setGeometry(QRect(50, 250, 175, 70))
+        self.control_cancel_in.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"")
         self.stackedWidget.addWidget(self.page_control)
         self.page_contentacc = QWidget()
         self.page_contentacc.setObjectName(u"page_contentacc")
@@ -5642,7 +5666,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(22)
+        self.stackedWidget.setCurrentIndex(28)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -5809,16 +5833,16 @@ class Ui_MainWindow(object):
         self.sim_fastjog.setText(QCoreApplication.translate("MainWindow", u"Fast Jog\n"
 " ---------------------\n"
 " Mark", None))
-        self.sim_record.setText(QCoreApplication.translate("MainWindow", u"Return\n"
-" ------------------------ \n"
-"Record", None))
+        self.sim_record.setText(QCoreApplication.translate("MainWindow", u"Record", None))
         self.sim_prvctl.setText(QCoreApplication.translate("MainWindow", u"Page\n"
 " ------------------\n"
 "PRV CTL", None))
         self.sim_out.setText(QCoreApplication.translate("MainWindow", u"Goto OUT \n"
 " ------------------------- \n"
 " OUT", None))
-        self.sim_insert.setText(QCoreApplication.translate("MainWindow", u"Browse", None))
+        self.sim_insert.setText(QCoreApplication.translate("MainWindow", u" Cancel IN\n"
+" ------------------------- \n"
+"Browse", None))
         self.sim_in.setText(QCoreApplication.translate("MainWindow", u"Goto IN\n"
 " --------------------------\n"
 "IN", None))
@@ -5935,6 +5959,7 @@ class Ui_MainWindow(object):
         self.control_gotoin.setText(QCoreApplication.translate("MainWindow", u"Go to IN", None))
         self.control_gototc.setText(QCoreApplication.translate("MainWindow", u"Go to TC", None))
         self.control_2ndfastjog.setText(QCoreApplication.translate("MainWindow", u"2nd FastJog Speed", None))
+        self.control_cancel_in.setText(QCoreApplication.translate("MainWindow", u"Cancel IN", None))
         self.cont_acc_lastmark.setText(QCoreApplication.translate("MainWindow", u"Last Mark", None))
         self.cont_acc_mark.setText(QCoreApplication.translate("MainWindow", u"Mark", None))
         self.cont_acc_lasttc.setText(QCoreApplication.translate("MainWindow", u"Last TC", None))

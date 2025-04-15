@@ -5,21 +5,22 @@
     "VMIX_LIST": [
         "VMIX_URI (127.0.0.1:8088)"
     ],
-    "CURRENT_PAGE": 1,
+    "CURRENT_PAGE": 5,
     "CURRENT_BANK": 1,
-    "CURRENT_CLIP": "116A",
+    "CURRENT_CLIP": "511A",
     "last_page": 1,
     "last_bank_per_page": {
-        "1": 1,
-        "2": 1,
+        "1": 0,
+        "2": 6,
         "3": 1,
-        "4": 1,
+        "4": 5,
         "5": 1,
-        "6": 1,
-        "7": 1,
-        "8": 1,
+        "6": 4,
+        "7": 5,
+        "8": 6,
         "9": 1,
-        "10": 1
+        "10": 1,
+        "0": 0
     },
     "last_clip": 1,
     "clip_mode": false,
@@ -27,8 +28,11 @@
     "clip_id": 0,
     "last_date": "2025-03-28",
     "last_time": "12:13:30.00",
-    "timecodes": [],
-    "mark_in_tc": "2025-04-12T19:38:05.420",
+    "timecodes": [
+        "2025-04-15T19:45:47.888",
+        "2025-04-15T19:45:20.888"
+    ],
+    "mark_in_tc": "2025-04-15T20:03:04.494",
     "estrella1": [],
     "estrella2": [],
     "estrella3": [],
@@ -51,5 +55,6 @@
     "playlist15": [],
     "playlist16": [],
     "playlist17": [],
-    "playlist18": []
+    "playlist18": [],
+    "modo_page": false
 }
