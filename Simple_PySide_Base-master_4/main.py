@@ -1,6 +1,5 @@
 
 import sys
-import platform
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent, QTimer,QEventLoop)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient, QMouseEvent)
@@ -12,7 +11,6 @@ import requests
 
 # GUI FILE
 from app_modules import *
-#from ui_popup_recordtrains import Ui_Dialog as Dialog_recordtrains
 from ui_popup_searchtc import Ui_Dialog as Dialog_searchtc
 from ui_popup_delete_marks import Ui_Dialog as Dialog_deletemarks
 from ui_popup_name_clip import Ui_Dialog as Dialog_nameclip
@@ -26,7 +24,7 @@ from ui_popup_overwrite_clip import Ui_Dialog as Dialog_overwrite
 from ui_popup_delete_clip_dictionary import Ui_Dialog as Dialog_delete_clip_dictionary
 from config_manager import *
 
-
+#DECLARE GLOBAL VARIABLES
 IP_VMIX = load_ip_vmix()
 FAST_JOG = load_fast_jog()
 SEC_FAST_JOG = load_sec_fast_jog()
@@ -67,8 +65,10 @@ playlist18 = load_plst(18)
 CLEAR_MODE = False
 CLEAR_SELECTION = None
 browse_mode = False
-selected_index = 0
 
+########################################################################
+## START - POPUPS CLASSES
+########################################################################
 
 class PopupNameClip(QDialog):
     def __init__(self):
@@ -129,7 +129,6 @@ class PopupNameClip(QDialog):
 
         # Conectar eventos de foco para detectar qué QTextEdit está seleccionado
 
-
     def write(self, text):
         self.ui.textedit_clipname_name.insertPlainText(text)
 
@@ -178,22 +177,20 @@ class PopupDeleteMarks(QDialog):
         ## SHOW ==> CLOSE APPLICATION
         self.ui.close_confirm_deletemarks.clicked.connect(lambda: self.close())
         self.ui.confirm_deletemarks_no.clicked.connect(lambda: self.close())
-        self.ui.confirm_deletemarks_yes.clicked.connect(lambda: yes())
+        self.ui.confirm_deletemarks_yes.clicked.connect(lambda: PopupDeleteMarks.yes(self))
 
-        def yes():
-            """
-            Vacía la lista de timecodes.
-            """
-            global timecodes, lastmark_index
-            timecodes = []
-            save_timecodes_list(timecodes)
-            lastmark_index = -1
-            print("Lista de timecodes vaciada.")
+    def yes(self):
+        """
+        Vacía la lista de timecodes.
+        """
+        global timecodes, lastmark_index
+        timecodes = []
+        save_timecodes_list(timecodes)
+        lastmark_index = -1
+        print("Lista de timecodes vaciada.")
 
-            time.sleep(0.1)
-            self.close()
-
-
+        time.sleep(0.1)
+        self.close()
 
 class PopupOverwriteClip(QDialog):  
 
@@ -284,9 +281,9 @@ class PopupDeleteClipDictionary(QDialog):
             save_estrella2_list([])
             save_estrella3_list([])
             
+            PopupDeleteMarks.yes(self)
+            
             print("clip_id ha sido restablecido a 0 en 'config.json'.")
-
-
 
             time.sleep(0.1)
             self.close()
@@ -341,7 +338,6 @@ class PopupSearchTC(QDialog):
         time.sleep(0.1)
         self.close()
         
-    
 class PopupFastJog(QDialog):
     def __init__(self):
         super().__init__()
@@ -542,8 +538,7 @@ class PopupIpConfig(QDialog):
     def add_to_combobox(self, name, ip_port):
         """Añade la configuración a la QComboBox en el formato correcto."""
         formatted_text = f"{name} ({ip_port})"
-        self.vmix_window.myvmix_combobox.addItem(formatted_text)
-    
+        self.vmix_window.myvmix_combobox.addItem(formatted_text)   
 
 class PopupMyVmix(QDialog):  
     def __init__(self):  
@@ -562,8 +557,7 @@ class PopupMyVmix(QDialog):
         self.ui.myvmix_delete.clicked.connect(lambda: self.show_dialog_deleteip())
         self.ui.myvmix_checkconnection.clicked.connect(lambda: self.check_connection())
         self.ui.myvmix_confirm.clicked.connect(lambda: self.confirm_selection())
-
-        
+ 
         self.myvmix_combobox= self.ui.myvmix_combobox 
 
         self.load_combobox_items()
@@ -657,7 +651,6 @@ class PopupMyVmix(QDialog):
         self.popup = PopupConnected()  # Guardar en un atributo para evitar que se elimine
         self.popup.exec_()  # Muestra el diálogo de forma modal
 
-
 class PopupDeleteIp(QDialog):  
     def __init__(self, myvmix_instance):  
         super().__init__()  
@@ -673,6 +666,7 @@ class PopupDeleteIp(QDialog):
 
         self.ui.deleteip_no.clicked.connect(lambda: self.close())
         self.ui.deleteip_yes.clicked.connect(lambda: self.delete_selected_item())
+
     def delete_selected_item(self):
         """Elimina el elemento seleccionado de la ComboBox y actualiza la lista en config.json."""
         if not self.myvmix_instance:  # Verificar que la referencia es válida
@@ -719,6 +713,16 @@ class PopupConnected(QDialog):
         self.ui.maximize_conn.clicked.connect(lambda: UIFunctions.maximize_restore(self))
         self.ui.close_conn.clicked.connect(lambda: self.close())
 
+########################################################################
+## END - POPUPS CLASSES
+########################################################################
+
+
+
+########################################################################
+## START - MAINWINDOW
+########################################################################
+
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -730,31 +734,21 @@ class MainWindow(QMainWindow):
         UIFunctions.check_vmix_connection(self)
         UIFunctions.start_connection_monitor(self)
 
-        ## PRINT ==> SYSTEM
-        print('System: ' + platform.system())
-        print('Version: ' +platform.release())
-
-        ########################################################################
-        ## START - WINDOW ATTRIBUTES
-        ########################################################################
-
-        ## REMOVE ==> STANDARD TITLE BAR
+        #REMOVE TITLE BAR
         UIFunctions.removeTitleBar(True)
-        ## ==> END ##
 
-        ## SET ==> WINDOW TITLE
+        #SET WINDOW TITLE AND PAGE - BANK LABEL
         self.setWindowTitle('Main Window - Python Base')
-        #UIFunctions.labelTitle(self, 'Main Window - Python Base')
         self.ui.label_page.setText(f"PAGE {current_page}  ")
         label_bank = current_bank
         if label_bank == 0:
             text = "PL"
         else: 
             text = current_bank
-        self.ui.label_bank.setText(f" {text} BANK")  # Actualiza QLabel
+        self.ui.label_bank.setText(f" {text} BANK")  # Actualiza Q
         UIFunctions.labelDescription(self, f"{active_playlist}")
         
-        ################################# SET PGM
+        #SET PGM - PRV (or LINKED A|B)
         def get_channelmode(self):
             """Obtiene el modo de canal ('channelMode') de la sección de Replay en vMix."""
             
@@ -788,95 +782,61 @@ class MainWindow(QMainWindow):
         pgm = get_channelmode(self)
         UIFunctions.labelPGM_PRV(self, pgm)
 
-        ## ==> END ##
-
-        ## WINDOW SIZE ==> DEFAULT SIZE
+        ## Set window size
         startSize = QSize(1024, 600)
         self.resize(startSize)
         self.setMinimumSize(startSize)
-        # UIFunctions.enableMaximumSize(self, 500, 720)
-        ## ==> END ##
 
-        ## ==> CREATE MENUS
-        ########################################################################
-
-        ## ==> TOGGLE MENU SIZE
+        #################################### START - CREATE MENUS
+        # Toggle menu size
         self.ui.btn_toggle_menu.clicked.connect(lambda: UIFunctions.toggleMenu(self, 220, True))
-        ## ==> END ##
 
-        ## ==> ADD CUSTOM MENUS
+        # Add menus
         self.ui.stackedWidget.setMinimumWidth(20)
         UIFunctions.addNewMenu(self, "CLIP", "btn_home", "url(:/16x16/icons/16x16/cil-media-play.png)", True)
         UIFunctions.addNewMenu(self, "CONTENT ACCESS", "btn_new_user", "url(:/16x16/icons/16x16/cil-input.png)", True)
         UIFunctions.addNewMenu(self, "CONTROL", "btn_control", "url(:/16x16/icons/16x16/cil-clipboard.png)", True)
         UIFunctions.addNewMenu(self, "EXPORT", "btn_export", "url(:/16x16/icons/16x16/cil-paper-plane.png)", True)
-        #UIFunctions.addNewMenu(self, "GENERIC", "btn_generic", "url(:/16x16/icons/16x16/cil-folder-open.png)", True)
         UIFunctions.addNewMenu(self, "PLAYLIST", "btn_playlist", "url(:/16x16/icons/16x16/cil-library-add.png)", True)
-        #UIFunctions.addNewMenu(self, "CLIP MANAGEMENT", "btn_clipmanagement", "url(:/16x16/icons/16x16/cil-featured-playlist.png)", True)
         UIFunctions.addNewMenu(self, "SIMULATOR", "btn_simulator", "url(:/16x16/icons/16x16/cil-devices.png)", True)
         UIFunctions.addNewMenu(self, "CONFIGURATION", "btn_config", "url(:/16x16/icons/16x16/cil-equalizer.png)", False)
-        #UIFunctions.addNewMenu(self, "WIDGETS", "btn_widgets", "url(:/16x16/icons/16x16/cil-equalizer.png)", False)
-        ## ==> END ##
-
-        # START MENU => SELECTION
+        
+        # Standard Menu
         UIFunctions.selectStandardMenu(self, "btn_home")
-        ## ==> END ##
 
-        ## ==> START PAGE
+        #Starting Page
         self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
-        ## ==> END ##
 
-        ## USER ICON ==> SHOW HIDE
+        ## Hide user icon
         UIFunctions.userIcon(self, "WM", "", False)
-        ## ==> END ##
+        #################################### END - CREATE MENUS
 
-
-        ## ==> MOVE WINDOW / MAXIMIZE / RESTORE
-        ########################################################################
+        #################################### START - MOVE WINDOW - MAXIMIZE - RESTORE - CLOSE
         def moveWindow(event):
-            # IF MAXIMIZED CHANGE TO NORMAL
+            # If maximized change to normal
             if UIFunctions.returStatus() == 1:
                 UIFunctions.maximize_restore(self)
 
-            # MOVE WINDOW
+            # Move window
             if event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.globalPos() - self.dragPos)
                 self.dragPos = event.globalPos()
                 event.accept()
 
-        # WIDGET TO MOVE
+        # Widget to move
         self.ui.frame_label_top_btns.mouseMoveEvent = moveWindow
-        ## ==> END ##
 
-        ## ==> LOAD DEFINITIONS
-        ########################################################################
+        #Load uiDefinitions
         UIFunctions.uiDefinitions(self)
-        ## ==> END ##
-
-        ########################################################################
-        ## END - WINDOW ATTRIBUTES
-        ############################## ---/--/--- ##############################
-
-
-
-
-        ########################################################################
-        #                                                                      #
-        ## START -------------- WIDGETS FUNCTIONS/PARAMETERS ---------------- ##
-        #                                                                      #
-        ## ==> USER CODES BELLOW                                              ##
-        ########################################################################
+        #################################### END - MOVE WINDOW - MAXIMIZE - RESTORE - CLOSE
 
         
-
-        #################################### START - MAINWINDOW PARAMETERS
-    
-       
-        #################################### END - MAINWINDOW PARAMETERS
+        ########################################################################
+        ## START - BUTTON ASSIGNMENT
+        ######################################################################## 
 
         #################################### START- BOTONS CLIP
-
-        self.ui.clip_addtoplaylist.clicked.connect(lambda: UIFunctions.cont_acc_gotopl(self))
+        self.ui.clip_addtoplaylist.clicked.connect(lambda: UIFunctions.clip_gotopl(self))
         UIFunctions.refresh_estrella1_list(self)
         self.ui.clip_estrella1.clicked.connect(lambda: UIFunctions.function_estrella1(self))
         UIFunctions.refresh_estrella2_list(self)
@@ -893,20 +853,7 @@ class MainWindow(QMainWindow):
         self.ui.estrella2_add.clicked.connect(lambda: UIFunctions.function_estrella2(self))
         self.ui.estrella3_add.clicked.connect(lambda: UIFunctions.function_estrella3(self))
         self.ui.clip_nameclip.clicked.connect(lambda: self.show_dialog_nameclip())
-
         #################################### END - BOTONS CLIP
-
-        #################################### START - BOTONS CONTROL
-        self.ui.control_syncprv.clicked.connect(lambda: UIFunctions.function_syncprv(self))
-        self.ui.control_loop.clicked.connect(lambda: UIFunctions.function_loop())
-        self.ui.control_fast_jog.clicked.connect(lambda: UIFunctions.function_fastjog(self.dial))
-        self.ui.control_2ndfastjog.clicked.connect(lambda: UIFunctions.function_sec_fastjog(self.dial))
-        self.ui.control_gotoin.clicked.connect(lambda: UIFunctions.function_gotoin())
-        self.ui.control_gotoout.clicked.connect(lambda: UIFunctions.function_gotoout())
-        self.ui.control_cancel_in.clicked.connect(lambda: UIFunctions.function_cancel_in())
-        self.ui.control_gototc.clicked.connect(self.show_dialog_searchtc)
-
-        #################################### END - BOTONS CONTROL
 
         #################################### START - BOTONS CONTENT ACCESS
         UIFunctions.restore_all_playlists_on_startup(self)
@@ -917,68 +864,27 @@ class MainWindow(QMainWindow):
         self.ui.cont_acc_page.clicked.connect(lambda: function_page_activate())
         self.ui.cont_acc_mark.clicked.connect(lambda: UIFunctions.function_mark())
         self.ui.cont_acc_lastmark.clicked.connect(lambda: UIFunctions.function_lastmark())
-        #self.ui.cont_acc_recordtrains.clicked.connect(self.show_dialog_recordtrains)
         self.ui.cont_acc_lasttc.clicked.connect(lambda: UIFunctions.function_lasttc())
-
-
         #################################### END - BOTONS CONTENT ACCESS
 
-        #################################### START - BOTONS EXPORT
+        #################################### START - BOTONS CONTROL
+        self.ui.control_syncprv.clicked.connect(lambda: UIFunctions.function_syncprv(self))
+        self.ui.control_prv_ctl.clicked.connect(lambda: UIFunctions.function_prvctl(self))
+        self.ui.control_loop.clicked.connect(lambda: UIFunctions.function_loop())
+        self.ui.control_fast_jog.clicked.connect(lambda: UIFunctions.function_fastjog(self.dial))
+        self.ui.control_2ndfastjog.clicked.connect(lambda: UIFunctions.function_sec_fastjog(self.dial))
+        self.ui.control_gotoin.clicked.connect(lambda: UIFunctions.function_gotoin())
+        self.ui.control_gotoout.clicked.connect(lambda: UIFunctions.function_gotoout())
+        self.ui.control_cancel_in.clicked.connect(lambda: UIFunctions.function_cancel_in())
+        self.ui.control_gototc.clicked.connect(self.show_dialog_searchtc)
+        #################################### END - BOTONS CONTROL
 
+        #################################### START - BOTONS EXPORT
         self.ui.export_playlist.clicked.connect(lambda: UIFunctions.export_playlist())
         self.ui.export_export_clip.clicked.connect(lambda: UIFunctions.export_clip())
-
         #################################### END - BOTONS EXPORT
 
-
         #################################### START- BOTONS SIMULATOR
-
-        def toggle_shift(self):
-            """Alterna el estado de SHIFT y cambia el color del botón."""
-            global SHIFT
-            SHIFT = load_shift()
-            SHIFT = not SHIFT
-
-            if SHIFT:
-                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: rgba(255,40,40,150);} QPushButton:hover {background-color: rgba(255,40,40,50);} QPushButton:pressed { background-color: rgba(255,40,40,50);}")  # Rojo cuando está activado
-            else:
-                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")   # Transparente cuando está desactivado
-
-            print(f"Shift activado: {SHIFT}")  # Depuración
-            save_shift(SHIFT)
-
-        def reset_shift(self):
-            """Desactiva SHIFT si está activado y restablece el color."""
-            global SHIFT
-            SHIFT = load_shift()
-            if SHIFT:
-                SHIFT = False
-                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
-                print("Shift desactivado")
-                save_shift(SHIFT)
-
-        def toggle_clear_mode(self):
-            """Activa o desactiva el modo CLEAR y espera la selección de IN u OUT."""
-            global CLEAR_MODE, CLEAR_SELECTION
-            CLEAR_MODE = not CLEAR_MODE
-
-            if CLEAR_MODE:
-                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255); background-color: rgba(255,165,0,150);} QPushButton:hover {background-color: rgba(255,165,0,100);} QPushButton:pressed { background-color: rgba(255,165,0,50);}")
-                print("Modo CLEAR activado")
-            else:
-                CLEAR_SELECTION = None
-                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(255,165,0,50);} QPushButton:pressed { background-color: rgba(255,165,0,50);}")
-                print("Modo CLEAR desactivado")
-
-
-        def reset_clear_mode(self):
-            """Apaga el modo CLEAR y resetea estilos del botón CLEAR únicamente"""
-            global CLEAR_MODE, CLEAR_SELECTION
-            CLEAR_MODE = False
-            CLEAR_SELECTION = None
-            self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
-            print("Modo CLEAR desactivado automáticamente después de la selección")
-
         self.ui.sim_shift.setCheckable(True)
         self.ui.sim_shift.clicked.connect(lambda: toggle_shift(self))
 
@@ -1146,8 +1052,6 @@ class MainWindow(QMainWindow):
                 reset_clear_mode(self)  # Se desactiva el modo después de la request
             else:
                 execute_functions_in(self)
-
-
         self.ui.sim_in.clicked.connect(lambda: handle_sim_in(self))
 
         def execute_functions_out(self):
@@ -1157,7 +1061,6 @@ class MainWindow(QMainWindow):
                 reset_shift(self)
             else:
                 function_out()
-
         def handle_sim_out(self):
             global CLEAR_MODE, CLEAR_SELECTION
             if CLEAR_MODE:
@@ -1166,12 +1069,9 @@ class MainWindow(QMainWindow):
                 UIFunctions.send_request("api/?Function=ReplayUpdateSelectedOutPoint&Channel=1")
                 reset_clear_mode(self)  # Se desactiva el modo después de la request
             else:
-                execute_functions_out(self)
-                
-
+                execute_functions_out(self)            
         self.ui.sim_out.clicked.connect(lambda: handle_sim_out(self))
             
-
         def execute_functions_take(self):
             global SHIFT
             if SHIFT:
@@ -1181,8 +1081,6 @@ class MainWindow(QMainWindow):
                 UIFunctions.function_take()
         self.ui.sim_take.clicked.connect(lambda: execute_functions_take(self))
 
-        #self.ui.sim_e_e.clicked.connect(lambda: UIFunctions.function_e_e())
-
         self.ui.sim_rodeta.setMinimum(0)
         self.ui.sim_rodeta.setMaximum(100)
         self.ui.sim_rodeta.setWrapping(True)  # Hacer que el dial sea cíclico
@@ -1191,9 +1089,153 @@ class MainWindow(QMainWindow):
 
         self.slider = self.findChild(QSlider, "sim_palanqueta")  # Find the slider
         UIFunctions.setup_replay_speed_slider(self.slider)  # Setup slider functionality
-        #self.ui.sim_lever.clicked.connect(lambda: UIFunctions.function_lever(self.slider))
 
-        #Gestio clips
+        self.ui.sim_menu.clicked.connect(lambda: UIFunctions.function_menu(self))
+        self.ui.sim_enter.clicked.connect(lambda: UIFunctions.function_enter(self))
+        #################################### END - BOTONS SIMULATOR
+
+        #################################### START - BOTONS PLAYLIST
+        self.ui.playlist_btnadd_1.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 1))
+        self.ui.playlist_btnadd_2.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 2))
+        self.ui.playlist_btnadd_3.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 3))
+        self.ui.playlist_btnadd_4.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 4))
+        self.ui.playlist_btnadd_5.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 5))
+        self.ui.playlist_btnadd_6.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 6))
+        self.ui.playlist_btnadd_7.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 7))
+        self.ui.playlist_btnadd_8.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 8))
+        self.ui.playlist_btnadd_9.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 9))
+        self.ui.playlist_btnadd_10.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 10))
+        self.ui.playlist_btnadd_11.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 11))
+        self.ui.playlist_btnadd_12.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 12))
+        self.ui.playlist_btnadd_13.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 13))
+        self.ui.playlist_btnadd_14.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 14))
+        self.ui.playlist_btnadd_15.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 15))
+        self.ui.playlist_btnadd_16.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 16))
+        self.ui.playlist_btnadd_17.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 17))
+        self.ui.playlist_btnadd_18.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 18))
+
+        self.ui.pl1_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 1))
+        self.ui.pl2_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 2))
+        self.ui.pl3_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 3))
+        self.ui.pl4_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 4))
+        self.ui.pl5_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 5))
+        self.ui.pl6_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 6))
+        self.ui.pl7_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 7))
+        self.ui.pl8_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 8))
+        self.ui.pl9_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 9))
+        self.ui.pl10_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 10))
+        self.ui.pl11_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 11))
+        self.ui.pl12_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 12))
+        self.ui.pl13_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 13))
+        self.ui.pl14_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 14))
+        self.ui.pl15_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 15))
+        self.ui.pl16_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 16))
+        self.ui.pl17_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 17))
+        self.ui.pl18_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 18))
+
+
+        self.ui.playlist_button_pl1.clicked.connect(lambda: UIFunctions.goto_pl(self, 1))
+        self.ui.playlist_button_pl2.clicked.connect(lambda: UIFunctions.goto_pl(self, 2))
+        self.ui.playlist_button_pl3.clicked.connect(lambda: UIFunctions.goto_pl(self, 3))
+        self.ui.playlist_button_pl4.clicked.connect(lambda: UIFunctions.goto_pl(self, 4))
+        self.ui.playlist_button_pl5.clicked.connect(lambda: UIFunctions.goto_pl(self, 5))
+        self.ui.playlist_button_pl6.clicked.connect(lambda: UIFunctions.goto_pl(self, 6))
+        self.ui.playlist_button_pl7.clicked.connect(lambda: UIFunctions.goto_pl(self, 7))
+        self.ui.playlist_button_pl8.clicked.connect(lambda: UIFunctions.goto_pl(self, 8))
+        self.ui.playlist_button_pl9.clicked.connect(lambda: UIFunctions.goto_pl(self, 9))
+        self.ui.playlist_button_pl10.clicked.connect(lambda: UIFunctions.goto_pl(self, 10))
+        self.ui.playlist_button_pl11.clicked.connect(lambda: UIFunctions.goto_pl(self, 11))
+        self.ui.playlist_button_pl12.clicked.connect(lambda: UIFunctions.goto_pl(self, 12))
+        self.ui.playlist_button_pl13.clicked.connect(lambda: UIFunctions.goto_pl(self, 13))
+        self.ui.playlist_button_pl14.clicked.connect(lambda: UIFunctions.goto_pl(self, 14))
+        self.ui.playlist_button_pl15.clicked.connect(lambda: UIFunctions.goto_pl(self, 15))
+        self.ui.playlist_button_pl16.clicked.connect(lambda: UIFunctions.goto_pl(self, 16))
+        self.ui.playlist_button_pl17.clicked.connect(lambda: UIFunctions.goto_pl(self, 17))
+        self.ui.playlist_button_pl18.clicked.connect(lambda: UIFunctions.goto_pl(self, 18))
+
+        self.ui.pl1_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 1))
+        self.ui.pl2_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 2))
+        self.ui.pl3_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 3))
+        self.ui.pl4_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 4))
+        self.ui.pl5_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 5))
+        self.ui.pl6_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 6))
+        self.ui.pl7_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 7))
+        self.ui.pl8_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 8))
+        self.ui.pl9_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 9))
+        self.ui.pl10_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 10))
+        self.ui.pl11_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 11))
+        self.ui.pl12_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 12))
+        self.ui.pl13_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 13))
+        self.ui.pl14_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 14))
+        self.ui.pl15_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 15))
+        self.ui.pl16_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 16))
+        self.ui.pl17_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 17))
+        self.ui.pl18_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 18))
+        #################################### END - BOTONS PLAYLIST
+        
+        #################################### START - BOTONS CONFIGURATION
+        self.ui.config_ipconfig.clicked.connect(self.show_dialog_myvmix)
+        self.ui.config_fastjogconfig.clicked.connect(self.show_dialog_fastjog)
+        self.ui.config_deleteclipdict.clicked.connect( self.show_dialog_deleteclipdic)
+        self.ui.config_resetmarks.clicked.connect(self.show_dialog_delete_marks)
+        #################################### END - BOTONS CONFIGURATION
+
+
+        ########################################################################
+        ## END - BUTTON ASSIGNMENT
+        ########################################################################
+
+
+        ########################################################################
+        ## START - CLIP MANAGEMENT
+        ########################################################################
+
+        def toggle_shift(self):
+            """Alterna el estado de SHIFT y cambia el color del botón."""
+            global SHIFT
+            SHIFT = load_shift()
+            SHIFT = not SHIFT
+
+            if SHIFT:
+                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: rgba(255,40,40,150);} QPushButton:hover {background-color: rgba(255,40,40,50);} QPushButton:pressed { background-color: rgba(255,40,40,50);}")  # Rojo cuando está activado
+            else:
+                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")   # Transparente cuando está desactivado
+
+            print(f"Shift activado: {SHIFT}")  # Depuración
+            save_shift(SHIFT)
+
+        def reset_shift(self):
+            """Desactiva SHIFT si está activado y restablece el color."""
+            global SHIFT
+            SHIFT = load_shift()
+            if SHIFT:
+                SHIFT = False
+                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
+                print("Shift desactivado")
+                save_shift(SHIFT)
+
+        def toggle_clear_mode(self):
+            """Activa o desactiva el modo CLEAR y espera la selección de IN u OUT."""
+            global CLEAR_MODE, CLEAR_SELECTION
+            CLEAR_MODE = not CLEAR_MODE
+
+            if CLEAR_MODE:
+                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255); background-color: rgba(255,165,0,150);} QPushButton:hover {background-color: rgba(255,165,0,100);} QPushButton:pressed { background-color: rgba(255,165,0,50);}")
+                print("Modo CLEAR activado")
+            else:
+                CLEAR_SELECTION = None
+                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(255,165,0,50);} QPushButton:pressed { background-color: rgba(255,165,0,50);}")
+                print("Modo CLEAR desactivado")
+
+
+        def reset_clear_mode(self):
+            """Apaga el modo CLEAR y resetea estilos del botón CLEAR únicamente"""
+            global CLEAR_MODE, CLEAR_SELECTION
+            CLEAR_MODE = False
+            CLEAR_SELECTION = None
+            self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
+            print("Modo CLEAR desactivado automáticamente después de la selección")
+
 
         def function_page_activate():
             """Activa el modo de selección de página."""
@@ -1203,98 +1245,6 @@ class MainWindow(QMainWindow):
             print("Modo de selección de página activado.")
         
 
-        """""
-        def function_out():
-            global clip_id, mark_in_tc, SHIFT, modo_page
-
-
-            # Simula el proceso de "Out"
-            endpoint_1 = "api/?Function=ReplayMarkOut"
-            response_1 = UIFunctions.send_request(endpoint_1)
-            clip_out_tc = UIFunctions.get_tc()
-            mark_in_tc = load_mark_in_tc()
-
-            if not response_1:
-                print("No se pudo marcar el 'Out' debido a la falta de conexión con vMix.")
-                return
-
-            print("Replay mark 'Out' set successfully.")
-
-            # Iniciar el modo de página si es necesario
-            modo_page = load_page_mode()
-            SHIFT = load_shift()
-
-            if modo_page:
-                print("Modo de selección de página activado.")
-                f_button = get_button_event()
-                function_page(f_button)  # Cambiar página según el botón presionado
-
-            # Espera por la selección de un botón sim_f
-            print("Esperando selección de clip...")
-            selected_clip = wait_for_clip_selection()
-
-            if selected_clip:
-                clip_management = load_clip_dictionary()
-
-                # Asigna el clip al slot seleccionado, si no está asignado ya
-                if clip_management.get(selected_clip, ["void"] * 7)[0] == "void":
-                    clip_id = load_current_clip_id()
-                    clip_dur_tc = UIFunctions.calculate_clip_duration(mark_in_tc, clip_out_tc)
-                    clip_management[selected_clip][0] = str(clip_id)
-                    clip_management[selected_clip][4] = str(mark_in_tc)
-                    clip_management[selected_clip][5] = str(clip_out_tc)
-                    clip_management[selected_clip][6] = str(clip_dur_tc)
-                    save_clip_dictionary(clip_management)
-
-                    clip_id += 1
-                    save_current_clip_id(clip_id)
-                    print(f"Clip {selected_clip} registrado con ID {clip_id - 1}")
-                else:
-                    UIFunctions.show_dialog_overwrite_clip(self, selected_clip, clip_management)
-  
-        
-        def wait_for_clip_selection():
-            while True:
-                button_number = get_button_event()  # Captura el número del botón (1-10)
-
-                if isinstance(button_number, int):  # Verifica que sea un número
-                    current_page = load_config().get("CURRENT_PAGE", 1)
-                    current_bank = load_config().get("last_bank_per_page", {}).get(str(current_page), 1)
-
-                    clip_code = f"{current_page}{current_bank}{button_number}"
-                    print(f"Clip code generado: {clip_code}")  # Para depuración
-                    return clip_code
-        
-                
-        def get_button_event():
-            loop = QEventLoop()
-            button_pressed = None
-
-            def on_button_press(button_number):
-                nonlocal button_pressed
-                button_pressed = button_number
-                loop.quit()
-
-            # Conectar cada botón a la función
-            self.ui.sim_f1.clicked.connect(lambda: on_button_press(1))
-            self.ui.sim_f2.clicked.connect(lambda: on_button_press(2))
-            self.ui.sim_f3.clicked.connect(lambda: on_button_press(3))
-            self.ui.sim_f4.clicked.connect(lambda: on_button_press(4))
-            self.ui.sim_f5.clicked.connect(lambda: on_button_press(5))
-            self.ui.sim_f6.clicked.connect(lambda: on_button_press(6))
-            self.ui.sim_f7.clicked.connect(lambda: on_button_press(7))
-            self.ui.sim_f8.clicked.connect(lambda: on_button_press(8))
-            self.ui.sim_f9.clicked.connect(lambda: on_button_press(9))
-            self.ui.sim_f10.clicked.connect(lambda: on_button_press(0))
-
-            # Establecer un timeout para evitar bloqueos
-            QTimer.singleShot(5000, loop.quit)  # Máximo 5 segundos de espera
-
-            loop.exec_()  # Espera a que se presione un botón
-
-            return button_pressed  # Retorna el botón presionado o None si se agotó el tiempo
-
-        """
         def function_out():
             global clip_id, mark_in_tc
 
@@ -1447,7 +1397,6 @@ class MainWindow(QMainWindow):
             """Maneja la funcionalidad de los botones sim_f1 a sim_f10."""
             global current_page, current_bank, SHIFT, clip_mode, modo_page
 
-
             # Si SHIFT está activado, cambiar el banco
             if SHIFT:
                 change_bank(f_button_number)  # Cambiar banco de la página actual
@@ -1529,18 +1478,7 @@ class MainWindow(QMainWindow):
                     endpoint_2 = "api/?Function=ReplayPause&Channel=1"
                     UIFunctions.send_request(endpoint_1)
                     UIFunctions.send_request(endpoint_2)
-
-
-
-                #endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
-                #endpoint_2 = "api/?Function=ReplaySelectNextEvent&Channel=1"
-                #UIFunctions.send_request(endpoint_1)
-                
-                #for _ in range(int(clip_list[0])):
-                 #   UIFunctions.send_request(endpoint_2)
-
-                
-            
+               
         def function_page(page_number):
             """Cambia la página y muestra el banco correspondiente."""
             global current_page, current_bank, SHIFT
@@ -1555,7 +1493,6 @@ class MainWindow(QMainWindow):
             self.ui.label_bank.setText(f" {current_bank} BANK")  # Actualiza QLabel
             print(f"Página {current_page} seleccionada. Banco actual: {current_bank}")
 
-    
         def change_bank(button_number):
             global current_bank
             SHIFT = load_shift()
@@ -1570,7 +1507,6 @@ class MainWindow(QMainWindow):
             else:
                 print("Shift no está presionado, no se puede cambiar el banco.")
 
-
         # Conectar los botones ya creados en Qt Designer
         self.ui.sim_f1.clicked.connect(lambda: handle_sim_f_button(self, 1))
         self.ui.sim_f2.clicked.connect(lambda: handle_sim_f_button(self, 2))
@@ -1582,136 +1518,21 @@ class MainWindow(QMainWindow):
         self.ui.sim_f8.clicked.connect(lambda: handle_sim_f_button(self, 8))
         self.ui.sim_f9.clicked.connect(lambda: handle_sim_f_button(self, 9))
         self.ui.sim_f10.clicked.connect(lambda: handle_sim_f_button(self, 0))
-
-        
-        self.ui.sim_menu.clicked.connect(lambda: UIFunctions.function_menu(self))
-        self.ui.sim_enter.clicked.connect(lambda: UIFunctions.function_enter(self))
-
-
-        #################################### END - BOTONS SIMULATOR
-
-
-        #################################### START - BOTONS PLAYLIST
-
-        self.ui.playlist_btnadd_1.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 1))
-        self.ui.playlist_btnadd_2.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 2))
-        self.ui.playlist_btnadd_3.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 3))
-        self.ui.playlist_btnadd_4.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 4))
-        self.ui.playlist_btnadd_5.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 5))
-        self.ui.playlist_btnadd_6.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 6))
-        self.ui.playlist_btnadd_7.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 7))
-        self.ui.playlist_btnadd_8.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 8))
-        self.ui.playlist_btnadd_9.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 9))
-        self.ui.playlist_btnadd_10.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 10))
-        self.ui.playlist_btnadd_11.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 11))
-        self.ui.playlist_btnadd_12.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 12))
-        self.ui.playlist_btnadd_13.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 13))
-        self.ui.playlist_btnadd_14.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 14))
-        self.ui.playlist_btnadd_15.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 15))
-        self.ui.playlist_btnadd_16.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 16))
-        self.ui.playlist_btnadd_17.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 17))
-        self.ui.playlist_btnadd_18.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 18))
-
-        self.ui.pl1_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 1))
-        self.ui.pl2_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 2))
-        self.ui.pl3_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 3))
-        self.ui.pl4_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 4))
-        self.ui.pl5_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 5))
-        self.ui.pl6_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 6))
-        self.ui.pl7_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 7))
-        self.ui.pl8_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 8))
-        self.ui.pl9_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 9))
-        self.ui.pl10_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 10))
-        self.ui.pl11_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 11))
-        self.ui.pl12_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 12))
-        self.ui.pl13_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 13))
-        self.ui.pl14_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 14))
-        self.ui.pl15_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 15))
-        self.ui.pl16_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 16))
-        self.ui.pl17_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 17))
-        self.ui.pl18_add.clicked.connect(lambda: UIFunctions.add_to_playlist(self, 18))
-
-
-        self.ui.playlist_button_pl1.clicked.connect(lambda: UIFunctions.goto_pl(self, 1))
-        self.ui.playlist_button_pl2.clicked.connect(lambda: UIFunctions.goto_pl(self, 2))
-        self.ui.playlist_button_pl3.clicked.connect(lambda: UIFunctions.goto_pl(self, 3))
-        self.ui.playlist_button_pl4.clicked.connect(lambda: UIFunctions.goto_pl(self, 4))
-        self.ui.playlist_button_pl5.clicked.connect(lambda: UIFunctions.goto_pl(self, 5))
-        self.ui.playlist_button_pl6.clicked.connect(lambda: UIFunctions.goto_pl(self, 6))
-        self.ui.playlist_button_pl7.clicked.connect(lambda: UIFunctions.goto_pl(self, 7))
-        self.ui.playlist_button_pl8.clicked.connect(lambda: UIFunctions.goto_pl(self, 8))
-        self.ui.playlist_button_pl9.clicked.connect(lambda: UIFunctions.goto_pl(self, 9))
-        self.ui.playlist_button_pl10.clicked.connect(lambda: UIFunctions.goto_pl(self, 10))
-        self.ui.playlist_button_pl11.clicked.connect(lambda: UIFunctions.goto_pl(self, 11))
-        self.ui.playlist_button_pl12.clicked.connect(lambda: UIFunctions.goto_pl(self, 12))
-        self.ui.playlist_button_pl13.clicked.connect(lambda: UIFunctions.goto_pl(self, 13))
-        self.ui.playlist_button_pl14.clicked.connect(lambda: UIFunctions.goto_pl(self, 14))
-        self.ui.playlist_button_pl15.clicked.connect(lambda: UIFunctions.goto_pl(self, 15))
-        self.ui.playlist_button_pl16.clicked.connect(lambda: UIFunctions.goto_pl(self, 16))
-        self.ui.playlist_button_pl17.clicked.connect(lambda: UIFunctions.goto_pl(self, 17))
-        self.ui.playlist_button_pl18.clicked.connect(lambda: UIFunctions.goto_pl(self, 18))
-
-        self.ui.pl1_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 1))
-        self.ui.pl2_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 2))
-        self.ui.pl3_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 3))
-        self.ui.pl4_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 4))
-        self.ui.pl5_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 5))
-        self.ui.pl6_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 6))
-        self.ui.pl7_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 7))
-        self.ui.pl8_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 8))
-        self.ui.pl9_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 9))
-        self.ui.pl10_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 10))
-        self.ui.pl11_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 11))
-        self.ui.pl12_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 12))
-        self.ui.pl13_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 13))
-        self.ui.pl14_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 14))
-        self.ui.pl15_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 15))
-        self.ui.pl16_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 16))
-        self.ui.pl17_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 17))
-        self.ui.pl18_delete.clicked.connect(lambda: UIFunctions.delete_element_plst(self, 18))
-
-
-        #################################### END - BOTONS PLAYLIST
-        
-
-        #################################### START - BOTONS CONFIGURATION
-
-
-        self.ui.config_ipconfig.clicked.connect(self.show_dialog_myvmix)
-        self.ui.config_fastjogconfig.clicked.connect(self.show_dialog_fastjog)
-        self.ui.config_deleteclipdict.clicked.connect( self.show_dialog_deleteclipdic)
-        self.ui.config_resetmarks.clicked.connect(self.show_dialog_delete_marks)
-
-
-
-
-        #################################### END - BOTONS CONFIGURATION
-
-        #################################### START - BOTONS PLAYLIST
-
-
-        #################################### END - BOTONS PLAYLIST
-
-        ## ==> QTableWidget RARAMETERS
+  
         ########################################################################
+        ## END - CLIP MANAGEMENT
+        ########################################################################
+
+        #QTableWidget Parameters
         self.ui.tableWidget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        ## ==> END ##
-
-        
-        ########################################################################
-        #                                                                      #
-        ## END --------------- WIDGETS FUNCTIONS/PARAMETERS ----------------- ##
-        #                                                                      #
-        ############################## ---/--/--- ##############################
 
 
-        ## SHOW ==> MAIN WINDOW
-        ########################################################################
+        ################### SHOW MAIN WINDOW ################ 
         self.show()
-        ## ==> END ##
+        #####################################################
 
     ########################################################################
-    ## MENUS ==> DYNAMIC MENUS FUNCTIONS
+    ## START - SHOW POPUPS
     ########################################################################
 
     def show_dialog_delete_marks(self):
@@ -1739,6 +1560,13 @@ class MainWindow(QMainWindow):
         self.popup = PopupDeleteClipDictionary()  # Guardar en un atributo para evitar que se elimine
         self.popup.exec_()  # Muestra el diálogo de forma modal
 
+    ########################################################################
+    ## END - SHOW POPUPS
+    ########################################################################
+
+    ########################################################################
+    ## START - MENU ASSIGNMENT
+    ########################################################################
 
     def Button(self):
         # GET BT CLICKED
@@ -1802,32 +1630,21 @@ class MainWindow(QMainWindow):
             UIFunctions.labelPage(self, "CONFIGURATION")
             btnWidget.setStyleSheet(UIFunctions.selectMenu(btnWidget.styleSheet()))
 
-    """""
-        # PAGE WIDGETS
-        if btnWidget.objectName() == "btn_widgets":
-            self.ui.stackedWidget.setCurrentWidget(self.ui.page_widgets)
-            UIFunctions.resetStyle(self, "btn_widgets")
-            UIFunctions.labelPage(self, "CONFIGURATION")
-            btnWidget.setStyleSheet(UIFunctions.selectMenu(btnWidget.styleSheet()))
-
-    """
-    ## ==> END ##
-
     ########################################################################
-    ## START ==> APP EVENTS
+    ## END - MENU ASSIGNMENT
     ########################################################################
 
-    ## EVENT ==> MOUSE DOUBLE CLICK
     ########################################################################
-    """""
+    ## START - APP EVENTS
+    ########################################################################
+
+    #Mouse Double Click
     def eventFilter(self, watched, event):
         if watched == self.le and event.type() == QtCore.QEvent.MouseButtonDblClick:
             print("pos: ", event.pos())
-    ## ==> END ##
-    """
+    
 
-    ## EVENT ==> MOUSE CLICK
-    ########################################################################
+    #Mouse Click
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
         if event.buttons() == Qt.LeftButton:
@@ -1836,27 +1653,26 @@ class MainWindow(QMainWindow):
             print('Mouse click: RIGHT CLICK')
         if event.buttons() == Qt.MidButton:
             print('Mouse click: MIDDLE BUTTON')
-    ## ==> END ##
 
-    ## EVENT ==> KEY PRESSED
-    ########################################################################
+    #Key Pressed
     def keyPressEvent(self, event):
         print('Key: ' + str(event.key()) + ' | Text Press: ' + str(event.text()))
-    ## ==> END ##
 
-    ## EVENT ==> RESIZE EVENT
-    ########################################################################
+    #Resize Event
     def resizeEvent(self, event):
         self.resizeFunction()
         return super(MainWindow, self).resizeEvent(event)
 
     def resizeFunction(self):
         print('Height: ' + str(self.height()) + ' | Width: ' + str(self.width()))
-    ## ==> END ##
 
     ########################################################################
-    ## END ==> APP EVENTS
-    ############################## ---/--/--- ##############################
+    ## END - APP EVENTS
+    ########################################################################
+
+########################################################################
+## END - MAINWINDOW
+########################################################################
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

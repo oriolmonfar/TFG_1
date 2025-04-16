@@ -1,5 +1,5 @@
 
-## ==> GUI FILE
+# GUI FILE
 from main import *
 import requests
 import xml.etree.ElementTree as ET
@@ -8,18 +8,18 @@ from PySide2.QtCore import QTimer
 from config_manager import *
 from PySide2.QtCore import Qt
 
-## ==> GLOBALS
+#DECLARE GLOBAL VARIABLES
 GLOBAL_STATE = 0
 GLOBAL_TITLE_BAR = True
 timecodes = load_timecodes_list()
 lastmark_index = -1
 
-## ==> COUT INITIAL MENU
+# COUNT INITIAL MENU
 count = 1
 
 class UIFunctions(MainWindow):
 
-    ## ==> GLOBALS
+    # GLOBALS
     GLOBAL_STATE = 0
     GLOBAL_TITLE_BAR = True
 
@@ -63,10 +63,9 @@ class UIFunctions(MainWindow):
         """Inicia un temporizador para monitorear la conexión con vMix."""
         main_window.timer = QTimer(main_window)
         main_window.timer.timeout.connect(lambda: UIFunctions.check_vmix_connection(main_window))
-        main_window.timer.start(5000)  # Ejecuta cada 3 segundos
+        main_window.timer.start(5000)  # Ejecuta cada 5 segundos
 
-    ## ==> MAXIMIZE/RESTORE
-    ########################################################################
+    #Maximize - Restore
     def maximize_restore(self):
         global GLOBAL_STATE
         status = GLOBAL_STATE
@@ -88,26 +87,23 @@ class UIFunctions(MainWindow):
             self.ui.frame_top_btns.setStyleSheet("background-color: rgba(27, 29, 35, 200)")
             self.ui.frame_size_grip.show()
 
-    ## ==> RETURN STATUS
+    # Return Status
     def returStatus():
         return GLOBAL_STATE
 
-    ## ==> SET STATUS
+    #Set State
     def setStatus(status):
         global GLOBAL_STATE
         GLOBAL_STATE = status
 
-    ## ==> ENABLE MAXIMUM SIZE
-    ########################################################################
+    #Enable Maximum Size
     def enableMaximumSize(self, width, height):
         if width != '' and height != '':
             self.setMaximumSize(QSize(width, height))
             self.ui.frame_size_grip.hide()
             self.ui.btn_maximize_restore.hide()
 
-
-    ## ==> TOGGLE MENU
-    ########################################################################
+    #Toggle Menu
     def toggleMenu(self, maxWidth, enable):
         if enable:
             # GET WIDTH
@@ -129,18 +125,16 @@ class UIFunctions(MainWindow):
             self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
             self.animation.start()
 
-    ## ==> SET TITLE BAR
-    ########################################################################
+    #Set Title Bar
     def removeTitleBar(status):
         global GLOBAL_TITLE_BAR
         GLOBAL_TITLE_BAR = status
 
-    ## ==> HEADER TEXTS
-    ########################################################################
-    # LABEL TITLE
+    # Label Title
     def labelTitle(self, text):
         self.ui.label_title_bar_top.setText(text)
 
+    #Label Title according to channel mode
     def labelPGM_PRV(self, text):
         global current_clip
         current_clip = load_current_clip()
@@ -157,13 +151,11 @@ class UIFunctions(MainWindow):
         self.ui.contec_acc_actualclip.setText(f"{current_clip}")
 
         
-
-    # LABEL DESCRIPTION
+    # Label Description
     def labelDescription(self, text):
         self.ui.label_top_info_1.setText(text)
 
-    ## ==> DYNAMIC MENUS
-    ########################################################################
+    #Dynamic Menus
     def addNewMenu(self, name, objName, icon, isTopMenu):
         font = QFont()
         font.setFamily(u"Segoe UI")
@@ -187,37 +179,35 @@ class UIFunctions(MainWindow):
         else:
             self.ui.layout_menu_bottom.addWidget(button)
 
-    ## ==> SELECT/DESELECT MENU
-    ########################################################################
-    ## ==> SELECT
+
+    # Select Menu
     def selectMenu(getStyle):
         select = getStyle + ("QPushButton { border-right: 7px solid rgb(44, 49, 60); }")
         return select
 
-    ## ==> DESELECT
+    # Deselect menu
     def deselectMenu(getStyle):
         deselect = getStyle.replace("QPushButton { border-right: 7px solid rgb(44, 49, 60); }", "")
         return deselect
 
-    ## ==> START SELECTION
+    #Start selection
     def selectStandardMenu(self, widget):
         for w in self.ui.frame_left_menu.findChildren(QPushButton):
             if w.objectName() == widget:
                 w.setStyleSheet(UIFunctions.selectMenu(w.styleSheet()))
 
-    ## ==> RESET SELECTION
+    #Reset Selection
     def resetStyle(self, widget):
         for w in self.ui.frame_left_menu.findChildren(QPushButton):
             if w.objectName() != widget:
                 w.setStyleSheet(UIFunctions.deselectMenu(w.styleSheet()))
 
-    ## ==> CHANGE PAGE LABEL TEXT
+    #Change Page Label Text
     def labelPage(self, text):
         newText = '| ' + text.upper()
         self.ui.label_top_info_2.setText(newText)
 
-    ## ==> USER ICON
-    ########################################################################
+    #User Icon
     def userIcon(self, initialsTooltip, icon, showHide):
         if showHide:
             # SET TEXT
@@ -238,22 +228,12 @@ class UIFunctions(MainWindow):
     ########################################################################
 
     ########################################################################
-    ## START - MAINWINDOW FUNCTIONS
+    ## START - VMIX TO EVS FUNCTIONS
     ########################################################################
-
-    ########################################################################
-    ## END - MAINWINDOW FUNCTIONS
-    ########################################################################
-
 
     ########################################################################
     ## START - FUNCIONS CLIP
     ########################################################################
- 
-    def function_plst_page(self):
-        self.ui.stackedWidget.setCurrentWidget(self.ui.page_playlist)
-        UIFunctions.resetStyle(self, "btn_playlist")
-        UIFunctions.labelPage(self, "PLAYLIST")
 
     def refresh_estrella1_list(self):
         global estrella1
@@ -466,9 +446,6 @@ class UIFunctions(MainWindow):
                     dur = "No duration assigned"
                 else: 
                     dur = clip_list[6]
-                
-
-
 
                 clip_info = f"{current_clip},   {name},   {pl},   {tc_in},   {tc_out},   {dur}"
                 
@@ -599,7 +576,6 @@ class UIFunctions(MainWindow):
         else:
             print("No hay ningún elemento seleccionado para eliminar.")
         
-        
     
     def function_estrella1_page(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.page_estrella1)
@@ -613,17 +589,161 @@ class UIFunctions(MainWindow):
         self.ui.stackedWidget.setCurrentWidget(self.ui.page_estrella3)
         UIFunctions.refresh_estrella3_list(self)
 
-    
-
-
+    def clip_gotopl(self):
+        global active_playlist
+        active_playlist = load_active_playlist()
+        num = active_playlist[2:]
+        print(num)
+        UIFunctions.add_to_playlist(self, num)
+        UIFunctions.goto_pl(self, num)
 
     ########################################################################
     ## END - FUNCIONS CLIP
     ########################################################################
 
     ########################################################################
+    ## START - FUNCIONS CONTENT ACCESS
+    ########################################################################
+
+    def cont_acc_gotopl(self):
+        global active_playlist
+        active_playlist = load_active_playlist()
+        num = active_playlist[-1]
+        UIFunctions.goto_pl(self, num)
+
+    def function_lasttc():
+        time = load_last_time()
+        date = load_last_date()
+        endpoint = f"api/?Function=ReplaySetTimecode&Value={date}T{time}0"
+        UIFunctions.send_request(endpoint)
+
+
+    def function_mark():
+        """
+        Obtiene el timecode actual de la API de vMix y lo añade a la lista de timecodes.
+        """
+        global timecodes
+        timecodes = load_timecodes_list()
+        response = UIFunctions.send_request("api/")
+        
+        if response:
+            tree = ET.fromstring(response)
+            timecode_element = tree.find(".//timecode")
+            timecode = timecode_element.text if timecode_element is not None else "00:00:00"
+            timecodes.append(timecode)
+            save_timecodes_list(timecodes)
+            print(f"Timecode añadido: {timecode}")
+        else:
+            print("No se pudo obtener el timecode de vMix. Conexión no disponible.")
+        
+    def function_lastmark():
+        """
+        Devuelve el último timecode añadido, luego el penúltimo y así sucesivamente.
+        Si se han agotado los timecodes, devuelve None.
+        """
+        global lastmark_index, timecodes
+        timecodes = load_timecodes_list()
+        
+        if not timecodes:
+            print("No hay timecodes almacenados.")
+            return None
+        
+        if abs(lastmark_index) <= len(timecodes):
+            timecode = timecodes[lastmark_index]
+            lastmark_index -= 1
+            print(f"Último timecode obtenido: {timecode}")
+            UIFunctions.send_request(f"api/?Function=ReplaySetTimecode&Value={timecode}")
+            UIFunctions.send_request("api/?Function=ReplayPause&Channel=1")
+        else:
+            print("No hay más timecodes disponibles.")
+        
+    def function_reset_lastmark():
+        """
+        Reinicia la cuenta de los timecodes para que function_lastmark vuelva a empezar desde el último añadido.
+        """
+        global lastmark_index
+        lastmark_index = -1
+        print("Se ha reseteado la cuenta de los timecodes.")
+
+    ########################################################################
+    ## END - FUNCIONS CONTENT ACCESS
+    ########################################################################
+
+
+    ########################################################################
     ## START - FUNCIONS CONTROL
     ########################################################################
+
+    def function_fastjog(dial):
+        """Cambia entre modo normal (1 frame) y modo rápido (50 frames)."""
+        FAST_JOG = load_fast_jog()
+        dial.fast_mode = not dial.fast_mode
+        dial.super_fast_mode = False
+        mode = f"RÁPIDO ({FAST_JOG})" if dial.fast_mode else "NORMAL (1 frame)"
+        print(f"Modo cambiado a: {mode}")
+
+    def function_sec_fastjog(dial):
+        """Cambia entre modo normal (1 frame) y modo super rápido (100 frames)."""
+        SEC_FAST_JOG = load_sec_fast_jog()
+        dial.super_fast_mode = not dial.super_fast_mode
+        dial.fast_mode = False
+        mode = f"RÁPIDO ({SEC_FAST_JOG})" if dial.super_fast_mode else "NORMAL (1 frame)"
+        print(f"Modo cambiado a: {mode}")
+
+    def function_syncprv(self):
+        """ Sincroniza la vista previa en vMix Replay seleccionando los canales A y B. """
+        response = UIFunctions.send_request("api/?Function=ReplaySelectChannelAB")
+        
+        if response is None:
+            return  # Si no hay conexión, salir de la función
+        
+        UIFunctions.labelPGM_PRV(self, "A|B")
+
+    def function_prvctl(self):
+        global current_clip
+        current_clip = load_current_clip()
+        # Step 1: Fetch the XML from vMix using send_request
+        response = UIFunctions.send_request("api/")  # Only pass "api/" here
+
+        if not response:
+            print("No connection to vMix. Skipping function_prvctl.")
+            return  # Exit the function if there's no connection
+
+        try:
+            # Step 2: Parse the XML
+            root = ET.fromstring(response)  # response is already a string
+
+            # Find the <replay> section inside <input type="Replay">
+            replay_section = root.find(".//input[@type='Replay']/replay")
+
+            if replay_section is None:
+                print("Replay section not found in XML")
+                return
+
+            # Get the channel mode
+            channel_mode = replay_section.get("channelMode")  
+
+            # Dictionary for selecting the correct API function
+            functions = {
+                "A": "ReplaySelectChannelB",
+                "B": "ReplaySelectChannelA",
+                "AB": "ReplaySelectChannelA",
+            }
+
+            if channel_mode in functions:
+                url = f"api/?Function={functions[channel_mode]}"  # Pass only the endpoint to send_request()
+                UIFunctions.send_request(url)  # Use send_request correctly
+
+                # Update UI labels
+                if channel_mode == "A":
+                    self.ui.label_pgm.setText(f'PRV : {current_clip}')
+                    self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
+                else:
+                    self.ui.label_pgm.setText(f'PGM : {current_clip}')
+                    self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
+
+        except ET.ParseError:
+            print("Error parsing XML response from vMix")
 
     def function_loop():
         """ Controla el estado de Loop en vMix Replay """
@@ -707,97 +827,156 @@ class UIFunctions(MainWindow):
 
     def function_gototc(self):
         self.show_dialog_searchtc()
-    
 
-    
+    def function_cancel_in():
+        global clip_id
+        UIFunctions.send_request("api/?Function=ReplayMarkCancel")
+        clip_id = load_current_clip_id()
+        clip_id +=1
+        save_current_clip_id(clip_id)
+
 
     ########################################################################
     ## END - FUNCIONS CONTROL
     ########################################################################
 
-    ########################################################################
-    ## START - FUNCIONS CONTENT ACCESS
-    ########################################################################
- 
-    def function_syncprv(self):
-        """ Sincroniza la vista previa en vMix Replay seleccionando los canales A y B. """
-        response = UIFunctions.send_request("api/?Function=ReplaySelectChannelAB")
-        
-        if response is None:
-            return  # Si no hay conexión, salir de la función
-        
-        UIFunctions.labelPGM_PRV(self, "A|B")
-
-    def function_lasttc():
-        time = load_last_time()
-        date = load_last_date()
-        endpoint = f"api/?Function=ReplaySetTimecode&Value={date}T{time}0"
-        UIFunctions.send_request(endpoint)
-
-
-    def function_mark():
-        """
-        Obtiene el timecode actual de la API de vMix y lo añade a la lista de timecodes.
-        """
-        global timecodes
-        timecodes = load_timecodes_list()
-        response = UIFunctions.send_request("api/")
-        
-        if response:
-            tree = ET.fromstring(response)
-            timecode_element = tree.find(".//timecode")
-            timecode = timecode_element.text if timecode_element is not None else "00:00:00"
-            timecodes.append(timecode)
-            save_timecodes_list(timecodes)
-            print(f"Timecode añadido: {timecode}")
-        else:
-            print("No se pudo obtener el timecode de vMix. Conexión no disponible.")
-        
-    def function_lastmark():
-        """
-        Devuelve el último timecode añadido, luego el penúltimo y así sucesivamente.
-        Si se han agotado los timecodes, devuelve None.
-        """
-        global lastmark_index, timecodes
-        timecodes = load_timecodes_list()
-        
-        if not timecodes:
-            print("No hay timecodes almacenados.")
-            return None
-        
-        if abs(lastmark_index) <= len(timecodes):
-            timecode = timecodes[lastmark_index]
-            lastmark_index -= 1
-            print(f"Último timecode obtenido: {timecode}")
-            UIFunctions.send_request(f"api/?Function=ReplaySetTimecode&Value={timecode}")
-            UIFunctions.send_request("api/?Function=ReplayPause&Channel=1")
-        else:
-            print("No hay más timecodes disponibles.")
-        
-    def function_reset_lastmark():
-        """
-        Reinicia la cuenta de los timecodes para que function_lastmark vuelva a empezar desde el último añadido.
-        """
-        global lastmark_index
-        lastmark_index = -1
-        print("Se ha reseteado la cuenta de los timecodes.")
-
-
-    def function_menu(self):
-        self.ui.stackedWidget.setCurrentWidget(self.ui.page_configuration)
-
-    def function_enter(self):
-        global modo_playlist, active_playlist
-        plst = load_active_playlist()
-        num_plst = plst[:-1]
-
-        if modo_playlist == True:
-            UIFunctions.add_to_playlist(self, num_plst)
-
 
     ########################################################################
-    ## END - FUNCIONS CONTENT ACCESS
+    ## START - FUNCTIONS EXPORT
     ########################################################################
+
+    def export_playlist():
+        active_playlist = load_active_playlist()
+        plst_num = active_playlist[-1]
+        event = int(plst_num) + 1
+        print(event)
+        endpoint_1 = f"api/?Function=ReplaySelectEvents{event}&Channel=1"
+        UIFunctions.send_request(endpoint_1)
+        try:
+            # Paso 1: Hacer la solicitud a la API de vMix
+            response_text = UIFunctions.send_request("api/")  # Reemplaza esto con la URL correcta si es necesario
+            if response_text is None:
+                print("Error al hacer la solicitud a la API de vMix")
+                return
+            
+            # Paso 2: Parsear el XML de la respuesta usando ET
+            root = ET.fromstring(response_text)
+
+            # Buscar la etiqueta <preset> y extraer el valor
+            preset_tag = root.find(".//preset")
+            if preset_tag is not None:
+                preset_path = preset_tag.text
+
+                # Paso 3: Extraer el directorio de la ruta del preset
+                base_directory = os.path.dirname(preset_path)
+
+                # Paso 4: Añadir el directorio "export"
+                export_directory = os.path.join(base_directory, "export")
+
+                # Paso 5: Crear la carpeta "playlistX" dentro de "export", donde X es active_playlist
+                playlist_folder = os.path.join(export_directory, f"playlist{plst_num}")
+                os.makedirs(playlist_folder, exist_ok=True)
+
+                print(f"Directorio creado: {playlist_folder}")
+
+                # Paso 6: Hacer la siguiente solicitud a la API de vMix para exportar el evento
+                export_url = f"api/?Function=ReplayExportLastEvent&Value={playlist_folder}&Channel=1"
+                
+                # Utilizar UIFunctions.send_request para realizar la solicitud
+                export_response_text = UIFunctions.send_request(export_url)
+
+                if export_response_text is not None:
+                    print(f"Exportación de evento realizada en {playlist_folder}")
+                else:
+                    print(f"Error al hacer la solicitud de exportación")
+            else:
+                print("No se encontró la etiqueta <preset> en la respuesta XML.")
+        except Exception as e:
+            print(f"Ocurrió un error: {e}")
+
+
+    def export_clip():
+        current_clip = load_current_clip()
+        numeric_code = current_clip[:-1]
+
+        clip_data = load_clip_dictionary()
+        clip_id = load_current_clip_id()
+        clip_list = clip_data.get(numeric_code, ["void"] * 7)
+        id = int(clip_list[0])
+         
+        endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
+        endpoint_2 =  "api/?Function=ReplaySelectNextEvent&Channel=1"
+
+        endpoint_3 = "api/?Function=ReplayCopySelectedEvent&Value=19"
+        endpoint_4 = "api/?Function=ReplaySelectEvents20&Channel=1"
+     
+
+    
+        UIFunctions.send_request(endpoint_1)
+
+        for _ in range(id):
+            UIFunctions.send_request(endpoint_2)
+
+        time.sleep(0.2)    
+        UIFunctions.send_request(endpoint_3)
+        time.sleep(0.2)
+        UIFunctions.send_request(endpoint_4)
+        time.sleep(0.2)
+        UIFunctions.send_request(endpoint_1)
+        time.sleep(0.2)
+
+        clip_id += 1
+        save_current_clip_id(clip_id)
+
+        try:
+            # Paso 1: Hacer la solicitud a la API de vMix
+            response_text = UIFunctions.send_request("api/")  # Reemplaza esto con la URL correcta si es necesario
+            if response_text is None:
+                print("Error al hacer la solicitud a la API de vMix")
+                return
+            
+            # Paso 2: Parsear el XML de la respuesta usando ET
+            root = ET.fromstring(response_text)
+
+            # Buscar la etiqueta <preset> y extraer el valor
+            preset_tag = root.find(".//preset")
+            if preset_tag is not None:
+                preset_path = preset_tag.text
+
+                # Paso 3: Extraer el directorio de la ruta del preset
+                base_directory = os.path.dirname(preset_path)
+
+                # Paso 4: Añadir el directorio "export"
+                export_directory = os.path.join(base_directory, "export")
+
+                # Paso 5: Crear la carpeta "playlistX" dentro de "export", donde X es active_playlist
+                clip_folder = os.path.join(export_directory, f"{current_clip}")
+                os.makedirs(clip_folder, exist_ok=True)
+
+                print(f"Directorio creado: {current_clip}")
+
+                # Paso 6: Hacer la siguiente solicitud a la API de vMix para exportar el evento
+                export_url = f"api/?Function=ReplayExportLastEvent&Value={clip_folder}&Channel=1"
+                
+                # Utilizar UIFunctions.send_request para realizar la solicitud
+                export_response_text = UIFunctions.send_request(export_url)
+
+                if export_response_text is not None:
+                    print(f"Exportación de evento realizada en {clip_folder}")
+                else:
+                    print(f"Error al hacer la solicitud de exportación")
+            else:
+                print("No se encontró la etiqueta <preset> en la respuesta XML.")
+
+        except Exception as e:
+            print(f"Ocurrió un error: {e}")
+
+
+    ########################################################################
+    ## END - FUNCTIONS EXPORT
+    ########################################################################
+
+
 
     ########################################################################
     ## START - FUNCTIONS PLAYLIST
@@ -909,13 +1088,6 @@ class UIFunctions(MainWindow):
 
         UIFunctions.dur_playlist(self, plst_num)
         UIFunctions.num_clips_playlist(self, plst_num)
-
-
-    def cont_acc_gotopl(self):
-        global active_playlist
-        active_playlist = load_active_playlist()
-        num = active_playlist[-1]
-        UIFunctions.goto_pl(self, num)
 
 
     def goto_pl(self, page_number):
@@ -1042,6 +1214,8 @@ class UIFunctions(MainWindow):
         UIFunctions.dur_playlist(self, num_plst)
         UIFunctions.num_clips_playlist(self, num_plst)
 
+        endpoint_5 = "api/?Function=ReplaySelectEvents1&Channel=1"
+        UIFunctions.send_request(endpoint_5)
 
 
     def refresh_playlist(self, num_plst):
@@ -1157,47 +1331,19 @@ class UIFunctions(MainWindow):
         getattr(self.ui, label2_name).setText(texto)
 
 
-
-
-
-
-
-
-
-        
-
-
-
-
-
-
     ########################################################################
-    ## START - FUNCTIONS PLAYLIST
+    ## END - FUNCTIONS PLAYLIST
     ########################################################################
-
-    ########################################################################
-    ## START - FUNCTIONS CONFIG
-    ########################################################################
-
-    def function_clear_marks():
-        """
-        Vacía la lista de timecodes.
-        """
-        global timecodes, lastmark_index
-        timecodes = []
-        save_timecodes_list(timecodes)
-        lastmark_index = -1
-        print("Lista de timecodes vaciada.")
-
-    ########################################################################
-    ## END - FUNCTIONS CONFIG
-    ########################################################################
-
 
 
     ########################################################################
     ## START - FUNCIONS SIMULATOR
     ########################################################################
+
+    #Toggle Shift declared in main.py
+
+    def function_menu(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.page_configuration)
 
     def function_A(self):
         """Fetches XML from vMix, checks the replay section, and sends the appropriate command based on channel mode."""
@@ -1438,24 +1584,6 @@ class UIFunctions(MainWindow):
         if not response_2:
             print("No se pudo ajustar la velocidad de reproducción.")
 
-    def function_fastjog(dial):
-        """Cambia entre modo normal (1 frame) y modo rápido (50 frames)."""
-        FAST_JOG = load_fast_jog()
-        dial.fast_mode = not dial.fast_mode
-        dial.super_fast_mode = False
-        mode = f"RÁPIDO ({FAST_JOG})" if dial.fast_mode else "NORMAL (1 frame)"
-        print(f"Modo cambiado a: {mode}")
-
-    def function_sec_fastjog(dial):
-        """Cambia entre modo normal (1 frame) y modo super rápido (100 frames)."""
-        SEC_FAST_JOG = load_sec_fast_jog()
-        dial.super_fast_mode = not dial.super_fast_mode
-        dial.fast_mode = False
-        mode = f"RÁPIDO ({SEC_FAST_JOG})" if dial.super_fast_mode else "NORMAL (1 frame)"
-        print(f"Modo cambiado a: {mode}")
-
-    def function_return():
-        print("Ejectuando funcion Return...")
 
     def function_record():
         """Fetches vMix XML, checks replay recording status, and toggles it."""
@@ -1501,58 +1629,10 @@ class UIFunctions(MainWindow):
 
         print("Replay recording toggled successfully")
 
-    #function PAGE declarada en main.py
-
-    def function_prvctl(self):
-        global current_clip
-        current_clip = load_current_clip()
-        # Step 1: Fetch the XML from vMix using send_request
-        response = UIFunctions.send_request("api/")  # Only pass "api/" here
-
-        if not response:
-            print("No connection to vMix. Skipping function_prvctl.")
-            return  # Exit the function if there's no connection
-
-        try:
-            # Step 2: Parse the XML
-            root = ET.fromstring(response)  # response is already a string
-
-            # Find the <replay> section inside <input type="Replay">
-            replay_section = root.find(".//input[@type='Replay']/replay")
-
-            if replay_section is None:
-                print("Replay section not found in XML")
-                return
-
-            # Get the channel mode
-            channel_mode = replay_section.get("channelMode")  
-
-            # Dictionary for selecting the correct API function
-            functions = {
-                "A": "ReplaySelectChannelB",
-                "B": "ReplaySelectChannelA",
-                "AB": "ReplaySelectChannelA",
-            }
-
-            if channel_mode in functions:
-                url = f"api/?Function={functions[channel_mode]}"  # Pass only the endpoint to send_request()
-                UIFunctions.send_request(url)  # Use send_request correctly
-
-                # Update UI labels
-                if channel_mode == "A":
-                    self.ui.label_pgm.setText(f'PRV : {current_clip}')
-                    self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
-                else:
-                    self.ui.label_pgm.setText(f'PGM : {current_clip}')
-                    self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
-
-        except ET.ParseError:
-            print("Error parsing XML response from vMix")
-
-    #function_plst_page declarada a FUNCTIONS CLIP
+    #function PAGE declared in main.py
+    #function gotopl declarada a FUNCTIONS CLIP
     #function_loop declarada a FUNCTIONS CONTROL
 
-        
     def function_in():
         """Marks the current position as 'in' for replay."""
         global mark_in_tc
@@ -1571,11 +1651,9 @@ class UIFunctions(MainWindow):
             return  # Salir si no hay conexión
         
         print("Replay mark 'In' set successfully.")
+
+    #Function out declared in main.py
     
-
-    def function_lever():
-        print("Ejecutando funcion lever...")
-
     def function_take():
         """Realiza la acción ReplaySwapChannels en vMix, si hay conexión."""
         response = UIFunctions.send_request("api/?Function=ReplaySwapChannels")
@@ -1587,8 +1665,7 @@ class UIFunctions(MainWindow):
         print("Acción 'ReplaySwapChannels' ejecutada correctamente.")
 
 
-    #dial
-
+    #Dial
     def toggle_browse_mode(self):
         """
         Activa o desactiva el modo BROWSE.
@@ -1609,7 +1686,6 @@ class UIFunctions(MainWindow):
 
 
     def function_rodeta(self, dial):
-        global selected_index
         """Configura el QDial para controlar la replay de vMix frame por frame o navegar en la lista de reproducción dependiendo del modo."""
 
         dial.setWrapping(True)  # Permite giros infinitos
@@ -1623,7 +1699,7 @@ class UIFunctions(MainWindow):
             # 1. Revisar si estamos en browse_mode
             if getattr(self, "browse_mode", False):  # Verifica si estamos en browse_mode
                 plst = load_active_playlist()  # Carga la lista activa
-                plst_num = plst[-1]  # Obtiene el número de la lista activa
+                plst_num = plst[2:]  # Obtiene el número de la lista activa
                 list_name = f"list_pl{plst_num}"  # Define el nombre de la lista en UI
 
                 if hasattr(self.ui, list_name):  # Verifica si la lista existe en la UI
@@ -1758,13 +1834,6 @@ class UIFunctions(MainWindow):
         slider.sliderReleased.connect(on_slider_released) # Resume with new speed
         slider.valueChanged.connect(on_slider_changed)    # Change speed while moving   
 
-    def function_cancel_in():
-        global clip_id
-        UIFunctions.send_request("api/?Function=ReplayMarkCancel")
-        clip_id = load_current_clip_id()
-        clip_id +=1
-        save_current_clip_id(clip_id)
-
 
     def function_e_e():
         """Jumps to current time in replay and plays it."""
@@ -1841,7 +1910,23 @@ class UIFunctions(MainWindow):
         print("Replay jumped to now and playback started successfully.")
 
 
-    #Gestio clips: 
+    #Toggle clear declared in main.py
+
+    def function_enter(self):
+        global modo_playlist, active_playlist
+        plst = load_active_playlist()
+        num_plst = plst[2:]
+        print(num_plst)
+        UIFunctions.add_to_playlist(self, num_plst)
+
+    ########################################################################
+    ## END - FUNCIONS SIMULATOR
+    ########################################################################
+
+
+    ########################################################################
+    ## START - CLIP MANAGEMENT FUNCTIONS
+    ########################################################################
 
     def show_dialog_overwrite_clip(self, clip_code, clip_management):
         self.popup = PopupOverwriteClip(clip_code, clip_management)
@@ -1860,7 +1945,6 @@ class UIFunctions(MainWindow):
             print("No se pudo obtener el timecode de vMix. Conexión no disponible.")
         return timecode
     
-
     def calculate_clip_duration(clip_tc_in, clip_tc_out):
         """
         Calcula la duración entre clip_tc_in y clip_tc_out en formato "HH:MM:SS.sss".
@@ -1900,174 +1984,47 @@ class UIFunctions(MainWindow):
         print(duration_str)
 
         return duration_str
+    
+    ########################################################################
+    ## START - CLIP MANAGEMENT FUNCTIONS
+    ########################################################################
 
+    ########################################################################
+    ## START - FUNCTIONS CONFIG
+    ########################################################################
 
+    def function_clear_marks():
+        """
+        Vacía la lista de timecodes.
+        """
+        global timecodes, lastmark_index
+        timecodes = []
+        save_timecodes_list(timecodes)
+        lastmark_index = -1
+        print("Lista de timecodes vaciada.")
 
-
-
-
+    ########################################################################
+    ## END - FUNCTIONS CONFIG
+    ########################################################################
 
     
-
-    
-
-
-
-
-
-
     ########################################################################
-    ## END - FUNCIONS SIMULATOR
+    ## END - VMIX TO EVS FUNCTIONS
     ########################################################################
 
-    ########################################################################
-    ## START - FUNCTIONS EXPORT
-    ########################################################################
-
-    def export_playlist():
-        active_playlist = load_active_playlist()
-        plst_num = active_playlist[-1]
-        event = int(plst_num) + 1
-        print(event)
-        endpoint_1 = f"api/?Function=ReplaySelectEvents{event}&Channel=1"
-        UIFunctions.send_request(endpoint_1)
-        try:
-            # Paso 1: Hacer la solicitud a la API de vMix
-            response_text = UIFunctions.send_request("api/")  # Reemplaza esto con la URL correcta si es necesario
-            if response_text is None:
-                print("Error al hacer la solicitud a la API de vMix")
-                return
-            
-            # Paso 2: Parsear el XML de la respuesta usando ET
-            root = ET.fromstring(response_text)
-
-            # Buscar la etiqueta <preset> y extraer el valor
-            preset_tag = root.find(".//preset")
-            if preset_tag is not None:
-                preset_path = preset_tag.text
-
-                # Paso 3: Extraer el directorio de la ruta del preset
-                base_directory = os.path.dirname(preset_path)
-
-                # Paso 4: Añadir el directorio "export"
-                export_directory = os.path.join(base_directory, "export")
-
-                # Paso 5: Crear la carpeta "playlistX" dentro de "export", donde X es active_playlist
-                playlist_folder = os.path.join(export_directory, f"playlist{plst_num}")
-                os.makedirs(playlist_folder, exist_ok=True)
-
-                print(f"Directorio creado: {playlist_folder}")
-
-                # Paso 6: Hacer la siguiente solicitud a la API de vMix para exportar el evento
-                export_url = f"api/?Function=ReplayExportLastEvent&Value={playlist_folder}&Channel=1"
-                
-                # Utilizar UIFunctions.send_request para realizar la solicitud
-                export_response_text = UIFunctions.send_request(export_url)
-
-                if export_response_text is not None:
-                    print(f"Exportación de evento realizada en {playlist_folder}")
-                else:
-                    print(f"Error al hacer la solicitud de exportación")
-            else:
-                print("No se encontró la etiqueta <preset> en la respuesta XML.")
-        except Exception as e:
-            print(f"Ocurrió un error: {e}")
-
-
-    def export_clip():
-        current_clip = load_current_clip()
-        numeric_code = current_clip[:-1]
-
-        clip_data = load_clip_dictionary()
-        clip_id = load_current_clip_id()
-        clip_list = clip_data.get(numeric_code, ["void"] * 7)
-        id = int(clip_list[0])
-         
-        endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
-        endpoint_2 =  "api/?Function=ReplaySelectNextEvent&Channel=1"
-
-        endpoint_3 = "api/?Function=ReplayCopySelectedEvent&Value=19"
-        endpoint_4 = "api/?Function=ReplaySelectEvents20&Channel=1"
-     
-
-    
-        UIFunctions.send_request(endpoint_1)
-
-        for _ in range(id):
-            UIFunctions.send_request(endpoint_2)
-
-        time.sleep(0.2)    
-        UIFunctions.send_request(endpoint_3)
-        time.sleep(0.2)
-        UIFunctions.send_request(endpoint_4)
-        time.sleep(0.2)
-        UIFunctions.send_request(endpoint_1)
-        time.sleep(0.2)
-
-        clip_id += 1
-        save_current_clip_id(clip_id)
-
-        try:
-            # Paso 1: Hacer la solicitud a la API de vMix
-            response_text = UIFunctions.send_request("api/")  # Reemplaza esto con la URL correcta si es necesario
-            if response_text is None:
-                print("Error al hacer la solicitud a la API de vMix")
-                return
-            
-            # Paso 2: Parsear el XML de la respuesta usando ET
-            root = ET.fromstring(response_text)
-
-            # Buscar la etiqueta <preset> y extraer el valor
-            preset_tag = root.find(".//preset")
-            if preset_tag is not None:
-                preset_path = preset_tag.text
-
-                # Paso 3: Extraer el directorio de la ruta del preset
-                base_directory = os.path.dirname(preset_path)
-
-                # Paso 4: Añadir el directorio "export"
-                export_directory = os.path.join(base_directory, "export")
-
-                # Paso 5: Crear la carpeta "playlistX" dentro de "export", donde X es active_playlist
-                clip_folder = os.path.join(export_directory, f"{current_clip}")
-                os.makedirs(clip_folder, exist_ok=True)
-
-                print(f"Directorio creado: {current_clip}")
-
-                # Paso 6: Hacer la siguiente solicitud a la API de vMix para exportar el evento
-                export_url = f"api/?Function=ReplayExportLastEvent&Value={clip_folder}&Channel=1"
-                
-                # Utilizar UIFunctions.send_request para realizar la solicitud
-                export_response_text = UIFunctions.send_request(export_url)
-
-                if export_response_text is not None:
-                    print(f"Exportación de evento realizada en {clip_folder}")
-                else:
-                    print(f"Error al hacer la solicitud de exportación")
-            else:
-                print("No se encontró la etiqueta <preset> en la respuesta XML.")
-
-        except Exception as e:
-            print(f"Ocurrió un error: {e}")
-
-
-    ########################################################################
-    ## END - FUNCTIONS EXPORT
-    ########################################################################
 
     ########################################################################
     ## START - GUI DEFINITIONS
     ########################################################################
 
-    ## ==> UI DEFINITIONS
-    ########################################################################
+    #UI definitions
     def uiDefinitions(self):
         def dobleClickMaximizeRestore(event):
             # IF DOUBLE CLICK CHANGE STATUS
             if event.type() == QtCore.QEvent.MouseButtonDblClick:
                 QtCore.QTimer.singleShot(250, lambda: UIFunctions.maximize_restore(self))
 
-        ## REMOVE ==> STANDARD TITLE BAR
+        #Remove standard title bar
         if GLOBAL_TITLE_BAR:
             self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
             self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -2076,12 +2033,11 @@ class UIFunctions(MainWindow):
             self.ui.horizontalLayout.setContentsMargins(0, 0, 0, 0)
             self.ui.frame_label_top_btns.setContentsMargins(8, 0, 0, 5)
             self.ui.frame_label_top_btns.setMinimumHeight(42)
-            #self.ui.frame_icon_top_bar.hide()
             self.ui.frame_btns_right.hide()
             self.ui.frame_size_grip.hide()
 
 
-        ## SHOW ==> DROP SHADOW
+        #Show drop shadow
         self.shadow = QGraphicsDropShadowEffect(self)
         self.shadow.setBlurRadius(17)
         self.shadow.setXOffset(0)
@@ -2089,24 +2045,22 @@ class UIFunctions(MainWindow):
         self.shadow.setColor(QColor(0, 0, 0, 150))
         self.ui.frame_main.setGraphicsEffect(self.shadow)
 
-        ## ==> RESIZE WINDOW
+        #Resize window
         self.sizegrip = QSizeGrip(self.ui.frame_size_grip)
         self.sizegrip.setStyleSheet("width: 20px; height: 20px; margin 0px; padding: 0px;")
 
-        ### ==> MINIMIZE
+        #Minimize
         self.ui.btn_minimize.clicked.connect(lambda: self.showMinimized())
 
-        ## ==> MAXIMIZE/RESTORE
+        #Maximize - Restore
         self.ui.btn_maximize_restore.clicked.connect(lambda: UIFunctions.maximize_restore(self))
 
-        ## SHOW ==> CLOSE APPLICATION
-        #self.ui.btn_close.clicked.connect(lambda: self.close())
+        ## Close Application
         self.ui.btn_close.clicked.connect(lambda: close_app())
         
         def close_app():
             UIFunctions.function_record()
             self.close()
-
 
     ########################################################################
     ## END - GUI DEFINITIONS
