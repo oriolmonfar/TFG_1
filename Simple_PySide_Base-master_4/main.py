@@ -904,6 +904,8 @@ class MainWindow(QMainWindow):
                 print(current_clip)
                 channel_mode = get_channelmode(self)
                 UIFunctions.labelPGM_PRV(self, channel_mode)
+                endpoint = "api/?Function=ReplayToggleSelectedEventCamera1"
+                UIFunctions.send_request(endpoint)
             else: 
                 if SHIFT:
                     UIFunctions.function_A(self)
@@ -924,6 +926,8 @@ class MainWindow(QMainWindow):
                 print(current_clip)
                 channel_mode = get_channelmode(self)
                 UIFunctions.labelPGM_PRV(self, channel_mode)
+                endpoint = "api/?Function=ReplayToggleSelectedEventCamera2"
+                UIFunctions.send_request(endpoint)
             else: 
                 if SHIFT:
                     UIFunctions.function_B(self)
@@ -944,6 +948,8 @@ class MainWindow(QMainWindow):
                 print(current_clip)
                 channel_mode = get_channelmode(self)
                 UIFunctions.labelPGM_PRV(self, channel_mode)
+                endpoint = "api/?Function=ReplayToggleSelectedEventCamera3"
+                UIFunctions.send_request(endpoint)
             else: 
                 if SHIFT:
                     UIFunctions.function_C(self)
@@ -964,6 +970,8 @@ class MainWindow(QMainWindow):
                 print(current_clip)
                 channel_mode = get_channelmode(self)
                 UIFunctions.labelPGM_PRV(self, channel_mode)
+                endpoint = "api/?Function=ReplayToggleSelectedEventCamera4"
+                UIFunctions.send_request(endpoint)
             else: 
                 if SHIFT:
                     UIFunctions.function_D(self)
