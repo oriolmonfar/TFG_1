@@ -32,6 +32,8 @@ SHIFT = False
 current_page = load_current_page()
 current_bank = load_current_bank()
 current_clip = load_current_clip()
+current_clip_pgm = load_current_clip_pgm()
+current_clip_prv = load_current_clip_prv()
 current_camangle = load_current_camangle()
 clip_mode = load_clip_mode()
 modo_page = False
@@ -780,6 +782,35 @@ class MainWindow(QMainWindow):
             return result  # Devolvemos el modo de canal o None si no se encontró
         
         pgm = get_channelmode(self)
+
+        def set_current_clip(self):
+            """Asigna un nuevo clip a la variable global current_clip y actualiza según channelMode."""
+            global current_clip, current_clip_pgm, current_clip_prv
+
+            channel_mode = get_channelmode(self)  # Saber si estamos en A o B
+            if not channel_mode:
+                print("No se pudo determinar el channelMode.")
+                return
+
+            new_clip = load_current_clip()  # Cargar el clip actual desde vMix
+
+            if channel_mode == 'A':
+                if new_clip != current_clip_pgm:
+                    current_clip = new_clip
+                    current_clip_pgm = new_clip
+                    save_current_clip_pgm(current_clip_pgm)
+                    print(f"Clip asignado al canal A (PGM): {current_clip_pgm}")
+            elif channel_mode == 'B':
+                if new_clip != current_clip_prv:
+                    current_clip = new_clip
+                    current_clip_prv = new_clip
+                    save_current_clip_prv(current_clip_prv)
+                    print(f"Clip asignado al canal B (PRV): {current_clip_prv}")
+            else:
+                print(f"ChannelMode desconocido: {channel_mode}")
+
+        set_current_clip(self)
+
         UIFunctions.labelPGM_PRV(self, pgm)
 
         ## Set window size
@@ -1423,6 +1454,7 @@ class MainWindow(QMainWindow):
                 print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
                 save_current_clip(clip_code)
                 channel_mode = get_channelmode(self)
+                set_current_clip(self)
                 UIFunctions.labelPGM_PRV(self, channel_mode)
                 # Remover el último carácter (letra del cam angle)
                 numeric_code = clip_code[:-1]  

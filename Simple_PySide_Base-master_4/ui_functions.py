@@ -136,19 +136,20 @@ class UIFunctions(MainWindow):
 
     #Label Title according to channel mode
     def labelPGM_PRV(self, text):
-        global current_clip
-        current_clip = load_current_clip()
+        global current_clip_pgm, current_clip_prv
+        current_clip_pgm = load_current_clip_pgm()
+        current_clip_prv = load_current_clip_prv()
         if text == "A":
-            self.ui.label_pgm.setText(f'PGM : {current_clip}')
+            self.ui.label_pgm.setText(f'PGM : {current_clip_pgm}')
             self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
         elif text == "B":
-            self.ui.label_pgm.setText(f'PRV : {current_clip}')
+            self.ui.label_pgm.setText(f'PRV : {current_clip_prv}')
             self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
         else: 
-            self.ui.label_pgm.setText(f'LINKED A|B : {current_clip}')
+            self.ui.label_pgm.setText(f'LINKED A|B : {current_clip_pgm}')
             self.ui.label_pgm.setStyleSheet("color: rgb(255,165,0)")
         self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
-        self.ui.contec_acc_actualclip.setText(f"{current_clip}")
+        self.ui.contec_acc_actualclip.setText(f"{current_clip_pgm}")
 
         
     # Label Description
@@ -700,8 +701,9 @@ class UIFunctions(MainWindow):
         UIFunctions.labelPGM_PRV(self, "A|B")
 
     def function_prvctl(self):
-        global current_clip
-        current_clip = load_current_clip()
+        global current_clip_pgm, current_clip_prv
+        current_clip_pgm = load_current_clip_pgm()
+        current_clip_prv = load_current_clip_prv()
         # Step 1: Fetch the XML from vMix using send_request
         response = UIFunctions.send_request("api/")  # Only pass "api/" here
 
@@ -736,10 +738,10 @@ class UIFunctions(MainWindow):
 
                 # Update UI labels
                 if channel_mode == "A":
-                    self.ui.label_pgm.setText(f'PRV : {current_clip}')
+                    self.ui.label_pgm.setText(f'PRV : {current_clip_prv}')
                     self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
                 else:
-                    self.ui.label_pgm.setText(f'PGM : {current_clip}')
+                    self.ui.label_pgm.setText(f'PGM : {current_clip_pgm}')
                     self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
 
         except ET.ParseError:
@@ -1635,6 +1637,10 @@ class UIFunctions(MainWindow):
     def function_take():
         """Realiza la acción ReplaySwapChannels en vMix, si hay conexión."""
         response = UIFunctions.send_request("api/?Function=ReplaySwapChannels")
+        response_1 = UIFunctions.send_request("api/?Function=ReplayPlay&Channel=1")
+        if not response_1:
+            print("No se pudo ejecutar ReplayPlay. Saltando function_play.")
+            return
         
         if not response:
             print("No se pudo ejecutar 'ReplaySwapChannels' porque no hay conexión con vMix.")

@@ -5,47 +5,55 @@ import time
 import threading
 import os
 import re
+from config_manager import *
+
+IP_VMIX = load_ip_vmix()
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 
 # Configuración
-BACKGROUND_IMAGE = 'preset_replay4+2.png'
-INPUT_VUMETER_HEIGHT = 110
-INPUT_VUMETER_WIDTH = 10
-REPLAY_VUMETER_HEIGHT = 150
-REPLAY_VUMETER_WIDTH = 12
+CONFIG = {
+    'BACKGROUND_IMAGE': 'preset_replay4+2.png',
+    'VMIX_API_URL': f'http://{IP_VMIX}/api',
+    'UPDATE_INTERVAL_MS': 50,
+    'VUMETER': {
+        'INPUT': {'HEIGHT': 50, 'WIDTH': 6},
+        'REPLAY': {'HEIGHT': 75, 'WIDTH': 8}
+    }
+}
 
 # Datos compartidos
 vu_data = {
-    'input_1': {'meterF1': 0, 'meterF2': 0, 'timecode': '00:00:00.00'},
-    'input_2': {'meterF1': 0, 'meterF2': 0, 'timecode': '00:00:00.00'},
-    'input_3': {'meterF1': 0, 'meterF2': 0, 'timecode': '00:00:00.00'},
-    'input_4': {'meterF1': 0, 'meterF2': 0, 'timecode': '00:00:00.00'},
+    'input_1': {'meterF1': 0, 'meterF2': 0},
+    'input_2': {'meterF1': 0, 'meterF2': 0},
+    'input_3': {'meterF1': 0, 'meterF2': 0},
+    'input_4': {'meterF1': 0, 'meterF2': 0},
     'replay': {
         'meterF1': 0, 
         'meterF2': 0,
-        'timecodeA': '00:00:00.00',
-        'timecodeB': '00:00:00.00',
-        'timecode': '00:00:00.00'
+        'timecode': '00:00:00.000'  # Mostrará timecodeA
     },
     'replay_preview': {
         'meterF1': 0, 
         'meterF2': 0,
-        'timecode': '00:00:00.00'
+        'timecode': '00:00:00.000'  # Mostrará timecodeB
     }
 }
 
-def format_timecode(full_timecode):
-    """Formatea el timecode de vMix a HH:MM:SS.ms"""
-    if not full_timecode:
-        return '00:00:00.00'
-    print(full_timecode)
-    
-    # Extraer solo la parte del tiempo (formato 0001-01-01T00:00:00.000)
-    match = re.search(r'T(\d{2}:\d{2}:\d{2}\.\d{2})\d*', full_timecode)
+def extract_vmix_timecode(full_timecode):
+    """
+    Extrae el timecode en formato 'HH:MM:SS.mmm' desde un string tipo '2025-04-29T19:20:32.988'
+    Devuelve '00:00:00.000' si el formato no es válido
+    """
+    if not full_timecode or full_timecode == '0001-01-01T00:00:00.000':
+        return '00:00:00.000'
+
+    # Formato vMix: "2025-04-29T19:20:32.988"
+    match = re.match(r".*T(\d{2}:\d{2}:\d{2}\.\d{3})", full_timecode)
     if match:
         return match.group(1)
-    return '00:00:00.00'
+    
+    return '00:00:00.000'
 
 def fetch_vmix_audio_data():
     """Función que obtiene los datos de audio y timecodes de vMix"""
@@ -53,103 +61,113 @@ def fetch_vmix_audio_data():
     
     while True:
         try:
-            response = requests.get('http://127.0.0.1:8088/api', timeout=1)
+            response = requests.get(CONFIG['VMIX_API_URL'], timeout=1)
+            if response.status_code != 200:
+                raise Exception(f"Error HTTP {response.status_code}")
+                
             xml_data = response.text
             root = ET.fromstring(xml_data)
-            inputs = root.findall('inputs/input')
-            replay = root.find('replay')
             
+            # Inicializar estructura temporal para nuevos datos
             new_data = {
-                'input_1': {'meterF1': 0, 'meterF2': 0, 'timecode': '00:00:00.00'},
-                'input_2': {'meterF1': 0, 'meterF2': 0, 'timecode': '00:00:00.00'},
-                'input_3': {'meterF1': 0, 'meterF2': 0, 'timecode': '00:00:00.00'},
-                'input_4': {'meterF1': 0, 'meterF2': 0, 'timecode': '00:00:00.00'},
+                'input_1': {'meterF1': 0, 'meterF2': 0},
+                'input_2': {'meterF1': 0, 'meterF2': 0},
+                'input_3': {'meterF1': 0, 'meterF2': 0},
+                'input_4': {'meterF1': 0, 'meterF2': 0},
                 'replay': {
                     'meterF1': 0, 
                     'meterF2': 0,
-                    'timecodeA': '00:00:00.00',
-                    'timecodeB': '00:00:00.00',
-                    'timecode': '00:00:00.00'
+                    'timecode': '00:00:00.000'
                 },
                 'replay_preview': {
                     'meterF1': 0, 
                     'meterF2': 0,
-                    'timecode': '00:00:00.00'
+                    'timecode': '00:00:00.000'
                 }
             }
             
-            # Procesar inputs normales
-            for input_elem in inputs:
+            # Primero encontrar el elemento replay para obtener timecodeA y timecodeB
+            replay_timecodeA = '00:00:00.000'
+            replay_timecodeB = '00:00:00.000'
+            replay_found = False
+            
+            replay = root.find(".//replay")
+            if replay is not None:
+                # Obtener atributos
+                replay_attrs = replay.attrib
+                # Obtener los timecodes
+                replay_timecodeA = extract_vmix_timecode(replay.findtext("timecodeA"))
+                replay_timecodeB = extract_vmix_timecode(replay.findtext("timecodeB"))
+                replay_found = True
+            
+            # Asignar timecodes A y B a sus respectivos lugares
+            new_data['replay']['timecode'] = replay_timecodeA
+            new_data['replay_preview']['timecode'] = replay_timecodeB
+            
+            # Procesar todos los inputs para obtener medidores y timecodes individuales
+            for input_elem in root.findall('inputs/input'):
                 number = input_elem.get('number', '').strip()
                 input_type = input_elem.get('type', '').strip()
                 
                 if number in ['1', '2', '3', '4']:
                     key = f'input_{number}'
                     try:
+                        # Obtener valores de los medidores
                         meterF1 = float(input_elem.get('meterF1', 0))
                         meterF2 = float(input_elem.get('meterF2', 0))
+                        
                         # Obtener timecode del input
-                        timecode = format_timecode(input_elem.get('timecode', ''))
+                        timecode = extract_vmix_timecode(input_elem.get('timecode', ''))
+                        
+                        # Actualizar datos
                         new_data[key].update({
                             'meterF1': meterF1,
                             'meterF2': meterF2,
                             'timecode': timecode
                         })
-                    except (ValueError, TypeError) as e:
-                        print(f"Error procesando {key}: {e}")
+                    except Exception as e:
+                        print(f"Error procesando input {number}: {str(e)}")
                 
                 elif input_type == 'Replay':
                     try:
+                        # Solo actualizar medidores (timecode ya lo tenemos)
                         meterF1 = float(input_elem.get('meterF1', 0))
                         meterF2 = float(input_elem.get('meterF2', 0))
-                        timecode = format_timecode(input_elem.get('timecode', ''))
                         new_data['replay'].update({
                             'meterF1': meterF1,
-                            'meterF2': meterF2,
-                            'timecode': timecode
+                            'meterF2': meterF2
                         })
-                    except (ValueError, TypeError) as e:
-                        print(f"Error procesando Replay: {e}")
+                    except Exception as e:
+                        print(f"Error procesando Replay: {str(e)}")
                 
                 elif input_type == 'ReplayPreview':
                     try:
+                        # Solo actualizar medidores (timecode ya lo tenemos)
                         meterF1 = float(input_elem.get('meterF1', 0))
                         meterF2 = float(input_elem.get('meterF2', 0))
-                        timecode = format_timecode(input_elem.get('timecode', ''))
                         new_data['replay_preview'].update({
                             'meterF1': meterF1,
-                            'meterF2': meterF2,
-                            'timecode': timecode
+                            'meterF2': meterF2
                         })
-                    except (ValueError, TypeError) as e:
-                        print(f"Error procesando ReplayPreview: {e}")
+                    except Exception as e:
+                        print(f"Error procesando ReplayPreview: {str(e)}")
             
-            # Procesar timecodes A/B del nodo replay principal
-            if replay is not None:
-                try:
-                    timecodeA = format_timecode(replay.get('timecodeA', ''))
-                    timecodeB = format_timecode(replay.get('timecodeB', ''))
-                    new_data['replay'].update({
-                        'timecodeA': timecodeA,
-                        'timecodeB': timecodeB
-                    })
-                except Exception as e:
-                    print(f"Error procesando timecodes A/B: {e}")
-            
+            # Actualizar datos globales solo si hay cambios
             if new_data != vu_data:
-                vu_data = new_data
+                vu_data.update(new_data)
+                print("Datos actualizados:", {k: v['timecode'] for k, v in vu_data.items() if 'timecode' in v})
             
         except requests.exceptions.RequestException as e:
-            print(f"Error de conexión con vMix: {e}")
+            print(f"Error de conexión con vMix: {str(e)}")
             time.sleep(1)
         except ET.ParseError as e:
-            print(f"Error parseando XML: {e}")
+            print(f"Error parseando XML: {str(e)}")
             time.sleep(0.1)
         except Exception as e:
-            print(f"Error inesperado: {e}")
+            print(f"Error inesperado: {str(e)}")
             time.sleep(0.1)
         else:
-            time.sleep(0.01)
+            time.sleep(CONFIG['UPDATE_INTERVAL_MS'] / 1000)
 
 @app.route('/')
 def index():
@@ -158,7 +176,7 @@ def index():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>vMix VU Meters</title>
+        <title>vMix Multiview</title>
         <style>
             body, html {{
                 margin: 0;
@@ -166,7 +184,8 @@ def index():
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
-                font-family: 'Courier New', monospace;
+                font-family: 'Arial', sans-serif;
+                background-color: transparent !important;
             }}
             .background {{
                 position: fixed;
@@ -174,10 +193,11 @@ def index():
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background-image: url('{BACKGROUND_IMAGE}');
+                background-color: rgba(0, 0, 0, 0)
                 background-size: cover;
                 background-position: center;
                 z-index: -1;
+                opacity: 0.9;
             }}
             .container {{
                 position: relative;
@@ -192,20 +212,20 @@ def index():
                 gap: 4px;
             }}
             .input-vu-meter {{
-                width: {INPUT_VUMETER_WIDTH}px;
-                height: {INPUT_VUMETER_HEIGHT}px;
-                border: 1px solid rgba(255,255,255,0.5);
-                background-color: rgba(0,0,0,0.3);
+                width: {CONFIG['VUMETER']['INPUT']['WIDTH']}px;
+                height: {CONFIG['VUMETER']['INPUT']['HEIGHT']}px;
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                background-color: rgba(0, 0, 0, 0.3);
                 display: flex;
                 flex-direction: column-reverse;
                 border-radius: 2px;
                 overflow: hidden;
             }}
             .replay-vu-meter {{
-                width: {REPLAY_VUMETER_WIDTH}px;
-                height: {REPLAY_VUMETER_HEIGHT}px;
-                border: 1px solid rgba(255,255,255,0.5);
-                background-color: rgba(0,0,0,0.3);
+                width: {CONFIG['VUMETER']['REPLAY']['WIDTH']}px;
+                height: {CONFIG['VUMETER']['REPLAY']['HEIGHT']}px;
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                background-color: rgba(0, 0, 0, 0.3);
                 display: flex;
                 flex-direction: column-reverse;
                 border-radius: 2px;
@@ -213,60 +233,88 @@ def index():
             }}
             .timecode {{
                 color: white;
-                font-size: 14px;
+                font-size: 22px;
                 font-weight: bold;
                 text-shadow: 1px 1px 2px black;
-                background-color: rgba(0,0,0,0.5);
+                background-color: rgba(0, 0, 0, 0);
                 padding: 2px 5px;
                 border-radius: 3px;
                 margin-top: 5px;
                 text-align: center;
-                min-width: 100px;
+                min-width: 120px;
+                font-family: 'Courier New', monospace;
+                position: absolute;
             }}
-            .timecode-ab {{
-                display: flex;
-                gap: 10px;
-                margin-top: 5px;
-            }}
-            .timecode-ab span {{
-                color: white;
+            .timecode_trans {{
+                color: rgba(0,0,0,0);
                 font-size: 14px;
                 font-weight: bold;
-                text-shadow: 1px 1px 2px black;
-                background-color: rgba(0,0,0,0.5);
+                background-color: rgba(0, 0, 0, 0);
                 padding: 2px 5px;
-                border-radius: 3px;
-                min-width: 100px;
+                margin-top: 5px;
+                text-align: center;
+                min-width: 120px;
+                font-family: 'Courier New', monospace;
+            }}
+            .timecode-label {{
+                position: absolute;
+                color: white;
+                font-size: 30px;
+                text-shadow: 1px 1px 1px black;
+                margin-bottom: 2px;
+            }}
+            .label-rec {{
+                color: white;
+                font-size: 12px;
+                text-shadow: 1px 1px 1px black;
+                margin-bottom: 2px;
+                position: absolute;
+            }}
+            .label-replay {{
+                color: white;
+                font-size: 22px;
+                text-shadow: 1px 1px 1px black;
+                margin-bottom: 2px;
+                position: absolute;
             }}
         </style>
     </head>
     <body>
+    
+
         <div class="background"></div>
         <div class="container">
+            
+            <div class="label-replay" style="top: 450px; left: 455px;">PGM</div>
+            <div class="label-replay" style="top: 450px; left: 1415px;">PRV</div>
+            <div class="label-rec" style="top: 60px; left: 395px;">REC 1</div>
+            <div class="label-rec" style="top: 60px; left: 875px;">REC 2</div>
+            <div class="label-rec" style="top: 60px; left: 1355px;">REC 3</div>
+            <div class="label-rec" style="top: 60px; left: 1835px;">REC 4</div>
             <!-- Inputs 1-4 -->
-            <div class="vu-pair" style="top: 130px; left: 315px;">
-                <div class="timecode" id="input_1_timecode">00:00:00.00</div>
+            <div class="vu-pair" style="top: 150px; left: 355px;">
+                <div class="timecode_trans" id="input_1_timecode">{vu_data['input_1']}</div>
                 <div style="display: flex; gap: 4px;">
                     <div class="input-vu-meter" id="input_1_meterF1"></div>
                     <div class="input-vu-meter" id="input_1_meterF2"></div>
                 </div>
             </div>
-            <div class="vu-pair" style="top: 130px; left: 690px;">
-                <div class="timecode" id="input_2_timecode">00:00:00.00</div>
+            <div class="vu-pair" style="top: 150px; left: 835px;">
+                <div class="timecode_trans" id="input_2_timecode">{vu_data['input_2']}</div>
                 <div style="display: flex; gap: 4px;">
                     <div class="input-vu-meter" id="input_2_meterF1"></div>
                     <div class="input-vu-meter" id="input_2_meterF2"></div>
                 </div>
             </div>
-            <div class="vu-pair" style="top: 130px; left: 1050px;">
-                <div class="timecode" id="input_3_timecode">00:00:00.00</div>
+            <div class="vu-pair" style="top: 150px; left: 1315px;">
+                <div class="timecode_trans" id="input_3_timecode">{vu_data['input_3']}</div>
                 <div style="display: flex; gap: 4px;">
                     <div class="input-vu-meter" id="input_3_meterF1"></div>
                     <div class="input-vu-meter" id="input_3_meterF2"></div>
                 </div>
             </div>
-            <div class="vu-pair" style="top: 130px; left: 1410px;">
-                <div class="timecode" id="input_4_timecode">00:00:00.00</div>
+            <div class="vu-pair" style="top: 150px; left: 1795px;">
+                <div class="timecode_trans" id="input_4_timecode">{vu_data['input_4']}</div>
                 <div style="display: flex; gap: 4px;">
                     <div class="input-vu-meter" id="input_4_meterF1"></div>
                     <div class="input-vu-meter" id="input_4_meterF2"></div>
@@ -274,19 +322,15 @@ def index():
             </div>
             
             <!-- Replays -->
-            <div class="vu-pair" style="top: 560px; left: 670px;">
-                <div class="timecode-ab">
-                    <span id="replay_timecodeA">A: 00:00:00.00</span>
-                    <span id="replay_timecodeB">B: 00:00:00.00</span>
-                </div>
+            <div class="timecode" id="replay_timecode" style="position: absolute; top: 825px; left: 180px;">{vu_data['replay']['timecode']}</div>
+            <div class="vu-pair" style="top: 750px; left: 720px;">
                 <div style="display: flex; gap: 4px;">
                     <div class="replay-vu-meter" id="replay_meterF1"></div>
                     <div class="replay-vu-meter" id="replay_meterF2"></div>
                 </div>
-                <div class="timecode" id="replay_timecode">00:00:00.00</div>
             </div>
-            <div class="vu-pair" style="top: 560px; left: 1390px;">
-                <div class="timecode" id="replay_preview_timecode">00:00:00.00</div>
+            <div class="timecode" id="replay_preview_timecode" style="position: absolute; top: 825px; left: 1140px;">{vu_data['replay_preview']['timecode']}</div>
+            <div class="vu-pair" style="top: 750px; left: 1680px;">
                 <div style="display: flex; gap: 4px;">
                     <div class="replay-vu-meter" id="replay_preview_meterF1"></div>
                     <div class="replay-vu-meter" id="replay_preview_meterF2"></div>
@@ -365,8 +409,6 @@ def index():
                         document.getElementById('input_2_timecode').textContent = data.input_2.timecode;
                         document.getElementById('input_3_timecode').textContent = data.input_3.timecode;
                         document.getElementById('input_4_timecode').textContent = data.input_4.timecode;
-                        document.getElementById('replay_timecodeA').textContent = `A: ${{data.replay.timecodeA}}`;
-                        document.getElementById('replay_timecodeB').textContent = `B: ${{data.replay.timecodeB}}`;
                         document.getElementById('replay_timecode').textContent = data.replay.timecode;
                         document.getElementById('replay_preview_timecode').textContent = data.replay_preview.timecode;
                     }})
@@ -388,20 +430,23 @@ def get_vu_data():
     response = jsonify(vu_data)
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
     return response
 
-if __name__ == '__main__':
-    # Verificar que la imagen existe
-    if not os.path.exists(BACKGROUND_IMAGE):
-        print(f"\nERROR: No se encuentra la imagen de fondo '{BACKGROUND_IMAGE}'")
+@app.route('/preset_replay4+2.png')
+def serve_background():
+    return send_from_directory('.', 'preset_replay4+2.png')
+
+def check_requirements():
+    if not os.path.exists(CONFIG['BACKGROUND_IMAGE']):
+        print(f"\nERROR: No se encuentra la imagen de fondo '{CONFIG['BACKGROUND_IMAGE']}'")
         print(f"Por favor, coloca la imagen en la misma carpeta que este script:")
         print(f"Ubicación actual: {os.getcwd()}\n")
-    else:
-        print(f"Imagen de fondo encontrada: {BACKGROUND_IMAGE}")
+        return False
+    return True
 
-    # Iniciar el hilo para obtener datos de vMix
-    threading.Thread(target=fetch_vmix_audio_data, daemon=True).start()
-    
-    # Ejecutar la aplicación Flask
-    print("\nServidor iniciado: http://localhost:5000")
-    app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
+if __name__ == '__main__':
+    if check_requirements():
+        threading.Thread(target=fetch_vmix_audio_data, daemon=True).start()
+        print("\nServidor iniciado: http://localhost:5000")
+        app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)

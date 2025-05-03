@@ -173,9 +173,29 @@ def load_current_clip():
     current_clip = load_config().get("CURRENT_CLIP", 1)
     return current_clip
 
+def load_current_clip_pgm():
+    """Carga el número de clip actual desde el archivo JSON."""
+    global current_clip_pgm
+    current_clip_pgm = load_config().get("CURRENT_CLIP_PGM", 1)
+    return current_clip_pgm
+
+def load_current_clip_prv():
+    """Carga el número de clip actual desde el archivo JSON."""
+    global current_clip_prv
+    current_clip_prv = load_config().get("CURRENT_CLIP_PRV", 1)
+    return current_clip_prv
+
 def save_current_clip(value):
     """Guarda el número de clip actual en el archivo JSON."""
     save_config("CURRENT_CLIP", value)
+
+def save_current_clip_pgm(value):
+    """Guarda el número de clip actual en el archivo JSON."""
+    save_config("CURRENT_CLIP_PGM", value)
+
+def save_current_clip_prv(value):
+    """Guarda el número de clip actual en el archivo JSON."""
+    save_config("CURRENT_CLIP_PRV", value)
 
 def load_current_camangle():
     """Carga el cam angle actual desde el archivo JSON."""
