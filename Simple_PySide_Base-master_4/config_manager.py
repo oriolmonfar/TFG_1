@@ -203,9 +203,29 @@ def load_current_camangle():
     current_camangle = load_config().get("current_camangle", "A")
     return current_camangle
 
+def load_current_camangleA():
+    """Carga el cam angle actual desde el archivo JSON."""
+    global current_camangleA
+    current_camangleA = load_config().get("current_camangleA", "A")
+    return current_camangleA
+
+def load_current_camangleB():
+    """Carga el cam angle actual desde el archivo JSON."""
+    global current_camangleB
+    current_camangleB = load_config().get("current_camangleB", "A")
+    return current_camangleB
+
 def save_current_camangle(value):
     """Guarda el número de camanlge actual en el archivo JSON."""
     save_config("current_camangle", value)
+
+def save_current_camangleA(value):
+    """Guarda el número de camanlge actual en el archivo JSON."""
+    save_config("current_camangleA", value)
+
+def save_current_camangleB(value):
+    """Guarda el número de camanlge actual en el archivo JSON."""
+    save_config("current_camangleB", value)
 
 def load_current_clip_id():
     """Carga el clip id actual desde el archivo JSON."""

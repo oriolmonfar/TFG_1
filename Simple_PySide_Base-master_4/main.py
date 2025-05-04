@@ -35,6 +35,8 @@ current_clip = load_current_clip()
 current_clip_pgm = load_current_clip_pgm()
 current_clip_prv = load_current_clip_prv()
 current_camangle = load_current_camangle()
+current_camangleA = load_current_camangleA()
+current_camangleB = load_current_camangleB()
 clip_mode = load_clip_mode()
 modo_page = False
 clip_id = load_current_clip_id()
@@ -809,8 +811,6 @@ class MainWindow(QMainWindow):
             else:
                 print(f"ChannelMode desconocido: {channel_mode}")
 
-        set_current_clip(self)
-
         UIFunctions.labelPGM_PRV(self, pgm)
 
         ## Set window size
@@ -924,19 +924,36 @@ class MainWindow(QMainWindow):
 
         def execute_functions_A(self):
             """Ejecuta la función correspondiente según el estado de SHIFT."""
-            global SHIFT, clip_mode, current_camangle, current_clip
+            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                save_current_camangle("A")
-                current_camangle = load_current_camangle()
-                print(f"Clip Mode activo: current_camangle actualizado a {current_camangle}")
-                current_clip = load_current_clip()
-                clip_no_camangle = current_clip[:-1]
-                save_current_clip(f"{clip_no_camangle}{current_camangle}")
-                print(current_clip)
                 channel_mode = get_channelmode(self)
-                UIFunctions.labelPGM_PRV(self, channel_mode)
-                endpoint = "api/?Function=ReplayToggleSelectedEventCamera1"
-                UIFunctions.send_request(endpoint)
+                save_current_camangle("A")
+                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
+                if channel_mode == 'A':
+                    if new_angle != current_camangleA:
+                        current_camangle = new_angle
+                        current_camangleA = new_angle
+                        save_current_camangleA(current_camangleA)
+                        current_clip = load_current_clip()
+                    clip_no_camangle = current_clip_pgm[:-1]
+                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
+                    print(current_clip_pgm)
+                    UIFunctions.labelPGM_PRV(self, channel_mode)
+                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera1"
+                    UIFunctions.send_request(endpoint)
+                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
+                elif channel_mode == 'B':
+                    if new_angle != current_camangleB:
+                        current_camangle = new_angle
+                        current_camangleB = new_angle
+                        save_current_camangleB(current_camangleB)
+                        clip_no_camangle = current_clip_prv[:-1]
+                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
+                        print(current_clip_prv)
+                        UIFunctions.labelPGM_PRV(self, channel_mode)
+                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera1"
+                        UIFunctions.send_request(endpoint)
+                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
             else: 
                 if SHIFT:
                     UIFunctions.function_A(self)
@@ -946,19 +963,36 @@ class MainWindow(QMainWindow):
         self.ui.sim_A.clicked.connect(lambda: execute_functions_A(self))
 
         def execute_functions_B(self):
-            global SHIFT, clip_mode, current_camangle, current_clip
+            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                save_current_camangle("B")
-                current_camangle = load_current_camangle()
-                print(f"Clip Mode activo: current_camangle actualizado a {current_camangle}")
-                current_clip = load_current_clip()
-                clip_no_camangle = current_clip[:-1]
-                save_current_clip(f"{clip_no_camangle}{current_camangle}")
-                print(current_clip)
                 channel_mode = get_channelmode(self)
-                UIFunctions.labelPGM_PRV(self, channel_mode)
-                endpoint = "api/?Function=ReplayToggleSelectedEventCamera2"
-                UIFunctions.send_request(endpoint)
+                save_current_camangle("B")
+                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
+                if channel_mode == 'A':
+                    if new_angle != current_camangleA:
+                        current_camangle = new_angle
+                        current_camangleA = new_angle
+                        save_current_camangleA(current_camangleA)
+                        current_clip = load_current_clip()
+                    clip_no_camangle = current_clip_pgm[:-1]
+                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
+                    print(current_clip_pgm)
+                    UIFunctions.labelPGM_PRV(self, channel_mode)
+                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera2"
+                    UIFunctions.send_request(endpoint)
+                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
+                elif channel_mode == 'B':
+                    if new_angle != current_camangleB:
+                        current_camangle = new_angle
+                        current_camangleB = new_angle
+                        save_current_camangleB(current_camangleB)
+                        clip_no_camangle = current_clip_prv[:-1]
+                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
+                        print(current_clip_prv)
+                        UIFunctions.labelPGM_PRV(self, channel_mode)
+                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera2"
+                        UIFunctions.send_request(endpoint)
+                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
             else: 
                 if SHIFT:
                     UIFunctions.function_B(self)
@@ -968,19 +1002,36 @@ class MainWindow(QMainWindow):
         self.ui.sim_B.clicked.connect(lambda: execute_functions_B(self))
 
         def execute_functions_C(self):
-            global SHIFT, clip_mode, current_camangle, current_clip
+            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                save_current_camangle("C")
-                current_camangle = load_current_camangle()
-                print(f"Clip Mode activo: current_camangle actualizado a {current_camangle}")
-                current_clip = load_current_clip()
-                clip_no_camangle = current_clip[:-1]
-                save_current_clip(f"{clip_no_camangle}{current_camangle}")
-                print(current_clip)
                 channel_mode = get_channelmode(self)
-                UIFunctions.labelPGM_PRV(self, channel_mode)
-                endpoint = "api/?Function=ReplayToggleSelectedEventCamera3"
-                UIFunctions.send_request(endpoint)
+                save_current_camangle("C")
+                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
+                if channel_mode == 'A':
+                    if new_angle != current_camangleA:
+                        current_camangle = new_angle
+                        current_camangleA = new_angle
+                        save_current_camangleA(current_camangleA)
+                        current_clip = load_current_clip()
+                    clip_no_camangle = current_clip_pgm[:-1]
+                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
+                    print(current_clip_pgm)
+                    UIFunctions.labelPGM_PRV(self, channel_mode)
+                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera3"
+                    UIFunctions.send_request(endpoint)
+                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
+                elif channel_mode == 'B':
+                    if new_angle != current_camangleB:
+                        current_camangle = new_angle
+                        current_camangleB = new_angle
+                        save_current_camangleB(current_camangleB)
+                        clip_no_camangle = current_clip_prv[:-1]
+                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
+                        print(current_clip_prv)
+                        UIFunctions.labelPGM_PRV(self, channel_mode)
+                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera3"
+                        UIFunctions.send_request(endpoint)
+                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
             else: 
                 if SHIFT:
                     UIFunctions.function_C(self)
@@ -990,19 +1041,36 @@ class MainWindow(QMainWindow):
         self.ui.sim_C.clicked.connect(lambda: execute_functions_C(self))
 
         def execute_functions_D(self):
-            global SHIFT, clip_mode, current_camangle, current_clip
+            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                save_current_camangle("D")
-                current_camangle = load_current_camangle()
-                print(f"Clip Mode activo: current_camangle actualizado a {current_camangle}")
-                current_clip = load_current_clip()
-                clip_no_camangle = current_clip[:-1]
-                save_current_clip(f"{clip_no_camangle}{current_camangle}")
-                print(current_clip)
                 channel_mode = get_channelmode(self)
-                UIFunctions.labelPGM_PRV(self, channel_mode)
-                endpoint = "api/?Function=ReplayToggleSelectedEventCamera4"
-                UIFunctions.send_request(endpoint)
+                save_current_camangle("D")
+                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
+                if channel_mode == 'A':
+                    if new_angle != current_camangleA:
+                        current_camangle = new_angle
+                        current_camangleA = new_angle
+                        save_current_camangleA(current_camangleA)
+                        current_clip = load_current_clip()
+                    clip_no_camangle = current_clip_pgm[:-1]
+                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
+                    print(current_clip_pgm)
+                    UIFunctions.labelPGM_PRV(self, channel_mode)
+                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera4"
+                    UIFunctions.send_request(endpoint)
+                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
+                elif channel_mode == 'B':
+                    if new_angle != current_camangleB:
+                        current_camangle = new_angle
+                        current_camangleB = new_angle
+                        save_current_camangleB(current_camangleB)
+                        clip_no_camangle = current_clip_prv[:-1]
+                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
+                        print(current_clip_prv)
+                        UIFunctions.labelPGM_PRV(self, channel_mode)
+                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera4"
+                        UIFunctions.send_request(endpoint)
+                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
             else: 
                 if SHIFT:
                     UIFunctions.function_D(self)
