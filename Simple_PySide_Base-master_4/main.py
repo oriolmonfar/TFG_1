@@ -924,7 +924,7 @@ class MainWindow(QMainWindow):
         self.ui.control_2ndfastjog.clicked.connect(lambda: UIFunctions.function_sec_fastjog(self, self.dial))
         self.ui.control_gotoin.clicked.connect(lambda: UIFunctions.function_gotoin())
         self.ui.control_gotoout.clicked.connect(lambda: UIFunctions.function_gotoout())
-        self.ui.control_cancel_in.clicked.connect(lambda: UIFunctions.function_cancel_in())
+        self.ui.control_cancel_in.clicked.connect(lambda: UIFunctions.function_cancel_in(self))
         self.ui.control_gototc.clicked.connect(self.show_dialog_searchtc)
         #################################### END - BOTONS CONTROL
 
@@ -1154,7 +1154,7 @@ class MainWindow(QMainWindow):
         def execute_functions_insert(self):
             global SHIFT
             if SHIFT:
-                UIFunctions.function_cancel_in()
+                UIFunctions.function_cancel_in(self)
                 reset_shift(self)
             else:
                 UIFunctions.toggle_browse_mode(self)
@@ -1498,6 +1498,8 @@ class MainWindow(QMainWindow):
             def create_handler(num):
                 def handler(checked):
                     nonlocal button_pressed
+                    self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+                    self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
                     button_pressed = num
                     loop.quit()
                 return handler
@@ -1523,8 +1525,6 @@ class MainWindow(QMainWindow):
                     btn.clicked.disconnect(handler)
                 except RuntimeError:
                     pass  # Ignorar si ya está desconectado
-            self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-            self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
             
             return button_pressed
 

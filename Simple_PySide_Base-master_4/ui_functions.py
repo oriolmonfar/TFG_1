@@ -945,12 +945,15 @@ class UIFunctions(MainWindow):
     def function_gototc(self):
         self.show_dialog_searchtc()
 
-    def function_cancel_in():
+    def function_cancel_in(self):
         global clip_id
         UIFunctions.send_request("api/?Function=ReplayMarkCancel")
         clip_id = load_current_clip_id()
         clip_id +=1
         save_current_clip_id(clip_id)
+        self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+               
+
 
 
     ########################################################################
