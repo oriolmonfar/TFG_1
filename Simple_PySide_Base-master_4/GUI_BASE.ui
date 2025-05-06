@@ -1668,7 +1668,7 @@ QPushButton:pressed {
                    <string notr="true">background: transparent;</string>
                   </property>
                   <property name="currentIndex">
-                   <number>28</number>
+                   <number>22</number>
                   </property>
                   <widget class="QWidget" name="page_home">
                    <widget class="QPushButton" name="clip_addtoplaylist">
@@ -6591,6 +6591,7 @@ QPushButton:pressed {
     font-family: &quot;Arial&quot;;    /* Cambia la fuente */
     font-size: 16px;         /* Tamaño del texto */
     font-weight: bold;       /* Negrita */    
+	background-color: red;
     color: white;				 /* Color del texto */
 	padding: 10px;           
     border-radius: 15px;

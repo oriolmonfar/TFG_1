@@ -3234,6 +3234,7 @@ class Ui_MainWindow(object):
 "    font-family: \"Arial\";    /* Cambia la fuente */\n"
 "    font-size: 16px;         /* Tama\u00f1o del texto */\n"
 "    font-weight: bold;       /* Negrita */    \n"
+"	background-color: red;\n"
 "    color: white;				 /* Color del texto */\n"
 "	padding: 10px;           \n"
 "    border-radius: 15px;\n"
@@ -5666,7 +5667,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(28)
+        self.stackedWidget.setCurrentIndex(22)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

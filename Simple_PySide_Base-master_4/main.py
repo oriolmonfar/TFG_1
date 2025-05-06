@@ -22,6 +22,7 @@ from ui_popup_confirm_no_connection import Ui_Dialog as Dialog_no_connection
 from ui_popup_confirm_connected import Ui_Dialog as Dialog_connected
 from ui_popup_overwrite_clip import Ui_Dialog as Dialog_overwrite
 from ui_popup_delete_clip_dictionary import Ui_Dialog as Dialog_delete_clip_dictionary
+from ui_popup_modo_page import Ui_Dialog as Dialog_modo_page
 from config_manager import *
 
 #DECLARE GLOBAL VARIABLES
@@ -69,10 +70,34 @@ playlist18 = load_plst(18)
 CLEAR_MODE = False
 CLEAR_SELECTION = None
 browse_mode = False
+modo_loop = False
 
 ########################################################################
 ## START - POPUPS CLASSES
 ########################################################################
+
+class PopupModoPage(QDialog):  
+    def __init__(self):  
+        super().__init__()  
+        self.ui = Dialog_modo_page()  # Instancia de la UI generada
+        self.ui.setupUi(self)  # Aplica la UI a la ventana de diálogo
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+
+        self.ui.minimize_modo_page.clicked.connect(lambda: self.showMinimized())
+        self.ui.maximize_modo_page.clicked.connect(lambda: UIFunctions.maximize_restore(self))
+        self.ui.close_modo_page.clicked.connect(lambda: self.close())
+
+
+    def cancel(self): 
+        global modo_page
+        modo_page = False
+        save_page_mode(modo_page)
+        print(f'modo safe desactivado : {modo_page}')
+        self.close()
+    
+    def close_popup(self):
+        self.close()
+
 
 class PopupNameClip(QDialog):
     def __init__(self):
@@ -284,6 +309,14 @@ class PopupDeleteClipDictionary(QDialog):
             save_estrella1_list([])
             save_estrella2_list([])
             save_estrella3_list([])
+
+            save_current_clip(" ")
+            save_current_clip_pgm(" ")
+            save_current_clip_prv(" ")
+
+            save_current_camangle(" ")
+            save_current_camangleA(" ")
+            save_current_camangleB(" ")
             
             PopupDeleteMarks.yes(self)
             
@@ -737,6 +770,8 @@ class MainWindow(QMainWindow):
         UIFunctions.function_e_e()
         UIFunctions.check_vmix_connection(self)
         UIFunctions.start_connection_monitor(self)
+        UIFunctions.start_modo_playlist_monitor(self)
+
 
         #REMOVE TITLE BAR
         UIFunctions.removeTitleBar(True)
@@ -753,43 +788,26 @@ class MainWindow(QMainWindow):
         UIFunctions.labelDescription(self, f"{active_playlist}")
         
         #SET PGM - PRV (or LINKED A|B)
-        def get_channelmode(self):
-            """Obtiene el modo de canal ('channelMode') de la sección de Replay en vMix."""
-            
-            # Paso 1: Obtener el XML desde la API de vMix
-            response = UIFunctions.send_request("api/")  # Usamos send_request con el endpoint de la API
-            
-            if not response:
-                print("No se pudo obtener el XML debido a la falta de conexión con vMix.")
-                return None  # Salimos de la función si no hay conexión
-
-            # Paso 2: Parsear el XML
-            try:
-                root = ET.fromstring(response)  # Convertimos el texto XML en una estructura de árbol
-            except ET.ParseError as e:
-                print(f"Error al parsear el XML: {e}")
-                return None  # Salimos si hay un error en el XML
-
-            # Paso 3: Iterar sobre todos los inputs y buscar el 'channelMode' en la sección de Replay
-            result = None  # Inicializamos result como None por si no encontramos nada
-            
-            for input_element in root.findall(".//input"):
-                replay_element = input_element.find('replay')
-                
-                if replay_element is not None:
-                    channel_mode = replay_element.get('channelMode')
-                    if channel_mode:
-                        result = channel_mode  # Guardamos el modo de canal encontrado
-
-            return result  # Devolvemos el modo de canal o None si no se encontró
+       
         
-        pgm = get_channelmode(self)
+        pgm = UIFunctions.get_channelmode(self)
+
+        angleA, angleB = UIFunctions.get_vmix_replay_cameras()
+
+        if pgm == "B":
+
+            save_current_camangle(angleB)
+        else: 
+            save_current_camangle(angleA)
+        
+        save_current_camangleA(angleA)
+        save_current_camangleB(angleB)
 
         def set_current_clip(self):
             """Asigna un nuevo clip a la variable global current_clip y actualiza según channelMode."""
             global current_clip, current_clip_pgm, current_clip_prv
 
-            channel_mode = get_channelmode(self)  # Saber si estamos en A o B
+            channel_mode = UIFunctions.get_channelmode(self)  # Saber si estamos en A o B
             if not channel_mode:
                 print("No se pudo determinar el channelMode.")
                 return
@@ -901,9 +919,9 @@ class MainWindow(QMainWindow):
         #################################### START - BOTONS CONTROL
         self.ui.control_syncprv.clicked.connect(lambda: UIFunctions.function_syncprv(self))
         self.ui.control_prv_ctl.clicked.connect(lambda: UIFunctions.function_prvctl(self))
-        self.ui.control_loop.clicked.connect(lambda: UIFunctions.function_loop())
-        self.ui.control_fast_jog.clicked.connect(lambda: UIFunctions.function_fastjog(self.dial))
-        self.ui.control_2ndfastjog.clicked.connect(lambda: UIFunctions.function_sec_fastjog(self.dial))
+        self.ui.control_loop.clicked.connect(lambda: UIFunctions.function_loop(self))
+        self.ui.control_fast_jog.clicked.connect(lambda: UIFunctions.function_fastjog(self, self.dial))
+        self.ui.control_2ndfastjog.clicked.connect(lambda: UIFunctions.function_sec_fastjog(self, self.dial))
         self.ui.control_gotoin.clicked.connect(lambda: UIFunctions.function_gotoin())
         self.ui.control_gotoout.clicked.connect(lambda: UIFunctions.function_gotoout())
         self.ui.control_cancel_in.clicked.connect(lambda: UIFunctions.function_cancel_in())
@@ -926,7 +944,7 @@ class MainWindow(QMainWindow):
             """Ejecuta la función correspondiente según el estado de SHIFT."""
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                channel_mode = get_channelmode(self)
+                channel_mode = UIFunctions.get_channelmode(self)
                 save_current_camangle("A")
                 new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
                 if channel_mode == 'A':
@@ -965,7 +983,7 @@ class MainWindow(QMainWindow):
         def execute_functions_B(self):
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                channel_mode = get_channelmode(self)
+                channel_mode = UIFunctions.get_channelmode(self)
                 save_current_camangle("B")
                 new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
                 if channel_mode == 'A':
@@ -1004,7 +1022,7 @@ class MainWindow(QMainWindow):
         def execute_functions_C(self):
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                channel_mode = get_channelmode(self)
+                channel_mode = UIFunctions.get_channelmode(self)
                 save_current_camangle("C")
                 new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
                 if channel_mode == 'A':
@@ -1043,7 +1061,7 @@ class MainWindow(QMainWindow):
         def execute_functions_D(self):
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                channel_mode = get_channelmode(self)
+                channel_mode = UIFunctions.get_channelmode(self)
                 save_current_camangle("D")
                 new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
                 if channel_mode == 'A':
@@ -1100,7 +1118,7 @@ class MainWindow(QMainWindow):
         def execute_functions_fastjog(self, dial):
             global SHIFT
             if SHIFT:
-                UIFunctions.function_fastjog(dial)
+                UIFunctions.function_fastjog(self, dial)
                 reset_shift(self)
             else:
                 UIFunctions.function_mark()
@@ -1127,7 +1145,7 @@ class MainWindow(QMainWindow):
         def execute_functions_loop(self):
             global SHIFT
             if SHIFT:
-                UIFunctions.function_loop()
+                UIFunctions.function_loop(self)
                 reset_shift(self)
             else:
                 UIFunctions.cont_acc_gotopl(self)
@@ -1148,7 +1166,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.function_gotoin()
                 reset_shift(self)
             else:
-                UIFunctions.function_in()
+                UIFunctions.function_in(self)
 
         def handle_sim_in(self):
             global CLEAR_MODE, CLEAR_SELECTION
@@ -1167,7 +1185,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.function_gotoout()
                 reset_shift(self)
             else:
-                function_out()
+                function_out(self)
         def handle_sim_out(self):
             global CLEAR_MODE, CLEAR_SELECTION
             if CLEAR_MODE:
@@ -1349,14 +1367,22 @@ class MainWindow(QMainWindow):
             global modo_page
             modo_page = True
             save_page_mode(modo_page)
+            self.show_dialog_modopage()
             print("Modo de selección de página activado.")
         
 
-        def function_out():
+        def function_out(self):
             global clip_id, mark_in_tc
 
             set_page_mode(False)
             set_shift(False)
+
+            pgm = UIFunctions.get_channelmode(self)
+
+            if pgm == "B":
+                self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            else: 
+                self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
             
             
             # 1. Marcar el Out en vMix
@@ -1497,8 +1523,11 @@ class MainWindow(QMainWindow):
                     btn.clicked.disconnect(handler)
                 except RuntimeError:
                     pass  # Ignorar si ya está desconectado
+            self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
             
             return button_pressed
+
 
         def handle_sim_f_button(self, f_button_number):
             """Maneja la funcionalidad de los botones sim_f1 a sim_f10."""
@@ -1518,10 +1547,11 @@ class MainWindow(QMainWindow):
             # Activar el modo clip y mostrar el código correspondiente
             else:
                 clip_mode = True  # Activar modo clip
+                current_camangle = load_current_camangle()
                 clip_code = f"{current_page}{current_bank}{f_button_number}{current_camangle}"
                 print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
                 save_current_clip(clip_code)
-                channel_mode = get_channelmode(self)
+                channel_mode = UIFunctions.get_channelmode(self)
                 set_current_clip(self)
                 UIFunctions.labelPGM_PRV(self, channel_mode)
                 # Remover el último carácter (letra del cam angle)
@@ -1666,6 +1696,10 @@ class MainWindow(QMainWindow):
 
     def show_dialog_deleteclipdic(self):
         self.popup = PopupDeleteClipDictionary()  # Guardar en un atributo para evitar que se elimine
+        self.popup.exec_()  # Muestra el diálogo de forma modal
+
+    def show_dialog_modopage(self):
+        self.popup = PopupModoPage()  # Guardar en un atributo para evitar que se elimine
         self.popup.exec_()  # Muestra el diálogo de forma modal
 
     ########################################################################

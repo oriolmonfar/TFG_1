@@ -57,6 +57,55 @@ vu_data = {
     }
 }
 
+from datetime import datetime, timedelta
+
+from datetime import datetime, timedelta
+
+from datetime import datetime
+
+def calculate_clip_duration_mw(clip_tc_in, clip_tc_out):
+    """
+    Calcula la duración entre clip_tc_in y clip_tc_out.
+
+    clip_tc_in tiene formato "HH:MM:SS.sss"
+    clip_tc_out tiene formato "YYYY-MM-DDTHH:MM:SS.sss"
+
+    Retorna:
+        str: Duración del clip en formato "HH:MM:SS.sss"
+    """
+    try:
+        # Formatos esperados
+        format_in = "%H:%M:%S.%f"
+        format_out = "%Y-%m-%dT%H:%M:%S.%f"
+
+        # Parsear clip_tc_in con fecha base ficticia
+        base_date = "1900-01-01"
+        time_in = datetime.strptime(f"{base_date}T{clip_tc_in}", f"%Y-%m-%dT{format_in}")
+
+        # Parsear clip_tc_out directamente
+        time_out = datetime.strptime(clip_tc_out, format_out)
+
+        # Restar los datetime
+        duration = time_out - time_in
+
+        if duration.total_seconds() < 0:
+            raise ValueError("clip_tc_out es anterior a clip_tc_in")
+
+        # Convertir la duración en componentes
+        total_seconds = duration.total_seconds()
+        hours = int(total_seconds // 3600)
+        minutes = int((total_seconds % 3600) // 60)
+        seconds = int(total_seconds % 60)
+        milliseconds = int((total_seconds % 1) * 1000)
+
+        return f"{hours:02}:{minutes:02}:{seconds:02}.{milliseconds:03}"
+
+    except Exception as e:
+        raise ValueError(f"Error procesando los timecodes: {e}")
+
+
+
+
 def get_channelmode():
     """Obtiene el modo de canal ('channelMode') de la sección de Replay en vMix."""
     
@@ -129,7 +178,6 @@ def fetch_vmix_audio_data():
                     'cameraA': None,
                     'speedA': None,
                     'cam_angleA': None,
-                    'inpoint_clipA': None,
                     'countodownA':None, 
                     'ID_A': None
                 },
@@ -140,7 +188,6 @@ def fetch_vmix_audio_data():
                     'cameraB': None,
                     'speedB': None,
                     'cam_angleB': None, 
-                    'inpoint_clipB': None,
                     'countodwnB':None, 
                     'ID_B': None
 
@@ -167,14 +214,11 @@ def fetch_vmix_audio_data():
             clip_listA = clip_data.get(numeric_codeA, ["void"] * 7)
             clip_listB = clip_data.get(numeric_codeB, ["void"] * 7)
 
-            inpoint_clipA = clip_listA[4]
-            inpoint_clipB = clip_listB[4]
             outpoint_clipA = clip_listA[5]
             outpoint_clipB = clip_listB[5]
             ID_A = current_clip_pgm
             ID_B = current_clip_prv
-            countdownA = UIFunctions.calculate_clip_duration(replay_timecodeA - outpoint_clipA )
-            countdownB = UIFunctions.calculate_clip_duration(replay_timecodeB - outpoint_clipB )
+
             
             replay = root.find(".//replay")
             if replay is not None:
@@ -193,6 +237,12 @@ def fetch_vmix_audio_data():
                 label_speedA = str(round(float(speedA)* 100))
                 label_speedB = str(round(float(speedB)* 100))
                 channelmode = get_channelmode()
+
+                countdownA = calculate_clip_duration_mw(replay_timecodeA, outpoint_clipA )
+                countdownB = calculate_clip_duration_mw(replay_timecodeB, outpoint_clipB )
+
+                print(countdownA)
+                print(countdownB)
 
 
 
@@ -236,13 +286,11 @@ def fetch_vmix_audio_data():
             new_data['replay']['speedA'] = label_speedA
             new_data['replay']['cameraA'] = label_rec_A
             new_data['replay']['cam_angleA'] = label_cam_angleA
-            new_data['replay']['inpoint_clipA'] = inpoint_clipA
             new_data['replay']['countdownA'] = countdownA
             new_data['replay']['ID_A'] = ID_A
             new_data['replay_preview']['speedB'] = label_speedB
             new_data['replay_preview']['cameraB'] = label_rec_B
             new_data['replay_preview']['cam_angleB'] = label_cam_angleB
-            new_data['replay_preview']['inpoint_clipB'] = inpoint_clipB
             new_data['replay_preview']['countdownB'] = countdownB
             new_data['replay_preview']['ID_B'] = ID_B
             new_data['channelmode'] = channelmode
@@ -314,7 +362,6 @@ def fetch_vmix_audio_data():
         else:
             time.sleep(CONFIG['UPDATE_INTERVAL_MS'] / 1000)
 
-        print(vu_data['replay']['cameraA'])
 
 @app.route('/')
 def index():

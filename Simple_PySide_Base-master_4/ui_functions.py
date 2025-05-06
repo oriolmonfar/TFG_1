@@ -8,6 +8,7 @@ from PySide2.QtCore import QTimer
 from config_manager import *
 from PySide2.QtCore import Qt
 
+
 #DECLARE GLOBAL VARIABLES
 GLOBAL_STATE = 0
 GLOBAL_TITLE_BAR = True
@@ -26,6 +27,7 @@ class UIFunctions(MainWindow):
     ########################################################################
     ## START - GUI FUNCTIONS
     ########################################################################
+
 
     def send_request(endpoint):
         """ Envía una request HTTP a la API de vMix y maneja errores. """
@@ -57,13 +59,110 @@ class UIFunctions(MainWindow):
             # No conectado: Muestra el frame rojo y oculta el verde
             self.ui.vmix_conn_ok.setStyleSheet("border-radius: 5px; border: 1px solid rgb(0,0,0); background-color: rgb(40, 40, 40);")  # Gris
             self.ui.vmix_conn_no.show()
-            
+
+    def check_modo_playlist(self):
+        global modo_playlist
+        if modo_playlist == True:
+            self.ui.sim_loop.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; background-color: red; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+        elif modo_loop == True:
+            self.ui.sim_loop.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+        else:
+            self.ui.sim_loop.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
 
     def start_connection_monitor(main_window):
         """Inicia un temporizador para monitorear la conexión con vMix."""
         main_window.timer = QTimer(main_window)
         main_window.timer.timeout.connect(lambda: UIFunctions.check_vmix_connection(main_window))
         main_window.timer.start(5000)  # Ejecuta cada 5 segundos
+
+    def start_modo_playlist_monitor(main_window):
+        global modo_playlist, modo_loop
+        """Inicia un temporizador para monitorear la conexión con vMix."""
+        main_window.timer = QTimer(main_window)
+        main_window.timer.timeout.connect(lambda: UIFunctions.check_modo_playlist(main_window))
+        print(f"connection checked, modo playlist: {modo_playlist}, modo loop: {modo_loop}")
+        main_window.timer.start(500)  # Ejecuta cada 5 segundos
+
+
+    def get_vmix_replay_cameras():
+        """
+        Obtiene cameraA y cameraB del input tipo replay en vMix.
+
+        Retorna:
+            tuple: (cameraA, cameraB) si se encuentra el input tipo replay,
+                o (None, None) si no se encuentra o hay error.
+        """
+        try:
+            # Solicita el XML usando send_request
+            xml_data = UIFunctions.send_request("api/")
+            if xml_data is None:
+                return None, None
+
+            # Parsear el XML
+            root = ET.fromstring(xml_data)
+
+            # Buscar input de tipo 'Replay'
+            for input_elem in root.findall('inputs/input'):
+                if input_elem.get('type') == 'Replay':
+                    replay_elem = input_elem.find('replay')
+                    if replay_elem is not None:
+                        cameraA = replay_elem.get('cameraA')
+                        cameraB = replay_elem.get('cameraB')
+
+            if cameraA == "1":
+                angleA = "A"
+            elif cameraA == "2":
+                angleA = "B"
+            elif cameraA == "3":
+                angleA = "C"
+            elif cameraA == "4":
+                angleA = "D"
+            
+            if cameraB == "1":
+                angleB = "A"
+            elif cameraB == "2":
+                angleB = "B"
+            elif cameraB == "3":
+                angleB = "C"
+            elif cameraB == "4":
+                angleB = "D"
+
+        
+            return angleA, angleB
+
+        except Exception as e:
+            print(f"Error al procesar XML de vMix: {e}")
+            return None, None
+        
+    def get_channelmode(self):
+        """Obtiene el modo de canal ('channelMode') de la sección de Replay en vMix."""
+        
+        # Paso 1: Obtener el XML desde la API de vMix
+        response = UIFunctions.send_request("api/")  # Usamos send_request con el endpoint de la API
+        
+        if not response:
+            print("No se pudo obtener el XML debido a la falta de conexión con vMix.")
+            return None  # Salimos de la función si no hay conexión
+
+        # Paso 2: Parsear el XML
+        try:
+            root = ET.fromstring(response)  # Convertimos el texto XML en una estructura de árbol
+        except ET.ParseError as e:
+            print(f"Error al parsear el XML: {e}")
+            return None  # Salimos si hay un error en el XML
+
+        # Paso 3: Iterar sobre todos los inputs y buscar el 'channelMode' en la sección de Replay
+        result = None  # Inicializamos result como None por si no encontramos nada
+        
+        for input_element in root.findall(".//input"):
+            replay_element = input_element.find('replay')
+            
+            if replay_element is not None:
+                channel_mode = replay_element.get('channelMode')
+                if channel_mode:
+                    result = channel_mode  # Guardamos el modo de canal encontrado
+
+        return result  # Devolvemos el modo de canal o None si no se encontró
 
     #Maximize - Restore
     def maximize_restore(self):
@@ -145,6 +244,7 @@ class UIFunctions(MainWindow):
         elif text == "B":
             self.ui.label_pgm.setText(f'PRV : {current_clip_prv}')
             self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
+            self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
         else: 
             self.ui.label_pgm.setText(f'LINKED A|B : {current_clip_pgm}')
             self.ui.label_pgm.setStyleSheet("color: rgb(255,165,0)")
@@ -675,20 +775,28 @@ class UIFunctions(MainWindow):
     ## START - FUNCIONS CONTROL
     ########################################################################
 
-    def function_fastjog(dial):
+    def function_fastjog(self, dial):
         """Cambia entre modo normal (1 frame) y modo rápido (50 frames)."""
         FAST_JOG = load_fast_jog()
         dial.fast_mode = not dial.fast_mode
         dial.super_fast_mode = False
         mode = f"RÁPIDO ({FAST_JOG})" if dial.fast_mode else "NORMAL (1 frame)"
+        if dial.fast_mode:
+            self.ui.sim_fastjog.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}") 
+        else:
+            self.ui.sim_fastjog.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
         print(f"Modo cambiado a: {mode}")
 
-    def function_sec_fastjog(dial):
+    def function_sec_fastjog(self, dial):
         """Cambia entre modo normal (1 frame) y modo super rápido (100 frames)."""
         SEC_FAST_JOG = load_sec_fast_jog()
         dial.super_fast_mode = not dial.super_fast_mode
         dial.fast_mode = False
         mode = f"RÁPIDO ({SEC_FAST_JOG})" if dial.super_fast_mode else "NORMAL (1 frame)"
+        if dial.super_fast_mode:
+            self.ui.sim_fastjog.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}") 
+        else:
+            self.ui.sim_fastjog.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
         print(f"Modo cambiado a: {mode}")
 
     def function_syncprv(self):
@@ -740,14 +848,17 @@ class UIFunctions(MainWindow):
                 if channel_mode == "A":
                     self.ui.label_pgm.setText(f'PRV : {current_clip_prv}')
                     self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
+                    self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
                 else:
                     self.ui.label_pgm.setText(f'PGM : {current_clip_pgm}')
                     self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
+                    self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
 
         except ET.ParseError:
             print("Error parsing XML response from vMix")
 
-    def function_loop():
+    def function_loop(self):
+        global modo_loop
         """ Controla el estado de Loop en vMix Replay """
         
         # Obtener XML de vMix
@@ -765,10 +876,14 @@ class UIFunctions(MainWindow):
 
                 # Determinar la acción según el estado del Loop
                 if loop_status.lower() == "true":
+                    modo_loop = False
                     response = UIFunctions.send_request(f"api/?Function=LoopOff&Input={key}")
+                    self.ui.sim_loop.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
                     print(f"Loop desactivado en {key}") if response else print("Error al desactivar loop")
                 else:
+                    modo_loop = True
                     response = UIFunctions.send_request(f"api/?Function=LoopOn&Input={key}")
+                    self.ui.sim_loop.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
                     print(f"Loop activado en {key}") if response else print("Error al activar loop")
 
                 return  # Salir tras encontrar y procesar el primer input "Replay"
@@ -1613,18 +1728,28 @@ class UIFunctions(MainWindow):
     #function gotopl declarada a FUNCTIONS CLIP
     #function_loop declarada a FUNCTIONS CONTROL
 
-    def function_in():
+    def function_in(self):
         """Marks the current position as 'in' for replay."""
         global mark_in_tc
 
         current_mark_in_tc = UIFunctions.get_tc()
         mark_in_tc = save_mark_in_tc(current_mark_in_tc)
-        
+
+        pgm = UIFunctions.get_channelmode(self)
+
+        if pgm == "B": 
+            self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+        else: 
+            self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+
         # Endpoint para la función 'ReplayMarkIn'
         endpoint = "api/?Function=ReplayMarkIn"
         
         # Usamos UIFunctions.send_request para realizar la solicitud
         response = UIFunctions.send_request(endpoint)
+
+
+        
         
         if not response:
             print("No se pudo marcar el 'In' debido a la falta de conexión con vMix.")
@@ -1662,11 +1787,10 @@ class UIFunctions(MainWindow):
 
         if self.browse_mode:
             print("🔍 Browse mode ACTIVADO")
-            # Aquí podés activar cosas visuales si querés:
-            # self.ui.browse_button.setStyleSheet("background-color: rgba(0, 255, 255, 100);")
+            self.ui.sim_insert.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
         else:
             print("🔚 Browse mode DESACTIVADO")
-            # self.ui.browse_button.setStyleSheet("")  # Reset visual si aplica
+            self.ui.sim_insert.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
 
 
     def function_rodeta(self, dial):

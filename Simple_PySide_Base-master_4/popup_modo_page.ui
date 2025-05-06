@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>451</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(44,49,60);</string>
+  </property>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>450</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(27,29,35,200);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QPushButton" name="minimize_modo_page">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>0</y>
+      <width>40</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>40</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>40</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Minimize</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {	
+	border: none;
+	background-color: transparent;
+}
+QPushButton:hover {
+	background-color: rgb(52, 59, 72);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../../../Escritorio/TFG/PyQt/Simple_PySide_Base-master_4/Simple_PySide_Base-master_4/files.qrc">
+      <normaloff>:/16x16/icons/16x16/cil-window-minimize.png</normaloff>:/16x16/icons/16x16/cil-window-minimize.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="maximize_modo_page">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>0</y>
+      <width>40</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>40</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>40</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Maximize</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {	
+	border: none;
+	background-color: transparent;
+}
+QPushButton:hover {
+	background-color: rgb(52, 59, 72);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../../../Escritorio/TFG/PyQt/Simple_PySide_Base-master_4/Simple_PySide_Base-master_4/files.qrc">
+      <normaloff>:/16x16/icons/16x16/cil-window-maximize.png</normaloff>:/16x16/icons/16x16/cil-window-maximize.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="close_modo_page">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>0</y>
+      <width>40</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>40</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>40</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Close</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {	
+	border: none;
+	background-color: transparent;
+}
+QPushButton:hover {
+	background-color: rgb(52, 59, 72);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../../../Escritorio/TFG/PyQt/Simple_PySide_Base-master_4/Simple_PySide_Base-master_4/files.qrc">
+      <normaloff>:/16x16/icons/16x16/cil-x.png</normaloff>:/16x16/icons/16x16/cil-x.png</iconset>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>270</y>
+     <width>450</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(27,29,35,200);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="overwrite_label">
+   <property name="geometry">
+    <rect>
+     <x>135</x>
+     <y>50</y>
+     <width>191</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;     
+	background-color: transparent;      
+
+}</string>
+   </property>
+   <property name="text">
+    <string>Select new Page:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="overwrite_label_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>171</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: rgb(250,50,50);				 /* Color del texto */
+	padding: 10px;     
+	background-color: transparent;      
+
+}</string>
+   </property>
+   <property name="text">
+    <string>[Menu]: Cancel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="overwrite_label_3">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>150</y>
+     <width>171</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 20px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: rgba(75,150,200);				 /* Color del texto */
+	padding: 10px;     
+	background-color: transparent;      
+
+}</string>
+   </property>
+   <property name="text">
+    <string>[F1-F10]: Page</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../../../Escritorio/TFG/PyQt/Simple_PySide_Base-master_4/Simple_PySide_Base-master_4/files.qrc"/>
+  <include location="files.qrc"/>
+ </resources>
+ <connections/>
+</ui>
