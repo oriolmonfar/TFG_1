@@ -27,6 +27,7 @@ CONFIG = {
 
 # Datos compartidos
 vu_data = {
+    'clip_mode': None,
     'channelmode': None,
     'input_1': {'meterF1': 0, 'meterF2': 0},
     'input_2': {'meterF1': 0, 'meterF2': 0},
@@ -165,6 +166,7 @@ def fetch_vmix_audio_data():
             
             # Inicializar estructura temporal para nuevos datos
             new_data = {
+                'clip_mode': None, 
                 'channelmode': None,
                 'input_1': {'meterF1': 0, 'meterF2': 0},
                 'input_2': {'meterF1': 0, 'meterF2': 0},
@@ -202,6 +204,8 @@ def fetch_vmix_audio_data():
             current_clip_prv = load_current_clip_prv()
             numeric_codeA = current_clip_pgm[:-1]
             numeric_codeB = current_clip_prv[:-1]
+            clip_mode = load_clip_mode()
+            label_clip_mode = str(clip_mode)
 
             try:
                 with open(CLIP_DICTIONARY_FILE, "r") as file:
@@ -293,6 +297,7 @@ def fetch_vmix_audio_data():
             new_data['replay_preview']['countdownB'] = countdownB
             new_data['replay_preview']['ID_B'] = ID_B
             new_data['channelmode'] = channelmode
+            new_data['clip_mode'] = label_clip_mode
 
             print(new_data)
             
@@ -481,6 +486,10 @@ def index():
             <div class="current-timecode timecode" style="top: 260px; left: 500px;"></div>
             <div class="current-timecode timecode" style="top: 260px; left: 970px;"></div>
             <div class="current-timecode timecode" style="top: 260px; left: 1450px;"></div>
+            <div class="timecode" id="label_countdownA" style="top: 870px; left: 400px;">{vu_data['replay']['countdownA']}</div>
+            <div class="timecode" id="label_countdownB" style="top: 870px; left: 1370px;">{vu_data['replay_preview']['countdownB']}</div>
+            <div class="timecode" id="label_ID_A" style="top: 825px; left: 450px;">{vu_data['replay']['ID_A']}</div>
+            <div class="timecode" id="label_ID_B" style="top: 825px; left: 1415px;">{vu_data['replay_preview']['ID_B']}</div>
             <div class="timecode" id="label_cam_pgm" style="top: 870px; left: 250px;">{vu_data['replay']['cameraA']}</div>
             <div class="timecode" id="label_speed_pgm" style="top: 825px; left: 355px;">{vu_data['replay']['speedA']}</div>
             <div class="timecode" id="label_cam_prv" style="top: 870px; left: 1210px;">{vu_data['replay_preview']['cameraB']}</div>
@@ -647,6 +656,19 @@ def index():
                         }} else if (data.channelmode === 'B') {{
                             document.getElementById('label_pgm').textContent = 'PGM';
                             document.getElementById('label_prv').textContent = '*PRV*';
+                        }}
+
+                        if (data.clip_mode === 'False') {{
+                            document.getElementById('label_countdownA').textContent = '';
+                            document.getElementById('label_countdownB').textContent = '';
+                            document.getElementById('label_ID_A').textContent = '';
+                            document.getElementById('label_ID_B').textContent = '';
+
+                        }} else if (data.clip_mode === 'True') {{
+                            document.getElementById('label_countdownA').textContent = data.replay.countdownA;
+                            document.getElementById('label_countdownB').textContent = data.replay_preview.countdownB;
+                            document.getElementById('label_ID_A').textContent = data.replay.ID_A;
+                            document.getElementById('label_ID_B').textContent = data.replay_preview.ID_B;
                         }}
 
 
