@@ -67,31 +67,33 @@ def calculate_clip_duration_mw(clip_tc_in, clip_tc_out):
     """
     Calcula la duración entre clip_tc_in y clip_tc_out.
 
-    clip_tc_in tiene formato "HH:MM:SS.sss"
-    clip_tc_out tiene formato "YYYY-MM-DDTHH:MM:SS.sss"
+    clip_tc_in: "HH:MM:SS.sss"
+    clip_tc_out: "YYYY-MM-DDTHH:MM:SS.sss"
 
     Retorna:
         str: Duración del clip en formato "HH:MM:SS.sss"
     """
     try:
-        # Formatos esperados
-        format_in = "%H:%M:%S.%f"
+        # Parsear clip_tc_out completamente
         format_out = "%Y-%m-%dT%H:%M:%S.%f"
-
-        # Parsear clip_tc_in con fecha base ficticia
-        base_date = "1900-01-01"
-        time_in = datetime.strptime(f"{base_date}T{clip_tc_in}", f"%Y-%m-%dT{format_in}")
-
-        # Parsear clip_tc_out directamente
         time_out = datetime.strptime(clip_tc_out, format_out)
 
-        # Restar los datetime
+        # Extraer la fecha de clip_tc_out
+        date_str = time_out.strftime("%Y-%m-%d")
+        full_clip_tc_in = f"{date_str}T{clip_tc_in}"
+
+        # Parsear clip_tc_in con la misma fecha
+        format_in = "%Y-%m-%dT%H:%M:%S.%f"
+        time_in = datetime.strptime(full_clip_tc_in, format_in)
+
+        # Si el in es mayor que el out, significa que cruzó medianoche
+        if time_in > time_out:
+            time_out += timedelta(days=1)
+
+        # Calcular duración
         duration = time_out - time_in
 
-        if duration.total_seconds() < 0:
-            raise ValueError("clip_tc_out es anterior a clip_tc_in")
-
-        # Convertir la duración en componentes
+        # Formatear duración
         total_seconds = duration.total_seconds()
         hours = int(total_seconds // 3600)
         minutes = int((total_seconds % 3600) // 60)
@@ -102,9 +104,6 @@ def calculate_clip_duration_mw(clip_tc_in, clip_tc_out):
 
     except Exception as e:
         raise ValueError(f"Error procesando los timecodes: {e}")
-
-
-
 
 def get_channelmode():
     """Obtiene el modo de canal ('channelMode') de la sección de Replay en vMix."""
@@ -478,6 +477,10 @@ def index():
 
         <div class="background"></div>
         <div class="container">
+            <div class="current-timecode timecode" style="top: 260px; left: 25px;"></div>
+            <div class="current-timecode timecode" style="top: 260px; left: 500px;"></div>
+            <div class="current-timecode timecode" style="top: 260px; left: 970px;"></div>
+            <div class="current-timecode timecode" style="top: 260px; left: 1450px;"></div>
             <div class="timecode" id="label_cam_pgm" style="top: 870px; left: 250px;">{vu_data['replay']['cameraA']}</div>
             <div class="timecode" id="label_speed_pgm" style="top: 825px; left: 355px;">{vu_data['replay']['speedA']}</div>
             <div class="timecode" id="label_cam_prv" style="top: 870px; left: 1210px;">{vu_data['replay_preview']['cameraB']}</div>
@@ -586,6 +589,24 @@ def index():
                 ];
             }}
 
+                function updateSystemTimecode() {{
+                const now = new Date();
+
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                const milliseconds = now.getMilliseconds().toString().padStart(3, '0');
+
+                const timecode = `${{hours}}:${{minutes}}:${{seconds}}.${{milliseconds}}`;
+
+                // Selecciona todos los divs con la clase 'current-timecode' y actualiza su contenido
+                document.querySelectorAll('.current-timecode').forEach(el => {{
+                    el.textContent = timecode;
+                }});
+
+                requestAnimationFrame(updateSystemTimecode);
+            }}
+
             function updateAllMeters() {{
                 fetch('/vu_data')
                     .then(response => response.json())
@@ -635,7 +656,9 @@ def index():
                 requestAnimationFrame(updateAllMeters);
             }}
 
-            document.addEventListener('DOMContentLoaded', updateAllMeters);
+            //document.addEventListener('DOMContentLoaded', updateAllMeters);
+            document.addEventListener('DOMContentLoaded', () => {{ updateAllMeters(); updateSystemTimecode();}});
+
         </script>
     </body>
     </html>

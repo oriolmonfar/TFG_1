@@ -790,7 +790,7 @@ class MainWindow(QMainWindow):
         #SET PGM - PRV (or LINKED A|B)
        
         
-        pgm = UIFunctions.get_channelmode(self)
+        pgm = UIFunctions.get_channelmode()
 
         angleA, angleB = UIFunctions.get_vmix_replay_cameras()
 
@@ -807,7 +807,7 @@ class MainWindow(QMainWindow):
             """Asigna un nuevo clip a la variable global current_clip y actualiza según channelMode."""
             global current_clip, current_clip_pgm, current_clip_prv
 
-            channel_mode = UIFunctions.get_channelmode(self)  # Saber si estamos en A o B
+            channel_mode = UIFunctions.get_channelmode()  # Saber si estamos en A o B
             if not channel_mode:
                 print("No se pudo determinar el channelMode.")
                 return
@@ -944,7 +944,7 @@ class MainWindow(QMainWindow):
             """Ejecuta la función correspondiente según el estado de SHIFT."""
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                channel_mode = UIFunctions.get_channelmode(self)
+                channel_mode = UIFunctions.get_channelmode()
                 save_current_camangle("A")
                 new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
                 if channel_mode == 'A':
@@ -983,7 +983,7 @@ class MainWindow(QMainWindow):
         def execute_functions_B(self):
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                channel_mode = UIFunctions.get_channelmode(self)
+                channel_mode = UIFunctions.get_channelmode()
                 save_current_camangle("B")
                 new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
                 if channel_mode == 'A':
@@ -1022,7 +1022,7 @@ class MainWindow(QMainWindow):
         def execute_functions_C(self):
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                channel_mode = UIFunctions.get_channelmode(self)
+                channel_mode = UIFunctions.get_channelmode()
                 save_current_camangle("C")
                 new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
                 if channel_mode == 'A':
@@ -1061,7 +1061,7 @@ class MainWindow(QMainWindow):
         def execute_functions_D(self):
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
             if clip_mode:
-                channel_mode = UIFunctions.get_channelmode(self)
+                channel_mode = UIFunctions.get_channelmode()
                 save_current_camangle("D")
                 new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
                 if channel_mode == 'A':
@@ -1377,7 +1377,7 @@ class MainWindow(QMainWindow):
             set_page_mode(False)
             set_shift(False)
 
-            pgm = UIFunctions.get_channelmode(self)
+            pgm = UIFunctions.get_channelmode()
 
             if pgm == "B":
                 self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
@@ -1551,7 +1551,7 @@ class MainWindow(QMainWindow):
                 clip_code = f"{current_page}{current_bank}{f_button_number}{current_camangle}"
                 print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
                 save_current_clip(clip_code)
-                channel_mode = UIFunctions.get_channelmode(self)
+                channel_mode = UIFunctions.get_channelmode()
                 set_current_clip(self)
                 UIFunctions.labelPGM_PRV(self, channel_mode)
                 # Remover el último carácter (letra del cam angle)

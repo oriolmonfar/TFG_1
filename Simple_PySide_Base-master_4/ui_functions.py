@@ -134,7 +134,7 @@ class UIFunctions(MainWindow):
             print(f"Error al procesar XML de vMix: {e}")
             return None, None
         
-    def get_channelmode(self):
+    def get_channelmode():
         """Obtiene el modo de canal ('channelMode') de la sección de Replay en vMix."""
         
         # Paso 1: Obtener el XML desde la API de vMix
@@ -1738,7 +1738,7 @@ class UIFunctions(MainWindow):
         current_mark_in_tc = UIFunctions.get_tc()
         mark_in_tc = save_mark_in_tc(current_mark_in_tc)
 
-        pgm = UIFunctions.get_channelmode(self)
+        pgm = UIFunctions.get_channelmode()
 
         if pgm == "B": 
             self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
