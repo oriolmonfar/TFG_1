@@ -7,6 +7,8 @@ import time
 from PySide2.QtCore import QTimer
 from config_manager import *
 from PySide2.QtCore import Qt
+import threading
+import subprocess
 
 
 #DECLARE GLOBAL VARIABLES
@@ -2012,6 +2014,7 @@ class UIFunctions(MainWindow):
         global clip_mode, modo_playlist
         modo_playlist = False
         clip_mode = False  # Desactivamos el modo clip
+        save_clip_mode(clip_mode)
         print(f"Modo clip desactivado: Clip_mode: {clip_mode}")
 
         # Guardar la configuración
@@ -2122,8 +2125,6 @@ class UIFunctions(MainWindow):
     ########################################################################
     ## END - VMIX TO EVS FUNCTIONS
     ########################################################################
-
-
     ########################################################################
     ## START - GUI DEFINITIONS
     ########################################################################

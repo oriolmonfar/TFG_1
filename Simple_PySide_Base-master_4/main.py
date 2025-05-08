@@ -7,6 +7,9 @@ from PySide2.QtWidgets import *
 import time
 from datetime import datetime
 import requests
+import subprocess
+import threading
+
 
 
 # GUI FILE
@@ -1547,6 +1550,7 @@ class MainWindow(QMainWindow):
             # Activar el modo clip y mostrar el código correspondiente
             else:
                 clip_mode = True  # Activar modo clip
+                save_clip_mode(clip_mode)
                 current_camangle = load_current_camangle()
                 clip_code = f"{current_page}{current_bank}{f_button_number}{current_camangle}"
                 print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
@@ -1673,6 +1677,7 @@ class MainWindow(QMainWindow):
     ## START - SHOW POPUPS
     ########################################################################
 
+    
     def show_dialog_delete_marks(self):
         self.popup = PopupDeleteMarks()  # Guardar en un atributo para evitar que se elimine
         self.popup.exec_()  # Muestra el diálogo de forma modal
@@ -1772,6 +1777,7 @@ class MainWindow(QMainWindow):
             UIFunctions.labelPage(self, "CONFIGURATION")
             btnWidget.setStyleSheet(UIFunctions.selectMenu(btnWidget.styleSheet()))
 
+
     ########################################################################
     ## END - MENU ASSIGNMENT
     ########################################################################
@@ -1811,12 +1817,19 @@ class MainWindow(QMainWindow):
     ########################################################################
     ## END - APP EVENTS
     ########################################################################
+    
+from multiview import run_flask
+def start_flask_thread():
+    flask_thread = threading.Thread(target=run_flask, daemon=True)
+    flask_thread.start()
+
 
 ########################################################################
 ## END - MAINWINDOW
 ########################################################################
 
 if __name__ == "__main__":
+    start_flask_thread()
     app = QApplication(sys.argv)
     QtGui.QFontDatabase.addApplicationFont('fonts/segoeui.ttf')
     QtGui.QFontDatabase.addApplicationFont('fonts/segoeuib.ttf')

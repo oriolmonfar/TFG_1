@@ -7,7 +7,7 @@
     ],
     "CURRENT_PAGE": 3,
     "CURRENT_BANK": 1,
-    "CURRENT_CLIP": "326A",
+    "CURRENT_CLIP": "325A",
     "CURRENT_CLIP_PGM": "325A",
     "CURRENT_CLIP_PRV": "326A",
     "last_page": 1,
@@ -25,7 +25,7 @@
         "0": 0
     },
     "last_clip": 1,
-    "clip_mode": false,
+    "clip_mode": true,
     "current_camangle": "A",
     "current_camangleA": "A",
     "current_camangleB": "A",

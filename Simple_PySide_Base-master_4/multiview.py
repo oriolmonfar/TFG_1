@@ -6,13 +6,10 @@ import threading
 import os
 import re
 from config_manager import *
-from app_modules import * 
 
 IP_VMIX = load_ip_vmix()
 
 app = Flask(__name__, static_folder='.', static_url_path='')
-
-UIFunctions.send_request("api/?Function=BrowserNavigate&Input=8&Value=https://localhost:5000/")
 
 # Configuración
 CONFIG = {
@@ -106,11 +103,28 @@ def calculate_clip_duration_mw(clip_tc_in, clip_tc_out):
     except Exception as e:
         raise ValueError(f"Error procesando los timecodes: {e}")
 
+def send_request(endpoint):
+        """ Envía una request HTTP a la API de vMix y maneja errores. """
+        IP_VMIX = load_ip_vmix()
+        url = f"http://{IP_VMIX}/{endpoint}"
+        
+        try:
+            response = requests.get(url, timeout=2)  # Timeout para evitar que se quede bloqueado
+            
+            if response.status_code == 200:
+                return response.text  # Devuelve el contenido si la request fue exitosa
+            else:
+                print(f"Error en la request: {response.status_code}")
+                return None
+                
+        except requests.ConnectionError:
+            return None
+
 def get_channelmode():
     """Obtiene el modo de canal ('channelMode') de la sección de Replay en vMix."""
     
     # Paso 1: Obtener el XML desde la API de vMix
-    response = UIFunctions.send_request("api/")  # Usamos send_request con el endpoint de la API
+    response = send_request("api/")  # Usamos send_request con el endpoint de la API
     
     if not response:
         print("No se pudo obtener el XML debido a la falta de conexión con vMix.")
@@ -664,11 +678,16 @@ def index():
                             document.getElementById('label_ID_A').textContent = '';
                             document.getElementById('label_ID_B').textContent = '';
 
-                        }} else if (data.clip_mode === 'True') {{
-                            document.getElementById('label_countdownA').textContent = data.replay.countdownA;
-                            document.getElementById('label_countdownB').textContent = data.replay_preview.countdownB;
-                            document.getElementById('label_ID_A').textContent = data.replay.ID_A;
-                            document.getElementById('label_ID_B').textContent = data.replay_preview.ID_B;
+                        }} 
+                        else if (data.clip_mode === 'True') {{
+                            if (data.channelmode === 'A'){{
+                                document.getElementById('label_countdownA').textContent = data.replay.countdownA;
+                                document.getElementById('label_ID_A').textContent = data.replay.ID_A;
+                            }}
+                            else if (data.channelmode === 'B'){{
+                                document.getElementById('label_countdownB').textContent = data.replay_preview.countdownB;
+                                document.getElementById('label_ID_B').textContent = data.replay_preview.ID_B;
+                            }}
                         }}
 
 
@@ -708,7 +727,16 @@ def check_requirements():
         return False
     return True
 
+"""""
 if __name__ == '__main__':
+    if check_requirements():
+        threading.Thread(target=fetch_vmix_audio_data, daemon=True).start()
+        print("\nServidor iniciado: http://localhost:5000")
+        app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
+
+"""
+def run_flask():
+    """Inicia el servidor Flask y el hilo de audio."""
     if check_requirements():
         threading.Thread(target=fetch_vmix_audio_data, daemon=True).start()
         print("\nServidor iniciado: http://localhost:5000")
