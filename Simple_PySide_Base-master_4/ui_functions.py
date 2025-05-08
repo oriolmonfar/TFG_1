@@ -1560,8 +1560,6 @@ class UIFunctions(MainWindow):
 
     #Toggle Shift declared in main.py
 
-    def function_menu(self):
-        self.ui.stackedWidget.setCurrentWidget(self.ui.page_configuration)
 
     def function_A(self):
         """Fetches XML from vMix, checks the replay section, and sends the appropriate command based on channel mode."""

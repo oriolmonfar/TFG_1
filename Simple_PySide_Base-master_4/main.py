@@ -85,6 +85,7 @@ class PopupModoPage(QDialog):
         self.ui = Dialog_modo_page()  # Instancia de la UI generada
         self.ui.setupUi(self)  # Aplica la UI a la ventana de diálogo
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.setWindowModality(QtCore.Qt.NonModal)
 
         self.ui.minimize_modo_page.clicked.connect(lambda: self.showMinimized())
         self.ui.maximize_modo_page.clicked.connect(lambda: UIFunctions.maximize_restore(self))
@@ -275,7 +276,7 @@ class PopupOverwriteClip(QDialog):
         self.close()
 
 class PopupDeleteClipDictionary(QDialog):  
-    def __init__(self):  
+    def __init__(self, main_window):  
         super().__init__()  
         self.ui = Dialog_delete_clip_dictionary()  # Instancia de la UI generada
         self.ui.setupUi(self)  # Aplica la UI a la ventana de diálogo
@@ -320,6 +321,9 @@ class PopupDeleteClipDictionary(QDialog):
             save_current_camangle(" ")
             save_current_camangleA(" ")
             save_current_camangleB(" ")
+
+            pgm = UIFunctions.get_channelmode()
+            UIFunctions.labelPGM_PRV(main_window, pgm)
             
             PopupDeleteMarks.yes(self)
             
@@ -421,6 +425,8 @@ class PopupFastJog(QDialog):
         # Inicializar con el valor actual de FAST_JOG
         self.ui.textedit_fastjog.setPlainText(str(FAST_JOG))  
         self.ui.textedit_sec_fastjog.setPlainText(str(SEC_FAST_JOG)) 
+
+        
 
     def write(self, text):
         self.ui.textedit_fastjog.insertPlainText(text)
@@ -1220,7 +1226,14 @@ class MainWindow(QMainWindow):
         self.slider = self.findChild(QSlider, "sim_palanqueta")  # Find the slider
         UIFunctions.setup_replay_speed_slider(self.slider)  # Setup slider functionality
 
-        self.ui.sim_menu.clicked.connect(lambda: UIFunctions.function_menu(self))
+        def function_menu(self):
+            global modo_page
+            if modo_page: 
+                self.popup_modo_page.cancel()
+            else:
+                self.ui.stackedWidget.setCurrentWidget(self.ui.page_configuration)
+
+        self.ui.sim_menu.clicked.connect(lambda: function_menu(self))
         self.ui.sim_enter.clicked.connect(lambda: UIFunctions.function_enter(self))
         #################################### END - BOTONS SIMULATOR
 
@@ -1545,7 +1558,8 @@ class MainWindow(QMainWindow):
                 reset_shift(self)
 
             elif modo_page:
-                function_page(f_button_number)  # Cambiar página según el número del botón
+                self.popup_modo_page.close_popup()
+                function_page(f_button_number)  # o directamente function_page si es global
                 print("function change page")
                 modo_page = False
 
@@ -1555,13 +1569,12 @@ class MainWindow(QMainWindow):
                 save_clip_mode(clip_mode)
                 current_camangle = load_current_camangle()
                 clip_code = f"{current_page}{current_bank}{f_button_number}{current_camangle}"
+                numeric_code = clip_code[:-1]  
                 print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
                 save_current_clip(clip_code)
                 channel_mode = UIFunctions.get_channelmode()
                 set_current_clip(self)
-                UIFunctions.labelPGM_PRV(self, channel_mode)
-                # Remover el último carácter (letra del cam angle)
-                numeric_code = clip_code[:-1]  
+                UIFunctions.labelPGM_PRV(self, channel_mode)        
                 # Cargar el archivo JSON
                 if numeric_code == "101":
                     UIFunctions.goto_pl(self, 1)
@@ -1675,10 +1688,15 @@ class MainWindow(QMainWindow):
         self.show()
         #####################################################
 
+        self.popup_modo_page = PopupModoPage()
+
     ########################################################################
     ## START - SHOW POPUPS
     ########################################################################
-
+    def show_dialog_modopage(self):
+        #self.popup_modo = PopupModoPage()  # Guardar en un atributo para evitar que se elimine
+        #self.popup.setModal(False)  # Asegurás que no sea modal
+        self.popup_modo_page.show()  # Muestra el diálogo de forma modal
     
     def show_dialog_delete_marks(self):
         self.popup = PopupDeleteMarks()  # Guardar en un atributo para evitar que se elimine
@@ -1702,12 +1720,10 @@ class MainWindow(QMainWindow):
         self.popup.exec_()  # Muestra el diálogo de forma modal
 
     def show_dialog_deleteclipdic(self):
-        self.popup = PopupDeleteClipDictionary()  # Guardar en un atributo para evitar que se elimine
+        self.popup = PopupDeleteClipDictionary(self)  # Guardar en un atributo para evitar que se elimine
         self.popup.exec_()  # Muestra el diálogo de forma modal
 
-    def show_dialog_modopage(self):
-        self.popup = PopupModoPage()  # Guardar en un atributo para evitar que se elimine
-        self.popup.exec_()  # Muestra el diálogo de forma modal
+
 
     ########################################################################
     ## END - SHOW POPUPS
