@@ -769,6 +769,8 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        UIFunctions.start_cam_angle_monitor(self)
+        UIFunctions.start_available_clips_monitor(self)
         UIFunctions.function_record()
         UIFunctions.function_e_e()
         UIFunctions.check_vmix_connection(self)
@@ -979,7 +981,7 @@ class MainWindow(QMainWindow):
                 if SHIFT:
                     UIFunctions.function_A(self)
                     reset_shift(self)
-                else:
+                else: 
                     UIFunctions.function_A(self)
         self.ui.sim_A.clicked.connect(lambda: execute_functions_A(self))
 

@@ -7,8 +7,6 @@ import time
 from PySide2.QtCore import QTimer
 from config_manager import *
 from PySide2.QtCore import Qt
-import threading
-import subprocess
 
 
 #DECLARE GLOBAL VARIABLES
@@ -48,6 +46,8 @@ class UIFunctions(MainWindow):
         except requests.ConnectionError:
             return None
         
+    
+        
     def check_vmix_connection(self):
         """Comprueba la conexión con vMix y actualiza los frames de estado."""
         response = UIFunctions.send_request("api/")  # Comprueba conexión con vMix
@@ -61,6 +61,88 @@ class UIFunctions(MainWindow):
             # No conectado: Muestra el frame rojo y oculta el verde
             self.ui.vmix_conn_ok.setStyleSheet("border-radius: 5px; border: 1px solid rgb(0,0,0); background-color: rgb(40, 40, 40);")  # Gris
             self.ui.vmix_conn_no.show()
+
+    def check_botons_simf(self):
+        self.sim_f_buttons = {
+            1: self.ui.sim_f1,
+            2: self.ui.sim_f2,
+            3: self.ui.sim_f3,
+            4: self.ui.sim_f4,
+            5: self.ui.sim_f5,
+            6: self.ui.sim_f6,
+            7: self.ui.sim_f7,
+            8: self.ui.sim_f8,
+            9: self.ui.sim_f9,
+            0: self.ui.sim_f10
+        }
+        current_page = load_current_page()
+        current_bank = load_current_bank()
+        clip_data = load_clip_dictionary()  # Cargar el diccionario de clips
+        current_clip_pgm = load_current_clip_pgm()
+        current_clip_prv = load_current_clip_prv()
+        code_pgm = current_clip_pgm[:3]
+        code_prv = current_clip_prv[:3]
+
+        for i in range(10):
+            key = f"{current_page}{current_bank}{i}"
+            clip_list = clip_data.get(key, ["void"] * 7)
+
+            boton = self.sim_f_buttons[i]  # Mapeo dinámico
+            if key == code_pgm or key == code_prv:
+                boton.setStyleSheet("QPushButton {font-family: Arial; background-color: red; font-size: 10px;font-weight: bold;color: white;padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);}QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            elif clip_list[0] != "void":
+                # Hay contenido: botón en verde
+                boton.setStyleSheet("QPushButton {font-family: Arial; background-color: green; font-size: 10px;font-weight: bold;color: white;padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);}QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            else:
+                # Sin contenido: sin fondo
+                boton.setStyleSheet("QPushButton {font-family: Arial;font-size: 10px;font-weight: bold;color: white;padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);}QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+
+
+    def check_cam_angles(self):
+        xml_data = UIFunctions.send_request("api/")
+        if not xml_data:
+            print("No se pudo obtener respuesta de la API.")
+            return
+
+        try:
+            root = ET.fromstring(xml_data)
+            for input_elem in root.findall("inputs/input"):
+                if input_elem.get("type") == "Replay":
+                    replay_elem = input_elem.find("replay")
+                    if replay_elem is not None:
+                        cameraA = replay_elem.get("cameraA")
+                        cameraB = replay_elem.get("cameraB")
+                        break
+            else:
+                print("No se encontró un input con tipo Replay.")
+                return
+        except ET.ParseError as e:
+            print(f"Error al parsear XML: {e}")
+            return
+
+        # Reset estilos
+        base_style = ("QPushButton { font-family: Arial;font-size: 16px;font-weight: bold;color: white;padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255);}QPushButton:hover {background-color: rgba(0,150,250,50);}QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+
+        sim_buttons = {
+            "1": self.ui.sim_A,
+            "2": self.ui.sim_B,
+            "3": self.ui.sim_C,
+            "4": self.ui.sim_D,
+        }
+
+        # Aplica estilos según cameraA y cameraB
+        for cam_id, button in sim_buttons.items():
+            if cameraA == cam_id and cameraB == cam_id:
+                # Mismo valor para A y B → rojo (prioridad A)
+                button.setStyleSheet(base_style.replace("}", " background-color: red; }", 1))
+            elif cameraA == cam_id:
+                button.setStyleSheet(base_style.replace("}", " background-color: red; }", 1))
+            elif cameraB == cam_id:
+                button.setStyleSheet(base_style.replace("}", " background-color: green; }", 1))
+            else:
+                # Ninguna coincidencia → reset
+                button.setStyleSheet(base_style)
+        
 
     def check_modo_playlist(self):
         global modo_playlist
@@ -85,6 +167,20 @@ class UIFunctions(MainWindow):
         print(f"connection checked, modo playlist: {modo_playlist}, modo loop: {modo_loop}")
         main_window.timer.start(500)  # Ejecuta cada 5 segundos
 
+    def start_cam_angle_monitor(main_window):
+        global current_page, current_bank
+        """Inicia un temporizador para monitorear la conexión con vMix."""
+        main_window.timer = QTimer(main_window)
+        main_window.timer.timeout.connect(lambda: UIFunctions.check_botons_simf(main_window))
+        print(f"connection checked, modo playlist: {modo_playlist}, modo loop: {modo_loop}")
+        main_window.timer.start(500)  # Ejecuta cada 5 segundos
+
+    def start_available_clips_monitor(main_window):
+        global current_page, current_bank
+        """Inicia un temporizador para monitorear la conexión con vMix."""
+        main_window.timer = QTimer(main_window)
+        main_window.timer.timeout.connect(lambda: UIFunctions.check_cam_angles(main_window))
+        main_window.timer.start(500)  # Ejecuta cada 5 segundos
 
     def get_vmix_replay_cameras():
         """
@@ -1953,6 +2049,12 @@ class UIFunctions(MainWindow):
         
         UIFunctions.send_request("api/?Function=ReplaySelectEvents1&Channel=1")
         UIFunctions.function_reset_lastmark()
+        save_current_clip(" ")
+        save_current_clip_pgm(" ")
+        save_current_clip_prv(" ")
+        save_current_camangle(" ")
+        save_current_camangleA(" ")
+        save_current_camangleB(" ")
         
         # Step 1: ReplayJumpToNow
         endpoint_now = "api/?Function=ReplayJumpToNow&Channel=1"
