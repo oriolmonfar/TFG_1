@@ -254,9 +254,16 @@ def fetch_vmix_audio_data():
                 label_speedA = str(round(float(speedA)* 100))
                 label_speedB = str(round(float(speedB)* 100))
                 channelmode = get_channelmode()
-
-                countdownA = calculate_clip_duration_mw(replay_timecodeA, outpoint_clipA )
-                countdownB = calculate_clip_duration_mw(replay_timecodeB, outpoint_clipB )
+                countdownA = "void"
+                countdownB = "void"
+                if outpoint_clipA == "void":
+                    continue
+                else:
+                    countdownA = calculate_clip_duration_mw(replay_timecodeA, outpoint_clipA )
+                if outpoint_clipB == "void":
+                    continue
+                else:
+                    countdownB = calculate_clip_duration_mw(replay_timecodeB, outpoint_clipB )
 
                 print(countdownA)
                 print(countdownB)
@@ -727,6 +734,7 @@ def check_requirements():
         return False
     return True
 
+
 """""
 if __name__ == '__main__':
     if check_requirements():
@@ -736,8 +744,8 @@ if __name__ == '__main__':
 
 """
 def run_flask():
-    """Inicia el servidor Flask y el hilo de audio."""
     if check_requirements():
         threading.Thread(target=fetch_vmix_audio_data, daemon=True).start()
         print("\nServidor iniciado: http://localhost:5000")
         app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
+

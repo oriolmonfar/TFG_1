@@ -9,6 +9,7 @@ from datetime import datetime
 import requests
 import subprocess
 import threading
+import serial
 
 
 
@@ -27,6 +28,11 @@ from ui_popup_overwrite_clip import Ui_Dialog as Dialog_overwrite
 from ui_popup_delete_clip_dictionary import Ui_Dialog as Dialog_delete_clip_dictionary
 from ui_popup_modo_page import Ui_Dialog as Dialog_modo_page
 from config_manager import *
+
+# GLOBAL VARIABLES LED CONTROLLER
+NUM_LEDS = 30
+SERIAL_PORT = '/dev/ttyUSB0'
+BAUDRATE = 115200
 
 #DECLARE GLOBAL VARIABLES
 IP_VMIX = load_ip_vmix()
@@ -797,7 +803,16 @@ class MainWindow(QMainWindow):
             text = current_bank
         self.ui.label_bank.setText(f" {text} BANK")  # Actualiza Q
         UIFunctions.labelDescription(self, f"{active_playlist}")
+
+        #SET LED COLORS
+        self.led_colors = [QColor(0,0,0) for _ in range(NUM_LEDS)]
         
+        try:
+            self.ser = serial.Serial(SERIAL_PORT, BAUDRATE, timeout=1)
+        except serial.SerialException as e:
+            print(f"Error obrint el port serial dels leds ESP32: {e}")
+            self.ser = None
+
         #SET PGM - PRV (or LINKED A|B)
        
         
@@ -814,50 +829,11 @@ class MainWindow(QMainWindow):
         save_current_camangleA(angleA)
         save_current_camangleB(angleB)
 
-        def set_current_clip():
-            """Asigna un nuevo clip a la variable global current_clip y actualiza según channelMode,
-            solo si el código existe en el diccionario y no es 'void' en la posición 0."""
-            global current_clip, current_clip_pgm, current_clip_prv
-
-            channel_mode = UIFunctions.get_channelmode()  # Saber si estamos en A o B
-            if not channel_mode:
-                print("No se pudo determinar el channelMode.")
-                return
-
-            new_clip = load_current_clip()  # Cargar el clip actual desde vMix
-            numeric_code = new_clip[:3]  # Obtener el código del clip
-            clip_data = load_clip_dictionary()
-
-            # Validación: comprobar si el código existe y si no es "void" en la posición 0
-            if numeric_code not in clip_data:
-                print(f"Código {numeric_code} no encontrado en el diccionario.")
-                return
-
-            if clip_data[numeric_code][0] == "void":
-                print(f"Código {numeric_code} es 'void' en la posición 0, no se guarda el clip.")
-                return
-
-            current_clip = new_clip
-
-            if channel_mode == 'A':
-                if new_clip != current_clip_pgm:
-                    current_clip_pgm = new_clip
-                    save_current_clip_pgm(current_clip_pgm)
-                    print(f"Clip asignado al canal A (PGM): {current_clip_pgm}")
-            elif channel_mode == 'B':
-                if new_clip != current_clip_prv:
-                    current_clip_prv = new_clip
-                    save_current_clip_prv(current_clip_prv)
-                    print(f"Clip asignado al canal B (PRV): {current_clip_prv}")
-            else:
-                print(f"ChannelMode desconocido: {channel_mode}")
-
-        UIFunctions.labelPGM_PRV(self, pgm)
-
         ## Set window size
         startSize = QSize(1024, 600)
         self.resize(startSize)
         self.setMinimumSize(startSize)
+        #self.showFullScreen()
 
         #################################### START - CREATE MENUS
         # Toggle menu size
@@ -966,6 +942,7 @@ class MainWindow(QMainWindow):
         def execute_functions_A(self):
             """Ejecuta la función correspondiente según el estado de SHIFT."""
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
+            clip_mode = load_clip_mode()
             if clip_mode:
                 channel_mode = UIFunctions.get_channelmode()
                 save_current_camangle("A")
@@ -1005,6 +982,7 @@ class MainWindow(QMainWindow):
 
         def execute_functions_B(self):
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
+            clip_mode = load_clip_mode()
             if clip_mode:
                 channel_mode = UIFunctions.get_channelmode()
                 save_current_camangle("B")
@@ -1044,6 +1022,7 @@ class MainWindow(QMainWindow):
 
         def execute_functions_C(self):
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
+            clip_mode = load_clip_mode()
             if clip_mode:
                 channel_mode = UIFunctions.get_channelmode()
                 save_current_camangle("C")
@@ -1083,6 +1062,7 @@ class MainWindow(QMainWindow):
 
         def execute_functions_D(self):
             global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
+            clip_mode = load_clip_mode()
             if clip_mode:
                 channel_mode = UIFunctions.get_channelmode()
                 save_current_camangle("D")
@@ -1153,7 +1133,7 @@ class MainWindow(QMainWindow):
                 UIFunctions.function_record()
                 reset_shift(self)
             else:
-                UIFunctions.function_e_e()
+                UIFunctions.function_e_e(self)
         self.ui.sim_record.clicked.connect(lambda: execute_functions_record(self))
 
         def execute_functions_prvctl(self):
@@ -1333,6 +1313,7 @@ class MainWindow(QMainWindow):
         self.ui.config_fastjogconfig.clicked.connect(self.show_dialog_fastjog)
         self.ui.config_deleteclipdict.clicked.connect( self.show_dialog_deleteclipdic)
         self.ui.config_resetmarks.clicked.connect(self.show_dialog_delete_marks)
+        self.ui.config_refresh_multi.clicked.connect(lambda: UIFunctions.send_request("api/?Function=BrowserNavigate&Input=8&Value=http://localhost:5000/"))
         #################################### END - BOTONS CONFIGURATION
 
 
@@ -1353,8 +1334,10 @@ class MainWindow(QMainWindow):
 
             if SHIFT:
                 self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: rgba(255,40,40,150);} QPushButton:hover {background-color: rgba(255,40,40,50);} QPushButton:pressed { background-color: rgba(255,40,40,50);}")  # Rojo cuando está activado
+                self.setLeds(self, 1, QColor(255,0,0))
             else:
                 self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")   # Transparente cuando está desactivado
+                self.setLeds(self, 1, QColor(0,0,0))
 
             print(f"Shift activado: {SHIFT}")  # Depuración
             save_shift(SHIFT)
@@ -1366,6 +1349,7 @@ class MainWindow(QMainWindow):
             if SHIFT:
                 SHIFT = False
                 self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
+                self.setLeds(self, 1, QColor(0,0,0))
                 print("Shift desactivado")
                 save_shift(SHIFT)
 
@@ -1584,9 +1568,6 @@ class MainWindow(QMainWindow):
                 numeric_code = clip_code[:-1]  
                 print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
                 save_current_clip(clip_code)
-                channel_mode = UIFunctions.get_channelmode()
-                set_current_clip()
-                UIFunctions.labelPGM_PRV(self, channel_mode)        
                 # Cargar el archivo JSON
                 if numeric_code == "101":
                     UIFunctions.goto_pl(self, 1)
@@ -1639,9 +1620,14 @@ class MainWindow(QMainWindow):
                 # Comprobar si el primer elemento de la lista es "void"
                 if clip_list[0] == "void":
                     print("No hay ningún clip asignado.")
-                    return None
-                
+                    return None          
                 else: 
+                    pgm = UIFunctions.get_channelmode()
+                    if pgm == "B":
+                        save_current_clip_prv(clip_code)
+                    else:
+                        save_current_clip_pgm(clip_code)      
+                    UIFunctions.labelPGM_PRV(self, pgm)
                     id = clip_list[0].zfill(4)
                     endpoint_1 = f"api/?Function=ReplayPlayEventsByID&Value={id}&Channel=1"
                     endpoint_2 = "api/?Function=ReplayPause&Channel=1"
@@ -1811,6 +1797,31 @@ class MainWindow(QMainWindow):
     ########################################################################
     ## END - MENU ASSIGNMENT
     ########################################################################
+
+    #############################################################
+    ## START - LED CONTROLLER FUNCTIONS
+    #############################################################
+
+    def setLeds(self, numLed, color):
+        self.led_colors[numLed] = color
+        self.send_colors()
+
+    def send_colors(self):
+        if self.ser and self.ser.is_open:
+            data = bytearray()
+            for color in self.led_colors:
+                data += bytes([color.red(), color.green(), color.blue()])
+            self.ser.write(data)
+
+    def closeEvent(self, event):
+        if self.ser and self.ser.is_open:
+            self.ser.close()
+        event.accept()
+
+    ##############################################################
+    ## END - LED CONTROLLER FUNCTIONS
+    ###############################################################
+
 
     ########################################################################
     ## START - APP EVENTS

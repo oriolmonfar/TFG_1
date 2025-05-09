@@ -1668,7 +1668,7 @@ QPushButton:pressed {
                    <string notr="true">background: transparent;</string>
                   </property>
                   <property name="currentIndex">
-                   <number>22</number>
+                   <number>23</number>
                   </property>
                   <widget class="QWidget" name="page_home">
                    <widget class="QPushButton" name="clip_addtoplaylist">
@@ -7009,6 +7009,42 @@ QPushButton:pressed {
                     </property>
                     <property name="text">
                      <string>Reset Marks</string>
+                    </property>
+                   </widget>
+                   <widget class="QPushButton" name="config_refresh_multi">
+                    <property name="geometry">
+                     <rect>
+                      <x>330</x>
+                      <y>140</y>
+                      <width>251</width>
+                      <height>71</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    font-family: &quot;Arial&quot;;    /* Cambia la fuente */
+    font-size: 16px;         /* Tamaño del texto */
+    font-weight: bold;       /* Negrita */    
+    color: white;				 /* Color del texto */
+	padding: 10px;           
+    border-radius: 15px;
+	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */
+}
+
+QPushButton:hover {
+	background-color: rgba(0,150,250,50);
+}
+
+QPushButton:pressed {
+    background-color: rgba(0,150,250,50);
+}
+
+
+
+</string>
+                    </property>
+                    <property name="text">
+                     <string>Resfresh Multiview</string>
                     </property>
                    </widget>
                   </widget>

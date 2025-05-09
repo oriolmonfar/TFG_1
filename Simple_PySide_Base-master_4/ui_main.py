@@ -3502,6 +3502,30 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "")
+        self.config_refresh_multi = QPushButton(self.page_configuration)
+        self.config_refresh_multi.setObjectName(u"config_refresh_multi")
+        self.config_refresh_multi.setGeometry(QRect(330, 140, 251, 71))
+        self.config_refresh_multi.setStyleSheet(u"QPushButton {\n"
+"    font-family: \"Arial\";    /* Cambia la fuente */\n"
+"    font-size: 16px;         /* Tama\u00f1o del texto */\n"
+"    font-weight: bold;       /* Negrita */    \n"
+"    color: white;				 /* Color del texto */\n"
+"	padding: 10px;           \n"
+"    border-radius: 15px;\n"
+"	border: 2px solid rgba(255,255,255,255);  /* Borde blanco con transparencia */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgba(0,150,250,50);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"")
         self.stackedWidget.addWidget(self.page_configuration)
         self.page_export = QWidget()
         self.page_export.setObjectName(u"page_export")
@@ -5667,7 +5691,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(22)
+        self.stackedWidget.setCurrentIndex(23)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -5857,6 +5881,7 @@ class Ui_MainWindow(object):
         self.config_fastjogconfig.setText(QCoreApplication.translate("MainWindow", u"Fast Jog Configuration", None))
         self.config_deleteclipdict.setText(QCoreApplication.translate("MainWindow", u"Delete Clip Dictionary", None))
         self.config_resetmarks.setText(QCoreApplication.translate("MainWindow", u"Reset Marks", None))
+        self.config_refresh_multi.setText(QCoreApplication.translate("MainWindow", u"Resfresh Multiview", None))
         self.export_playlist.setText(QCoreApplication.translate("MainWindow", u"Export Playlist", None))
         self.export_export_clip.setText(QCoreApplication.translate("MainWindow", u"Export Clip", None))
         self.generic_none.setText(QCoreApplication.translate("MainWindow", u"None", None))

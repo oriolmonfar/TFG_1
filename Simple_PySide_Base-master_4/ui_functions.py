@@ -119,6 +119,26 @@ class UIFunctions(MainWindow):
         except ET.ParseError as e:
             print(f"Error al parsear XML: {e}")
             return
+        if cameraA == "1":
+            angleA = "A"
+        elif cameraA == "2":
+            angleA = "B"
+        elif cameraA == "3":
+            angleA = "C"
+        elif cameraA == "4":
+            angleA = "D"
+        
+        if cameraB == "1":
+            angleB = "A"
+        elif cameraB == "2":
+            angleB = "B"
+        elif cameraB == "3":
+            angleB = "C"
+        elif cameraB == "4":
+            angleB = "D"
+
+        save_current_camangleA(angleA)
+        save_current_camangleB(angleB)
 
         # Reset estilos
         base_style = ("QPushButton { font-family: Arial;font-size: 16px;font-weight: bold;color: white;padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255);}QPushButton:hover {background-color: rgba(0,150,250,50);}QPushButton:pressed {background-color: rgba(0,150,250,50);}")
@@ -333,21 +353,36 @@ class UIFunctions(MainWindow):
 
     #Label Title according to channel mode
     def labelPGM_PRV(self, text):
-        global current_clip_pgm, current_clip_prv
+        global current_clip_pgm, current_clip_prv, clip_mode
+        clip_mode = load_clip_mode()
         current_clip_pgm = load_current_clip_pgm()
         current_clip_prv = load_current_clip_prv()
-        if text == "A":
-            self.ui.label_pgm.setText(f'PGM : {current_clip_pgm}')
-            self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
-        elif text == "B":
-            self.ui.label_pgm.setText(f'PRV : {current_clip_prv}')
-            self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
-            self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+        if clip_mode:
+            if text == "A":
+                self.ui.label_pgm.setText(f'PGM : {current_clip_pgm}')
+                self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
+            elif text == "B":
+                self.ui.label_pgm.setText(f'PRV : {current_clip_prv}')
+                self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
+                self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            else: 
+                self.ui.label_pgm.setText(f'LINKED A|B : {current_clip_pgm}')
+                self.ui.label_pgm.setStyleSheet("color: rgb(255,165,0)")
+            self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
+            self.ui.contec_acc_actualclip.setText(f"{current_clip_pgm}")
         else: 
-            self.ui.label_pgm.setText(f'LINKED A|B : {current_clip_pgm}')
-            self.ui.label_pgm.setStyleSheet("color: rgb(255,165,0)")
-        self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
-        self.ui.contec_acc_actualclip.setText(f"{current_clip_pgm}")
+            if text == "A":
+                self.ui.label_pgm.setText('PGM')
+                self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
+            elif text == "B":
+                self.ui.label_pgm.setText(f'PRV')
+                self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
+                self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            else: 
+                self.ui.label_pgm.setText(f'LINKED A|B')
+                self.ui.label_pgm.setStyleSheet("color: rgb(255,165,0)")
+            self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
+            self.ui.contec_acc_actualclip.setText("No Selected Clip")
 
         
     # Label Description
@@ -943,14 +978,24 @@ class UIFunctions(MainWindow):
                 UIFunctions.send_request(url)  # Use send_request correctly
 
                 # Update UI labels
-                if channel_mode == "A":
-                    self.ui.label_pgm.setText(f'PRV : {current_clip_prv}')
-                    self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
-                    self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                else:
-                    self.ui.label_pgm.setText(f'PGM : {current_clip_pgm}')
-                    self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
-                    self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+                if clip_mode:
+                    if channel_mode == "A":
+                        self.ui.label_pgm.setText(f'PRV : {current_clip_prv}')
+                        self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
+                        self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+                    else:
+                        self.ui.label_pgm.setText(f'PGM : {current_clip_pgm}')
+                        self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
+                        self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+                else: 
+                    if channel_mode == "A":
+                        self.ui.label_pgm.setText(f'PRV')
+                        self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
+                        self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+                    else:
+                        self.ui.label_pgm.setText(f'PGM')
+                        self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
+                        self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
 
         except ET.ParseError:
             print("Error parsing XML response from vMix")
@@ -2042,7 +2087,7 @@ class UIFunctions(MainWindow):
         slider.valueChanged.connect(on_slider_changed)    # Change speed while moving   
 
 
-    def function_e_e():
+    def function_e_e(self):
         """Jumps to current time in replay and plays it."""
         
         UIFunctions.send_request("api/?Function=ReplaySelectEvents1&Channel=1")
@@ -2050,9 +2095,9 @@ class UIFunctions(MainWindow):
         save_current_clip(" ")
         save_current_clip_pgm(" ")
         save_current_clip_prv(" ")
-        save_current_camangle(" ")
-        save_current_camangleA(" ")
-        save_current_camangleB(" ")
+        #save_current_camangle(" ")
+        #save_current_camangleA(" ")
+        #save_current_camangleB(" ")
         
         # Step 1: ReplayJumpToNow
         endpoint_now = "api/?Function=ReplayJumpToNow&Channel=1"
@@ -2116,6 +2161,8 @@ class UIFunctions(MainWindow):
         clip_mode = False  # Desactivamos el modo clip
         save_clip_mode(clip_mode)
         print(f"Modo clip desactivado: Clip_mode: {clip_mode}")
+        pgm = UIFunctions.get_channelmode()
+        UIFunctions.labelPGM_PRV(self, pgm)
 
         # Guardar la configuración
         save_config("clip_mode", clip_mode)
