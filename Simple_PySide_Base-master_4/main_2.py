@@ -1359,11 +1359,13 @@ class MainWindow(QMainWindow):
             CLEAR_MODE = not CLEAR_MODE
 
             if CLEAR_MODE:
-                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255); background-color: rgba(255,165,0,150);} QPushButton:hover {background-color: rgba(255,165,0,100);} QPushButton:pressed { background-color: rgba(255,165,0,50);}")
+                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: red;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")
+                self.setLeds(self, 2, QColor(255,0,0))
                 print("Modo CLEAR activado")
             else:
                 CLEAR_SELECTION = None
-                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(255,165,0,50);} QPushButton:pressed { background-color: rgba(255,165,0,50);}")
+                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")
+                self.setLeds(self, 2, QColor(0,0,0))
                 print("Modo CLEAR desactivado")
 
 
@@ -1373,6 +1375,7 @@ class MainWindow(QMainWindow):
             CLEAR_MODE = False
             CLEAR_SELECTION = None
             self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
+            self.setLeds(self, 2, QColor(0,0,0))
             print("Modo CLEAR desactivado automáticamente después de la selección")
 
 
@@ -1395,8 +1398,10 @@ class MainWindow(QMainWindow):
 
             if pgm == "B":
                 self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+                self.setLeds(self, 27, QColor(0, 255,0))
             else: 
                 self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+                self.setLeds(self, 27, QColor(255, 0,0))
             
             
             # 1. Marcar el Out en vMix
@@ -1513,7 +1518,9 @@ class MainWindow(QMainWindow):
                 def handler(checked):
                     nonlocal button_pressed
                     self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+                    self.setLeds(self, 26, QColor(0, 0,0))
                     self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+                    self.setLeds(self, 27, QColor(0, 0,0))
                     button_pressed = num
                     loop.quit()
                 return handler

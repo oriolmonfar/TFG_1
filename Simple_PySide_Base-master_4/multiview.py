@@ -257,18 +257,13 @@ def fetch_vmix_audio_data():
                 countdownA = "void"
                 countdownB = "void"
                 if outpoint_clipA == "void":
-                    continue
+                    countdownA = "void"
                 else:
                     countdownA = calculate_clip_duration_mw(replay_timecodeA, outpoint_clipA )
                 if outpoint_clipB == "void":
-                    continue
+                    countdownB = "void"
                 else:
                     countdownB = calculate_clip_duration_mw(replay_timecodeB, outpoint_clipB )
-
-                print(countdownA)
-                print(countdownB)
-
-
 
                 if cameraA == "1": 
                     label_rec_A = "REC 1"
