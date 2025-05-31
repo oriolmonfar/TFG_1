@@ -5,10 +5,10 @@
     "VMIX_LIST": [
         "VMIX_URI (127.0.0.1:8088)"
     ],
-    "CURRENT_PAGE": 1,
+    "CURRENT_PAGE": 2,
     "CURRENT_BANK": 1,
-    "CURRENT_CLIP": " ",
-    "CURRENT_CLIP_PGM": " ",
+    "CURRENT_CLIP": "245A",
+    "CURRENT_CLIP_PGM": "245A",
     "CURRENT_CLIP_PRV": " ",
     "last_page": 1,
     "last_bank_per_page": {
@@ -25,21 +25,24 @@
         "0": 0
     },
     "last_clip": 1,
-    "clip_mode": false,
+    "clip_mode": true,
     "current_camangle": "A",
     "current_camangleA": "A",
     "current_camangleB": "A",
-    "clip_id": 1,
+    "clip_id": 6,
     "last_date": "2025-04-16",
     "last_time": "18:22:30.00",
     "timecodes": [],
-    "mark_in_tc": "2025-05-09T22:35:55.561",
+    "mark_in_tc": "0001-01-01T00:00:00.000",
     "estrella1": [],
     "estrella2": [],
     "estrella3": [],
-    "active_playlist": "PL1",
+    "active_playlist": "PL15",
     "SHIFT": false,
-    "playlist1": [],
+    "playlist1": [
+        "245,   No name assigned, No rank assigned,   {PL1, PL15},   00:00:00.000,   00:00:00.000,   00:00:00.000",
+        "246,   No name assigned, No rank assigned,   PL1,   00:00:00.000,   00:00:00.000,   00:00:00.000"
+    ],
     "playlist2": [],
     "playlist3": [],
     "playlist4": [],
@@ -53,7 +56,9 @@
     "playlist12": [],
     "playlist13": [],
     "playlist14": [],
-    "playlist15": [],
+    "playlist15": [
+        "245A,   No name assigned, No rank assigned,   {PL1, PL15},   00:00:00.000,   00:00:00.000,   00:00:00.000"
+    ],
     "playlist16": [],
     "playlist17": [],
     "playlist18": [],

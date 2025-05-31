@@ -315,7 +315,7 @@ def fetch_vmix_audio_data():
             new_data['channelmode'] = channelmode
             new_data['clip_mode'] = label_clip_mode
 
-            print(new_data)
+            #print(new_data)
             
             # Procesar todos los inputs para obtener medidores y timecodes individuales
             for input_elem in root.findall('inputs/input'):
@@ -368,7 +368,7 @@ def fetch_vmix_audio_data():
             # Actualizar datos globales solo si hay cambios
             if new_data != vu_data:
                 vu_data.update(new_data)
-                print("Datos actualizados:", {k: v['timecode'] for k, v in vu_data.items() if 'timecode' in v})
+                #print("Datos actualizados:", {k: v['timecode'] for k, v in vu_data.items() if 'timecode' in v})
             
         except requests.exceptions.RequestException as e:
             print(f"Error de conexión con vMix: {str(e)}")
