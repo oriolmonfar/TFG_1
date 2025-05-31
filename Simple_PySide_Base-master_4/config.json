@@ -7,8 +7,8 @@
     ],
     "CURRENT_PAGE": 2,
     "CURRENT_BANK": 1,
-    "CURRENT_CLIP": "245A",
-    "CURRENT_CLIP_PGM": "245A",
+    "CURRENT_CLIP": " ",
+    "CURRENT_CLIP_PGM": " ",
     "CURRENT_CLIP_PRV": " ",
     "last_page": 1,
     "last_bank_per_page": {
@@ -25,11 +25,11 @@
         "0": 0
     },
     "last_clip": 1,
-    "clip_mode": true,
-    "current_camangle": "A",
+    "clip_mode": false,
+    "current_camangle": " ",
     "current_camangleA": "A",
     "current_camangleB": "A",
-    "clip_id": 6,
+    "clip_id": 0,
     "last_date": "2025-04-16",
     "last_time": "18:22:30.00",
     "timecodes": [],
@@ -39,10 +39,7 @@
     "estrella3": [],
     "active_playlist": "PL15",
     "SHIFT": false,
-    "playlist1": [
-        "245,   No name assigned, No rank assigned,   {PL1, PL15},   00:00:00.000,   00:00:00.000,   00:00:00.000",
-        "246,   No name assigned, No rank assigned,   PL1,   00:00:00.000,   00:00:00.000,   00:00:00.000"
-    ],
+    "playlist1": [],
     "playlist2": [],
     "playlist3": [],
     "playlist4": [],
@@ -56,9 +53,7 @@
     "playlist12": [],
     "playlist13": [],
     "playlist14": [],
-    "playlist15": [
-        "245A,   No name assigned, No rank assigned,   {PL1, PL15},   00:00:00.000,   00:00:00.000,   00:00:00.000"
-    ],
+    "playlist15": [],
     "playlist16": [],
     "playlist17": [],
     "playlist18": [],
