@@ -1959,7 +1959,7 @@ class UIFunctions(MainWindow):
         global mark_in_tc
 
         current_mark_in_tc = UIFunctions.get_tc()
-        mark_in_tc = save_mark_in_tc(current_mark_in_tc)
+        mark_in_tc = save_mark_in_tc(current_mark_in_tc) 
 
         pgm = UIFunctions.get_channelmode()
 
@@ -2056,7 +2056,7 @@ class UIFunctions(MainWindow):
                         list_widget.setCurrentRow(new_index)  # Actualiza la fila seleccionada
                         list_widget.scrollToItem(list_widget.item(new_index))  # Desplázate al nuevo elemento
                         self.selected_index = new_index  # Guarda el índice seleccionado
-                        
+
                     if direction == 1:
                         UIFunctions.send_request("api/?Function=ReplaySelectNextEvent&Channel=1")
                     elif direction == -1:
@@ -2280,9 +2280,7 @@ class UIFunctions(MainWindow):
     ## START - CLIP MANAGEMENT FUNCTIONS
     ########################################################################
 
-    def show_dialog_overwrite_clip(self, clip_code, clip_management):
-        self.popup = PopupOverwriteClip(clip_code, clip_management)
-        self.popup.exec_()
+
 
     
     def get_tc(): 

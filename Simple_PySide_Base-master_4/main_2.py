@@ -270,10 +270,17 @@ class PopupOverwriteClip(QDialog):
         self.close()
 
     def no(self, clip_code): 
-
+        endpoint_1 = "api/?Function=ReplaySelectFirstEvent&Channel=1"
+        endpoint_2 = "api/?Function=ReplaySelectNextEvent&Channel=1"
+        PopupOverwriteClip.send_request(endpoint_1)
+        id = load_current_clip_id()
+        for _ in range(int(id)):
+            PopupOverwriteClip.send_request(endpoint_2) 
+        id += 1
+        save_current_clip_id(id)
+        time.sleep(0.1)
         endpoint = f"api/?Function=ReplayDeleteSelectedEvent&Value=1&Channel=1"
         PopupOverwriteClip.send_request(endpoint)
-        print(f"Se mantuvo el ID original para el clip {clip_code}.")
         time.sleep(0.1)
         self.close()
 
@@ -1461,7 +1468,7 @@ class MainWindow(QMainWindow):
                         save_current_clip_id(clip_id)
                         print(f"Clip guardado en {clip_pos} (ID: {clip_id-1})")
                     else:
-                        UIFunctions.show_dialog_overwrite_clip(self, clip_pos, clips)
+                        show_dialog_overwrite_clip(self, clip_pos, clips)
                     
                     break  # Salir del bucle después de guardar
 
@@ -1689,6 +1696,10 @@ class MainWindow(QMainWindow):
         #####################################################
 
         self.popup_modo_page = PopupModoPage()
+        
+        def show_dialog_overwrite_clip(self, clip_code, clip_management):
+            self.popup = PopupOverwriteClip(clip_code, clip_management)
+            self.popup.exec_()
 
     ########################################################################
     ## START - SHOW POPUPS
@@ -1697,6 +1708,8 @@ class MainWindow(QMainWindow):
         #self.popup_modo = PopupModoPage()  # Guardar en un atributo para evitar que se elimine
         #self.popup.setModal(False)  # Asegurás que no sea modal
         self.popup_modo_page.show()  # Muestra el diálogo de forma modal
+    
+
     
     def show_dialog_delete_marks(self):
         self.popup = PopupDeleteMarks()  # Guardar en un atributo para evitar que se elimine
