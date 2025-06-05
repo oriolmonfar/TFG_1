@@ -25,38 +25,6 @@ class UIFunctions(MainWindow):
     GLOBAL_STATE = 0
     GLOBAL_TITLE_BAR = True
 
-    NUM_LEDS = 30
-    SERIAL_PORT = '/dev/ttyUSB0'
-    BAUDRATE = 115200
-
-    """"
-
-    #SET LED COLORS
-    led_colors = [QColor(0,0,0) for _ in range(NUM_LEDS)]
-    
-    try:
-        ser = serial.Serial(SERIAL_PORT, BAUDRATE, timeout=1)
-    except serial.SerialException as e:
-        print(f"Error obrint el port serial dels leds ESP32: {e}")
-        ser = None
-
-    def setLeds(self, numLed, color):
-        self.led_colors[numLed] = color
-        self.send_colors()
-
-    def send_colors(self):
-        if self.ser and self.ser.is_open:
-            data = bytearray()
-            for color in self.led_colors:
-                data += bytes([color.red(), color.green(), color.blue()])
-            self.ser.write(data)
-
-    def closeEvent(self, event):
-        if self.ser and self.ser.is_open:
-            self.ser.close()
-        event.accept()
-    """""
-
     ########################################################################
     ## START - GUI FUNCTIONS
     ########################################################################
@@ -139,15 +107,15 @@ class UIFunctions(MainWindow):
 
             if key == code_pgm or key == code_prv:
                 boton.setStyleSheet("QPushButton {font-family: Arial; background-color: red; font-size: 10px;font-weight: bold;color: white;padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);}QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                #self.setLeds(led_id, QColor(255, 0, 0))
+                self.setLeds(led_id, QColor(255, 0, 0))
             elif clip_list[0] != "void":
                 # Hay contenido: botón en verde
                 boton.setStyleSheet("QPushButton {font-family: Arial; background-color: green; font-size: 10px;font-weight: bold;color: white;padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);}QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                #self.setLeds(led_id, QColor(0, 255, 0))
+                self.setLeds(led_id, QColor(0, 255, 0))
             else:
                 # Sin contenido: sin fondo
                 boton.setStyleSheet("QPushButton {font-family: Arial;font-size: 10px;font-weight: bold;color: white;padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);}QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                #self.setLeds(led_id, QColor(0, 0, 0))  # LED apagado
+                self.setLeds(led_id, QColor(0, 0, 0))  # LED apagado
 
 
     def check_cam_angles(self):
@@ -208,30 +176,30 @@ class UIFunctions(MainWindow):
             if cameraA == cam_id and cameraB == cam_id:
                 # Mismo valor para A y B → rojo (prioridad A)
                 button.setStyleSheet(base_style.replace("}", " background-color: red; }", 1))
-                #self.setLeds(led_id, QColor(255, 0, 0))  # rojo
+                self.setLeds(led_id, QColor(255, 0, 0))  # rojo
             elif cameraA == cam_id:
                 button.setStyleSheet(base_style.replace("}", " background-color: red; }", 1))
-                #self.setLeds(led_id, QColor(255, 0, 0))  # rojo
+                self.setLeds(led_id, QColor(255, 0, 0))  # rojo
             elif cameraB == cam_id:
                 button.setStyleSheet(base_style.replace("}", " background-color: green; }", 1))
-                #self.setLeds(led_id, QColor(0, 255, 0))  # verde
+                self.setLeds(led_id, QColor(0, 255, 0))  # verde
             else:
                 # Ninguna coincidencia → reset
                 button.setStyleSheet(base_style)
-                #self.setLeds(led_id, QColor(0, 0, 0))  # off
+                self.setLeds(led_id, QColor(0, 0, 0))  # off
         
 
     def check_modo_playlist(self):
         global modo_playlist
         if modo_playlist == True:
             self.ui.sim_loop.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; background-color: red; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-            #self.setLeds(24, QColor(255, 0, 0))  # rojo
+            self.setLeds(24, QColor(255, 0, 0))  # rojo
         elif modo_loop == True:
             self.ui.sim_loop.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-            #self.setLeds(24, QColor(0, 255, 0))  # verde
+            self.setLeds(24, QColor(0, 255, 0))  # verde
         else:
             self.ui.sim_loop.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-            #self.setLeds(24, QColor(0, 0, 0))  # off
+            self.setLeds(24, QColor(0, 0, 0))  # off
 
     def start_connection_monitor(main_window):
         """Inicia un temporizador para monitorear la conexión con vMix."""
@@ -425,7 +393,7 @@ class UIFunctions(MainWindow):
                 self.ui.label_pgm.setText(f'PRV : {current_clip_prv}')
                 self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
                 self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-               # UIFunctions.setLeds(self, 23, QColor(0, 255, 0))  # verde
+                self.setLeds(23, QColor(0, 255, 0))  # verde
             else: 
                 self.ui.label_pgm.setText(f'LINKED A|B : {current_clip_pgm}')
                 self.ui.label_pgm.setStyleSheet("color: rgb(255,165,0)")
@@ -439,7 +407,7 @@ class UIFunctions(MainWindow):
                 self.ui.label_pgm.setText(f'PRV')
                 self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
                 self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                #UIFunctions.setLeds(self, 23, QColor(0, 255, 0))  # verde
+                self.setLeds(23, QColor(0, 255, 0))  # verde
             else: 
                 self.ui.label_pgm.setText(f'LINKED A|B')
                 self.ui.label_pgm.setStyleSheet("color: rgb(255,165,0)")
@@ -978,10 +946,10 @@ class UIFunctions(MainWindow):
         mode = f"RÁPIDO ({FAST_JOG})" if dial.fast_mode else "NORMAL (1 frame)"
         if dial.fast_mode:
             self.ui.sim_fastjog.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}") 
-            #self.setLeds(21, QColor(0, 255, 0))  # verde
+            self.setLeds(21, QColor(0, 255, 0))  # verde
         else:
             self.ui.sim_fastjog.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-            #self.setLeds(21, QColor(0, 0, 0))  # off
+            self.setLeds(21, QColor(0, 0, 0))  # off
         print(f"Modo cambiado a: {mode}")
 
     def function_sec_fastjog(self, dial):
@@ -992,10 +960,10 @@ class UIFunctions(MainWindow):
         mode = f"RÁPIDO ({SEC_FAST_JOG})" if dial.super_fast_mode else "NORMAL (1 frame)"
         if dial.super_fast_mode:
             self.ui.sim_fastjog.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}") 
-           # self.setLeds(21, QColor(255, 0, 0))  # rojo
+            self.setLeds(21, QColor(255, 0, 0))  # rojo
         else:
             self.ui.sim_fastjog.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-           # self.setLeds(21, QColor(0, 0, 0))  # off
+            self.setLeds(21, QColor(0, 0, 0))  # off
         print(f"Modo cambiado a: {mode}")
 
     def function_syncprv(self):
@@ -1049,23 +1017,23 @@ class UIFunctions(MainWindow):
                         self.ui.label_pgm.setText(f'PRV : {current_clip_prv}')
                         self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
                         self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                        #self.setLeds(23, QColor(0, 255, 0))  # verde
+                        self.setLeds(23, QColor(0, 255, 0))  # verde
                     else:
                         self.ui.label_pgm.setText(f'PGM : {current_clip_pgm}')
                         self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
                         self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                       # self.setLeds(23, QColor(0, 0, 0))  # off
+                        self.setLeds(23, QColor(0, 0, 0))  # off
                 else: 
                     if channel_mode == "A":
                         self.ui.label_pgm.setText(f'PRV')
                         self.ui.label_pgm.setStyleSheet("color: rgb(0,255,0)")
                         self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; background-color: green; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                        #self.setLeds(23, QColor(0, 255, 0))  # rojo
+                        self.setLeds(23, QColor(0, 255, 0))  # rojo
                     else:
                         self.ui.label_pgm.setText(f'PGM')
                         self.ui.label_pgm.setStyleSheet("color: rgb(255,0,0)")
                         self.ui.sim_prvctl.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                        #self.setLeds(23, QColor(0, 0, 0))  # off
+                        self.setLeds(23, QColor(0, 0, 0))  # off
 
         except ET.ParseError:
             print("Error parsing XML response from vMix")
@@ -1090,13 +1058,13 @@ class UIFunctions(MainWindow):
                     modo_loop = False
                     response = UIFunctions.send_request(f"api/?Function=LoopOff&Input={key}")
                     self.ui.sim_loop.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                    #self.setLeds(24, QColor(0, 0, 0))  # off
+                    self.setLeds(24, QColor(0, 0, 0))  # off
                     print(f"Loop desactivado en {key}") if response else print("Error al desactivar loop")
                 else:
                     modo_loop = True
                     response = UIFunctions.send_request(f"api/?Function=LoopOn&Input={key}")
                     self.ui.sim_loop.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                # self.setLeds(24, QColor(0, 255, 0))  # rojo
+                    self.setLeds(24, QColor(0, 255, 0))  # rojo
                     print(f"Loop activado en {key}") if response else print("Error al activar loop")
 
                 return  # Salir tras encontrar y procesar el primer input "Replay"
@@ -1165,7 +1133,7 @@ class UIFunctions(MainWindow):
         clip_id +=1
         save_current_clip_id(clip_id)
         self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-        #self.setLeds(26, QColor(0, 0, 0))  # off
+        self.setLeds(26, QColor(0, 0, 0))  # off
                
 
 
@@ -1906,7 +1874,7 @@ class UIFunctions(MainWindow):
             print("No se pudo ajustar la velocidad de reproducción.")
 
 
-    def function_record():
+    def function_record(self):
         """Fetches vMix XML, checks replay recording status, and toggles it."""
         
         # Step 1: Fetch the XML from vMix
@@ -1936,17 +1904,23 @@ class UIFunctions(MainWindow):
         if recording_status == "True":
             # Stop recording if it's already on
             toggle_url = "api/?Function=ReplayStopRecording"  # Solo el endpoint
+            toggle_response = UIFunctions.send_request(toggle_url)
+            self.ui.sim_record.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; background-color: transparent; color: white;	padding: 10px;  border-radius: 15px;border: 2px solid rgba(255,255,255,255);}QPushButton:hover {background-color: rgba(0,150,250,50);}QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            self.setLeds(22, QColor(0, 0, 0))
+            if not toggle_response:
+                print("No se pudo cambiar el estado de la grabación debido a la falta de conexión con vMix.")
+                return  # Salir si no hay conexión
             print("Stopping replay recording...")
         else:
             # Start recording if it's off
             toggle_url = "api/?Function=ReplayStartRecording"  # Solo el endpoint
+            toggle_response = UIFunctions.send_request(toggle_url)
+            self.ui.sim_record.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; background-color: red; color: white;	padding: 10px;  border-radius: 15px;border: 2px solid rgba(255,255,255,255);}QPushButton:hover {background-color: rgba(0,150,250,50);}QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            self.setLeds(22, QColor(255, 0, 0))
+            if not toggle_response:
+                print("No se pudo cambiar el estado de la grabación debido a la falta de conexión con vMix.")
+                return  # Salir si no hay conexión
             print("Starting replay recording...")
-
-        # Usar UIFunctions.send_request para enviar la solicitud de cambiar el estado
-        toggle_response = UIFunctions.send_request(toggle_url)  # Pasamos solo el endpoint
-        if not toggle_response:
-            print("No se pudo cambiar el estado de la grabación debido a la falta de conexión con vMix.")
-            return  # Salir si no hay conexión
 
         print("Replay recording toggled successfully")
 
@@ -1965,10 +1939,10 @@ class UIFunctions(MainWindow):
 
         if pgm == "B": 
             self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-            #self.setLeds(26, QColor(0, 255, 0))  # verde
+            self.setLeds(26, QColor(0, 255, 0))  # verde
         else: 
             self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-            #self.setLeds(26, QColor(255, 0, 0))  # rojo
+            self.setLeds(26, QColor(255, 0, 0))  # rojo
 
         # Endpoint para la función 'ReplayMarkIn'
         endpoint = "api/?Function=ReplayMarkIn"
@@ -2016,11 +1990,11 @@ class UIFunctions(MainWindow):
         if self.browse_mode:
             print("🔍 Browse mode ACTIVADO")
             self.ui.sim_insert.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-           # self.setLeds(25, QColor(255, 0, 0))  # rojo
+            self.setLeds(25, QColor(255, 0, 0))  # rojo
         else:
             print("🔚 Browse mode DESACTIVADO")
             self.ui.sim_insert.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white; padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-           # self.setLeds(25, QColor(0, 0, 0))  # off
+            self.setLeds(25, QColor(0, 0, 0))  # off
 
 
     def function_rodeta(self, dial):
@@ -2407,7 +2381,7 @@ class UIFunctions(MainWindow):
         self.ui.btn_close.clicked.connect(lambda: close_app())
         
         def close_app():
-            UIFunctions.function_record()
+            UIFunctions.function_record(self)
             self.close()
 
     ########################################################################

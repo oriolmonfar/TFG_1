@@ -30,6 +30,11 @@ from ui_popup_modo_page import Ui_Dialog as Dialog_modo_page
 from config_manager import *
 
 
+NUM_LEDS = 30
+#SERIAL_PORT = '/dev/ttyUSB0'
+SERIAL_PORT = "COM10"
+BAUDRATE = 115200
+
 #DECLARE GLOBAL VARIABLES
 IP_VMIX = load_ip_vmix()
 FAST_JOG = load_fast_jog()
@@ -778,19 +783,31 @@ class PopupConnected(QDialog):
 ## START - MAINWINDOW
 ########################################################################
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        #SET LED COLORS
+        self.led_colors = [QColor(0,0,0) for _ in range(NUM_LEDS)]
+        
+        try:
+            self.ser = serial.Serial(SERIAL_PORT, BAUDRATE, timeout=1)
+        except serial.SerialException as e:
+            print(f"Error obrint el port serial dels leds ESP32: {e}")
+            self.ser = None
+
         UIFunctions.start_cam_angle_monitor(self)
         UIFunctions.start_available_clips_monitor(self)
-        UIFunctions.function_record()
+        UIFunctions.function_record(self)
         UIFunctions.function_e_e(self)
         UIFunctions.check_vmix_connection(self)
         UIFunctions.start_connection_monitor(self)
         UIFunctions.start_modo_playlist_monitor(self)
+
+
 
 
         #REMOVE TITLE BAR
@@ -810,8 +827,7 @@ class MainWindow(QMainWindow):
 
 
         #SET PGM - PRV (or LINKED A|B)
-       
-        
+
         pgm = UIFunctions.get_channelmode()
 
         angleA, angleB = UIFunctions.get_vmix_replay_cameras()
@@ -1126,7 +1142,7 @@ class MainWindow(QMainWindow):
         def execute_functions_record(self):
             global SHIFT
             if SHIFT:
-                UIFunctions.function_record()
+                UIFunctions.function_record(self)
                 reset_shift(self)
             else:
                 UIFunctions.function_e_e(self)
@@ -1330,10 +1346,10 @@ class MainWindow(QMainWindow):
 
             if SHIFT:
                 self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: rgba(255,40,40,150);} QPushButton:hover {background-color: rgba(255,40,40,50);} QPushButton:pressed { background-color: rgba(255,40,40,50);}")  # Rojo cuando está activado
-               # UIFunctions.setLeds(self, 1, QColor(255,0,0))
+                self.setLeds(1, QColor(255,0,0))
             else:
                 self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")   # Transparente cuando está desactivado
-                #UIFunctions.setLeds(self, 1, QColor(0,0,0))
+                self.setLeds(1, QColor(0,0,0))
 
             print(f"Shift activado: {SHIFT}")  # Depuración
             save_shift(SHIFT)
@@ -1345,7 +1361,7 @@ class MainWindow(QMainWindow):
             if SHIFT:
                 SHIFT = False
                 self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
-                #UIFunctions.setLeds(self, 1, QColor(0,0,0))
+                self.setLeds(1, QColor(0,0,0))
                 print("Shift desactivado")
                 save_shift(SHIFT)
 
@@ -1356,12 +1372,12 @@ class MainWindow(QMainWindow):
 
             if CLEAR_MODE:
                 self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: red;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")
-               # UIFunctions.setLeds(self, 2, QColor(255,0,0))
+                self.setLeds(2, QColor(255,0,0))
                 print("Modo CLEAR activado")
             else:
                 CLEAR_SELECTION = None
                 self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")
-                #UIFunctions.setLeds(self, 2, QColor(0,0,0))
+                self.setLeds(2, QColor(0,0,0))
                 print("Modo CLEAR desactivado")
 
 
@@ -1371,7 +1387,7 @@ class MainWindow(QMainWindow):
             CLEAR_MODE = False
             CLEAR_SELECTION = None
             self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
-           # UIFunctions.setLeds(self, 2, QColor(0,0,0))
+            self.setLeds(2, QColor(0,0,0))
             print("Modo CLEAR desactivado automáticamente después de la selección")
 
 
@@ -1394,10 +1410,10 @@ class MainWindow(QMainWindow):
 
             if pgm == "B":
                 self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-               # UIFunctions.setLeds(self, 27, QColor(0, 255,0))
+                self.setLeds(27, QColor(0, 255,0))
             else: 
                 self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-               # UIFunctions.setLeds(self, 27, QColor(255, 0,0))
+                self.setLeds(27, QColor(255, 0,0))
             
             
             # 1. Marcar el Out en vMix
@@ -1514,9 +1530,9 @@ class MainWindow(QMainWindow):
                 def handler(checked):
                     nonlocal button_pressed
                     self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                    #UIFunctions.setLeds(self, 26, QColor(0, 0,0))
+                    self.setLeds(26, QColor(0, 0,0))
                     self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                    #UIFunctions.setLeds(self, 27, QColor(0, 0,0))
+                    self.setLeds(27, QColor(0, 0,0))
                     button_pressed = num
                     loop.quit()
                 return handler
@@ -1816,7 +1832,7 @@ class MainWindow(QMainWindow):
     ## START - LED CONTROLLER FUNCTIONS
     #############################################################
 
-    """
+    
     def setLeds(self, numLed, color):
         self.led_colors[numLed] = color
         self.send_colors()
@@ -1832,7 +1848,7 @@ class MainWindow(QMainWindow):
         if self.ser and self.ser.is_open:
             self.ser.close()
         event.accept()
-    """
+    
 
     ##############################################################
     ## END - LED CONTROLLER FUNCTIONS
