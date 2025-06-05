@@ -57,14 +57,5 @@
     "playlist16": [],
     "playlist17": [],
     "playlist18": [],
-    "modo_page": false,
-    "playlistPL": [
-        "246A,  No name assigned,   No ranking assigned, PLPL,  13:58:20.057,   13:59:03.057,   00:00:43.000",
-        "246A,  No name assigned,   No ranking assigned, PLPL,  13:58:20.057,   13:59:03.057,   00:00:43.000",
-        "246A,  No name assigned,   No ranking assigned, PLPL,  13:58:20.057,   13:59:03.057,   00:00:43.000",
-        "246A,  No name assigned,   No ranking assigned, {PL1, PLPL},  13:58:20.057,   13:59:03.057,   00:00:43.000"
-    ],
-    "playlist0": [
-        "245A,  TEST,   ***, {PL13, PL0, PL1},  17:40:06.290,   17:40:07.490,   00:00:01.199"
-    ]
+    "modo_page": false
 }

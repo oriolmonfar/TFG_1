@@ -741,6 +741,6 @@ if __name__ == '__main__':
 def run_flask():
     if check_requirements():
         threading.Thread(target=fetch_vmix_audio_data, daemon=True).start()
-        print("\nServidor iniciado: http://localhost:5000")
+        print("\nServidor iniciado: http://0.0.0.0:5000")
         app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
 
