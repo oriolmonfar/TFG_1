@@ -1,28 +1,18 @@
-# Python Interface - PySide2/PyQt5(optional) (MODERN / FLAT GUI)
+# Interfície per a controlar Instant Replays de vMix amb operativa d'EVS:
 
-> ## :gift: **//// DONATE ////**
-> ## 🔗 Donate (Gumroad): https://gum.co/mHsRC
-
-> **Warning**: use PySide2 and PyQt5 in version 5.15.2 or > (**pip install pyside2==5.15.2**)!
+Aquest projecte permet operar de forma remota la funció de repeticions instantànies (*Instant Replays*) de **vMix** amb l'operativa d'**EVS**. Aquest codi forma part d'un projecte amb un remot físic, però el codi sol ja és funcional, replicant el remot des de la pàgina de simulador.
+El projecte és el treball de final de grau, que consta en el següent: 
 
 
-![image_1](https://user-images.githubusercontent.com/60605512/82736094-50887300-9cfd-11ea-8e9a-c2fbbf97d983.PNG)
+**Controlador remot per a repeticions instantànies a vMix: replicant l’experiència d’EVS en un entorn més accessible:**
 
-Project created using Python, Qt Designer and PySide2.
-I hope it helps everyone who is starting now in the Python world.
-This project works very well with Windows, however on Linux and macOS there are some font size problems and the custom title bar does not work very well.
+
+Aquest projecte presenta el disseny i la implementació d’un sistema de control remot per a repeticions instantànies amb vMix, com a alternativa més accessible i econòmica als sistemes d'EVS, habituals en produccions esportives professionals. Per desenvolupar-lo, s’ha realitzat un estudi de les solucions existents actualment per a la gestió de repeticions instantànies. A partir d’aquesta anàlisi, s’ha dissenyat una interfície gràfica amb QtDesigner i PySide2, reproduint els menús i interaccions del remot original. Les funcionalitats s’han implementat en Python, utilitzant crides HTTP a l’API de vMix i codi personalitzat. Pel que fa al maquinari, s'usa una Orange Pi 5+ i una placa ESP32 dins una carcassa impresa en 3D amb controls físics i pantalla tàctil. El sistema ha estat testejat per operadors professionals per avaluar-ne el funcionament i detectar possibles millores.
 
 # REQUERIMENTS:
-> ```sh
-> pip install pyside2==5.15.2
-> ```
-> PySide2 and PyQt5 in version 5.15.1 **are causing problems** due to several updates in process.
+Es requereixen les llibreries: PySide2, Time, Datetime, Requests, Threading i Serial.
 
-# RUN FILE:
-main.py
+# EXECUCIÓ:
+Per a executar el programa, s'executa el fitxer main_2.py. 
 
-# ADD MENUS
-![add-MENUS](https://user-images.githubusercontent.com/60605512/94625100-56372c00-028e-11eb-978e-22165d8f77c8.png)
 
-# Youtube Video:
-> https://www.youtube.com/watch?v=iaIooM9FlRI
