@@ -1417,8 +1417,8 @@ class UIFunctions(MainWindow):
         active_playlist = load_active_playlist()
         self.ui.contec_acc_actualclip.setAlignment(Qt.AlignCenter)
         self.ui.cont_acc_actualplaylist.setText(f"{active_playlist}") 
-        vmix_event = page_number + 1
-        endpoint_1 = f"api/?Function=ReplaySelectEvents{vmix_event}&Channel=1"
+        vmix_event = int(page_number) + 1
+        endpoint_1 = f"api/?Function=ReplaySelectEvents{str(vmix_event)}&Channel=1"
         UIFunctions.send_request(endpoint_1)
 
         if page_widget:  # Verifica si la página existe

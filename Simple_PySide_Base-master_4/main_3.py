@@ -1,12 +1,13 @@
 
 import sys
 from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent, QTimer,QEventLoop)
+from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent, QTimer,QEventLoop, Signal, QThread)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient, QMouseEvent)
 from PySide2.QtWidgets import *
 import time
 from datetime import datetime
 import requests
+import subprocess
 import threading
 import serial
 
@@ -102,7 +103,7 @@ class PopupModoPage(QDialog):
         global modo_page
         modo_page = False
         save_page_mode(modo_page)
-        print(f'modo safe desactivado : {modo_page}')
+        print(f'modo page desactivado : {modo_page}')
         self.close()
     
     def close_popup(self):
@@ -784,6 +785,9 @@ class PopupConnected(QDialog):
 
 
 class MainWindow(QMainWindow):
+
+    button_pressed_signal = Signal(int)
+
     def __init__(self):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
@@ -791,13 +795,16 @@ class MainWindow(QMainWindow):
 
         #SET LED COLORS
         self.led_colors = [QColor(0,0,0) for _ in range(NUM_LEDS)]
-       
+        
         try:
             self.ser = serial.Serial(SERIAL_PORT, BAUDRATE, timeout=1)
         except serial.SerialException as e:
             print(f"Error obrint el port serial dels leds ESP32: {e}")
             self.ser = None
 
+        self.start_serial_listener()
+
+        self.button_pressed_signal.connect(self.handle_button_press)
         UIFunctions.start_cam_angle_monitor(self)
         UIFunctions.start_available_clips_monitor(self)
         UIFunctions.function_record(self)
@@ -805,9 +812,6 @@ class MainWindow(QMainWindow):
         UIFunctions.check_vmix_connection(self)
         UIFunctions.start_connection_monitor(self)
         UIFunctions.start_modo_playlist_monitor(self)
-
-
-
 
         #REMOVE TITLE BAR
         UIFunctions.removeTitleBar(True)
@@ -920,7 +924,7 @@ class MainWindow(QMainWindow):
         self.ui.contec_acc_actualclip.setText(f"{current_clip}")
         self.ui.cont_acc_actualplaylist.setText(f"{active_playlist}")
         self.ui.cont_acc_actualplaylist.clicked.connect(lambda: UIFunctions.cont_acc_gotopl(self))
-        self.ui.cont_acc_page.clicked.connect(lambda: function_page_activate())
+        self.ui.cont_acc_page.clicked.connect(lambda: self.function_page_activate)
         self.ui.cont_acc_mark.clicked.connect(lambda: UIFunctions.function_mark())
         self.ui.cont_acc_lastmark.clicked.connect(lambda: UIFunctions.function_lastmark())
         self.ui.cont_acc_lasttc.clicked.connect(lambda: UIFunctions.function_lasttc())
@@ -945,280 +949,27 @@ class MainWindow(QMainWindow):
 
         #################################### START- BOTONS SIMULATOR
         self.ui.sim_shift.setCheckable(True)
-        self.ui.sim_shift.clicked.connect(lambda: toggle_shift(self))
+        self.ui.sim_shift.clicked.connect(self.toggle_shift)
 
         self.ui.sim_clear.setCheckable(True)
-        self.ui.sim_clear.clicked.connect(lambda: toggle_clear_mode(self))
+        self.ui.sim_clear.clicked.connect(self.toggle_clear_mode)
 
-        def execute_functions_A(self):
-            """Ejecuta la función correspondiente según el estado de SHIFT."""
-            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
-            clip_mode = load_clip_mode()
-            if clip_mode:
-                channel_mode = UIFunctions.get_channelmode()
-                save_current_camangle("A")
-                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
-                if channel_mode == 'A':
-                    if new_angle != current_camangleA:
-                        current_camangle = new_angle
-                        current_camangleA = new_angle
-                        save_current_camangleA(current_camangleA)
-                        current_clip = load_current_clip()
-                    clip_no_camangle = current_clip_pgm[:-1]
-                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
-                    print(current_clip_pgm)
-                    UIFunctions.labelPGM_PRV(self, channel_mode)
-                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera1"
-                    UIFunctions.send_request(endpoint)
-                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
-                elif channel_mode == 'B':
-                    if new_angle != current_camangleB:
-                        current_camangle = new_angle
-                        current_camangleB = new_angle
-                        save_current_camangleB(current_camangleB)
-                        clip_no_camangle = current_clip_prv[:-1]
-                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
-                        print(current_clip_prv)
-                        UIFunctions.labelPGM_PRV(self, channel_mode)
-                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera1"
-                        UIFunctions.send_request(endpoint)
-                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
-            else: 
-                if SHIFT:
-                    UIFunctions.function_A(self)
-                    reset_shift(self)
-                else: 
-                    UIFunctions.function_A(self)
-        self.ui.sim_A.clicked.connect(lambda: execute_functions_A(self))
+        self.ui.sim_A.clicked.connect(lambda: self.execute_functions_A())
+        self.ui.sim_B.clicked.connect(lambda: self.execute_functions_B())
+        self.ui.sim_C.clicked.connect(lambda: self.execute_functions_C())
+        self.ui.sim_D.clicked.connect(lambda: self.execute_functions_D())
 
-        def execute_functions_B(self):
-            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
-            clip_mode = load_clip_mode()
-            if clip_mode:
-                channel_mode = UIFunctions.get_channelmode()
-                save_current_camangle("B")
-                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
-                if channel_mode == 'A':
-                    if new_angle != current_camangleA:
-                        current_camangle = new_angle
-                        current_camangleA = new_angle
-                        save_current_camangleA(current_camangleA)
-                        current_clip = load_current_clip()
-                    clip_no_camangle = current_clip_pgm[:-1]
-                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
-                    print(current_clip_pgm)
-                    UIFunctions.labelPGM_PRV(self, channel_mode)
-                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera2"
-                    UIFunctions.send_request(endpoint)
-                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
-                elif channel_mode == 'B':
-                    if new_angle != current_camangleB:
-                        current_camangle = new_angle
-                        current_camangleB = new_angle
-                        save_current_camangleB(current_camangleB)
-                        clip_no_camangle = current_clip_prv[:-1]
-                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
-                        print(current_clip_prv)
-                        UIFunctions.labelPGM_PRV(self, channel_mode)
-                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera2"
-                        UIFunctions.send_request(endpoint)
-                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
-            else: 
-                if SHIFT:
-                    UIFunctions.function_B(self)
-                    reset_shift(self)
-                else:
-                    UIFunctions.function_B(self)
-        self.ui.sim_B.clicked.connect(lambda: execute_functions_B(self))
+        self.ui.sim_play.clicked.connect(lambda: self.execute_functions_play())
+        self.ui.sim_gototc.clicked.connect(lambda: self.execute_functions_gototc())
+        self.ui.sim_fastjog.clicked.connect(lambda: self.execute_functions_fastjog(self.dial))
+        self.ui.sim_record.clicked.connect(lambda: self.execute_functions_record())
+        self.ui.sim_prvctl.clicked.connect(lambda: self.execute_functions_prvctl())
+        self.ui.sim_loop.clicked.connect(lambda: self.execute_functions_loop())
+        self.ui.sim_insert.clicked.connect(lambda: self.execute_functions_insert())
+        self.ui.sim_in.clicked.connect(lambda: self.handle_sim_in())
+        self.ui.sim_out.clicked.connect(lambda: self.handle_sim_out())
+        self.ui.sim_take.clicked.connect(lambda:self.execute_functions_take())
 
-        def execute_functions_C(self):
-            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
-            clip_mode = load_clip_mode()
-            if clip_mode:
-                channel_mode = UIFunctions.get_channelmode()
-                save_current_camangle("C")
-                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
-                if channel_mode == 'A':
-                    if new_angle != current_camangleA:
-                        current_camangle = new_angle
-                        current_camangleA = new_angle
-                        save_current_camangleA(current_camangleA)
-                        current_clip = load_current_clip()
-                    clip_no_camangle = current_clip_pgm[:-1]
-                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
-                    print(current_clip_pgm)
-                    UIFunctions.labelPGM_PRV(self, channel_mode)
-                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera3"
-                    UIFunctions.send_request(endpoint)
-                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
-                elif channel_mode == 'B':
-                    if new_angle != current_camangleB:
-                        current_camangle = new_angle
-                        current_camangleB = new_angle
-                        save_current_camangleB(current_camangleB)
-                        clip_no_camangle = current_clip_prv[:-1]
-                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
-                        print(current_clip_prv)
-                        UIFunctions.labelPGM_PRV(self, channel_mode)
-                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera3"
-                        UIFunctions.send_request(endpoint)
-                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
-            else: 
-                if SHIFT:
-                    UIFunctions.function_C(self)
-                    reset_shift(self)
-                else:
-                    UIFunctions.function_C(self)
-        self.ui.sim_C.clicked.connect(lambda: execute_functions_C(self))
-
-        def execute_functions_D(self):
-            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
-            clip_mode = load_clip_mode()
-            if clip_mode:
-                channel_mode = UIFunctions.get_channelmode()
-                save_current_camangle("D")
-                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
-                if channel_mode == 'A':
-                    if new_angle != current_camangleA:
-                        current_camangle = new_angle
-                        current_camangleA = new_angle
-                        save_current_camangleA(current_camangleA)
-                        current_clip = load_current_clip()
-                    clip_no_camangle = current_clip_pgm[:-1]
-                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
-                    print(current_clip_pgm)
-                    UIFunctions.labelPGM_PRV(self, channel_mode)
-                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera4"
-                    UIFunctions.send_request(endpoint)
-                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
-                elif channel_mode == 'B':
-                    if new_angle != current_camangleB:
-                        current_camangle = new_angle
-                        current_camangleB = new_angle
-                        save_current_camangleB(current_camangleB)
-                        clip_no_camangle = current_clip_prv[:-1]
-                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
-                        print(current_clip_prv)
-                        UIFunctions.labelPGM_PRV(self, channel_mode)
-                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera4"
-                        UIFunctions.send_request(endpoint)
-                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
-            else: 
-                if SHIFT:
-                    UIFunctions.function_D(self)
-                    reset_shift(self)
-                else:
-                    UIFunctions.function_D(self)
-        self.ui.sim_D.clicked.connect(lambda: execute_functions_D(self))
-
-        def execute_functions_play(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_play()
-                reset_shift(self)
-            else:
-                UIFunctions.function_play(self)
-        self.ui.sim_play.clicked.connect(lambda: execute_functions_play(self))
-
-        def execute_functions_gototc(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_gototc(self)
-                reset_shift(self)
-            else:
-                UIFunctions.function_lastmark()
-        self.ui.sim_gototc.clicked.connect(lambda: execute_functions_gototc(self))
-
-        def execute_functions_fastjog(self, dial):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_fastjog(self, dial)
-                reset_shift(self)
-            else:
-                UIFunctions.function_mark()
-        self.ui.sim_fastjog.clicked.connect(lambda: execute_functions_fastjog(self, self.dial))
-
-        def execute_functions_record(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_record(self)
-                reset_shift(self)
-            else:
-                UIFunctions.function_e_e(self)
-        self.ui.sim_record.clicked.connect(lambda: execute_functions_record(self))
-
-        def execute_functions_prvctl(self):
-            global SHIFT
-            if SHIFT:
-                function_page_activate()
-                reset_shift(self)
-            else:
-                UIFunctions.function_prvctl(self)
-        self.ui.sim_prvctl.clicked.connect(lambda: execute_functions_prvctl(self))
-
-        def execute_functions_loop(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_loop(self)
-                reset_shift(self)
-            else:
-                UIFunctions.cont_acc_gotopl(self)
-        self.ui.sim_loop.clicked.connect(lambda: execute_functions_loop(self))
-
-        def execute_functions_insert(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_cancel_in(self)
-                reset_shift(self)
-            else:
-                UIFunctions.toggle_browse_mode(self)
-        self.ui.sim_insert.clicked.connect(lambda: execute_functions_insert(self))
-
-        def execute_functions_in(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_gotoin()
-                reset_shift(self)
-            else:
-                UIFunctions.function_in(self)
-
-        def handle_sim_in(self):
-            global CLEAR_MODE, CLEAR_SELECTION
-            if CLEAR_MODE:
-                CLEAR_SELECTION = "in"
-                print("Modo CLEAR: Seleccionado IN")
-                UIFunctions.send_request("api/?Function=ReplayUpdateSelectedInPoint&Channel=1")
-                reset_clear_mode(self)  # Se desactiva el modo después de la request
-            else:
-                execute_functions_in(self)
-        self.ui.sim_in.clicked.connect(lambda: handle_sim_in(self))
-
-        def execute_functions_out(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_gotoout()
-                reset_shift(self)
-            else:
-                function_out(self)
-        def handle_sim_out(self):
-            global CLEAR_MODE, CLEAR_SELECTION
-            if CLEAR_MODE:
-                CLEAR_SELECTION = "out"
-                print("Modo CLEAR: Seleccionado OUT")
-                UIFunctions.send_request("api/?Function=ReplayUpdateSelectedOutPoint&Channel=1")
-                reset_clear_mode(self)  # Se desactiva el modo después de la request
-            else:
-                execute_functions_out(self)            
-        self.ui.sim_out.clicked.connect(lambda: handle_sim_out(self))
-            
-        def execute_functions_take(self):
-            global SHIFT
-            if SHIFT:
-                UIFunctions.function_lever()
-                reset_shift(self)
-            else:
-                UIFunctions.function_take()
-        self.ui.sim_take.clicked.connect(lambda: execute_functions_take(self))
 
         self.ui.sim_rodeta.setMinimum(0)
         self.ui.sim_rodeta.setMaximum(100)
@@ -1229,14 +980,7 @@ class MainWindow(QMainWindow):
         self.slider = self.findChild(QSlider, "sim_palanqueta")  # Find the slider
         UIFunctions.setup_replay_speed_slider(self.slider)  # Setup slider functionality
 
-        def function_menu(self):
-            global modo_page
-            if modo_page: 
-                self.popup_modo_page.cancel()
-            else:
-                self.ui.stackedWidget.setCurrentWidget(self.ui.page_configuration)
-
-        self.ui.sim_menu.clicked.connect(lambda: function_menu(self))
+        self.ui.sim_menu.clicked.connect(self.function_menu())
         self.ui.sim_enter.clicked.connect(lambda: UIFunctions.function_enter(self))
         #################################### END - BOTONS SIMULATOR
 
@@ -1337,506 +1081,21 @@ class MainWindow(QMainWindow):
         ## START - CLIP MANAGEMENT
         ########################################################################
 
-        def toggle_shift(self):
-            """Alterna el estado de SHIFT y cambia el color del botón."""
-            global SHIFT
-            SHIFT = load_shift()
-            SHIFT = not SHIFT
-
-            if SHIFT:
-                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: rgba(255,40,40,150);} QPushButton:hover {background-color: rgba(255,40,40,50);} QPushButton:pressed { background-color: rgba(255,40,40,50);}")  # Rojo cuando está activado
-                self.setLeds(1, QColor(255,0,0))
-            else:
-                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")   # Transparente cuando está desactivado
-                self.setLeds(1, QColor(0,0,0))
-
-            print(f"Shift activado: {SHIFT}")  # Depuración
-            save_shift(SHIFT)
-
-        def reset_shift(self):
-            """Desactiva SHIFT si está activado y restablece el color."""
-            global SHIFT
-            SHIFT = load_shift()
-            if SHIFT:
-                SHIFT = False
-                self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
-                self.setLeds(1, QColor(0,0,0))
-                print("Shift desactivado")
-                save_shift(SHIFT)
-
-        def toggle_clear_mode(self):
-            """Activa o desactiva el modo CLEAR y espera la selección de IN u OUT."""
-            global CLEAR_MODE, CLEAR_SELECTION
-            CLEAR_MODE = not CLEAR_MODE
-
-            if CLEAR_MODE:
-                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: red;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")
-                self.setLeds(2, QColor(255,0,0))
-                print("Modo CLEAR activado")
-            else:
-                CLEAR_SELECTION = None
-                self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")
-                self.setLeds(2, QColor(0,0,0))
-                print("Modo CLEAR desactivado")
-
-
-        def reset_clear_mode(self):
-            """Apaga el modo CLEAR y resetea estilos del botón CLEAR únicamente"""
-            global CLEAR_MODE, CLEAR_SELECTION
-            CLEAR_MODE = False
-            CLEAR_SELECTION = None
-            self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
-            self.setLeds(2, QColor(0,0,0))
-            print("Modo CLEAR desactivado automáticamente después de la selección")
-
-
-        def function_page_activate():
-            """Activa el modo de selección de página."""
-            global modo_page
-            modo_page = True
-            save_page_mode(modo_page)
-            self.show_dialog_modopage()
-            print("Modo de selección de página activado.")
-        
-
-        def function_out(self):
-            global clip_id, mark_in_tc
-
-            set_page_mode(False)
-            set_shift(False)
-
-            pgm = UIFunctions.get_channelmode()
-
-            if pgm == "B":
-                self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                self.setLeds(27, QColor(0, 255,0))
-            else: 
-                self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                self.setLeds(27, QColor(255, 0,0))
-            
-            
-            # 1. Marcar el Out en vMix
-            endpoint = "api/?Function=ReplayMarkOut"
-            if not UIFunctions.send_request(endpoint):
-                print("Error: No se pudo marcar el 'Out'")
-                return
-            
-            clip_out_tc = UIFunctions.get_tc()
-            mark_in_tc = load_mark_in_tc()
-            print("Replay mark 'Out' set successfully.")
-
-            # Estado inicial
-            operation_mode = "normal"  # Puede ser: "normal", "page", "bank"
-            
-            while True:
-                # Obtener el estado ACTUAL de los botones especiales
-                current_shift = load_shift()
-                current_page_mode = load_page_mode()
-                
-                # Determinar el modo de operación actual
-                if current_page_mode:
-                    operation_mode = "page"
-                elif current_shift:
-                    operation_mode = "bank"
-                else:
-                    operation_mode = "normal"
-
-                print(f"Modo actual: {operation_mode}")  # Debug
-                
-                # Esperar pulsación de botón
-                button_num = wait_for_button_press()
-                
-                if button_num is None:
-                    continue  # Timeout, reintentar
-                    
-                # Manejar según el modo actual
-                if operation_mode == "page":
-                    print(f"Cambiando a página {button_num}")
-                    function_page(button_num)
-                    set_page_mode(False)  # Desactivar modo página
-                    continue
-                    
-                elif operation_mode == "bank":
-                    print(f"Cambiando banco a {button_num}")
-                    change_bank(button_num)
-                    set_shift(False)  # Desactivar shift
-                    continue
-                    
-                elif operation_mode == "normal":
-                    # Guardar clip - TU LÓGICA ORIGINAL
-                    page = load_config().get("CURRENT_PAGE", 1)
-                    bank = load_config().get("last_bank_per_page", {}).get(str(page), 1)
-                    clip_pos = f"{page}{bank}{button_num}"
-                    
-                    clips = load_clip_dictionary()
-                    if clips.get(clip_pos, ["void"] * 7)[0] == "void":
-                        clip_id = load_current_clip_id()
-                        duration = UIFunctions.calculate_clip_duration(mark_in_tc, clip_out_tc)
-                        
-                        clips[clip_pos] = [
-                            str(clip_id), "void", "void", "void",
-                            str(mark_in_tc), str(clip_out_tc), str(duration)
-                        ]
-                        save_clip_dictionary(clips)
-                        
-                        clip_id += 1
-                        save_current_clip_id(clip_id)
-                        print(f"Clip guardado en {clip_pos} (ID: {clip_id-1})")
-                    else:
-                        show_dialog_overwrite_clip(self, clip_pos, clips)
-                    
-                    break  # Salir del bucle después de guardar
-
-            # Limpieza final
-            set_page_mode(False)
-            set_shift(False)
-
-        def set_page_mode(active):
-            """Activa o desactiva el modo de cambio de página"""
-            global modo_page
-            modo_page = active
-            save_page_mode(active)
-
-        def set_shift(active):
-            """Activa o desactiva el modo de cambio de banco (SHIFT)"""
-            global SHIFT
-            SHIFT = active
-            save_shift(active)
-
-        def wait_for_button_press():
-            """Espera la pulsación de un botón F de manera segura"""
-            button_pressed = None
-            loop = QEventLoop()
-            timer = QTimer()
-            timer.setSingleShot(True)
-            
-            # Mapeo de botones
-            buttons = {
-                1: self.ui.sim_f1,
-                2: self.ui.sim_f2,
-                3: self.ui.sim_f3,
-                4: self.ui.sim_f4,
-                5: self.ui.sim_f5,
-                6: self.ui.sim_f6,
-                7: self.ui.sim_f7,
-                8: self.ui.sim_f8,
-                9: self.ui.sim_f9,
-                0: self.ui.sim_f10
-            }
-            
-            # Handler que captura el parámetro checked
-            def create_handler(num):
-                def handler(checked):
-                    nonlocal button_pressed
-                    self.ui.sim_in.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                    self.setLeds(26, QColor(0, 0,0))
-                    self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
-                    self.setLeds(27, QColor(0, 0,0))
-                    button_pressed = num
-                    loop.quit()
-                return handler
-            
-            # Conectar todos los botones
-            connections = []
-            for num, btn in buttons.items():
-                handler = create_handler(num)
-                btn.clicked.connect(handler)
-                connections.append((btn, handler))
-            
-            # Configurar timeout
-            timer.timeout.connect(loop.quit)
-            timer.start(200)  # 0.2 segundos
-            
-            # Ejecutar el loop de eventos
-            loop.exec_()
-            
-            # Limpieza garantizada
-            timer.stop()
-            for btn, handler in connections:
-                try:
-                    btn.clicked.disconnect(handler)
-                except RuntimeError:
-                    pass  # Ignorar si ya está desconectado
-            
-            return button_pressed
-
-
-        def handle_sim_f_button(self, f_button_number):
-            """Maneja la funcionalidad de los botones sim_f1 a sim_f10."""
-            global current_page, current_bank, SHIFT, clip_mode, modo_page
-
-            # Si SHIFT está activado, cambiar el banco
-            if SHIFT:
-                change_bank(f_button_number)  # Cambiar banco de la página actual
-                print("function change bank")
-                reset_shift(self)
-
-            elif modo_page:
-                self.popup_modo_page.close_popup()
-                function_page(f_button_number)  # o directamente function_page si es global
-                print("function change page")
-                modo_page = False
-
-            # Activar el modo clip y mostrar el código correspondiente
-            else:
-                clip_mode = True  # Activar modo clip
-                save_clip_mode(clip_mode)
-                current_camangle = load_current_camangle()
-                clip_code = f"{current_page}{current_bank}{f_button_number}{current_camangle}"
-                numeric_code = clip_code[:-1]  
-                print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
-                save_current_clip(clip_code)
-                # Cargar el archivo JSON
-                if numeric_code == "101":
-                    UIFunctions.goto_pl(self, 1)
-                if numeric_code == "102":
-                    UIFunctions.goto_pl(self, 2)
-                if numeric_code == "201":
-                    UIFunctions.goto_pl(self, 3)
-                if numeric_code == "202":
-                    UIFunctions.goto_pl(self, 4)
-                if numeric_code == "301":
-                    UIFunctions.goto_pl(self, 5)
-                if numeric_code == "302":
-                    UIFunctions.goto_pl(self, 6)
-                if numeric_code == "401":
-                    UIFunctions.goto_pl(self, 7)
-                if numeric_code == "402":
-                    UIFunctions.goto_pl(self, 8)
-                if numeric_code == "501":
-                    UIFunctions.goto_pl(self, 8)
-                if numeric_code == "502":
-                    UIFunctions.goto_pl(self, 9)
-                if numeric_code == "602":
-                    UIFunctions.goto_pl(self, 10)
-                if numeric_code == "701":
-                    UIFunctions.goto_pl(self, 11)
-                if numeric_code == "702":
-                    UIFunctions.goto_pl(self, 12)
-                if numeric_code == "801":
-                    UIFunctions.goto_pl(self, 13)
-                if numeric_code == "802":
-                    UIFunctions.goto_pl(self, 14)
-                if numeric_code == "901":
-                    UIFunctions.goto_pl(self, 15)
-                if numeric_code == "902":
-                    UIFunctions.goto_pl(self, 16)
-                if numeric_code == "001":
-                    UIFunctions.goto_pl(self, 17)
-                if numeric_code == "002":
-                    UIFunctions.goto_pl(self, 18)
-                try:
-                    with open(CLIP_DICTIONARY_FILE, "r") as file:
-                        clip_data = json.load(file)
-                except FileNotFoundError:
-                    print(f"Error: El archivo {CLIP_DICTIONARY_FILE} no existe.")
-                    return None
-
-                # Obtener la lista asignada al código
-                clip_list = clip_data.get(numeric_code, ["void"] * 7)
-
-                # Comprobar si el primer elemento de la lista es "void"
-                if clip_list[0] == "void":
-                    print("No hay ningún clip asignado.")
-                    return None          
-                else: 
-                    pgm = UIFunctions.get_channelmode()
-                    if pgm == "B":
-                        current_camangleB = load_current_camangleB()
-                        clip_prv = f"{numeric_code}{current_camangleB}"
-                        save_current_clip_prv(clip_prv)
-                    else:
-                        current_camangleA = load_current_camangleA()
-                        clip_pgm = f"{numeric_code}{current_camangleA}"
-                        save_current_clip_pgm(clip_pgm)      
-                    UIFunctions.labelPGM_PRV(self, pgm)
-                    id = clip_list[0].zfill(4)
-                    endpoint_0 = "api/?Function=ReplaySelectEvents1&Channel=1"
-                    endpoint_1 = f"api/?Function=ReplayPlayEventsByID&Value={id}&Channel=1"
-                    endpoint_2 = "api/?Function=ReplayPause&Channel=1"
-                    UIFunctions.send_request(endpoint_0)
-                    UIFunctions.send_request(endpoint_1)
-                    UIFunctions.send_request(endpoint_2)
-               
-        def function_page(page_number):
-            """Cambia la página y muestra el banco correspondiente."""
-            global current_page, current_bank, SHIFT
-            
-            # Cambiar la página
-            current_page = page_number
-            save_current_page(current_page)
-            self.ui.label_page.setText(f"PAGE {current_page}")  # Actualiza QLabel
-            
-            # Mostrar el banco de la página seleccionada
-            current_bank = load_current_bank()
-            self.ui.label_bank.setText(f" {current_bank} BANK")  # Actualiza QLabel
-            print(f"Página {current_page} seleccionada. Banco actual: {current_bank}")
-
-        def change_bank(button_number):
-            global current_bank
-            SHIFT = load_shift()
-            if SHIFT:
-                save_current_bank(button_number)
-                current_bank = button_number  # Actualizamos la variable global
-                self.ui.label_bank.setText(f"{current_bank} BANK")  # Actualiza QLabel
-                print(f"Banco actualizado a {button_number} para la página {current_page}.")
-                if current_bank == 0:
-                    self.ui.label_bank.setText("PL. BANK")  # Actualiza QLabel
-
-            else:
-                print("Shift no está presionado, no se puede cambiar el banco.")
-
         # Conectar los botones ya creados en Qt Designer
-        self.ui.sim_f1.clicked.connect(lambda: handle_sim_f_button(self, 1))
-        self.ui.sim_f2.clicked.connect(lambda: handle_sim_f_button(self, 2))
-        self.ui.sim_f3.clicked.connect(lambda: handle_sim_f_button(self, 3))
-        self.ui.sim_f4.clicked.connect(lambda: handle_sim_f_button(self, 4))
-        self.ui.sim_f5.clicked.connect(lambda: handle_sim_f_button(self, 5))
-        self.ui.sim_f6.clicked.connect(lambda: handle_sim_f_button(self, 6))
-        self.ui.sim_f7.clicked.connect(lambda: handle_sim_f_button(self, 7))
-        self.ui.sim_f8.clicked.connect(lambda: handle_sim_f_button(self, 8))
-        self.ui.sim_f9.clicked.connect(lambda: handle_sim_f_button(self, 9))
-        self.ui.sim_f10.clicked.connect(lambda: handle_sim_f_button(self, 0))
+        self.ui.sim_f1.clicked.connect(lambda: self.handle_sim_f_button(1))
+        self.ui.sim_f2.clicked.connect(lambda: self.handle_sim_f_button(2))
+        self.ui.sim_f3.clicked.connect(lambda: self.handle_sim_f_button(3))
+        self.ui.sim_f4.clicked.connect(lambda: self.handle_sim_f_button(4))
+        self.ui.sim_f5.clicked.connect(lambda: self.handle_sim_f_button(5))
+        self.ui.sim_f6.clicked.connect(lambda: self.handle_sim_f_button(6))
+        self.ui.sim_f7.clicked.connect(lambda: self.handle_sim_f_button(7))
+        self.ui.sim_f8.clicked.connect(lambda: self.handle_sim_f_button(8))
+        self.ui.sim_f9.clicked.connect(lambda: self.handle_sim_f_button(9))
+        self.ui.sim_f10.clicked.connect(lambda: self.handle_sim_f_button(0))
   
         ########################################################################
         ## END - CLIP MANAGEMENT
         ########################################################################
-        def start_serial_listener(self):
-            print('Serial listener started')
-            if self.ser is None:
-                print("Serial no disponible.")
-                return
-
-            def listen():
-                print("Listening on serial port...")
-                while True:
-                    try:
-                        line = self.ser.readline().decode().strip()
-                        if not line:
-                            continue
-                        #print(f"Received: {line}")
-
-                        if line.startswith("BTN:"):
-                            try:
-                                btn_id = int(line.split(":")[1])
-                                handle_button_press(self, btn_id)
-                            except ValueError:
-                                print(f"Línea malformada: {line}")
-
-                        elif line.startswith("FADER:"):
-                            try:
-                                fader_val = int(line.split(":")[1])
-                                handle_fader_change(self, fader_val)
-                            except ValueError:
-                                print(f"Línea malformada fader: {line}")
-
-                        elif line.startswith("ENCODER:"):
-                            try:
-                                encoder_val = int(line.split(":")[1])
-                                handle_encoder_change(self, encoder_val)
-                            except ValueError:
-                                print(f"Línea malformada encoder: {line}")
-
-                        elif line == "ENC_BTN":
-                            handle_encoder_button(self)
-
-                        else:
-                            print(f"Línea desconocida: {line}")
-
-                    except Exception as e:
-                        print(f"Error leyendo del puerto serial: {e}")
-                        break
-
-            self.listener_thread = threading.Thread(target=listen, daemon=True)
-            self.listener_thread.start()
-        start_serial_listener(self)
-
-        def handle_button_press(self, btn_id):
-            print(f"Botón presionado: {btn_id}")
-            if btn_id == 0:
-                function_menu(self)
-            elif btn_id == 1:
-                toggle_shift(self)
-            elif btn_id == 2:
-                toggle_clear_mode(self)
-            elif btn_id == 3:
-                UIFunctions.function_enter(self)
-            elif btn_id == 4:
-                handle_sim_f_button(self, 1)
-            elif btn_id == 5:
-                handle_sim_f_button(self, 2)
-            elif btn_id == 6:
-                handle_sim_f_button(self, 3)
-            elif btn_id == 7:
-                handle_sim_f_button(self, 4)
-            elif btn_id == 8:
-                handle_sim_f_button(self, 5)
-            elif btn_id == 9:
-                handle_sim_f_button(self, 6)
-            elif btn_id == 10:
-                handle_sim_f_button(self, 7)
-            elif btn_id == 11:
-                handle_sim_f_button(self, 8)
-            elif btn_id == 12:
-                handle_sim_f_button(self, 9)
-            elif btn_id == 13:
-                handle_sim_f_button(self, 0)
-            elif btn_id == 14:
-                execute_functions_A(self)
-            elif btn_id == 15:
-                execute_functions_B(self)
-            elif btn_id == 16:
-                execute_functions_C(self)
-            elif btn_id == 17:
-                execute_functions_D(self)
-            elif btn_id == 18:
-                print('18')
-            elif btn_id == 19:
-                execute_functions_play(self)
-            elif btn_id == 20:
-                execute_functions_gototc(self)
-            elif btn_id == 21:
-                execute_functions_fastjog(self, self.dial)
-            elif btn_id == 22:
-                execute_functions_record(self)
-            elif btn_id == 23:
-                execute_functions_prvctl(self)
-            elif btn_id == 24:
-                execute_functions_loop(self)
-            elif btn_id == 25:
-                execute_functions_insert(self)
-            elif btn_id == 26:
-                handle_sim_in(self)
-            elif btn_id == 27:
-                handle_sim_out(self)
-            elif btn_id == 28:
-                execute_functions_take(self)
-
-
-        def handle_fader_change(self, value):
-            print(f"Fader cambiado a: {value}")
-            slider_val = value
-
-            # Para evitar llamadas repetidas si no cambia el valor:
-            if slider_val != self.slider.value():
-                self.slider.blockSignals(True)
-                self.slider.setValue(slider_val)
-                self.slider.blockSignals(False)
-                speed = value/100
-                UIFunctions.send_request(f"api/?Function=ReplaySetSpeed&Value={speed}&Channel=1")
-
-        def handle_encoder_change(self, value):
-            print(f"Encoder cambiado a: {value}")
-            self.ui.sim_rodeta.setValue(value)
-
-        def handle_encoder_button(self):
-            print("Botón del encoder presionado")
-            UIFunctions.function_fastjog(self, self.dial)
-
-
-    
-
-
 
         #QTableWidget Parameters
         self.ui.tableWidget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
@@ -1848,17 +1107,666 @@ class MainWindow(QMainWindow):
 
         self.popup_modo_page = PopupModoPage()
         
-        def show_dialog_overwrite_clip(self, clip_code, clip_management):
-            self.popup = PopupOverwriteClip(clip_code, clip_management)
-            self.popup.exec_()
+
+    ########################################################################
+    ## START - SIMULATOR FUNCTIONS
+    ########################################################################
+
+    def execute_functions_A(self):
+            """Ejecuta la función correspondiente según el estado de SHIFT."""
+            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
+            clip_mode = load_clip_mode()
+            if clip_mode:
+                channel_mode = UIFunctions.get_channelmode()
+                save_current_camangle("A")
+                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
+                if channel_mode == 'A':
+                    if new_angle != current_camangleA:
+                        current_camangle = new_angle
+                        current_camangleA = new_angle
+                        save_current_camangleA(current_camangleA)
+                        current_clip = load_current_clip()
+                    clip_no_camangle = current_clip_pgm[:-1]
+                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
+                    print(current_clip_pgm)
+                    UIFunctions.labelPGM_PRV(self, channel_mode)
+                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera1"
+                    UIFunctions.send_request(endpoint)
+                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
+                elif channel_mode == 'B':
+                    if new_angle != current_camangleB:
+                        current_camangle = new_angle
+                        current_camangleB = new_angle
+                        save_current_camangleB(current_camangleB)
+                        clip_no_camangle = current_clip_prv[:-1]
+                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
+                        print(current_clip_prv)
+                        UIFunctions.labelPGM_PRV(self, channel_mode)
+                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera1"
+                        UIFunctions.send_request(endpoint)
+                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
+            else: 
+                if SHIFT:
+                    UIFunctions.function_A(self)
+                    self.reset_shift()
+                else: 
+                    UIFunctions.function_A(self)
+
+    def execute_functions_B(self):
+            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
+            clip_mode = load_clip_mode()
+            if clip_mode:
+                channel_mode = UIFunctions.get_channelmode()
+                save_current_camangle("B")
+                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
+                if channel_mode == 'A':
+                    if new_angle != current_camangleA:
+                        current_camangle = new_angle
+                        current_camangleA = new_angle
+                        save_current_camangleA(current_camangleA)
+                        current_clip = load_current_clip()
+                    clip_no_camangle = current_clip_pgm[:-1]
+                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
+                    print(current_clip_pgm)
+                    UIFunctions.labelPGM_PRV(self, channel_mode)
+                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera2"
+                    UIFunctions.send_request(endpoint)
+                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
+                elif channel_mode == 'B':
+                    if new_angle != current_camangleB:
+                        current_camangle = new_angle
+                        current_camangleB = new_angle
+                        save_current_camangleB(current_camangleB)
+                        clip_no_camangle = current_clip_prv[:-1]
+                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
+                        print(current_clip_prv)
+                        UIFunctions.labelPGM_PRV(self, channel_mode)
+                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera2"
+                        UIFunctions.send_request(endpoint)
+                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
+            else: 
+                if SHIFT:
+                    UIFunctions.function_B(self)
+                    self.reset_shift()
+                else:
+                    UIFunctions.function_B(self)
+
+    def execute_functions_C(self):
+        global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
+        clip_mode = load_clip_mode()
+        if clip_mode:
+            channel_mode = UIFunctions.get_channelmode()
+            save_current_camangle("C")
+            new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
+            if channel_mode == 'A':
+                if new_angle != current_camangleA:
+                    current_camangle = new_angle
+                    current_camangleA = new_angle
+                    save_current_camangleA(current_camangleA)
+                    current_clip = load_current_clip()
+                clip_no_camangle = current_clip_pgm[:-1]
+                save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
+                print(current_clip_pgm)
+                UIFunctions.labelPGM_PRV(self, channel_mode)
+                endpoint = "api/?Function=ReplayToggleSelectedEventCamera3"
+                UIFunctions.send_request(endpoint)
+                print(f"angle asignado al canal A (PGM): {current_camangleA}")
+            elif channel_mode == 'B':
+                if new_angle != current_camangleB:
+                    current_camangle = new_angle
+                    current_camangleB = new_angle
+                    save_current_camangleB(current_camangleB)
+                    clip_no_camangle = current_clip_prv[:-1]
+                    save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
+                    print(current_clip_prv)
+                    UIFunctions.labelPGM_PRV(self, channel_mode)
+                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera3"
+                    UIFunctions.send_request(endpoint)
+                    print(f"Angle asignado al canal B (PRV): {current_camangleB}")
+        else: 
+            if SHIFT:
+                UIFunctions.function_C(self)
+                self.reset_shift()
+            else:
+                UIFunctions.function_C(self)
+
+    def execute_functions_D(self):
+            global SHIFT, clip_mode, current_camangle, current_clip, current_camangleA, current_camangleB
+            clip_mode = load_clip_mode()
+            if clip_mode:
+                channel_mode = UIFunctions.get_channelmode()
+                save_current_camangle("D")
+                new_angle = load_current_camangle()  # Cargar el clip actual desde vMix
+                if channel_mode == 'A':
+                    if new_angle != current_camangleA:
+                        current_camangle = new_angle
+                        current_camangleA = new_angle
+                        save_current_camangleA(current_camangleA)
+                        current_clip = load_current_clip()
+                    clip_no_camangle = current_clip_pgm[:-1]
+                    save_current_clip_pgm(f"{clip_no_camangle}{current_camangleA}")
+                    print(current_clip_pgm)
+                    UIFunctions.labelPGM_PRV(self, channel_mode)
+                    endpoint = "api/?Function=ReplayToggleSelectedEventCamera4"
+                    UIFunctions.send_request(endpoint)
+                    print(f"angle asignado al canal A (PGM): {current_camangleA}")
+                elif channel_mode == 'B':
+                    if new_angle != current_camangleB:
+                        current_camangle = new_angle
+                        current_camangleB = new_angle
+                        save_current_camangleB(current_camangleB)
+                        clip_no_camangle = current_clip_prv[:-1]
+                        save_current_clip_prv(f"{clip_no_camangle}{current_camangleB}")
+                        print(current_clip_prv)
+                        UIFunctions.labelPGM_PRV(self, channel_mode)
+                        endpoint = "api/?Function=ReplayToggleSelectedEventCamera4"
+                        UIFunctions.send_request(endpoint)
+                        print(f"Angle asignado al canal B (PRV): {current_camangleB}")
+            else: 
+                if SHIFT:
+                    UIFunctions.function_D(self)
+                    self.reset_shift()
+                else:
+                    UIFunctions.function_D(self)
+
+    def execute_functions_play(self):
+        global SHIFT
+        if SHIFT:
+            UIFunctions.function_play()
+            self.reset_shift()
+        else:
+            UIFunctions.function_play(self)
+
+    def execute_functions_gototc(self):
+        global SHIFT
+        if SHIFT:
+            UIFunctions.function_gototc(self)
+            self.reset_shift()
+        else:
+            UIFunctions.function_lastmark()
+
+    def execute_functions_fastjog(self, dial):
+        global SHIFT
+        if SHIFT:
+            UIFunctions.function_fastjog(self, dial)
+            self.reset_shift()
+        else:
+            UIFunctions.function_mark()
+
+    def execute_functions_record(self):
+        global SHIFT
+        if SHIFT:
+            UIFunctions.function_record(self)
+            self.reset_shift()
+        else:
+            UIFunctions.function_e_e(self)
+
+    def execute_functions_prvctl(self):
+        global SHIFT
+        if SHIFT:
+            self.function_page_activate()
+            self.reset_shift()
+        else:
+            UIFunctions.function_prvctl(self)
+
+    def execute_functions_loop(self):
+        global SHIFT
+        if SHIFT:
+            UIFunctions.function_loop(self)
+            self.reset_shift()
+        else:
+            UIFunctions.cont_acc_gotopl(self)
+
+    def execute_functions_insert(self):
+        global SHIFT
+        if SHIFT:
+            UIFunctions.function_cancel_in(self)
+            self.reset_shift()
+        else:
+            UIFunctions.toggle_browse_mode(self)
+
+    def execute_functions_in(self):
+        global SHIFT
+        if SHIFT:
+            UIFunctions.function_gotoin()
+            self.reset_shift()
+        else:
+            UIFunctions.function_in(self)
+
+    def handle_sim_in(self):
+        global CLEAR_MODE, CLEAR_SELECTION
+        if CLEAR_MODE:
+            CLEAR_SELECTION = "in"
+            print("Modo CLEAR: Seleccionado IN")
+            UIFunctions.send_request("api/?Function=ReplayUpdateSelectedInPoint&Channel=1")
+            self.reset_clear_mode(self)  # Se desactiva el modo después de la request
+        else:
+            self.execute_functions_in()
+
+    def execute_functions_out(self):
+        global SHIFT
+        if SHIFT:
+            UIFunctions.function_gotoout()
+            self.reset_shift()
+        else:
+            self.function_out()
+
+    def handle_sim_out(self):
+        global CLEAR_MODE, CLEAR_SELECTION
+        print('hola')
+        if CLEAR_MODE:
+            CLEAR_SELECTION = "out"
+            print("Modo CLEAR: Seleccionado OUT")
+            UIFunctions.send_request("api/?Function=ReplayUpdateSelectedOutPoint&Channel=1")
+            self.reset_clear_mode()  # Se desactiva el modo después de la request
+        else:
+           self.execute_functions_out()            
+        
+    def execute_functions_take(self):
+        global SHIFT
+        if SHIFT:
+            UIFunctions.function_lever()
+            self.reset_shift()
+        else:
+            UIFunctions.function_take()
+
+    def function_menu(self):
+        global modo_page
+        if modo_page: 
+            self.popup_modo_page.cancel()
+        else:
+            self.ui.stackedWidget.setCurrentWidget(self.ui.page_configuration)
+
+    def toggle_shift(self):
+        """Alterna el estado de SHIFT y cambia el color del botón."""
+        global SHIFT
+        SHIFT = load_shift()
+        SHIFT = not SHIFT
+
+        if SHIFT:
+            self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: rgba(255,40,40,150);} QPushButton:hover {background-color: rgba(255,40,40,50);} QPushButton:pressed { background-color: rgba(255,40,40,50);}")  # Rojo cuando está activado
+            self.setLeds(1, QColor(255,0,0))
+        else:
+            self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")   # Transparente cuando está desactivado
+            self.setLeds(1, QColor(0,0,0))
+
+        print(f"Shift activado: {SHIFT}")  # Depuración
+        save_shift(SHIFT)
+
+    def reset_shift(self):
+        """Desactiva SHIFT si está activado y restablece el color."""
+        global SHIFT
+        SHIFT = load_shift()
+        if SHIFT:
+            SHIFT = False
+            self.ui.sim_shift.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
+            self.setLeds(1, QColor(0,0,0))
+            print("Shift desactivado")
+            save_shift(SHIFT)
+
+    def toggle_clear_mode(self):
+        """Activa o desactiva el modo CLEAR y espera la selección de IN u OUT."""
+        global CLEAR_MODE, CLEAR_SELECTION
+        CLEAR_MODE = not CLEAR_MODE
+
+        if CLEAR_MODE:
+            self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: red;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")
+            self.setLeds(2, QColor(255,0,0))
+            print("Modo CLEAR activado")
+        else:
+            CLEAR_SELECTION = None
+            self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}")
+            self.setLeds(2, QColor(0,0,0))
+            print("Modo CLEAR desactivado")
+
+
+    def reset_clear_mode(self):
+        """Apaga el modo CLEAR y resetea estilos del botón CLEAR únicamente"""
+        global CLEAR_MODE, CLEAR_SELECTION
+        CLEAR_MODE = False
+        CLEAR_SELECTION = None
+        self.ui.sim_clear.setStyleSheet("QPushButton { font-family: Arial; font-size: 8px; font-weight: bold; color: white; padding: 10px;border-radius: 15px;border: 2px solid rgba(255,255,255,255); background-color: transparent;} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed { background-color: rgba(0,150,250,50);}") 
+        self.setLeds(2, QColor(0,0,0))
+        print("Modo CLEAR desactivado automáticamente después de la selección")
+
+
+    def function_page_activate(self):
+        """Activa el modo de selección de página."""
+        global modo_page
+        modo_page = True
+        save_page_mode(modo_page)
+        self.show_dialog_modopage()
+        print("Modo de selección de página activado.")
+        
+
+    def function_out(self):
+        global clip_id, mark_in_tc
+
+        self.set_page_mode(False)
+        self.set_shift(False)
+
+        pgm = UIFunctions.get_channelmode()
+
+        if pgm == "B":
+            self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: green; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            self.setLeds(27, QColor(0, 255,0))
+        else: 
+            self.ui.sim_out.setStyleSheet("QPushButton {font-family: Arial; font-size: 16px; background-color: red; font-weight: bold; color: white;	padding: 10px; border-radius: 15px; border: 2px solid rgba(255,255,255,255);} QPushButton:hover {background-color: rgba(0,150,250,50);} QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            self.setLeds(27, QColor(255, 0,0))
+        
+        
+        # 1. Marcar el Out en vMix
+        endpoint = "api/?Function=ReplayMarkOut"
+        if not UIFunctions.send_request(endpoint):
+            print("Error: No se pudo marcar el 'Out'")
+            return
+        
+        clip_out_tc = UIFunctions.get_tc()
+        mark_in_tc = load_mark_in_tc()
+        print("Replay mark 'Out' set successfully.")
+
+        # Estado inicial
+        operation_mode = "normal"  # Puede ser: "normal", "page", "bank"
+        
+        while True:
+            # Obtener el estado ACTUAL de los botones especiales
+            current_shift = load_shift()
+            current_page_mode = load_page_mode()
+            
+            # Determinar el modo de operación actual
+            if current_page_mode:
+                operation_mode = "page"
+            elif current_shift:
+                operation_mode = "bank"
+            else:
+                operation_mode = "normal"
+
+            print(f"Modo actual: {operation_mode}")  # Debug
+            
+            # Esperar pulsación de botón
+            button_num = self.wait_for_button_press()
+            
+            if button_num is None:
+                continue  # Timeout, reintentar
+                
+            # Manejar según el modo actual
+            if operation_mode == "page":
+                print(f"Cambiando a página {button_num}")
+                self.function_page(button_num)
+                self.set_page_mode(False)  # Desactivar modo página
+                continue
+                
+            elif operation_mode == "bank":
+                print(f"Cambiando banco a {button_num}")
+                self.change_bank(button_num)
+                self.set_shift(False)  # Desactivar shift
+                continue
+                
+            elif operation_mode == "normal":
+                # Guardar clip - TU LÓGICA ORIGINAL
+                page = load_config().get("CURRENT_PAGE", 1)
+                bank = load_config().get("last_bank_per_page", {}).get(str(page), 1)
+                clip_pos = f"{page}{bank}{button_num}"
+                
+                clips = load_clip_dictionary()
+                if clips.get(clip_pos, ["void"] * 7)[0] == "void":
+                    clip_id = load_current_clip_id()
+                    duration = UIFunctions.calculate_clip_duration(mark_in_tc, clip_out_tc)
+                    
+                    clips[clip_pos] = [
+                        str(clip_id), "void", "void", "void",
+                        str(mark_in_tc), str(clip_out_tc), str(duration)
+                    ]
+                    save_clip_dictionary(clips)
+                    
+                    clip_id += 1
+                    save_current_clip_id(clip_id)
+                    print(f"Clip guardado en {clip_pos} (ID: {clip_id-1})")
+                else:
+                    self.show_dialog_overwrite_clip(clip_pos, clips)
+                
+                break  # Salir del bucle después de guardar
+
+        # Limpieza final
+        self.set_page_mode(False)
+        self.set_shift(False)
+
+    def set_page_mode(self, active):
+        """Activa o desactiva el modo de cambio de página"""
+        global modo_page
+        modo_page = active
+        save_page_mode(active)
+
+    def set_shift(self, active):
+        """Activa o desactiva el modo de cambio de banco (SHIFT)"""
+        global SHIFT
+        SHIFT = active
+        save_shift(active)
+
+    def wait_for_button_press(self):
+        """Espera la pulsación de un botón F desde la UI o hardware físico"""
+        button_pressed = None
+        loop = QEventLoop()
+        timer = QTimer()
+        timer.setSingleShot(True)
+
+        # Mapeo de botones virtuales
+        buttons = {
+            1: self.ui.sim_f1,
+            2: self.ui.sim_f2,
+            3: self.ui.sim_f3,
+            4: self.ui.sim_f4,
+            5: self.ui.sim_f5,
+            6: self.ui.sim_f6,
+            7: self.ui.sim_f7,
+            8: self.ui.sim_f8,
+            9: self.ui.sim_f9,
+            0: self.ui.sim_f10
+        }
+
+        # Handlers UI
+        def create_handler(num):
+            def handler(checked):
+                nonlocal button_pressed
+                self.reset_styles()
+                button_pressed = num
+                loop.quit()
+            return handler
+
+        # Handler físico desde señal
+        def hardware_handler(btn_id):
+            nonlocal button_pressed
+            # IDs físicos 4–13 → botones lógicos 1–0
+            mapping = {4+i: (i+1) if i < 9 else 0 for i in range(10)}
+            if btn_id in mapping:
+                self.reset_styles()
+                button_pressed = mapping[btn_id]
+                loop.quit()
+
+        # Estilo de botones (reutilizable)
+        def reset_styles():
+            style = ("QPushButton {font-family: Arial; font-size: 16px; font-weight: bold; "
+                     "color: white;	padding: 10px; border-radius: 15px; "
+                     "border: 2px solid rgba(255,255,255,255);} "
+                     "QPushButton:hover {background-color: rgba(0,150,250,50);} "
+                     "QPushButton:pressed {background-color: rgba(0,150,250,50);}")
+            self.ui.sim_in.setStyleSheet(style)
+            self.ui.sim_out.setStyleSheet(style)
+            self.setLeds(26, QColor(0, 0, 0))
+            self.setLeds(27, QColor(0, 0, 0))
+
+        self.reset_styles = reset_styles  # hacer accesible internamente
+
+        # Conectar botones virtuales
+        connections = []
+        for num, btn in buttons.items():
+            handler = create_handler(num)
+            btn.clicked.connect(handler)
+            connections.append((btn, handler))
+
+        # Conectar señal de botón físico
+        self.button_pressed_signal.connect(hardware_handler)
+
+        # Timeout
+        timer.timeout.connect(loop.quit)
+        timer.start(200)
+
+        loop.exec_()
+
+        # Limpieza
+        timer.stop()
+        for btn, handler in connections:
+            try:
+                btn.clicked.disconnect(handler)
+            except RuntimeError:
+                pass
+
+        try:
+            self.button_pressed_signal.disconnect(hardware_handler)
+        except RuntimeError:
+            pass
+
+        return button_pressed
+
+    def handle_sim_f_button(self, f_button_number):
+        """Maneja la funcionalidad de los botones sim_f1 a sim_f10."""
+        global current_page, current_bank, SHIFT, clip_mode, modo_page
+
+        # Si SHIFT está activado, cambiar el banco
+        if SHIFT:
+            self.change_bank(f_button_number)  # Cambiar banco de la página actual
+            print("function change bank")
+            self.reset_shift()
+
+        elif modo_page:
+            self.popup_modo_page.close_popup()
+            self.function_page(f_button_number)  # o directamente function_page si es global
+            print("function change page")
+            modo_page = False
+
+        # Activar el modo clip y mostrar el código correspondiente
+        else:
+            clip_mode = True  # Activar modo clip
+            save_clip_mode(clip_mode)
+            current_camangle = load_current_camangle()
+            clip_code = f"{current_page}{current_bank}{f_button_number}{current_camangle}"
+            numeric_code = clip_code[:-1]  
+            print(f"Código del clip: {clip_code}")  # Mostrar el código del clip
+            save_current_clip(clip_code)
+            # Cargar el archivo JSON
+            if numeric_code == "101":
+                UIFunctions.goto_pl(self, 1)
+            if numeric_code == "102":
+                UIFunctions.goto_pl(self, 2)
+            if numeric_code == "201":
+                UIFunctions.goto_pl(self, 3)
+            if numeric_code == "202":
+                UIFunctions.goto_pl(self, 4)
+            if numeric_code == "301":
+                UIFunctions.goto_pl(self, 5)
+            if numeric_code == "302":
+                UIFunctions.goto_pl(self, 6)
+            if numeric_code == "401":
+                UIFunctions.goto_pl(self, 7)
+            if numeric_code == "402":
+                UIFunctions.goto_pl(self, 8)
+            if numeric_code == "501":
+                UIFunctions.goto_pl(self, 8)
+            if numeric_code == "502":
+                UIFunctions.goto_pl(self, 9)
+            if numeric_code == "602":
+                UIFunctions.goto_pl(self, 10)
+            if numeric_code == "701":
+                UIFunctions.goto_pl(self, 11)
+            if numeric_code == "702":
+                UIFunctions.goto_pl(self, 12)
+            if numeric_code == "801":
+                UIFunctions.goto_pl(self, 13)
+            if numeric_code == "802":
+                UIFunctions.goto_pl(self, 14)
+            if numeric_code == "901":
+                UIFunctions.goto_pl(self, 15)
+            if numeric_code == "902":
+                UIFunctions.goto_pl(self, 16)
+            if numeric_code == "001":
+                UIFunctions.goto_pl(self, 17)
+            if numeric_code == "002":
+                UIFunctions.goto_pl(self, 18)
+            try:
+                with open(CLIP_DICTIONARY_FILE, "r") as file:
+                    clip_data = json.load(file)
+            except FileNotFoundError:
+                print(f"Error: El archivo {CLIP_DICTIONARY_FILE} no existe.")
+                return None
+
+            # Obtener la lista asignada al código
+            clip_list = clip_data.get(numeric_code, ["void"] * 7)
+
+            # Comprobar si el primer elemento de la lista es "void"
+            if clip_list[0] == "void":
+                print("No hay ningún clip asignado.")
+                return None          
+            else: 
+                pgm = UIFunctions.get_channelmode()
+                if pgm == "B":
+                    current_camangleB = load_current_camangleB()
+                    clip_prv = f"{numeric_code}{current_camangleB}"
+                    save_current_clip_prv(clip_prv)
+                else:
+                    current_camangleA = load_current_camangleA()
+                    clip_pgm = f"{numeric_code}{current_camangleA}"
+                    save_current_clip_pgm(clip_pgm)      
+                UIFunctions.labelPGM_PRV(self, pgm)
+                id = clip_list[0].zfill(4)
+                endpoint_0 = "api/?Function=ReplaySelectEvents1&Channel=1"
+                endpoint_1 = f"api/?Function=ReplayPlayEventsByID&Value={id}&Channel=1"
+                endpoint_2 = "api/?Function=ReplayPause&Channel=1"
+                UIFunctions.send_request(endpoint_0)
+                UIFunctions.send_request(endpoint_1)
+                UIFunctions.send_request(endpoint_2)
+               
+    def function_page(self, page_number):
+        """Cambia la página y muestra el banco correspondiente."""
+        global current_page, current_bank, SHIFT
+        
+        # Cambiar la página
+        current_page = page_number
+        save_current_page(current_page)
+        self.ui.label_page.setText(f"PAGE {current_page}")  # Actualiza QLabel
+        
+        # Mostrar el banco de la página seleccionada
+        current_bank = load_current_bank()
+        self.ui.label_bank.setText(f" {current_bank} BANK")  # Actualiza QLabel
+        print(f"Página {current_page} seleccionada. Banco actual: {current_bank}")
+
+    def change_bank(self, button_number):
+        global current_bank
+        SHIFT = load_shift()
+        if SHIFT:
+            save_current_bank(button_number)
+            current_bank = button_number  # Actualizamos la variable global
+            self.ui.label_bank.setText(f"{current_bank} BANK")  # Actualiza QLabel
+            print(f"Banco actualizado a {button_number} para la página {current_page}.")
+            if current_bank == 0:
+                self.ui.label_bank.setText("PL. BANK")  # Actualiza QLabel
+
+        else:
+            print("Shift no está presionado, no se puede cambiar el banco.")
+
+
+    ########################################################################
+    ## END - SIMULATOR FUNCTIONS
+    ########################################################################
 
     ########################################################################
     ## START - SHOW POPUPS
     ########################################################################
     def show_dialog_modopage(self):
-        #self.popup_modo = PopupModoPage()  # Guardar en un atributo para evitar que se elimine
-        #self.popup.setModal(False)  # Asegurás que no sea modal
+        #self.popup_modo_page.setModal(False)  # Asegurás que no sea modal
         self.popup_modo_page.show()  # Muestra el diálogo de forma modal
+        #self.popup_modo_page = PopupModoPage()
+        #self.popup_modo_page.exec_()
+
     
 
     
@@ -1886,6 +1794,10 @@ class MainWindow(QMainWindow):
     def show_dialog_deleteclipdic(self):
         self.popup = PopupDeleteClipDictionary(self)  # Guardar en un atributo para evitar que se elimine
         self.popup.exec_()  # Muestra el diálogo de forma modal
+
+    def show_dialog_overwrite_clip(self, clip_code, clip_management):
+        self.popup = PopupOverwriteClip(clip_code, clip_management)
+        self.popup.exec_()
 
 
     ########################################################################
@@ -1989,6 +1901,142 @@ class MainWindow(QMainWindow):
     ## END - LED CONTROLLER FUNCTIONS
     ###############################################################
 
+    def start_serial_listener(self):
+        print('Serial listener started')
+        if self.ser is None:
+            print("Serial no disponible.")
+            return
+
+        def listen():
+            print("Listening on serial port...")
+            while True:
+                try:
+                    line = self.ser.readline().decode().strip()
+                    if not line:
+                        continue
+                    #print(f"Received: {line}")
+
+                    if line.startswith("BTN:"):
+                        try:
+                            btn_id = int(line.split(":")[1])
+                            #self.handle_button_press(btn_id)
+                            self.button_pressed_signal.emit(btn_id)
+                        except ValueError:
+                            print(f"Línea malformada: {line}")
+
+                    elif line.startswith("FADER:"):
+                        try:
+                            fader_val = int(line.split(":")[1])
+                            self.handle_fader_change(fader_val)
+                        except ValueError:
+                            print(f"Línea malformada fader: {line}")
+
+                    elif line.startswith("ENCODER:"):
+                        try:
+                            encoder_val = int(line.split(":")[1])
+                            self.handle_encoder_change(encoder_val)
+                        except ValueError:
+                            print(f"Línea malformada encoder: {line}")
+
+                    elif line == "ENC_BTN":
+                        self.handle_encoder_button()
+
+                    else:
+                        print(f"Línea desconocida: {line}")
+
+                except Exception as e:
+                    print(f"Error leyendo del puerto serial: {e}")
+                    break
+
+        self.listener_thread = QThread()
+        self.worker = threading.Thread(target=listen, daemon=True)
+        self.worker.start()
+
+    def handle_button_press(self, btn_id):
+        try: 
+            print(f"Botón presionado: {btn_id}")
+            if btn_id == 0:
+                self.function_menu()
+            elif btn_id == 1:
+                self.toggle_shift()
+            elif btn_id == 2:
+                self.toggle_clear_mode()
+            elif btn_id == 3:
+                UIFunctions.function_enter()
+            elif btn_id == 4:
+                self.handle_sim_f_button(1)
+            elif btn_id == 5:
+                self.handle_sim_f_button(2)
+            elif btn_id == 6:
+                self.handle_sim_f_button(3)
+            elif btn_id == 7:
+                self.handle_sim_f_button(4)
+            elif btn_id == 8:
+                self.handle_sim_f_button(5)
+            elif btn_id == 9:
+                self.handle_sim_f_button(6)
+            elif btn_id == 10:
+                self.handle_sim_f_button(7)
+            elif btn_id == 11:
+                self.handle_sim_f_button(8)
+            elif btn_id == 12:
+                self.handle_sim_f_button(9)
+            elif btn_id == 13:
+                self.handle_sim_f_button(0)
+            elif btn_id == 14:
+                self.execute_functions_A()
+            elif btn_id == 15:
+                self.execute_functions_B()
+            elif btn_id == 16:
+                self.execute_functions_C()
+            elif btn_id == 17:
+                self.execute_functions_D()
+            elif btn_id == 18:
+                print('18')
+            elif btn_id == 19:
+                self.execute_functions_play()
+            elif btn_id == 20:
+                self.execute_functions_gototc()
+            elif btn_id == 21:
+                self.execute_functions_fastjog(self.dial)
+            elif btn_id == 22:
+                self.execute_functions_record()
+            elif btn_id == 23:
+                self.execute_functions_prvctl()
+            elif btn_id == 24:
+                self.execute_functions_loop()
+            elif btn_id == 25:
+                self.execute_functions_insert()
+            elif btn_id == 26:
+                self.handle_sim_in()
+            elif btn_id == 27:
+                self.handle_sim_out()
+            elif btn_id == 28:
+                self.execute_functions_take()
+        except Exception as e:
+            print(f"Error en handle_button_press: {e}") 
+
+
+
+    def handle_fader_change(self, value):
+        print(f"Fader cambiado a: {value}")
+        slider_val = value
+
+        # Para evitar llamadas repetidas si no cambia el valor:
+        if slider_val != self.slider.value():
+            self.slider.blockSignals(True)
+            self.slider.setValue(slider_val)
+            self.slider.blockSignals(False)
+            speed = value/100
+            UIFunctions.send_request(f"api/?Function=ReplaySetSpeed&Value={speed}&Channel=1")
+
+    def handle_encoder_change(self, value):
+        print(f"Encoder cambiado a: {value}")
+        self.ui.sim_rodeta.setValue(value)
+
+    def handle_encoder_button(self):
+        print("Botón del encoder presionado")
+        UIFunctions.function_fastjog(self, self.dial)
 
     ########################################################################
     ## START - APP EVENTS
