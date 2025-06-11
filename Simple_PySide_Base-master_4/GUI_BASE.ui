@@ -1668,7 +1668,7 @@ QPushButton:pressed {
                    <string notr="true">background: transparent;</string>
                   </property>
                   <property name="currentIndex">
-                   <number>23</number>
+                   <number>26</number>
                   </property>
                   <widget class="QWidget" name="page_home">
                    <widget class="QPushButton" name="clip_addtoplaylist">
@@ -7236,11 +7236,16 @@ QPushButton:pressed {
                    <widget class="QLabel" name="playlist_numclip_pl1">
                     <property name="geometry">
                      <rect>
-                      <x>220</x>
+                      <x>230</x>
                       <y>30</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7255,9 +7260,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>120</x>
                       <y>30</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7279,7 +7289,7 @@ border: rgba(255,255,255,0);</string>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -7332,9 +7342,14 @@ QPushButton:pressed {
                      <rect>
                       <x>120</x>
                       <y>110</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7347,11 +7362,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl2">
                     <property name="geometry">
                      <rect>
-                      <x>220</x>
+                      <x>230</x>
                       <y>110</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7373,7 +7393,7 @@ border: rgba(255,255,255,0);</string>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -7426,9 +7446,14 @@ QPushButton:pressed {
                      <rect>
                       <x>120</x>
                       <y>190</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7441,11 +7466,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl3">
                     <property name="geometry">
                      <rect>
-                      <x>220</x>
+                      <x>230</x>
                       <y>190</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7467,7 +7497,7 @@ border: rgba(255,255,255,0);</string>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -7520,9 +7550,14 @@ QPushButton:pressed {
                      <rect>
                       <x>120</x>
                       <y>270</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7535,11 +7570,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl4">
                     <property name="geometry">
                      <rect>
-                      <x>220</x>
+                      <x>230</x>
                       <y>270</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7561,7 +7601,7 @@ border: rgba(255,255,255,0);</string>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -7614,9 +7654,14 @@ QPushButton:pressed {
                      <rect>
                       <x>120</x>
                       <y>350</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7629,11 +7674,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl5">
                     <property name="geometry">
                      <rect>
-                      <x>220</x>
+                      <x>230</x>
                       <y>350</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7655,7 +7705,7 @@ border: rgba(255,255,255,0);</string>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -7708,9 +7758,14 @@ QPushButton:pressed {
                      <rect>
                       <x>120</x>
                       <y>430</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7723,11 +7778,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl6">
                     <property name="geometry">
                      <rect>
-                      <x>220</x>
+                      <x>230</x>
                       <y>430</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7749,7 +7809,7 @@ border: rgba(255,255,255,0);</string>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -7958,9 +8018,14 @@ QPushButton:pressed {
                      <rect>
                       <x>430</x>
                       <y>110</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7973,11 +8038,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl12">
                     <property name="geometry">
                      <rect>
-                      <x>530</x>
+                      <x>540</x>
                       <y>430</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -7992,14 +8062,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>430</x>
                       <y>250</y>
-                      <width>21</width>
+                      <width>31</width>
                       <height>16</height>
                      </rect>
                     </property>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8016,9 +8086,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>430</x>
                       <y>190</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8031,11 +8106,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl10">
                     <property name="geometry">
                      <rect>
-                      <x>530</x>
+                      <x>540</x>
                       <y>270</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8050,9 +8130,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>430</x>
                       <y>270</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8074,7 +8159,7 @@ border: rgba(255,255,255,0);</string>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8098,7 +8183,7 @@ border: rgba(255,255,255,0);</string>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8122,7 +8207,7 @@ border: rgba(255,255,255,0);</string>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8139,9 +8224,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>430</x>
                       <y>350</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8163,7 +8253,7 @@ border: rgba(255,255,255,0);</string>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8219,6 +8309,14 @@ QPushButton:pressed {
                       <width>171</width>
                       <height>51</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Arial</family>
+                      <pointsize>-1</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">QPushButton {
@@ -8310,11 +8408,16 @@ QPushButton:pressed {
                    <widget class="QLabel" name="playlist_numclip_pl11">
                     <property name="geometry">
                      <rect>
-                      <x>530</x>
+                      <x>540</x>
                       <y>350</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8399,11 +8502,16 @@ QPushButton:pressed {
                    <widget class="QLabel" name="playlist_numclip_pl8">
                     <property name="geometry">
                      <rect>
-                      <x>530</x>
+                      <x>540</x>
                       <y>110</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8448,11 +8556,16 @@ QPushButton:pressed {
                    <widget class="QLabel" name="playlist_numclip_pl9">
                     <property name="geometry">
                      <rect>
-                      <x>530</x>
+                      <x>540</x>
                       <y>190</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8467,9 +8580,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>430</x>
                       <y>430</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8484,14 +8602,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>430</x>
                       <y>410</y>
-                      <width>21</width>
+                      <width>31</width>
                       <height>16</height>
                      </rect>
                     </property>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8506,11 +8624,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl7">
                     <property name="geometry">
                      <rect>
-                      <x>530</x>
+                      <x>540</x>
                       <y>30</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8593,9 +8716,14 @@ QPushButton:pressed {
                      <rect>
                       <x>430</x>
                       <y>30</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8714,9 +8842,14 @@ QPushButton:pressed {
                      <rect>
                       <x>750</x>
                       <y>110</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8729,11 +8862,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl18">
                     <property name="geometry">
                      <rect>
-                      <x>850</x>
+                      <x>860</x>
                       <y>430</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8748,14 +8886,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>750</x>
                       <y>250</y>
-                      <width>21</width>
+                      <width>31</width>
                       <height>16</height>
                      </rect>
                     </property>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8772,9 +8910,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>750</x>
                       <y>190</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8787,11 +8930,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl16">
                     <property name="geometry">
                      <rect>
-                      <x>850</x>
+                      <x>860</x>
                       <y>270</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8806,9 +8954,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>750</x>
                       <y>270</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8823,14 +8976,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>750</x>
                       <y>170</y>
-                      <width>21</width>
+                      <width>31</width>
                       <height>16</height>
                      </rect>
                     </property>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8847,14 +9000,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>750</x>
                       <y>90</y>
-                      <width>21</width>
+                      <width>31</width>
                       <height>16</height>
                      </rect>
                     </property>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8871,14 +9024,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>750</x>
                       <y>330</y>
-                      <width>21</width>
+                      <width>31</width>
                       <height>16</height>
                      </rect>
                     </property>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8895,9 +9048,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>750</x>
                       <y>350</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -8912,14 +9070,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>750</x>
                       <y>10</y>
-                      <width>21</width>
+                      <width>31</width>
                       <height>16</height>
                      </rect>
                     </property>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -9066,11 +9224,16 @@ QPushButton:pressed {
                    <widget class="QLabel" name="playlist_numclip_pl17">
                     <property name="geometry">
                      <rect>
-                      <x>850</x>
+                      <x>860</x>
                       <y>350</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -9155,11 +9318,16 @@ QPushButton:pressed {
                    <widget class="QLabel" name="playlist_numclip_pl14">
                     <property name="geometry">
                      <rect>
-                      <x>850</x>
+                      <x>860</x>
                       <y>110</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -9204,11 +9372,16 @@ QPushButton:pressed {
                    <widget class="QLabel" name="playlist_numclip_pl15">
                     <property name="geometry">
                      <rect>
-                      <x>850</x>
+                      <x>860</x>
                       <y>190</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -9223,9 +9396,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>750</x>
                       <y>430</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -9240,14 +9418,14 @@ border: rgba(255,255,255,0);</string>
                      <rect>
                       <x>750</x>
                       <y>410</y>
-                      <width>21</width>
+                      <width>31</width>
                       <height>16</height>
                      </rect>
                     </property>
                     <property name="font">
                      <font>
                       <family>Arial</family>
-                      <pointsize>10</pointsize>
+                      <pointsize>13</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -9262,11 +9440,16 @@ border: rgba(255,255,255,0);</string>
                    <widget class="QLabel" name="playlist_numclip_pl13">
                     <property name="geometry">
                      <rect>
-                      <x>850</x>
+                      <x>860</x>
                       <y>30</y>
                       <width>51</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -9349,9 +9532,14 @@ QPushButton:pressed {
                      <rect>
                       <x>750</x>
                       <y>30</y>
-                      <width>81</width>
+                      <width>101</width>
                       <height>16</height>
                      </rect>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">backgound-color: rgba(255,255,255,0);
@@ -9465,6 +9653,24 @@ QPushButton:pressed {
                       <normaloff>:/20x20/icons/20x20/cil-plus.png</normaloff>:/20x20/icons/20x20/cil-plus.png</iconset>
                     </property>
                    </widget>
+                   <zorder>playlist_button_pl18</zorder>
+                   <zorder>playlist_button_pl17</zorder>
+                   <zorder>playlist_button_pl16</zorder>
+                   <zorder>playlist_button_pl15</zorder>
+                   <zorder>playlist_button_pl14</zorder>
+                   <zorder>playlist_button_pl13</zorder>
+                   <zorder>playlist_button_pl12</zorder>
+                   <zorder>playlist_button_pl11</zorder>
+                   <zorder>playlist_button_pl10</zorder>
+                   <zorder>playlist_button_pl9</zorder>
+                   <zorder>playlist_button_pl6</zorder>
+                   <zorder>playlist_button_pl5</zorder>
+                   <zorder>playlist_button_pl4</zorder>
+                   <zorder>playlist_button_pl8</zorder>
+                   <zorder>playlist_button_pl7</zorder>
+                   <zorder>playlist_button_pl1</zorder>
+                   <zorder>playlist_button_pl3</zorder>
+                   <zorder>playlist_button_pl2</zorder>
                    <zorder>playlist_btnadd_1</zorder>
                    <zorder>playlist_numclip_pl1</zorder>
                    <zorder>playlist_dur_pl1</zorder>
@@ -9537,24 +9743,6 @@ QPushButton:pressed {
                    <zorder>playlist_dur_pl13</zorder>
                    <zorder>playlist_btnadd_15</zorder>
                    <zorder>playlist_btnadd_18</zorder>
-                   <zorder>playlist_button_pl1</zorder>
-                   <zorder>playlist_button_pl2</zorder>
-                   <zorder>playlist_button_pl3</zorder>
-                   <zorder>playlist_button_pl4</zorder>
-                   <zorder>playlist_button_pl5</zorder>
-                   <zorder>playlist_button_pl6</zorder>
-                   <zorder>playlist_button_pl7</zorder>
-                   <zorder>playlist_button_pl8</zorder>
-                   <zorder>playlist_button_pl9</zorder>
-                   <zorder>playlist_button_pl10</zorder>
-                   <zorder>playlist_button_pl11</zorder>
-                   <zorder>playlist_button_pl12</zorder>
-                   <zorder>playlist_button_pl13</zorder>
-                   <zorder>playlist_button_pl14</zorder>
-                   <zorder>playlist_button_pl15</zorder>
-                   <zorder>playlist_button_pl16</zorder>
-                   <zorder>playlist_button_pl17</zorder>
-                   <zorder>playlist_button_pl18</zorder>
                   </widget>
                   <widget class="QWidget" name="page_clipmanagement">
                    <widget class="QPushButton" name="clip_manag_name_clip">
@@ -11273,6 +11461,7 @@ QHeaderView::section:vertical
  </tabstops>
  <resources>
   <include location="files.qrc"/>
+  <include location="../../../../../.designer/backup/files.qrc"/>
  </resources>
  <connections/>
 </ui>

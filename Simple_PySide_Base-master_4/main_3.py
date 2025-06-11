@@ -865,10 +865,10 @@ class MainWindow(QMainWindow):
         UIFunctions.addNewMenu(self, "CONFIGURATION", "btn_config", "url(:/16x16/icons/16x16/cil-equalizer.png)", False)
         
         # Standard Menu
-        UIFunctions.selectStandardMenu(self, "btn_home")
+        UIFunctions.selectStandardMenu(self, "btn_simulator")
 
         #Starting Page
-        self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
+        self.ui.stackedWidget.setCurrentWidget(self.ui.page_simulator)
 
         ## Hide user icon
         UIFunctions.userIcon(self, "WM", "", False)
@@ -980,7 +980,7 @@ class MainWindow(QMainWindow):
         self.slider = self.findChild(QSlider, "sim_palanqueta")  # Find the slider
         UIFunctions.setup_replay_speed_slider(self.slider)  # Setup slider functionality
 
-        self.ui.sim_menu.clicked.connect(self.function_menu())
+        self.ui.sim_menu.clicked.connect(lambda: self.function_menu())
         self.ui.sim_enter.clicked.connect(lambda: UIFunctions.function_enter(self))
         #################################### END - BOTONS SIMULATOR
 
