@@ -1963,8 +1963,10 @@ class UIFunctions(MainWindow):
     
     def function_take():
         """Realiza la acción ReplaySwapChannels en vMix, si hay conexión."""
-        response = UIFunctions.send_request("api/?Function=ReplaySwapChannels")
         response_1 = UIFunctions.send_request("api/?Function=ReplayPlay&Channel=1")
+        response = UIFunctions.send_request("api/?Function=ReplaySwapChannels")
+        
+        
         if not response_1:
             print("No se pudo ejecutar ReplayPlay. Saltando function_play.")
             return
