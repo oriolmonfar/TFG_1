@@ -13,6 +13,6 @@ Aquest projecte presenta el disseny i la implementació d’un sistema de contro
 Es requereixen les llibreries: PySide2, Time, Datetime, Requests, Threading i Serial.
 
 # EXECUCIÓ:
-Per a executar el programa, s'executa el fitxer main_2.py. 
+Per a executar el programa, s'executa el fitxer main_3.py. 
 
 
